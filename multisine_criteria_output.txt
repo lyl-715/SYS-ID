@@ -128,3 +128,108 @@ constrained opt       1.0260  0.669  0.553390   0.665907   0.203928   0.203928  
   w -> infinity at fixed power).  The fixed-T objective is only
   meaningful on a bounded frequency band; the numbers above are
   comparisons inside each case's own band, not global optima.
+
+================================================================================================
+STAGE 2.  THE BETA FAMILY   (beta = a2 w2 / (a1 w1))
+================================================================================================
+
+2.1  wide-separation LIMIT family, beta in [0.2, 5], 200 log points (theta-free).
+     every 20th point:
+
+      beta          D    E_ratio      cond           g
+    0.2000   0.940744   0.679801    2.0357   -0.122909
+    0.2764   0.985457   0.691411    2.0614   -0.131238
+    0.3820   1.064790   0.712700    2.0963   -0.141933
+    0.5279   1.196525   0.750255    2.1257   -0.148555
+    0.7295   1.388079   0.811300    2.1089   -0.134152
+    1.0081   1.583289   0.890650    1.9959   -0.085039
+    1.3932   1.603663   0.940293    1.8138   -0.042123
+    1.9253   1.537768   0.967676    1.6422   -0.019043
+    2.6607   1.464104   0.982742    1.5160   -0.008453
+    3.6770   1.409647   0.990866    1.4358   -0.003860
+    5.0000   1.376978   0.995033    1.3908   -0.001907
+
+     beta_D* = 1.222412,  D = 1.6127375   (target 1.222388, 1.6127375: REPRODUCED)
+     beta_E* = argmax E_ratio = 5.0000 -- the RIGHT EDGE of the sweep: E_ratio is
+     monotone increasing in beta on [0.2, 5] (E = 0.6798 -> 0.9950), and spot checks
+       beta =    20:  E_ratio = 0.999688
+       beta =   100:  E_ratio = 0.999988
+     show it climbing toward 1 from below (R11 -> 1, R22 -> 4/3
+     as beta -> inf), so sup E_ratio = 1, NOT attained: the two
+     optima do not coincide and E never beats periodic here.
+     E_ratio at beta_D*: 0.923822
+     g along the sweep: g in [-0.1486, -0.0019], max at beta = 5.000;
+     g < 0 EVERYWHERE -- it never changes sign on the limit family.
+
+2.2  E_ratio at beta = 1 (exact inner p2 integral + 1-D adaptive quadrature):
+     E_ratio(beta=1) = 0.888888888889
+     nearest small rational: 8/9 = 0.888888888889,  |diff| = 1.11e-16
+     matches 8/9 to better than 1e-10: at beta = 1 the
+     weight factorises, |cos p1 + cos p2| =
+     2 |cos((p1+p2)/2)| |cos((p1-p2)/2)|, and the same
+     factorised moments that give D = 128/81 give
+     R11 = 8/9, R22 = 16/9 exactly.  (Curious: the E ratio
+     of the beta = 1 family equals the M = 1 D ratio.)
+
+2.3  FINITE family w1 = 0.5, r = 2 (w_hi = 1), phases (0,0),
+     unit input power.  r = 2 is rational, so the result is
+     phase-dependent; (0,0) is a stated choice.  J_ref = the
+     unit-power single tone at w_hi, per theta.
+
+     every 20th point (D, E, g at theta = (1, 0.5) only):
+
+      beta         D   E_ratio          g J/Jref(1,.5)  J/Jref(1,0)  J/Jref(0,1)
+    0.2000  0.937644  0.688632  -0.112592     0.059708     0.069635     0.018208
+    0.2764  0.979197  0.706397  -0.113385     0.065711     0.076150     0.020780
+    0.3820  1.052236  0.736027  -0.113407     0.077235     0.088648     0.027905
+    0.5279  1.172829  0.781815  -0.109122     0.099388     0.112607     0.043131
+    0.7295  1.352007  0.845429  -0.092619     0.141439     0.157795     0.072792
+    1.0081  1.542342  0.911154  -0.061547     0.216866     0.238004     0.127931
+    1.3932  1.478987  0.900649  -0.063797     0.335325     0.362050     0.222536
+    1.9253  1.321185  0.853225  -0.080501     0.489727     0.520081     0.362653
+    2.6607  1.168800  0.796802  -0.094866     0.650609     0.679640     0.530664
+    3.6770  1.055892  0.748537  -0.103253     0.783985     0.807024     0.689932
+    5.0000  0.986130  0.715893  -0.107245     0.872142     0.888137     0.807379
+
+     g on the finite family: in [-0.1136, -0.0589] -- never changes sign either.
+
+     finite family, theta = (1, 0.5):
+       beta_D* = 1.0610   D = 1.545888
+       beta_E* = 1.1068   E = 0.914249
+
+     ADDENDUM -- beta_J* and peak J/J_ref per theta (same reference convention):
+
+       theta       beta_J*  peak J/J_ref  J/Jref at 20     J_ref
+    (1, 0.5)    5.0 (EDGE)      0.872142      0.991153   0.90063
+      (1, 0)    5.0 (EDGE)      0.888137      0.992527   0.72051
+      (0, 1)    5.0 (EDGE)      0.807379      0.985652   0.72051
+
+     beta_J* sits at the sweep EDGE for every theta: at r = 2
+     the J objective has NO interior optimum -- raising beta just
+     concentrates power on the top tone (rho = beta/2), and
+     J/J_ref climbs monotonically toward 1, the degenerate
+     single-tone limit, without ever beating it.  The two-tones
+     that DO beat their band edge (the 1.27 of Stage 1B) live at
+     r near 1, not at r = 2: splitting the tones a full octave
+     already costs more event rate than the D factor repays.
+
+     ADDENDUM -- frequency scale c in {0.5, 1, 2, 4}, theta = (1, 0.5), reference
+     retargeted to the new band edge w_hi = c * (old w_hi).
+     Scaling all w by c acts like scaling theta2 by c, so this
+     doubles as the theta sensitivity of the J numbers.
+
+     (i) finite-family tone at its edge beta_J* = 5.000 (w1 = 0.5c, w2 = c):
+         c     w_hi    J/J_ref
+       0.5      0.5   0.883441
+         1        1   0.872142
+         2        2   0.848000
+         4        4   0.823685
+
+     (ii) the ACTUAL 1.27 two-tone (constrained optimum: w1 = 0.631c,
+     r = 1.06, rho = 0.9486, unit power; quasi-period much longer
+     than one tone period, so the long-window quadrature of Stage 1B is reused):
+         c     w_hi    J/J_ref
+       0.5   0.3344   1.277124
+         1   0.6689   1.271903
+         2    1.338   1.257039
+         4    2.675   1.233250

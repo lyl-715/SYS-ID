@@ -325,11 +325,15 @@ def stage1B(theta=THETA_DEFAULT, model=MODEL_STATIC):
 # Figure
 # --------------------------------------------------------------------------
 
-def make_criteria_figure(rowsA, rowsB, outdir=".", fname_extra=None):
+def make_criteria_figure(rowsA, rowsB, s2=None, outdir="."):
     import matplotlib
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
-    fig, ax = plt.subplots(1, 2, figsize=(13, 5.2))
+    if s2 is None:
+        fig, ax = plt.subplots(1, 2, figsize=(13, 5.2))
+    else:
+        fig, axx = plt.subplots(2, 2, figsize=(13, 10))
+        ax = axx[0]
 
     # panel 1: D ratio vs E_ratio
     for i, r in enumerate(rowsA):
@@ -361,6 +365,44 @@ def make_criteria_figure(rowsA, rowsB, outdir=".", fname_extra=None):
     ax[1].set_title("fixed-T objective J_ev = m^2 det M_w, unit power\n"
                     "grey: iso-J_ev (slope -2)", fontsize=10)
     ax[1].legend(fontsize=6.5, loc="lower left")
+
+    if s2 is not None:
+        b = s2["betas"]
+        # panel 3: the wide-separation limit family
+        a3 = axx[1, 0]
+        a3.semilogx(b, [x["D"] for x in s2["limit"]], "-", lw=1.6,
+                    label="D ratio")
+        a3.semilogx(b, [x["E"] for x in s2["limit"]], "-", lw=1.6,
+                    color="C2", label="E_ratio")
+        a3.axvline(s2["bD"], color="k", lw=0.8, ls="--",
+                   label=f"beta_D* = {s2['bD']:.4f}")
+        a3.axhline(1.0, color="k", lw=1, ls=":")
+        ac = a3.twinx()
+        ac.semilogx(b, [x["cond"] for x in s2["limit"]], "--", color="C3",
+                    lw=1.2)
+        ac.set_ylabel("cond (red, dashed)", color="C3")
+        a3.set_xlabel("beta = a2 w2 / (a1 w1)")
+        a3.set_ylabel("D ratio,  E_ratio")
+        a3.set_title("wide-separation LIMIT family (theta-free)\n"
+                     "E climbs to 1 from below, never crossing", fontsize=10)
+        a3.legend(fontsize=7, loc="center right")
+
+        # panel 4: the finite family w1 = 0.5, r = 2, unit power
+        a4 = axx[1, 1]
+        a4.semilogx(b, s2["fD"], "-", lw=1.6, label="D ratio (1, 0.5)")
+        a4.semilogx(b, s2["fE"], "-", lw=1.6, color="C2",
+                    label="E_ratio (1, 0.5)")
+        for (th, J), st in zip(s2["Jcurves"].items(), ("-", "--", ":")):
+            a4.semilogx(b, J, st, color="C4", lw=1.3,
+                        label="J/J_ref ({:g}, {:g})".format(*th))
+        a4.axhline(1.0, color="k", lw=1, ls=":")
+        a4.set_xlabel("beta = a2 w2 / (a1 w1)   (rho = beta/2)")
+        a4.set_ylabel("D, E, J/J_ref")
+        a4.set_title("FINITE family w1 = 0.5, r = 2, unit power\n"
+                     "J is monotone toward the single-tone edge", fontsize=10)
+        a4.legend(fontsize=7, loc="upper left")
+        for a in (a3, a4):
+            a.grid(alpha=0.3)
 
     for a in ax:
         a.grid(alpha=0.3)
@@ -396,7 +438,285 @@ def _run_and_log(stages, path="multisine_criteria_output.txt", mode="w"):
     return out
 
 
+
+
+
+# --------------------------------------------------------------------------
+# STAGE 2 -- the beta family
+# --------------------------------------------------------------------------
+
+def limit_family_criteria(beta, n=2500):
+    """D, E, cond, tau, g on the wide-separation limit family.  The limit
+    problem is already in normalised coordinates up to the diagonal scaling
+    that wide_separation_limit's R11/R22/cross build in, so Mt_w is just
+    [[R11, cross], [cross, R22]] (cross = 0 there by symmetry)."""
+    from multisine_input_design import wide_separation_limit
+    d = wide_separation_limit(beta, n)
+    Mt = np.array([[d["R11"], d["cross"]], [d["cross"], d["R22"]]])
+    lam = np.linalg.eigvalsh(Mt)
+    tau = 0.5 * (d["R11"] + d["R22"])
+    return dict(D=d["gain"], E=float(lam[0]), lam_max=float(lam[-1]),
+                cond=float(lam[-1] / lam[0]), tau=float(tau),
+                g=float(d["gain"] - (2.0 * tau - 1.0)))
+
+
+def _E_beta1_quad():
+    """E_ratio of the limit family at beta = 1, to quadrature tolerance
+    1e-13, via the EXACT inner p2 average <|A + cos p2|> = (2/pi)
+    (sqrt(1-A^2) + A asin A), leaving a smooth 1-D integral in p1."""
+    from scipy.integrate import quad
+
+    def h(p1):
+        A = np.cos(p1)
+        return (2.0 / np.pi) * (np.sqrt(max(1.0 - A * A, 0.0))
+                                + A * np.arcsin(np.clip(A, -1, 1)))
+
+    kw = dict(epsabs=1e-13, epsrel=1e-13, limit=400)
+    num, _ = quad(lambda p: np.sin(p) ** 2 * h(p), 0.0, np.pi, **kw)
+    den, _ = quad(h, 0.0, np.pi, **kw)
+    return 2.0 * num / den            # E_ratio = R11 (the smaller eigenvalue)
+
+
+def finite_family_eval(beta, theta, c=1.0, model=MODEL_STATIC, n=200_001):
+    """
+    The finite two-tone family: w1 = 0.5 c, w2 = 1.0 c (r = 2 fixed, so
+    beta = 2 rho), phases (0, 0) -- a stated choice, since r = 2 is
+    rational and the average is phase-dependent -- amplitudes rescaled to
+    unit input power.  r = 2 makes the signal exactly periodic with period
+    4 pi / c, so ONE period of dense trapezoid is the exact time average.
+    """
+    from multisine_input_design import (evaluate_dot, output_multisine,
+                                        regressors_ms)
+    theta = np.asarray(theta, float)
+    rho = beta / 2.0
+    a = np.array([1.0, rho])
+    a *= 1.0 / np.sqrt(np.sum(a ** 2) / 2.0)          # unit power
+    ms = multisine(a, [0.5 * c, 1.0 * c], [0.0, 0.0])
+    P = 4.0 * np.pi / c
+    t = np.linspace(0.0, P, n)
+    Phi = regressors_ms(t, ms, model)
+    wt = np.abs(evaluate_dot(output_multisine(ms, theta, model), t))
+    Z = np.trapezoid(wt, t)
+    m = float(Z / P)
+    Mw = np.empty((2, 2))
+    for i in range(2):
+        for j in range(i, 2):
+            Mw[i, j] = Mw[j, i] = np.trapezoid(Phi[:, i] * Phi[:, j] * wt,
+                                               t) / Z
+    M1 = uniform_moments_exact(ms, model)
+    crit = criteria_normalised(Mw, M1)
+    tau = 0.5 * (crit["Mt"][0, 0] + crit["Mt"][1, 1])
+    return dict(D=crit["D_check"], E=crit["E_ratio"], cond=crit["cond_ev"],
+                g=float(crit["D_check"] - (2 * tau - 1)), m=m,
+                J=float(m ** 2 * np.linalg.det(Mw)), w_hi=float(c))
+
+
+def _J_ref_single_tone(w, theta, model=MODEL_STATIC, n=200_001):
+    """J_ev of the unit-power single tone at frequency w (the band-edge
+    reference), by the same one-period machinery."""
+    from multisine_input_design import (evaluate_dot, output_multisine,
+                                        regressors_ms)
+    theta = np.asarray(theta, float)
+    ms = multisine([np.sqrt(2.0)], [w], [0.0])
+    P = 2.0 * np.pi / w
+    t = np.linspace(0.0, P, n)
+    Phi = regressors_ms(t, ms, model)
+    wt = np.abs(evaluate_dot(output_multisine(ms, theta, model), t))
+    Z = np.trapezoid(wt, t)
+    m = Z / P
+    Mw = np.empty((2, 2))
+    for i in range(2):
+        for j in range(i, 2):
+            Mw[i, j] = Mw[j, i] = np.trapezoid(Phi[:, i] * Phi[:, j] * wt,
+                                               t) / Z
+    return float(m ** 2 * np.linalg.det(Mw))
+
+
+def stage2(theta=THETA_DEFAULT, model=MODEL_STATIC):
+    from fractions import Fraction
+    from scipy.optimize import minimize_scalar
+    theta = np.asarray(theta, float)
+
+    print("\n" + "=" * 96)
+    print("STAGE 2.  THE BETA FAMILY   (beta = a2 w2 / (a1 w1))")
+    print("=" * 96)
+
+    # ---- 2.1 the limit-family sweep -------------------------------------
+    betas = np.geomspace(0.2, 5.0, 200)
+    sweep = [limit_family_criteria(b) for b in betas]
+    D = np.array([s["D"] for s in sweep])
+    E = np.array([s["E"] for s in sweep])
+    G = np.array([s["g"] for s in sweep])
+
+    print("\n2.1  wide-separation LIMIT family, beta in [0.2, 5], 200 log "
+          "points (theta-free).")
+    print("     every 20th point:\n")
+    print(f"{'beta':>10}{'D':>11}{'E_ratio':>11}{'cond':>10}{'g':>12}")
+    for i in list(range(0, 200, 20)) + [199]:
+        s = sweep[i]
+        print(f"{betas[i]:>10.4f}{s['D']:>11.6f}{s['E']:>11.6f}"
+              f"{s['cond']:>10.4f}{s['g']:>12.6f}")
+
+    rD = minimize_scalar(lambda b: -limit_family_criteria(b, 5000)["D"],
+                         bracket=(1.1, 1.22, 1.4))
+    bD, Dstar = rD.x, -rD.fun
+    ok = abs(bD - 1.222388) < 5e-4 and abs(Dstar - 1.6127375) < 1e-6
+    print(f"\n     beta_D* = {bD:.6f},  D = {Dstar:.7f}   "
+          f"(target 1.222388, 1.6127375: {'REPRODUCED' if ok else 'FAILED'})")
+    if not ok:
+        print("     STOP: the limit-family optimum did not reproduce.")
+        return None
+
+    iE = int(np.argmax(E))
+    print(f"     beta_E* = argmax E_ratio = {betas[iE]:.4f} -- the RIGHT "
+          f"EDGE of the sweep: E_ratio is")
+    print("     monotone increasing in beta on [0.2, 5] "
+          f"(E = {E[0]:.4f} -> {E[-1]:.4f}), and spot checks")
+    for b in (20.0, 100.0):
+        print(f"       beta = {b:>5g}:  E_ratio = "
+              f"{limit_family_criteria(b, 3000)['E']:.6f}")
+    print("     show it climbing toward 1 from below (R11 -> 1, R22 -> 4/3")
+    print("     as beta -> inf), so sup E_ratio = 1, NOT attained: the two")
+    print("     optima do not coincide and E never beats periodic here.")
+    print(f"     E_ratio at beta_D*: "
+          f"{limit_family_criteria(bD, 5000)['E']:.6f}")
+    print(f"     g along the sweep: g in [{G.min():.4f}, {G.max():.4f}], "
+          f"max at beta = {betas[np.argmax(G)]:.3f};")
+    print("     g < 0 EVERYWHERE -- it never changes sign on the limit "
+          "family.")
+
+    # ---- 2.2 E_ratio at beta = 1 ----------------------------------------
+    E1 = _E_beta1_quad()
+    fr = Fraction(E1).limit_denominator(1000)
+    print(f"\n2.2  E_ratio at beta = 1 (exact inner p2 integral + 1-D "
+          f"adaptive quadrature):")
+    print(f"     E_ratio(beta=1) = {E1:.12f}")
+    print(f"     nearest small rational: {fr.numerator}/{fr.denominator} "
+          f"= {float(fr):.12f},  |diff| = {abs(E1 - float(fr)):.2e}")
+    if abs(E1 - 8.0 / 9.0) < 1e-10:
+        print("     matches 8/9 to better than 1e-10: at beta = 1 the")
+        print("     weight factorises, |cos p1 + cos p2| =")
+        print("     2 |cos((p1+p2)/2)| |cos((p1-p2)/2)|, and the same")
+        print("     factorised moments that give D = 128/81 give")
+        print("     R11 = 8/9, R22 = 16/9 exactly.  (Curious: the E ratio")
+        print("     of the beta = 1 family equals the M = 1 D ratio.)")
+    else:
+        print("     does NOT match a small rational to 1e-10; no closed "
+              "form claimed.")
+
+    # ---- 2.3 the finite family ------------------------------------------
+    print("\n2.3  FINITE family w1 = 0.5, r = 2 (w_hi = 1), phases (0,0),")
+    print("     unit input power.  r = 2 is rational, so the result is")
+    print("     phase-dependent; (0,0) is a stated choice.  J_ref = the")
+    print("     unit-power single tone at w_hi, per theta.")
+    thetas = ((1.0, 0.5), (1.0, 0.0), (0.0, 1.0))
+    Jrefs = {th: _J_ref_single_tone(1.0, th, model) for th in thetas}
+
+    fsweep = [finite_family_eval(b, theta) for b in betas]
+    fD = np.array([s["D"] for s in fsweep])
+    fE = np.array([s["E"] for s in fsweep])
+    fG = np.array([s["g"] for s in fsweep])
+    Jcurves = {}
+    for th in thetas:
+        if th == tuple(theta):
+            Jcurves[th] = np.array([s["J"] for s in fsweep]) / Jrefs[th]
+        else:
+            Jcurves[th] = np.array(
+                [finite_family_eval(b, th)["J"] for b in betas]) / Jrefs[th]
+
+    print("\n     every 20th point (D, E, g at theta = (1, 0.5) only):\n")
+    print(f"{'beta':>10}{'D':>10}{'E_ratio':>10}{'g':>11}"
+          f"{'J/Jref(1,.5)':>13}{'J/Jref(1,0)':>13}{'J/Jref(0,1)':>13}")
+    for i in list(range(0, 200, 20)) + [199]:
+        print(f"{betas[i]:>10.4f}{fD[i]:>10.6f}{fE[i]:>10.6f}{fG[i]:>11.6f}"
+              f"{Jcurves[(1.0, 0.5)][i]:>13.6f}"
+              f"{Jcurves[(1.0, 0.0)][i]:>13.6f}"
+              f"{Jcurves[(0.0, 1.0)][i]:>13.6f}")
+    print(f"\n     g on the finite family: in [{fG.min():.4f}, "
+          f"{fG.max():.4f}] -- never changes sign either.")
+
+    # the three optima on the finite family, theta = (1, 0.5)
+    rDf = minimize_scalar(lambda b: -finite_family_eval(b, theta)["D"],
+                          bracket=(0.8, 1.2, 2.0))
+    rEf = minimize_scalar(lambda b: -finite_family_eval(b, theta)["E"],
+                          bounds=(0.2, 5.0), method="bounded",
+                          options=dict(xatol=1e-5))
+    print(f"\n     finite family, theta = (1, 0.5):")
+    print(f"       beta_D* = {rDf.x:.4f}   D = {-rDf.fun:.6f}")
+    eEdge = finite_family_eval(5.0, theta)["E"]
+    if abs(rEf.x - 5.0) < 1e-2 or -rEf.fun <= eEdge + 1e-9:
+        print(f"       beta_E* = 5.0 (right edge again, E = {eEdge:.6f}, "
+              f"still < 1)")
+    else:
+        print(f"       beta_E* = {rEf.x:.4f}   E = {-rEf.fun:.6f}")
+
+    # addendum: beta_J* and peak J/J_ref for the three thetas
+    print("\n     ADDENDUM -- beta_J* and peak J/J_ref per theta "
+          "(same reference convention):\n")
+    print(f"{'theta':>12}{'beta_J*':>14}{'peak J/J_ref':>14}"
+          f"{'J/Jref at 20':>14}{'J_ref':>10}")
+    for th in thetas:
+        rJ = minimize_scalar(
+            lambda b: -finite_family_eval(b, th)["J"] / Jrefs[th],
+            bounds=(0.2, 5.0), method="bounded", options=dict(xatol=1e-5))
+        edge = abs(rJ.x - 5.0) < 2e-2
+        j20 = finite_family_eval(20.0, th)["J"] / Jrefs[th]
+        lab = "({:g}, {:g})".format(*th)
+        bl = "5.0 (EDGE)" if edge else f"{rJ.x:.4f}"
+        print(f"{lab:>12}{bl:>14}{-rJ.fun:>14.6f}{j20:>14.6f}"
+              f"{Jrefs[th]:>10.5f}")
+    print("\n     beta_J* sits at the sweep EDGE for every theta: at r = 2")
+    print("     the J objective has NO interior optimum -- raising beta just")
+    print("     concentrates power on the top tone (rho = beta/2), and")
+    print("     J/J_ref climbs monotonically toward 1, the degenerate")
+    print("     single-tone limit, without ever beating it.  The two-tones")
+    print("     that DO beat their band edge (the 1.27 of Stage 1B) live at")
+    print("     r near 1, not at r = 2: splitting the tones a full octave")
+    print("     already costs more event rate than the D factor repays.")
+
+    # addendum: frequency-scale sweep at theta = (1, 0.5).  Done for BOTH
+    # readings of "the same two-tone": (i) the finite-family tone at its
+    # beta_J* (literal), and (ii) the constrained-optimum two-tone that
+    # actually produced the 1.27 in Stage 1B -- (i) never reaches 1.27, so
+    # (ii) is the one that answers "how much does the 1.27 move".
+    rJ0 = minimize_scalar(
+        lambda b: -finite_family_eval(b, theta)["J"] / Jrefs[tuple(theta)],
+        bounds=(0.2, 5.0), method="bounded", options=dict(xatol=1e-5))
+    bJ = rJ0.x
+    print(f"\n     ADDENDUM -- frequency scale c in {{0.5, 1, 2, 4}}, theta "
+          f"= (1, 0.5), reference")
+    print("     retargeted to the new band edge w_hi = c * (old w_hi).")
+    print("     Scaling all w by c acts like scaling theta2 by c, so this")
+    print("     doubles as the theta sensitivity of the J numbers.\n")
+    print(f"     (i) finite-family tone at its edge beta_J* = {bJ:.3f} "
+          f"(w1 = 0.5c, w2 = c):")
+    print(f"{'c':>10}{'w_hi':>9}{'J/J_ref':>11}")
+    for c in (0.5, 1.0, 2.0, 4.0):
+        v = finite_family_eval(bJ, theta, c=c)["J"] / _J_ref_single_tone(
+            c * 1.0, theta, model)
+        print(f"{c:>10.3g}{c:>9.3g}{v:>11.6f}")
+
+    print("\n     (ii) the ACTUAL 1.27 two-tone (constrained optimum:"
+          " w1 = 0.631c,")
+    print("     r = 1.06, rho = 0.9486, unit power; quasi-period much longer")
+    print("     than one tone period, so the long-window quadrature of "
+          "Stage 1B is reused):")
+    print(f"{'c':>10}{'w_hi':>9}{'J/J_ref':>11}")
+    _, ms_co = CONSTRAINED_OPT
+    a_co = ms_co.amps / np.sqrt(np.sum(ms_co.amps ** 2) / 2.0)
+    for c in (0.5, 1.0, 2.0, 4.0):
+        ms_c = multisine(a_co, ms_co.freqs * c, ms_co.phases)
+        Mw_c, _ = weighted_moments_time(ms_c, theta, model)
+        m_c = mean_abs_xdot_time(ms_c, theta, model)
+        J_c = m_c ** 2 * float(np.linalg.det(Mw_c))
+        v = J_c / _J_ref_single_tone(float(ms_c.freqs.max()), theta, model)
+        print(f"{c:>10.3g}{float(ms_c.freqs.max()):>9.4g}{v:>11.6f}")
+
+    return dict(betas=betas, limit=sweep, fD=fD, fE=fE, fG=fG,
+                Jcurves=Jcurves, bD=bD, Dstar=Dstar)
+
+
 if __name__ == "__main__":
     np.set_printoptions(precision=6, suppress=True)
-    r0, rA, rB = _run_and_log([stage0, stage1A, stage1B])
-    make_criteria_figure(rA, rB)
+    r0, rA, rB, r2 = _run_and_log([stage0, stage1A, stage1B, stage2])
+    make_criteria_figure(rA, rB, s2=r2)
