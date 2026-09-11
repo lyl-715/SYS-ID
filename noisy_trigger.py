@@ -79,23 +79,38 @@ def folded_normal_mean(a, s):
 # Triggering on y
 # --------------------------------------------------------------------------
 
-def trigger_on_signal(tg, sg, Delta):
+def trigger_on_signal(tg, sg, Delta, window=4096):
     """
     Send-on-delta applied to the sampled signal sg on grid tg.
     Segment-wise: between events the reference is fixed, so the next
     event is the first index where |sg - ref| >= Delta, found with a
     vectorised argmax on the remaining slice.
+
+    `window` bounds that slice and doubles it until a crossing is found or
+    the grid is exhausted.  This is a pure speed fix -- the event sequence
+    returned is bit-identical to scanning the whole tail -- and it matters
+    for multisine grids, where scanning the full tail once per event costs
+    O(N_events * n_grid) and dominates everything else.  Pass window=None
+    for the original single-shot scan.
     """
     taus = []
     ref = sg[0]
     i = 0
     n = len(tg)
     while i < n - 1:
-        rest = sg[i + 1:]
-        hit = np.argmax(np.abs(rest - ref) >= Delta)
-        if not (abs(rest[hit] - ref) >= Delta):
+        # locate the first index > i with |sg - ref| >= Delta
+        k = -1
+        lo, w = i + 1, (n if window is None else window)
+        while lo < n:
+            hi = n if window is None else min(lo + w, n)
+            blk = sg[lo:hi]
+            hit = np.argmax(np.abs(blk - ref) >= Delta)
+            if abs(blk[hit] - ref) >= Delta:
+                k = lo + hit
+                break
+            lo, w = hi, w * 2                       # widen and keep looking
+        if k < 0:
             break                                   # no further crossing
-        k = i + 1 + hit
         target = ref + np.sign(sg[k] - ref) * Delta
         d = sg[k] - sg[k - 1]
         frac = 0.0 if d == 0 else np.clip((target - sg[k - 1]) / d, 0, 1)

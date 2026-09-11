@@ -1,0 +1,182 @@
+==============================================================================
+1.  M = 1 MULTISINE PATH vs THE EXISTING SINGLE-SINE CODE
+==============================================================================
+model          A  omega   N old/new   max|dphi|      |dC|    |dpsi|    max|dI|   max|dtau|  refine shift  ladder err
+static         1      1   4399/4399   1.846e-15 0.000e+00 0.000e+00  7.283e-13   2.040e-06     2.200e-06   1.533e-14
+static         2    0.7   8399/8399   2.595e-15 0.000e+00 0.000e+00  3.695e-13   2.461e-06     1.181e-06   5.853e-14
+static       0.5      3   3559/3559   8.091e-15 0.000e+00 0.000e+00  3.281e-12   1.091e-06     1.278e-06   3.004e-14
+dynamic        1      1   4319/4319   0.000e+00 0.000e+00 0.000e+00  0.000e+00   7.384e-06     7.627e-06   1.507e-14
+dynamic        2    0.7   9519/9519   0.000e+00 0.000e+00 0.000e+00  0.000e+00   8.494e-06     2.485e-06   7.551e-14
+dynamic      0.5      3   1239/1239   0.000e+00 0.000e+00 0.000e+00  0.000e+00   8.786e-06     8.811e-06   9.250e-15
+
+  Event COUNTS agree exactly.  dtau is not zero because the two
+  paths size their detection grid differently (the old code fixes
+  4000 points per period, event_grid sizes by peak slope), so each
+  carries its own O(dt^2) linear-interpolation error -- 'refine
+  shift' is the same quantity, and it is what Newton removes.
+  'ladder err' = max | |x(tau_i+1) - x(tau_i)| - Delta | over the
+  refined events: ~1e-14 confirms they sit on the exact levels.
+
+single sine: A=1.0, omega=1.0, theta=[1.  0.5], model=static
+  C = 1.118034   psi = 26.5651 deg   (window = 40 periods)
+
+==============================================================================
+2.  |zeta| AND THE CRITERION RATIOS vs Delta
+==============================================================================
+predictions: |zeta| = 1/3 = 0.333333,  det = 8/9 = 0.888889,
+             lam_min = 2/3 = 0.666667,  cond_ev/cond_per = 2
+
+  Delta/C       N  N/period   |z| fund   |z| anal   |z| det   |z| lam   det ratio  lam ratio   cond ev
+     0.04    3920      98.0   0.358950   0.358950  0.358950  0.358950    0.871155   0.641050  2.119882
+     0.02    7919     198.0   0.346430   0.346430  0.346430  0.346430    0.879987   0.653570  2.060114
+     0.01   15920     398.0   0.339942   0.339942  0.339942  0.339942    0.884440   0.660058  2.030035
+    0.005   31919     798.0   0.336646   0.336646  0.336646  0.336646    0.886670   0.663354  2.014981
+   0.0025   63919    1598.0   0.334991   0.334991  0.334991  0.334991    0.887781   0.665009  2.007478
+
+quantity         linear fit        err   quadratic fit        err     slope   prediction
+|zeta| fund        0.333494   1.60e-04        0.333316  -1.72e-05    0.6386     0.333333
+|zeta| anal        0.333494   1.60e-04        0.333316  -1.72e-05    0.6386     0.333333
+|zeta| det         0.333494   1.60e-04        0.333316  -1.72e-05    0.6386     0.333333
+|zeta| lam         0.333494   1.60e-04        0.333316  -1.72e-05    0.6386     0.333333
+det ratio          0.888879  -9.70e-06        0.888903   1.41e-05   -0.4434     0.888889
+lam ratio          0.666506  -1.60e-04        0.666684   1.72e-05   -0.6386     0.666667
+
+  'slope' is the finite-threshold bias d/d(Delta/C): |zeta| comes
+  out ABOVE 1/3 at finite Delta, the criterion ratios below their
+  limits.  The bias is not exactly linear, so the linear fit over
+  this Delta range is itself biased; the quadratic fit is the one
+  to read.  Established bias coefficient for |zeta| is 2/3 =
+  0.6667 -- the measured slope sits just under it because the
+  curvature is negative.
+
+==============================================================================
+3.  I_22 / I_11  AND THE psi DEPENDENCE
+==============================================================================
+theta             psi[deg]    |zeta|   I22/I11 ev   predicted  I22/I11 per     w^2
+(1, 0)               0.000  0.339955     2.030093    2.030095     1.000000       1
+(1, 0.25)           14.036  0.336637     1.845728    1.845083     1.000000       1
+(1, 0.5)            26.565  0.336646     1.507050    1.506227     1.000000       1
+(1, 1)              45.000  0.336665     1.000642    1.000000     1.000000       1
+(0.2, 1)            78.690  0.336686     0.525938    0.525800     1.000000       1
+(0, 1)              90.000  0.339558     0.493030    0.493030     1.000000       1
+
+==============================================================================
+4.  INDUCED DENSITY IN OUTPUT PHASE   (target: |cos s| / 4)
+==============================================================================
+N = 31919 events
+
+  s [deg]  measured p(s)   |cos s|/4    abs err   rel err
+      7.5       0.248912    0.247153   1.76e-03     0.007
+     22.5       0.229645    0.230310  -6.65e-04    -0.003
+     37.5       0.196257    0.197772  -1.51e-03    -0.008
+     52.5       0.153176    0.151756   1.42e-03     0.009
+     67.5       0.095735    0.095398   3.38e-04     0.004
+     82.5       0.033507    0.032538   9.69e-04     0.030
+     97.5       0.028721    0.032538  -3.82e-03    -0.117
+    112.5       0.095735    0.095398   3.38e-04     0.004
+    127.5       0.153176    0.151756   1.42e-03     0.009
+    142.5       0.196257    0.197772  -1.51e-03    -0.008
+    157.5       0.229765    0.230310  -5.45e-04    -0.002
+    172.5       0.248912    0.247153   1.76e-03     0.007
+    187.5       0.248912    0.247153   1.76e-03     0.007
+    202.5       0.229765    0.230310  -5.45e-04    -0.002
+    217.5       0.196257    0.197772  -1.51e-03    -0.008
+    232.5       0.153176    0.151756   1.42e-03     0.009
+    247.5       0.095735    0.095398   3.38e-04     0.004
+    262.5       0.033507    0.032538   9.69e-04     0.030
+    277.5       0.028721    0.032538  -3.82e-03    -0.117
+    292.5       0.095735    0.095398   3.38e-04     0.004
+    307.5       0.153176    0.151756   1.42e-03     0.009
+    322.5       0.196257    0.197772  -1.51e-03    -0.008
+    337.5       0.229765    0.230310  -5.45e-04    -0.002
+    352.5       0.248912    0.247153   1.76e-03     0.007
+
+  max absolute deviation             = 3.818e-03
+  max relative deviation, all bins   = 0.1173
+  max relative deviation, away from  = 0.0094
+      the turning points (|s-90|,|s-270| > 15 deg)
+
+  The whole relative error lives in the two bins straddling a
+  turning point, and it is NOT a failure of the density -- it is
+  quantisation of the level ladder against a fixed histogram bin.
+  That bin spans |x| in [cos(7.5deg), 1] * C, a band of width
+  0.0086 C, so it contains only 0.0086 C / Delta ladder levels;
+  below a few levels per bin the bin count is an integer artefact
+  of where the ladder happens to fall, not a density estimate.
+  (The turning point also loses one event per half period outright:
+  the top level is crossed going up, but coming down the trigger
+  needs a FULL Delta from it, so that level is never revisited.)
+
+   Delta/C        N   levels/peak bin  max rel, all  max rel, away    max abs
+      0.02     7919              0.43        0.4070         0.0244   1.32e-02
+      0.01    15920              0.86        0.4101         0.0295   1.33e-02
+     0.005    31919              1.71        0.1173         0.0094   3.82e-03
+    0.0025    63919              3.42        0.1184         0.0089   3.85e-03
+   0.00125   127919              6.84        0.0456         0.0109   1.48e-03
+
+  Neither artefact touches zeta: it is a smooth second-harmonic
+  moment, so a defect confined to a shrinking phase window around
+  the turning points enters it only at O(Delta/C) -- which is
+  exactly the bias measured in section 2.
+
+==============================================================================
+5.  ARE THE EVENTS OFF-GRID?
+==============================================================================
+grid step dt = 5.000e-04,  N = 31919 events
+fraction landing on a grid point (within 1e-9 of one) = 0.000125
+histogram of the fractional position within a grid cell (flat = healthy):
+    0.1014  0.0968  0.1014  0.1015  0.0988  0.1015  0.0968  0.1014  0.1015  0.0989
+
+==============================================================================
+6.  M > 1 SMOKE TEST -- does the machinery run, and do the two
+    phase conventions agree?
+==============================================================================
+case                      N    C_pk   C_rms  |z| fund  arg z_f  |z| anal  arg z_a  |z| det  |z| lam  det ratio
+M=1 reference         11939  1.1180  0.7906   0.33992     0.15   0.33992     0.15  0.33992  0.33992   0.884455
+M=2 harmonic 1:2      10799  1.8251  0.9354   0.02110   -44.18   0.28652     2.17      nan  0.00001   1.489001
+M=2 incommensurate     8791  1.7304  0.9014   0.17395    -1.39   0.32030    -0.52      nan  0.12415   1.451515
+M=2 weak 2nd tone     11238  1.1956  0.7925   0.33111     0.15   0.33749     0.19  0.30436  0.32864   0.907363
+M=3 spread            17548  2.1161  0.8744   0.27649   -82.58   0.19360    19.29      nan -0.12064   1.449695
+
+  Read this as a status report, not a result:
+   - at M = 1 all four columns coincide, as they must;
+   - at M > 1 the fundamental-phase and analytic-phase zeta
+     DISAGREE, and both disagree with the FIM-implied values, so
+     the single-complex-number description does not survive
+     intact.  Which convention (if either) is the useful one is
+     exactly the question for the next stage;
+   - |z| det and |z| lam also part company at M > 1, which is the
+     sharpest sign of it: they are two readings of the same
+     number only under the single-sine FIM structure.  'nan' means
+     det ratio > 1, i.e. no real |zeta| reproduces it at all.
+
+  Flagging one thing without chasing it, since this session
+  stops here: det ratio comes out ABOVE 1 for three of these
+  multisines -- event-based sampling more informative than
+  periodic at equal N, which a single sinusoid can never do
+  (1 - |zeta|^2 <= 1).  Checked against the analytic time-average
+  FIM and at 4x grid density, so it is not a sampling artefact.
+  That is the thing to go after in the reachable-set study.
+
+==============================================================================
+7.  PARALLEL SCAFFOLDING
+==============================================================================
+8 cases: serial 0.29s, pool(4) 0.13s, identical = True
+per-case cost at these settings: ~0.04s serial
+  Cost scales as 1/Delta (grid points and event count both do),
+  so budget the step-4/5 sweeps from a timing at the Delta you
+  actually intend to use, not from this one.
+  case 0: N=  2203  |z|fund=0.02461  |z|anal=0.26635  det ratio=1.38192
+  case 1: N=  1570  |z|fund=0.08989  |z|anal=0.35067  det ratio=1.65001
+  case 2: N=  3132  |z|fund=0.00367  |z|anal=0.31569  det ratio=1.12329
+  case 3: N=  2654  |z|fund=0.02198  |z|anal=0.29709  det ratio=1.33736
+
+
+figure written to ./multisine_sanity_figures.png
+
+table for panel (d) -- |zeta| by convention, summarised over 120 random multisines
+   M     n   mean |z| fund   mean |z| anal   mean |diff|   max |diff|
+   1    28         0.34658         0.34658       0.00000      0.00000
+   2    37         0.10510         0.31230       0.20720      0.33522
+   3    24         0.03641         0.31437       0.27796      0.34029
+   4    31         0.03509         0.31989       0.28479      0.35083
