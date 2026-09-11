@@ -1,0 +1,130 @@
+================================================================================================
+STAGE 0.  SANITY
+================================================================================================
+
+0.1  <u udot>_1 = 0 (M_1 diagonal), exact closed-form moments:
+     all 9 cases pass; worst normalised off-diagonal = 0.0e+00
+
+0.2  D_check = det(Mt_w) vs existing det_gain (must agree to 1e-10):
+     all cases pass; worst |D_check - det_gain| = 8.9e-16
+
+0.3  M = 1 control at theta = (1,0), (1,0.5), (1,1), (0,1).
+     predictions (psi-independent): E_ratio = 2/3, lam_max = 4/3,
+     cond_ev = 2, D_check = 8/9.  closed form for Mt_w itself:
+     Mt_w = I + (1/3) [[-cos 2psi, -sin 2psi], [-sin 2psi, cos 2psi]]
+
+theta        psi[deg]   E_ratio      -2/3   lam_max      -4/3     cond        -2         D      -8/9   max|dMt|
+(1, 0)           0.00  0.666666 -1.75e-07  1.333334  1.75e-07  2.00000  7.90e-07  0.888889 -1.17e-07   1.75e-07
+(1, 0.5)        26.57  0.666667 -1.34e-07  1.333333  1.34e-07  2.00000  6.03e-07  0.888889 -8.94e-08   1.07e-07
+(1, 1)          45.00  0.666666 -1.75e-07  1.333334  1.75e-07  2.00000  7.90e-07  0.888889 -1.17e-07   1.75e-07
+(0, 1)          90.00  0.666666 -1.75e-07  1.333334  1.75e-07  2.00000  7.90e-07  0.888889 -1.17e-07   1.75e-07
+
+     (discrepancies are the finite-Delta-free quadrature error;
+      the closed-form matrix matches entry-wise, so the psi-
+      independence of the eigenvalues is structural, not luck.)
+
+0.4  THE NINE CASES  (primary route: time quadrature, T = 400 periods of w1)
+     torus value shown only where the frequencies are rationally
+     independent; 'n/a (rational)' otherwise.
+
+case                 rational?    D ratio        D torus   E_ratio   cond_ev  m=<|xdot|>
+M=1 control                yes   0.888889  n/a (rational)  0.666667    2.0000    0.711762
+M=2 harmonic 1:2           yes   1.476257  n/a (rational)  0.912177    1.7742    1.054152
+M=2 incommensurate          no   1.432946       1.435656  0.849075    1.9876    0.822389
+M=2 weak 2nd tone           no   0.912849       0.912849  0.677112    1.9910    0.716577
+M=3 spread                 yes   1.451293  n/a (rational)  0.886965    1.8448    1.397607
+M=3 random #0               no   1.341926       1.341363  0.864443    1.7958    2.571594
+M=3 random #1               no   1.646188       1.634573  0.915807    1.9628    1.045823
+M=3 random #2               no   1.129008       1.129166  0.778460    1.8631    2.039625
+M=3 random #3               no   1.331195       1.332133  0.841976    1.8778    1.657041
+
+     NOTE: E_ratio and cond_ev are eigenvalues of the
+     NORMALISED matrix Mt_w = S M_w S.  det is invariant to that
+     choice of S; the eigenvalues are not, so the E column is
+     tied to this normalisation -- a modelling choice, not a
+     scale-free fact.
+
+================================================================================================
+STAGE 1A.  E CRITERION,  tau = trace(Mt_w)/2,  AND THE E GAP
+================================================================================================
+  tau = trace(Mt_w)/2 = <E>_w/<E>_1 (energy identity);
+  g := D_ratio - (2 tau - 1) = (lam_max - 1)(lam_min - 1):
+  g > 0 puts BOTH eigenvalues of Mt_w on the same side of 1, and
+  tau then decides which side -- so E_ratio > 1 iff g > 0 AND
+  tau > 1.  tau > 1 holds in every case below (it is the
+  positive |xdot|-energy correlation), so within this family the
+  test reduces to the sign of g, as intended.
+
+case                   D ratio   E_ratio  vmin[deg]      tau  |tau-EI|  |fixed|    E gap g sgn ok?
+M=1 control           0.888889  0.666667      26.57  1.00000   2.2e-16  2.2e-16  -0.111111     yes
+M=2 harmonic 1:2      1.476257  0.912177      34.64  1.26528   2.2e-16  2.2e-16  -0.054309     yes
+M=2 incommensurate    1.432946  0.849075      28.34  1.26837   1.8e-03  2.2e-16  -0.103785     yes
+M=2 weak 2nd tone     0.912849  0.677112      26.57  1.01263   2.2e-16  0.0e+00  -0.112414     yes
+M=3 spread            1.451293  0.886965      49.91  1.26161   3.7e-05  0.0e+00  -0.071918     yes
+M=3 random #0         1.341926  0.864443      47.33  1.20840   4.3e-04  2.2e-16  -0.074876     yes
+M=3 random #1         1.646188  0.915807      39.36  1.35667   4.8e-03  0.0e+00  -0.067146     yes
+M=3 random #2         1.129008  0.778460      45.25  1.11439   1.8e-05  4.4e-16  -0.099762     yes
+M=3 random #3         1.331195  0.841976      40.14  1.21151   8.0e-05  0.0e+00  -0.091817     yes
+constrained opt       1.579963  0.888942      17.99  1.33315   4.4e-16  4.4e-16  -0.086331     yes
+
+  |tau-EI| compares tau against energy_identity AS IS: its
+  <E>_1 is a finite-window average, so the residual is window
+  ergodicity (zero for the exactly periodic cases), not a
+  failure of the identity.  |fixed| rescales that <E>_1 to the
+  exact infinite-window value; it must be < 1e-10 and is.
+
+  Findings on this set:
+   - E_ratio > 1 NOWHERE: every case, including all the
+     D ratio > 1 ones and the constrained optimum, LOSES on the
+     E criterion (in this normalisation).  g < 0 throughout --
+     the D gain never exceeds 2 tau - 1, so lam_min stays
+     below 1 even though the product of eigenvalues beats 1.
+   - sign(E_ratio - 2/3) vs sign(D - 8/9): agree in 10/10 cases.
+   - vmin is the losing direction in NORMALISED (u, udot)
+     coordinates (0 deg = u, 90 deg = udot).  At M = 1 it equals
+     psi exactly: in these coordinates the losing direction IS
+     the direction of x itself -- the combination the trigger
+     watches is the one that loses information.  Across the
+     other cases it ranges from ~18 to ~50 deg.
+   - REMINDER: E_ratio, vmin and g are tied to the choice
+     S = diag(M_1)^(-1/2); D ratio is not.
+
+================================================================================================
+STAGE 1B.  EVENT-BUDGET OBJECTIVE AT FIXED T AND FIXED Delta
+================================================================================================
+  N ~ T m / Delta and det I_ev ~ (T/Delta)^2 J_ev with
+      J_ev := m^2 det M_w = det( <|xdot| phi phi^T>_1 ).
+  J_ev is NOT scale-invariant (it grows like power^3), so every
+  case is first rescaled to unit input power <u^2>_1 = 1; the
+  factor is printed.  The M = 1 reference for each case is a
+  unit-power single sine at that case's HIGHEST frequency --
+  under fixed T and a power constraint m grows with frequency,
+  so that is the fair single-tone competitor (a modelling
+  choice: a band-edge reference, stated, not settled).
+
+case                   scale   w_hi         m    det M_w       J_ev  m^2*detMw     J_ref   J/J_ref
+M=1 control           1.4142  1.000  1.006584   0.888889   0.900632   0.900632   0.90063   1.00000
+M=2 harmonic 1:2      1.2649  2.000  1.333409   2.362012   4.199606   4.199606  23.05619   0.18215
+M=2 incommensurate    1.2649  1.414  1.040249   1.719536   1.860740   1.860740   4.32304   0.43042
+M=2 weak 2nd tone     1.4124  2.370  1.012128   0.923359   0.945892   0.945892  54.65202   0.01731
+M=3 spread            1.4286  3.300  1.996581   3.252377  12.965062  12.965062 318.07407   0.04076
+M=3 random #0         0.9986  2.722  2.567931   5.089387  33.560789  33.560789 112.78060   0.29758
+M=3 random #1         1.6851  1.910  1.762327   4.399501  13.663957  13.663957  18.33461   0.74525
+M=3 random #2         1.1153  2.148  2.274812   3.713945  19.218813  19.218813  32.99830   0.58242
+M=3 random #3         1.0720  1.893  1.776389   3.269285  10.316418  10.316418  17.54627   0.58796
+constrained opt       1.0260  0.669  0.553390   0.665907   0.203928   0.203928   0.16033   1.27190
+
+  The J_ev and m^2*detMw columns are printed separately only to
+  show the decomposition is exact; they are the same number.
+  J/J_ref > 1 in 1/10 cases.  All the SPREAD
+  multisines lose (0.02 - 0.75): they win the per-event
+  comparison (D ratio) but give up too much event rate m against
+  a single tone at their own top frequency.  The one winner is
+  the NARROWBAND constrained optimum (1.27): its two tones sit
+  so close together that m barely drops below the single-tone
+  value, while det M_w keeps most of the 1.58 D-ratio factor.
+  IMPORTANT: J_ev is UNBOUNDED in frequency under a power
+  constraint alone (m ~ w, so J ~ w^4 for a single tone as
+  w -> infinity at fixed power).  The fixed-T objective is only
+  meaningful on a bounded frequency band; the numbers above are
+  comparisons inside each case's own band, not global optima.
