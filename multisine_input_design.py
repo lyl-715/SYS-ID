@@ -1753,14 +1753,11 @@ def make_plots_weighting(theta=(1.0, 0.5), model=MODEL_STATIC, outdir="."):
                      label="M=2 supremum 1.61274")
     ax[1, 1].axhline(128 / 81, color="C1", ls=":", lw=1.2,
                      label="128/81 (beta=1)")
-    ax[1, 1].axhline(2.0, color="k", ls="--", lw=1.4,
-                     label="Gaussian (M->inf) bound = 2")
     ax[1, 1].axhline(8 / 9, color="C0", ls=":", lw=1.2, label="M=1: 8/9")
     ax[1, 1].set_xlabel("beta = a2 w2 / (a1 w1)")
     ax[1, 1].set_ylabel("D_w / D_1")
     ax[1, 1].set_title("how far the weighting can go: 8/9 at M=1, "
-                       "1.613 at M=2,\nbounded by 2 in the many-tone limit",
-                       fontsize=10)
+                       "1.613 at M=2", fontsize=10)
     ax[1, 1].legend(fontsize=7, loc="lower center")
 
     for a in ax.ravel():
