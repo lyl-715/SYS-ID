@@ -86,7 +86,7 @@ FIGURE 1 -- SINGLE TONE (M = 1, a = 1, power = 1), omega swept 0.05 .. 20
 ================================================================================================
 FIGURE 2 -- TWO TONES, omega_1 = 0.3, omega_2 in [0.3, 20], rho = a2^2/(a1^2+a2^2)
 ================================================================================================
-  window T = 8378 (400 periods of omega_1); 8 phase draws/cell; 1120 quadrature cases in 38 s on 4 workers
+  window T = 8378 (400 periods of omega_1); 8 phase draws/cell; 1120 quadrature cases in 37 s on 4 workers
   Delta rule: floor (C_peak/2000) hit in 56/1120 cases = 5.0%
   Delta/C_min: median 0.0100, max 0.028;  Delta/C_peak: median 0.00274, max 0.00498
   worst relative spread over the 8 draws, per quantity: lam 0.538, det_rate 2.117, detMw 1.693, det_ratio 0.002, dirsum 0.001, e_x 0.001, e_u 0.001, m 0.538
@@ -207,49 +207,67 @@ FIGURE 2 -- TWO TONES, omega_1 = 0.3, omega_2 in [0.3, 20], rho = a2^2/(a1^2+a2^
 ================================================================================================
 FIGURE 3 -- TRADE-OFF: information rate vs event rate, 500 random inputs, M in {1,2,3}
 ================================================================================================
-  omega log-uniform [0.05, 20], random phases, power = 1 (amplitudes drawn U(0.2,1) then rescaled);
-  window 400 periods of each input's slowest tone; lambda = m/Delta at each input's own Delta.
+  The DESIGN comparison uses ONE FIXED Delta for every input: the trigger is a constant of the
+  experiment, and det I scales like Delta^-2 at fixed input, so an input-dependent Delta rule
+  injects a spurious Delta^-2 spread into any 'equal lambda' comparison.  (The earlier variable-
+  Delta version of this figure suffered exactly that; it is kept as panel (b), relabelled as a
+  numerical-resolution study.)
+  omega log-uniform [0.05, 20], random phases, power = 1; window 400 periods of the slowest tone.
 
-  first 50 inputs: 6.2 s wall-clock on 4 workers -> scaling to 500
-  full sweep: 42.1 s total
-  500/500 evaluated; Delta floor hit by 28 = 5.6% of inputs
-  Delta/C_min: median 0.0100, max 0.031;  Delta/C_peak: median 0.00302, max 0.01000
+  first 50 inputs: 8.5 s wall-clock on 4 workers -> scaling to 500
+  full sweep: 51.6 s total
 
-  det I / T^2: vertical spread at comparable lambda (deciles of lambda)
+  FIXED Delta = median(C_peak)/100 = 0.01400   (median C_peak = 1.4001)
+  inputs with C_min < Delta: 0 of 500 -- FLAGGED and excluded from the
+  statistics below (their weakest component moves less than one threshold: too few events per
+  component to be meaningful); they are drawn as light crosses in panel (a).
+
+  === FIXED-Delta analysis (500 inputs) ===
+  lambda = m/Delta now spans [3.5, 101.8] only (m saturates), so 'comparable
+  event count' is a genuine statement about m, not about the threshold rule.
+
+  det I / T^2  (FIXED Delta): vertical spread at comparable lambda (deciles of lambda)
               lambda bin    n   p90/p10 ev   max/min ev   p90/p10 per
-  [     3.24,    11.16]   50         28.4         98.3          28.4
-  [    11.16,    41.94]   50         16.4         38.2          15.8
-  [    41.94,    94.84]   50          4.2          8.9           3.9
-  [    94.84,   156.37]   50         15.9         41.0          12.6
-  [   156.37,   249.04]   50         97.6        168.9          82.6
-  [   249.04,   382.45]   50        778.7       2457.6         704.7
-  [   382.45,   530.53]   50       5992.3      16664.9        4669.2
-  [   530.53,   803.70]   50      35321.7     191962.2       30408.6
-  [   803.70,  1092.18]   50     188707.4     838487.9      164861.2
-  [  1092.18,  4155.34]   50     747818.3    1383897.3      717702.5
+  [     3.46,     9.63]   50         19.0         93.2          16.8
+  [     9.63,    21.56]   50          7.4         22.7           7.5
+  [    21.56,    35.02]   50          2.9         14.9           2.6
+  [    35.02,    47.21]   50          4.3         12.8           3.2
+  [    47.21,    57.85]   50          3.7         13.2           3.6
+  [    57.85,    67.12]   50          2.5          4.4           2.5
+  [    67.12,    76.65]   50          4.6         10.3           5.8
+  [    76.65,    85.23]   50          9.5         49.5          10.0
+  [    85.23,    94.97]   50         61.0      16154.4         103.7
+  [    94.97,   101.79]   50        632.9      24599.0         632.9
 
-  lam_min(I) / T: vertical spread at comparable lambda (deciles of lambda)
+  lam_min(I) / T  (FIXED Delta): vertical spread at comparable lambda (deciles of lambda)
               lambda bin    n   p90/p10 ev   max/min ev   p90/p10 per
-  [     3.24,    11.16]   50         12.4         31.5          12.4
-  [    11.16,    41.94]   50          7.6         18.5           8.3
-  [    41.94,    94.84]   50          2.6          6.1           3.1
-  [    94.84,   156.37]   50          6.3         14.2           6.0
-  [   156.37,   249.04]   50         15.9         34.3          19.8
-  [   249.04,   382.45]   50         82.7        197.2         102.9
-  [   382.45,   530.53]   50        236.2        680.4         285.2
-  [   530.53,   803.70]   50        865.0       3402.5        1117.9
-  [   803.70,  1092.18]   50       2691.6       8903.7        3575.4
-  [  1092.18,  4155.34]   50       8206.4      12843.7       10936.5
+  [     3.46,     9.63]   50          9.1         27.0           8.7
+  [     9.63,    21.56]   50          4.8         10.4           4.6
+  [    21.56,    35.02]   50          3.0         19.5           2.4
+  [    35.02,    47.21]   50          6.4         22.2           4.1
+  [    47.21,    57.85]   50          6.1         21.5           5.0
+  [    57.85,    67.12]   50          2.6          5.3           2.5
+  [    67.12,    76.65]   50          4.0         15.6           4.1
+  [    76.65,    85.23]   50          6.1         15.9           7.6
+  [    85.23,    94.97]   50         22.1        889.7          36.7
+  [    94.97,   101.79]   50         76.9        913.7          76.9
 
-  WIDEST BIN: lambda in [1092.18, 4155.34] (p90/p10 = 747818.3).  Best vs worst input in that bin:
-    BEST : M = 3   a = [0.6722, 0.4551, 0.5839]   w = [0.4767, 0.8837, 18.4605]   ph = [5.9765, 4.5098, 0.7444]
-           lambda = 1208.68   det I/T^2 = 1.932e+04   (m = 0.8788, Delta = 0.00073, Delta/C_min = 0.0103)
+  WIDEST BIN (fixed Delta): lambda in [94.97, 101.79] (p90/p10 = 632.9).  Best vs worst:
+    BEST : M = 2   a = [0.3254, 0.9456]   w = [0.1260, 14.0510]   ph = [1.0516, 3.9373]
+           lambda = 95.85   det I/T^2 = 2.33   (m = 1.3419, C_min = 0.1500, Delta/C_min = 0.0934)
     WORST: M = 1   a = [1.0000]   w = [19.4108]   ph = [0.4948]
-           lambda = 1235.73   det I/T^2 = 0.01396   (m = 1.4252, Delta = 0.00115, Delta/C_min = 0.0100)
-    -> same event rate within the bin, det I differs by x1383897.
+           lambda = 101.79   det I/T^2 = 9.471e-05   (m = 1.4252, C_min = 0.1153, Delta/C_min = 0.1214)
+    -> same threshold, same event rate to within the bin, det I differs by x2.46e+04.
 
-  do D and E rank inputs the same way?  Spearman rank correlation of det I/T^2 vs lam_min(I)/T
-  across the 500 inputs: 0.961  (1 = identical ranking).
+  periodic reference at the same N, fixed Delta: its within-bin p90/p10 is listed above --
+  it shows a COMPARABLE spread, so the spread is carried by the input's frequency content;
+  the event/periodic distinction at equal N stays within [0.700, 1.620] on top.
+
+  D vs E ranking (fixed Delta, kept inputs): Spearman = 0.963  (1 = identical ranking).
+
+  panel (b), input-dependent Delta = max(C_min/100, C_peak/2000): floor hit by 28 = 5.6% of inputs;
+  kept ONLY as a numerical-resolution study (which Delta each input was SIMULATED at in the
+  validation runs), NOT as a design comparison.
 
   figure written to ./multisine_dynamic_fig3.png
 
@@ -300,9 +318,11 @@ P4 (does R11 + R22 = 2<E>_w/<E>_1 survive without the derivative relation?; OPEN
    2d: up to ~1.55 near omega_2/omega_1 ~ 1.4), so the envelope-sum identity was sufficient, not
    necessary, for the M > 1 gain.
 
-BOTTOM LINE (the supervisor's question): at comparable event rate (middle 40% of lambda),
-   det I/T^2 spans p90/p10 = 378x.  Far beyond factor 2: input choice changes the information
-   enormously at the same communication cost -- the trade-off is real.  Where the figures point (words
-   only, no optimisation): efficient inputs concentrate their power within roughly a factor 3 of the
-   filter corners 1/T1 = 2 and 1/T2 = 0.5; high-frequency tones buy events but almost no
-   information; and a slightly-split pair of tones beats a single tone at equal N (Figure 2d).
+BOTTOM LINE (the supervisor's question), at ONE FIXED threshold Delta = median(C_peak)/100 =
+   0.01400 for every input -- the earlier variable-Delta headline conflated the Delta^-2
+   scaling of det I with input design and is retracted; panel (b) keeps it only as a resolution
+   study.  At comparable event rate (middle 40% of lambda), det I/T^2 spans p90/p10 = 4x.
+   Still far beyond factor 2: the trade-off is real after the confound is removed.  Efficient inputs
+   concentrate power within roughly a factor 3 of the filter corners 1/T1 = 2, 1/T2 = 0.5; high-
+   frequency tones buy events but almost no information; a slightly-split pair beats a single tone
+   at equal N (Figure 2d).

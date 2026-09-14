@@ -551,6 +551,27 @@ def draw_inputs(n, seed=42):
     return [random_input(int(rng.integers(1, 4)), rng) for _ in range(n)]
 
 
+def _spread_table(lam, y_ev, y_per, name):
+    """p90/p10 of y within deciles of lam; returns (spans, edges)."""
+    print(f"\n  {name}: vertical spread at comparable lambda "
+          f"(deciles of lambda)")
+    print(f"{'lambda bin':>24}{'n':>5}{'p90/p10 ev':>13}{'max/min ev':>13}"
+          f"{'p90/p10 per':>14}")
+    edges = np.quantile(lam, np.linspace(0, 1, 11))
+    spans = []
+    for b in range(10):
+        k = (lam >= edges[b]) & (lam <= edges[b + 1])
+        if k.sum() < 5:
+            continue
+        pe = np.percentile(y_ev[k], [10, 90])
+        pp = np.percentile(y_per[k], [10, 90])
+        spans.append((pe[1] / pe[0], edges[b], edges[b + 1]))
+        print(f"  [{edges[b]:>9.2f},{edges[b+1]:>9.2f}]{k.sum():>5d}"
+              f"{pe[1]/pe[0]:>13.1f}{y_ev[k].max()/y_ev[k].min():>13.1f}"
+              f"{pp[1]/pp[0]:>14.1f}")
+    return spans, edges
+
+
 def fig3(n_inputs=500, n_first=50, outdir=".", workers=4):
     import time
     import matplotlib
@@ -563,10 +584,17 @@ def fig3(n_inputs=500, n_first=50, outdir=".", workers=4):
     print(f"FIGURE 3 -- TRADE-OFF: information rate vs event rate, "
           f"{n_inputs} random inputs, M in {{1,2,3}}")
     print("=" * 96)
-    print(f"  omega log-uniform [0.05, 20], random phases, power = 1 "
-          f"(amplitudes drawn U(0.2,1) then rescaled);")
-    print(f"  window {N_PERIODS} periods of each input's slowest tone; "
-          f"lambda = m/Delta at each input's own Delta.")
+    print("  The DESIGN comparison uses ONE FIXED Delta for every input: "
+          "the trigger is a constant of the")
+    print("  experiment, and det I scales like Delta^-2 at fixed input, "
+          "so an input-dependent Delta rule")
+    print("  injects a spurious Delta^-2 spread into any 'equal lambda' "
+          "comparison.  (The earlier variable-")
+    print("  Delta version of this figure suffered exactly that; it is "
+          "kept as panel (b), relabelled as a")
+    print("  numerical-resolution study.)")
+    print(f"  omega log-uniform [0.05, 20], random phases, power = 1; "
+          f"window {N_PERIODS} periods of the slowest tone.")
 
     t0 = time.time()
     first = run_pool([(i, ms) for i, ms in enumerate(inputs[:n_first])],
@@ -578,52 +606,48 @@ def fig3(n_inputs=500, n_first=50, outdir=".", workers=4):
                      in enumerate(inputs[n_first:])], workers=workers)
     print(f"  full sweep: {time.time() - t0:.1f} s total")
     res = [r for r in first + rest if r["ok"]]
-    nfloor = sum(1 for r in res if r["floor"])
-    dcs = np.array([r["Delta"] / r["C_min"] for r in res])
-    dps = np.array([r["Delta"] / r["C_peak"] for r in res])
-    print(f"  {len(res)}/{n_inputs} evaluated; Delta floor hit by "
-          f"{nfloor} = {100*nfloor/len(res):.1f}% of inputs"
-          + ("  <-- OVER 20%: sweep range too wide for the Delta rule"
-             if nfloor > 0.2 * len(res) else ""))
-    print(f"  Delta/C_min: median {np.median(dcs):.4f}, max {dcs.max():.3f}"
-          f";  Delta/C_peak: median {np.median(dps):.5f}, max "
-          f"{dps.max():.5f}")
 
-    lam = np.array([r["lam"] for r in res])
+    # ---- the fixed experiment threshold ---------------------------------
+    C_peaks = np.array([r["C_peak"] for r in res])
+    C_mins = np.array([r["C_min"] for r in res])
+    delta_fix = float(np.median(C_peaks)) / 100.0
+    keep = C_mins >= delta_fix
+    print(f"\n  FIXED Delta = median(C_peak)/100 = {delta_fix:.5f}   "
+          f"(median C_peak = {100*delta_fix:.4f})")
+    print(f"  inputs with C_min < Delta: {int((~keep).sum())} of "
+          f"{len(res)} -- FLAGGED and excluded from the")
+    print("  statistics below (their weakest component moves less than "
+          "one threshold: too few events per")
+    print("  component to be meaningful); they are drawn as light "
+          "crosses in panel (a).")
+
+    m_all = np.array([r["m"] for r in res])
     Ms = np.array([r["M"] for r in res])
-    det_ev = np.array([r["det_rate"] for r in res])
-    det_pp = np.array([r["det_rate_per"] for r in res])
-    lmin_ev = np.array([r["lmin_rate"] for r in res])
-    lmin_pp = np.array([r["lmin_rate_per"] for r in res])
+    detMw = np.array([r["detMw"] for r in res])
+    detM1 = np.array([r["detM1"] for r in res])
+    lamMw = np.array([r["lamMw"] for r in res])
+    lamM1 = np.array([r["lamM1"] for r in res])
 
-    def spread_table(y_ev, y_per, name):
-        print(f"\n  {name}: vertical spread at comparable lambda "
-              f"(deciles of lambda)")
-        print(f"{'lambda bin':>24}{'n':>5}{'p90/p10 ev':>13}"
-              f"{'max/min ev':>13}{'p90/p10 per':>14}")
-        edges = np.quantile(lam, np.linspace(0, 1, 11))
-        spans = []
-        for b in range(10):
-            k = (lam >= edges[b]) & (lam <= edges[b + 1])
-            if k.sum() < 5:
-                continue
-            pe = np.percentile(y_ev[k], [10, 90])
-            pp = np.percentile(y_per[k], [10, 90])
-            spans.append((pe[1] / pe[0], b, edges[b], edges[b + 1]))
-            print(f"  [{edges[b]:>9.2f},{edges[b+1]:>9.2f}]{k.sum():>5d}"
-                  f"{pe[1]/pe[0]:>13.1f}{y_ev[k].max()/y_ev[k].min():>13.1f}"
-                  f"{pp[1]/pp[0]:>14.1f}")
-        return spans, edges
+    lamF = m_all / delta_fix                      # fixed-Delta event rate
+    detF_ev, detF_pp = lamF ** 2 * detMw, lamF ** 2 * detM1
+    lminF_ev, lminF_pp = lamF * lamMw, lamF * lamM1
 
-    spans, edges = spread_table(det_ev, det_pp, "det I / T^2")
-    spread_table(lmin_ev, lmin_pp, "lam_min(I) / T")
+    k = keep
+    print(f"\n  === FIXED-Delta analysis ({int(k.sum())} inputs) ===")
+    print(f"  lambda = m/Delta now spans [{lamF[k].min():.1f}, "
+          f"{lamF[k].max():.1f}] only (m saturates), so 'comparable")
+    print("  event count' is a genuine statement about m, not about the "
+          "threshold rule.")
+    spans, _ = _spread_table(lamF[k], detF_ev[k], detF_pp[k],
+                             "det I / T^2  (FIXED Delta)")
+    _spread_table(lamF[k], lminF_ev[k], lminF_pp[k],
+                  "lam_min(I) / T  (FIXED Delta)")
 
-    # the most convincing exhibit: best and worst input in the widest bin
-    wid, b, lo, hi = max(spans)
-    k = np.where((lam >= lo) & (lam <= hi))[0]
-    ib, iw = k[np.argmax(det_ev[k])], k[np.argmin(det_ev[k])]
-    print(f"\n  WIDEST BIN: lambda in [{lo:.2f}, {hi:.2f}] "
-          f"(p90/p10 = {wid:.1f}).  Best vs worst input in that bin:")
+    wid, lo, hi = max(spans)
+    kk = np.where(k & (lamF >= lo) & (lamF <= hi))[0]
+    ib, iw = kk[np.argmax(detF_ev[kk])], kk[np.argmin(detF_ev[kk])]
+    print(f"\n  WIDEST BIN (fixed Delta): lambda in [{lo:.2f}, {hi:.2f}] "
+          f"(p90/p10 = {wid:.1f}).  Best vs worst:")
     for name, i in (("BEST ", ib), ("WORST", iw)):
         r = res[i]
         print(f"    {name}: M = {r['M']}"
@@ -631,42 +655,75 @@ def fig3(n_inputs=500, n_first=50, outdir=".", workers=4):
               f"   w = [" + ", ".join(f"{w:.4f}" for w in r["freqs"]) + "]"
               f"   ph = [" + ", ".join(f"{p:.4f}" for p in r["phases"])
               + "]")
-        print(f"           lambda = {r['lam']:.2f}   det I/T^2 = "
-              f"{r['det_rate']:.4g}   (m = {r['m']:.4f}, Delta = "
-              f"{r['Delta']:.5f}, Delta/C_min = "
-              f"{r['Delta']/r['C_min']:.4f})")
-    print(f"    -> same event rate within the bin, det I differs by "
-          f"x{det_ev[ib]/det_ev[iw]:.0f}.")
+        print(f"           lambda = {lamF[i]:.2f}   det I/T^2 = "
+              f"{detF_ev[i]:.4g}   (m = {r['m']:.4f}, C_min = "
+              f"{r['C_min']:.4f}, Delta/C_min = "
+              f"{delta_fix/r['C_min']:.4f})")
+    print(f"    -> same threshold, same event rate to within the bin, "
+          f"det I differs by x{detF_ev[ib]/detF_ev[iw]:.3g}.")
 
-    rho_s = spearmanr(det_ev, lmin_ev).statistic
-    print(f"\n  do D and E rank inputs the same way?  Spearman rank "
-          f"correlation of det I/T^2 vs lam_min(I)/T")
-    print(f"  across the {len(res)} inputs: {rho_s:.3f}  (1 = identical "
-          f"ranking).")
+    print(f"\n  periodic reference at the same N, fixed Delta: its "
+          f"within-bin p90/p10 is listed above --")
+    print("  it shows a COMPARABLE spread, so the spread is carried by "
+          "the input's frequency content;")
+    dr = detF_ev[k] / detF_pp[k]
+    print(f"  the event/periodic distinction at equal N stays within "
+          f"[{dr.min():.3f}, {dr.max():.3f}] on top.")
 
-    fig, ax = plt.subplots(1, 2, figsize=(13, 5.6))
-    for a, (ye, yp, lab) in zip(
-            ax, ((det_ev, det_pp, "det I / T^2"),
-                 (lmin_ev, lmin_pp, "lam_min(I) / T"))):
-        a.loglog(lam, yp, ".", ms=3, color="0.65", label="periodic, same N")
-        for Mn, col in ((1, "C0"), (2, "C1"), (3, "C2")):
-            kk = Ms == Mn
-            a.loglog(lam[kk], ye[kk], "o", ms=4, color=col, mfc="none",
-                     label=f"events, M = {Mn}")
-        a.set_xlabel("lambda = m / Delta   (Delta = max(C_min/100, "
-                     "C_peak/2000))")
-        a.set_ylabel(lab)
-        a.set_title(f"{lab} vs event rate", fontsize=10)
-        a.legend(fontsize=8, loc="lower right")
-        a.grid(alpha=0.3)
+    rho_s = spearmanr(detF_ev[k], lminF_ev[k]).statistic
+    print(f"\n  D vs E ranking (fixed Delta, kept inputs): Spearman = "
+          f"{rho_s:.3f}  (1 = identical ranking).")
+
+    # ---- variable-Delta numbers (resolution study, panel b) -------------
+    lamV = np.array([r["lam"] for r in res])
+    detV = np.array([r["det_rate"] for r in res])
+    nfloor = sum(1 for r in res if r["floor"])
+    print(f"\n  panel (b), input-dependent Delta = max(C_min/100, "
+          f"C_peak/2000): floor hit by {nfloor} = "
+          f"{100*nfloor/len(res):.1f}% of inputs;")
+    print("  kept ONLY as a numerical-resolution study (which Delta "
+          "each input was SIMULATED at in the")
+    print("  validation runs), NOT as a design comparison.")
+
+    fig, ax = plt.subplots(1, 2, figsize=(13.5, 5.8))
+    a = ax[0]
+    a.loglog(lamF[k], detF_pp[k], ".", ms=3, color="0.65",
+             label="periodic, same N")
+    for Mn, col in ((1, "C0"), (2, "C1"), (3, "C2")):
+        s_ = k & (Ms == Mn)
+        a.loglog(lamF[s_], detF_ev[s_], "o", ms=4, color=col, mfc="none",
+                 label=f"events, M = {Mn}")
+    a.loglog(lamF[~k], detF_ev[~k], "x", ms=4, color="0.75",
+             label="flagged: C_min < Delta")
+    a.set_xlabel("lambda = m / Delta")
+    a.set_ylabel("det I / T^2")
+    a.set_title(f"(a) FIXED Delta = median(C_peak)/100 = {delta_fix:.4f}"
+                "\nthe design comparison", fontsize=10)
+    a.legend(fontsize=8, loc="lower right")
+
+    b = ax[1]
+    for Mn, col in ((1, "C0"), (2, "C1"), (3, "C2")):
+        s_ = Ms == Mn
+        b.loglog(lamV[s_], detV[s_], "o", ms=4, color=col, mfc="none",
+                 label=f"M = {Mn}")
+    b.set_xlabel("lambda = m / Delta,  Delta = max(C_min/100, C_peak/2000)")
+    b.set_ylabel("det I / T^2")
+    b.set_title("(b) input-dependent Delta -- NUMERICAL-RESOLUTION STUDY"
+                "\nNOT a design comparison: det I ~ Delta^-2 inflates the "
+                "spread", fontsize=10)
+    b.legend(fontsize=8, loc="lower right")
+    for a_ in ax:
+        a_.grid(alpha=0.3)
     fig.suptitle(f"Figure 3 -- information vs communication cost, "
-                 f"{n_inputs} random multisines, two-lag model", fontsize=11)
+                 f"{n_inputs} random multisines, two-lag model",
+                 fontsize=11)
     fig.tight_layout()
     path = f"{outdir}/multisine_dynamic_fig3.png"
     fig.savefig(path, dpi=130)
     plt.close(fig)
     print(f"\n  figure written to {path}")
-    return res
+    return dict(res=res, delta_fix=delta_fix, keep=keep, lamF=lamF,
+                detF_ev=detF_ev)
 
 
 # --------------------------------------------------------------------------
@@ -727,7 +784,7 @@ def fig4(res, f1ws, f1det, outdir="."):
 # Scorecard and the full run
 # --------------------------------------------------------------------------
 
-def scorecard(f1, f2, res):
+def scorecard(f1, f2, f3):
     ws = f1["ws"]
     rows = f1["rows"]
     print("\n" + "=" * 96)
@@ -791,22 +848,25 @@ def scorecard(f1, f2, res):
           "envelope-sum identity was sufficient, not")
     print("   necessary, for the M > 1 gain.")
 
-    lam = np.array([r["lam"] for r in res])
-    de = np.array([r["det_rate"] for r in res])
-    mid = (lam > np.quantile(lam, 0.3)) & (lam < np.quantile(lam, 0.7))
-    p = np.percentile(de[mid], [10, 90])
-    print("\nBOTTOM LINE (the supervisor's question): at comparable event "
-          "rate (middle 40% of lambda),")
-    print(f"   det I/T^2 spans p90/p10 = {p[1]/p[0]:.0f}x.  Far beyond "
-          f"factor 2: input choice changes the information")
-    print("   enormously at the same communication cost -- the trade-off "
-          "is real.  Where the figures point (words")
-    print("   only, no optimisation): efficient inputs concentrate their "
-          "power within roughly a factor 3 of the")
-    print(f"   filter corners 1/T1 = {1/TAU1:g} and 1/T2 = {1/TAU2:g}; "
-          f"high-frequency tones buy events but almost no")
-    print("   information; and a slightly-split pair of tones beats a "
-          "single tone at equal N (Figure 2d).")
+    k = f3["keep"]
+    lamF, deF = f3["lamF"][k], f3["detF_ev"][k]
+    mid = (lamF > np.quantile(lamF, 0.3)) & (lamF < np.quantile(lamF, 0.7))
+    p = np.percentile(deF[mid], [10, 90])
+    print("\nBOTTOM LINE (the supervisor's question), at ONE FIXED "
+          "threshold Delta = median(C_peak)/100 =")
+    print(f"   {f3['delta_fix']:.5f} for every input -- the earlier "
+          "variable-Delta headline conflated the Delta^-2")
+    print("   scaling of det I with input design and is retracted; panel "
+          "(b) keeps it only as a resolution")
+    print(f"   study.  At comparable event rate (middle 40% of lambda), "
+          f"det I/T^2 spans p90/p10 = {p[1]/p[0]:.0f}x.")
+    print("   Still far beyond factor 2: the trade-off is real after the "
+          "confound is removed.  Efficient inputs")
+    print(f"   concentrate power within roughly a factor 3 of the filter "
+          f"corners 1/T1 = {1/TAU1:g}, 1/T2 = {1/TAU2:g}; high-")
+    print("   frequency tones buy events but almost no information; a "
+          "slightly-split pair beats a single tone")
+    print("   at equal N (Figure 2d).")
 
 
 def run_partA(scratch):
@@ -841,9 +901,9 @@ def run_partB(scratch, f1, f2):
     from multisine_criteria import _run_and_log
 
     def _b():
-        res = fig3()
-        fig4(res, f1["ws"], np.array([q["detMw"] for q in f1["rows"]]))
-        scorecard(f1, f2, res)
-        return res
+        f3 = fig3()
+        fig4(f3["res"], f1["ws"], np.array([q["detMw"] for q in f1["rows"]]))
+        scorecard(f1, f2, f3)
+        return f3
 
     _run_and_log([_b], path="multisine_dynamic_output.txt", mode="a")
