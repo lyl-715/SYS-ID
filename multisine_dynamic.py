@@ -983,3 +983,271 @@ def highfreq_exponents(w_lo=5.0, w_hi=20.0, n=25):
     print("  across the middle decades comes out near -5; over [5, 20]")
     print("  the fit is already within 0.1 of -6.)")
     return out
+
+
+# --------------------------------------------------------------------------
+# WHERE does R = det I_ev / det I_per > 1 live?  (H-ratio / H-absolute /
+# H-beat discrimination; quadrature only, no trigger, no Delta)
+# --------------------------------------------------------------------------
+
+def R_case(case):
+    """One (w1, w2, rho, phases) cell: R by |xdot|-weighted quadrature,
+    plus the window-quadrature det M_1 for the phase-cancellation check
+    (the closed-form det M_1 is phase-free ALGEBRAICALLY for distinct
+    tones -- the input phase enters both channels identically and cancels
+    in cos(alpha_i - alpha_j) -- so only the finite-window average can
+    show phase scatter, and that scatter is ergodicity, not algebra)."""
+    tag, w1, w2, rho, ph1, ph2 = case
+    try:
+        ms = multisine([np.sqrt(1 - rho), np.sqrt(rho)], [w1, w2],
+                       [ph1, ph2])                    # sum a^2 = 1
+        msx = output_multisine(ms, THETA, MODEL_DYNAMIC)
+        t, T = _window_grid(ms)
+        Phi = regressors_ms(t, ms, MODEL_DYNAMIC)
+        wt = np.abs(evaluate_dot(msx, t))
+        Z = np.trapezoid(wt, t)
+        Mw, M1w = np.empty((2, 2)), np.empty((2, 2))
+        for i in range(2):
+            for j in range(i, 2):
+                pij = Phi[:, i] * Phi[:, j]
+                Mw[i, j] = Mw[j, i] = np.trapezoid(pij * wt, t) / Z
+                M1w[i, j] = M1w[j, i] = np.trapezoid(pij, t) / T
+        M1e = uniform_moments_dyn(ms)
+        return dict(tag=tag, ok=True,
+                    R=float(np.linalg.det(Mw) / np.linalg.det(M1e)),
+                    detM1e=float(np.linalg.det(M1e)),
+                    detM1w=float(np.linalg.det(M1w)),
+                    detMw=float(np.linalg.det(Mw)),
+                    C_min=float(msx.amps.min()))
+    except Exception as exc:
+        return dict(tag=tag, ok=False, error=f"{type(exc).__name__}: {exc}")
+
+
+def experiment_R_location(w1s=(0.1, 0.3, 1.0, 3.0), n_w2=24, n_rho=12,
+                          n_draw=16, workers=4, seed=17, outdir="."):
+    import time
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.colors as mcolors
+    import matplotlib.pyplot as plt
+
+    rhos = np.linspace(0.05, 0.95, n_rho)
+    ratios = np.geomspace(1.0, 30.0, n_w2)      # w2 = w1 * ratio
+    rng = np.random.default_rng(seed)
+
+    print("=" * 100)
+    print("WHERE IS R = det I_ev / det I_per > 1 ?   quadrature sweep over "
+          "w1 in " + str(tuple(w1s)))
+    print("=" * 100)
+    print(f"  w2 = w1 * r, r in [1, 30] ({n_w2} log points); rho in "
+          f"[0.05, 0.95] ({n_rho} points); {n_draw} phase draws;")
+    print(f"  window = {N_PERIODS} periods of w1 (T = 400*2pi/w1: "
+          + ", ".join(f"{N_PERIODS*2*np.pi/w:.0f}" for w in w1s)
+          + " for the four w1);")
+    print("  model/theta/power as Figure 2.  R is a ratio of weighted "
+          "moment determinants -- no trigger, no Delta.")
+
+    data = {}
+    for iw, w1 in enumerate(w1s):
+        cases = []
+        for i, r in enumerate(ratios):
+            for j, rho in enumerate(rhos):
+                for k in range(n_draw):
+                    ph = rng.uniform(0, 2 * np.pi, 2)
+                    cases.append(((i, j, k), w1, w1 * r, rho, ph[0], ph[1]))
+        t0 = time.time()
+        with mp.Pool(workers) as pool:
+            out = pool.map(R_case, cases, chunksize=8)
+        wall = time.time() - t0
+        if iw == 0:
+            print(f"\n  first w1 = {w1}: {len(cases)} cases in "
+                  f"{wall:.0f} s on {workers} workers -> continuing")
+        Rg = np.full((n_w2, n_rho, n_draw), np.nan)
+        d1e = np.full_like(Rg, np.nan)
+        d1w = np.full_like(Rg, np.nan)
+        for r_ in out:
+            if r_["ok"]:
+                Rg[r_["tag"]] = r_["R"]
+                d1e[r_["tag"]] = r_["detM1e"]
+                d1w[r_["tag"]] = r_["detM1w"]
+        data[w1] = dict(R=Rg, d1e=d1e, d1w=d1w, wall=wall)
+
+    # ---------------- tables and per-w1 findings -------------------------
+    peaks = {}
+    for w1 in w1s:
+        Rm = data[w1]["R"].mean(axis=2)
+        Rs = data[w1]["R"].std(axis=2)
+        print("\n" + "-" * 100)
+        print(f"  w1 = {w1}:  mean R over {n_draw} draws   "
+              f"(rows r = w2/w1, cols rho)")
+        print("            " + "".join(f"{r:>8.2f}" for r in rhos))
+        for i, r in enumerate(ratios):
+            print(f"  r={r:>7.3f} " + "".join(f"{Rm[i, j]:>8.4f}"
+                                              for j in range(n_rho)))
+        i, j = np.unravel_index(np.nanargmax(Rm), Rm.shape)
+        w2s_ = w1 * ratios
+        peaks[w1] = (w2s_[i], rhos[j], Rm[i, j])
+        print(f"\n  peak: R = {Rm[i, j]:.4f} +- {Rs[i, j]:.4f} (std over "
+              f"draws) at w2* = {w2s_[i]:.4f}, rho* = {rhos[j]:.2f}")
+        print(f"        w2*/w1 = {ratios[i]:.3f}    w2* - w1 = "
+              f"{w2s_[i] - w1:.4f}")
+        print(f"  phase spread: max std/|mean| of R over the grid = "
+              f"{np.nanmax(Rs / np.abs(Rm)):.4f}; at the peak "
+              f"{Rs[i, j]/Rm[i, j]:.4f}")
+        # phase spread of det M_1 -- SPLIT by the r = 1 row: at w2 = w1
+        # the tones are coincident and merge into ONE sinusoid whose
+        # amplitude depends on the drawn phase difference, so det M_1
+        # varies there BY PHYSICS.  The phase-cancellation algebra is a
+        # statement about DISTINCT tones (rows r > 1).
+        sm = lambda A: np.nanmax(A.std(axis=2) / np.abs(A.mean(axis=2)))
+        d1e, d1w = data[w1]["d1e"], data[w1]["d1w"]
+        dMw = data[w1]["R"] * d1e
+        print(f"  det M_1 phase spread, DISTINCT tones (r > 1): closed "
+              f"form std/mean = {sm(d1e[1:]):.1e}  (algebra: exactly 0);")
+        print(f"    window-quadrature det M_1 std/mean = {sm(d1w[1:]):.1e}"
+              f" (finite-window ergodicity, not algebra);")
+        print(f"    weighted det M_w std/mean = {sm(dMw[1:]):.1e}")
+        print(f"  coincident row r = 1 (tones merge into one sinusoid): "
+              f"det M_1 std/mean = {sm(d1e[:1]):.1e} -- phase-dependent")
+        print(f"    by amplitude interference, NOT a failure of the "
+              f"cancellation; R there = 8/9 for every draw "
+              f"(std {data[w1]['R'][0].std():.1e}).")
+
+        # boundary rho -> 0, 1: exact single tones
+        for rho_b, lab in ((0.0, "rho -> 0"), (1.0, "rho -> 1")):
+            rb = []
+            for r in (ratios[0], ratios[-1]):
+                c = R_case(((0,), w1, w1 * r, rho_b, 0.0, 0.0))
+                rb.append(c["R"])
+            print(f"  boundary {lab}: R = {rb[0]:.6f} (r=1) .. "
+                  f"{rb[-1]:.6f} (r=30)   [should be 8/9 = 0.888889]")
+
+        # R = 1 crossings at fixed rho
+        print(f"  R = 1 crossings (log-interp along r at fixed rho):")
+        line = "    "
+        for j2 in (1, 4, 7, 10):
+            col = Rm[:, j2]
+            cross = None
+            for i2 in range(len(ratios) - 1, 0, -1):
+                if (col[i2] - 1) * (col[i2 - 1] - 1) < 0:
+                    f = (1 - col[i2 - 1]) / (col[i2] - col[i2 - 1])
+                    cross = ratios[i2 - 1] * (ratios[i2] / ratios[i2 - 1]) ** f
+                    break
+            line += (f"rho={rhos[j2]:.2f}: r_x={cross:.2f} "
+                     f"(w2={w1*cross:.3f})   " if cross
+                     else f"rho={rhos[j2]:.2f}: none   ")
+        print(line)
+
+    # ---------------- hypothesis table -----------------------------------
+    print("\n" + "=" * 100)
+    print("HYPOTHESIS TABLE")
+    print("=" * 100)
+    print(f"{'w1':>7}{'w2*':>10}{'rho*':>7}{'R peak':>9}{'w2*/w1':>9}"
+          f"{'w2*-w1':>10}")
+    for w1 in w1s:
+        w2p, rhop, Rp = peaks[w1]
+        print(f"{w1:>7.3g}{w2p:>10.4f}{rhop:>7.2f}{Rp:>9.4f}"
+              f"{w2p/w1:>9.3f}{w2p-w1:>10.4f}")
+    print("  H-ratio    predicts w2*/w1 constant;  H-absolute predicts "
+          "w2* constant (~0.45);")
+    print("  H-beat     predicts w2* - w1 constant (~0.15).")
+
+    # ---------------- figure ---------------------------------------------
+    fig = plt.figure(figsize=(15, 9))
+    for k, w1 in enumerate(w1s):
+        a = fig.add_subplot(2, 3, k + 1)
+        Rm = data[w1]["R"].mean(axis=2)
+        im = a.pcolormesh(rhos, ratios, Rm, shading="auto", cmap="RdBu_r",
+                          norm=mcolors.TwoSlopeNorm(vcenter=1.0))
+        try:
+            a.contour(rhos, ratios, Rm, levels=[1.0], colors="k",
+                      linewidths=1.2)
+        except Exception:
+            pass
+        a.set_yscale("log")
+        a.set_xlabel("rho")
+        a.set_ylabel("r = w2/w1")
+        a.set_title(f"mean R, w1 = {w1}  (black: R = 1)", fontsize=10)
+        fig.colorbar(im, ax=a)
+    # discrimination panels: R vs ratio and vs absolute w2 at each w1's
+    # peak rho
+    a5 = fig.add_subplot(2, 3, 5)
+    a6 = fig.add_subplot(2, 3, 6)
+    for k, w1 in enumerate(w1s):
+        Rm = data[w1]["R"].mean(axis=2)
+        jj = int(np.argmin(np.abs(rhos - peaks[w1][1])))
+        a5.semilogx(ratios, Rm[:, jj], "o-", ms=3, color=f"C{k}",
+                    label=f"w1 = {w1} (rho = {rhos[jj]:.2f})")
+        a6.semilogx(w1 * ratios, Rm[:, jj], "o-", ms=3, color=f"C{k}",
+                    label=f"w1 = {w1}")
+    for a_, xl, tt in ((a5, "r = w2/w1",
+                        "collapse here -> H-ratio"),
+                       (a6, "w2 (absolute)",
+                        "collapse here -> H-absolute")):
+        a_.axhline(1.0, color="k", lw=1, ls=":")
+        a_.axhline(8 / 9, color="0.5", lw=1, ls=":")
+        a_.set_xlabel(xl)
+        a_.set_ylabel("mean R at that w1's peak rho")
+        a_.set_title(tt, fontsize=10)
+        a_.legend(fontsize=7)
+        a_.grid(alpha=0.3)
+    fig.suptitle("Locating R = det I_ev / det I_per > 1  (two-lag model, "
+                 "quadrature)", fontsize=12)
+    fig.tight_layout()
+    path = f"{outdir}/R_location_figure.png"
+    fig.savefig(path, dpi=130)
+    plt.close(fig)
+    print(f"\n  figure written to {path}")
+    return dict(peaks=peaks, data=data, rhos=rhos, ratios=ratios)
+
+
+def confirm_R_peaks(peaks=((0.1, 0.1344, 0.38), (0.3, 0.3478, 0.46),
+                           (1.0, 1.1594, 0.46)),
+                    ratios=(0.02, 0.01, 0.005)):
+    """
+    Event-simulation check at three peak cells (the brief asks for three
+    only, so w1 = 3.0 is left out): does det I_ev / det I_per at equal N
+    converge to the quadrature R as Delta shrinks?  Phases fixed at
+    (0, 0) -- the quadrature reference is recomputed for those phases so
+    like is compared with like.
+    """
+    print("\n" + "=" * 100)
+    print("SIMULATION CONFIRMATION AT THE PEAKS  (Delta shrinking; "
+          "quadrature recomputed at the same phases)")
+    print("=" * 100)
+    for w1, w2, rho in peaks:
+        q = R_case(((0,), w1, w2, rho, 0.0, 0.0))
+        # the simulation compares event and periodic FIMs on the SAME
+        # finite window, so its Delta -> 0 limit is the window-matched
+        # ratio R_win = det M_w / det M_1(window); the gap between R_win
+        # and the sweep's R (which uses the exact infinite-window M_1) is
+        # finite-window ergodicity, not a trigger effect
+        R_win = q["detMw"] / q["detM1w"]
+        ms = multisine([np.sqrt(1 - rho), np.sqrt(rho)], [w1, w2],
+                       [0.0, 0.0])
+        msx = output_multisine(ms, THETA, MODEL_DYNAMIC)
+        T = N_PERIODS * 2 * np.pi / w1
+        C_min = float(msx.amps.min())
+        print(f"\n  w1 = {w1}, w2 = {w2}, rho = {rho}:  R (infinite-"
+              f"window M_1, the sweep's object) = {q['R']:.6f}")
+        print(f"    R_win (window-matched M_1, the sim's Delta -> 0 "
+              f"limit) = {R_win:.6f}   window gap = "
+              f"{q['R'] - R_win:+.2e}   C_min = {C_min:.4f}")
+        print(f"  {'Delta/C_min':>12}{'N':>10}{'det ratio sim':>15}"
+              f"{'sim - R_win':>13}")
+        for r in ratios:
+            Delta = r * C_min
+            taus = send_on_delta_instants_ms(T, Delta, ms, THETA,
+                                             MODEL_DYNAMIC)
+            N = len(taus)
+            tk = periodic_instants(T, N)
+            dr = (np.linalg.det(fisher_ms(taus, ms, 1.0, MODEL_DYNAMIC))
+                  / np.linalg.det(fisher_ms(tk, ms, 1.0, MODEL_DYNAMIC)))
+            print(f"  {r:>12.3f}{N:>10d}{dr:>15.6f}{dr - R_win:>13.2e}")
+    print("\n  Against the window-matched target the residual shrinks "
+          "with Delta (finite-threshold bias);")
+    print("  the remaining constant offset vs the sweep's R is the "
+          "finite-window ergodicity of M_1,")
+    print("  already quantified above (window det M_1 std/mean ~ 5e-3).  "
+          "The quadrature measures the")
+    print("  object the trigger produces.")
