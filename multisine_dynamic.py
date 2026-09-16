@@ -907,3 +907,79 @@ def run_partB(scratch, f1, f2):
         return f3
 
     _run_and_log([_b], path="multisine_dynamic_output.txt", mode="a")
+
+
+# --------------------------------------------------------------------------
+# High-frequency power laws for Figure 1  (log-log fits over omega in [5,20])
+# --------------------------------------------------------------------------
+
+def highfreq_exponents(w_lo=5.0, w_hi=20.0, n=25):
+    """
+    Fit y ~ omega^b over [w_lo, w_hi] for the Figure-1 quantities and
+    check them against the analytic asymptotes.
+
+    Asymptotics for the two-lag channels (a = 1, T1 T2 = 1 here):
+      |G_j| -> 1/(omega T_j),  angle G_j -> -90 deg with residual
+      1/(omega T_j), so the PHASE SPLIT is
+          dphi = atan(omega T2) - atan(omega T1) -> (1/T1 - 1/T2)/omega,
+      and the per-event (per-sample) moment determinant of a single tone,
+          det M = (1/4) a^4 |G1|^2 |G2|^2 sin^2(dphi)
+               -> (1/4) (1/T1 - 1/T2)^2 / (T1 T2)^2 * omega^-6,
+      is omega^-4 (amplitudes) times omega^-2 (phase collapse): omega^-6.
+      With lambda ~ omega (Delta = C/100, C ~ 1/omega, m -> const):
+          det I/T^2 = lambda^2 det M_w ~ omega^-4,
+          lam_min(M) ~ det/trace ~ omega^-6 / omega^-2 = omega^-4.
+      NOTE det I/N^2 IS det M: it is already per event, so lambda enters
+      it zero more times -- there is no omega^-8 quantity in this family.
+    """
+    ws = np.geomspace(w_lo, w_hi, n)
+    rows = [quad_case(multisine([1.0], [w], [0.0])) for w in ws]
+    qty = (("m = <|xdot|>", "m", 0.0),
+           ("lambda = m/Delta", "lam", 1.0),
+           ("det I / T^2", "det_rate", -4.0),
+           ("det I / N^2", "detMw", -6.0),
+           ("lam_min(I) / N", "lamMw", -4.0))
+    print("=" * 92)
+    print(f"HIGH-FREQUENCY POWER LAWS, log-log linear fit over omega in "
+          f"[{w_lo:g}, {w_hi:g}]  ({n} points)")
+    print("=" * 92)
+    print(f"{'quantity':<18}{'fitted exp':>12}{'rms resid':>11}"
+          f"{'max resid':>11}{'slope[5,10]':>13}{'slope[10,20]':>14}"
+          f"{'asymptote':>11}")
+    lw = np.log10(ws)
+    out = {}
+    for name, key, pred in qty:
+        ly = np.log10([q[key] for q in rows])
+        b, a = np.polyfit(lw, ly, 1)
+        r = ly - (a + b * lw)
+        half = ws <= np.sqrt(w_lo * w_hi)
+        b1 = np.polyfit(lw[half], ly[half], 1)[0]
+        b2 = np.polyfit(lw[~half], ly[~half], 1)[0]
+        out[key] = b
+        print(f"{name:<18}{b:>12.3f}{np.sqrt(np.mean(r**2)):>11.1e}"
+              f"{np.abs(r).max():>11.1e}{b1:>13.3f}{b2:>14.3f}"
+              f"{pred:>11.0f}")
+
+    # the analytic constant, not just the exponent
+    cM1 = 0.25 * (1 / TAU1 - 1 / TAU2) ** 2 / (TAU1 * TAU2) ** 2
+    q20 = rows[-1]
+    print(f"\n  analytic constant check at omega = {w_hi:g}: "
+          f"det M_1 asymptote (1/4)(1/T1 - 1/T2)^2/(T1 T2)^2 omega^-6")
+    print(f"  = {cM1:.4f} omega^-6 = {cM1 / w_hi**6:.4e}   vs measured "
+          f"det M_1 = {q20['detM1']:.4e}   "
+          f"(ratio {q20['detM1'] * w_hi**6 / cM1:.4f})")
+    print(f"  and det M_w = (8/9) det M_1 at M = 1: measured ratio "
+          f"{q20['detMw'] / q20['detM1']:.6f}")
+
+    # where a "-5" reading comes from: the pre-asymptotic mid band
+    ws2 = np.geomspace(2.0, 6.0, 13)
+    ly2 = np.log10([quad_case(multisine([1.0], [w], [0.0]))["detMw"]
+                    for w in ws2])
+    b_mid = np.polyfit(np.log10(ws2), ly2, 1)[0]
+    print(f"\n  det I/N^2 fitted over the PRE-ASYMPTOTIC band "
+          f"omega in [2, 6]: exponent {b_mid:.2f}")
+    print("  (|G1| has its knee at 1/T1 = 2 and sin^2(dphi) is still far")
+    print("  from its omega^-2 tail there, so a slope read off the plot")
+    print("  across the middle decades comes out near -5; over [5, 20]")
+    print("  the fit is already within 0.1 of -6.)")
+    return out

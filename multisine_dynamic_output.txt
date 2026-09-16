@@ -326,3 +326,22 @@ BOTTOM LINE (the supervisor's question), at ONE FIXED threshold Delta = median(C
    concentrate power within roughly a factor 3 of the filter corners 1/T1 = 2, 1/T2 = 0.5; high-
    frequency tones buy events but almost no information; a slightly-split pair beats a single tone
    at equal N (Figure 2d).
+============================================================================================
+HIGH-FREQUENCY POWER LAWS, log-log linear fit over omega in [5, 20]  (25 points)
+============================================================================================
+quantity            fitted exp  rms resid  max resid  slope[5,10]  slope[10,20]  asymptote
+m = <|xdot|>             0.043    2.7e-03    6.5e-03        0.073         0.018          0
+lambda = m/Delta         1.000    2.5e-06    5.0e-06        1.000         1.000          1
+det I / T^2             -3.804    1.2e-02    3.0e-02       -3.670        -3.918         -4
+det I / N^2             -5.804    1.2e-02    3.0e-02       -5.670        -5.918         -6
+lam_min(I) / N          -3.894    6.6e-03    1.6e-02       -3.820        -3.955         -4
+
+  analytic constant check at omega = 20: det M_1 asymptote (1/4)(1/T1 - 1/T2)^2/(T1 T2)^2 omega^-6
+  = 0.5625 omega^-6 = 8.7891e-09   vs measured det M_1 = 8.6051e-09   (ratio 0.9791)
+  and det M_w = (8/9) det M_1 at M = 1: measured ratio 0.888891
+
+  det I/N^2 fitted over the PRE-ASYMPTOTIC band omega in [2, 6]: exponent -4.86
+  (|G1| has its knee at 1/T1 = 2 and sin^2(dphi) is still far
+  from its omega^-2 tail there, so a slope read off the plot
+  across the middle decades comes out near -5; over [5, 20]
+  the fit is already within 0.1 of -6.)
