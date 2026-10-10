@@ -25,10 +25,10 @@ print(f"self-check: UNIF re-evaluated in the pool: D={u['D']:+.3f}, dmD_C={u['dm
 
 print(f"\nTable 4. R={R2} (seed {SEED2}) re-evaluation of the {len(recs)} selected candidates, sorted by Delta m_D^(C); "
       "dmD_C = full-R estimate, (se) = paired batch se 10x200; R=200 values for comparison")
-print(f"{'id':6s} {'sel':6s} {'B':>7s} {'D +- se':>14s} {'dec':5s} {'dmD_C':>7s} {'(se)':>7s} {'mE_C':>6s} {'dmD_B':>7s} {'mE_B':>6s} | {'R200: dmD_C':>11s} {'mE_C':>6s} {'dec':5s}")
+print(f"{'id':6s} {'sel':6s} {'B':>7s} {'D +- se':>14s} {'dec':5s} {'dmD_C':>7s} {'(se)':>7s} {'mE_C':>6s} {'(se)':>8s} {'dmD_B':>7s} {'mE_B':>6s} | {'R200: dmD_C':>11s} {'mE_C':>6s} {'dec':5s}")
 for r in sorted(recs, key=lambda r: -r['dmD_C']):
     q = r['R200']
-    print(f"{r['id']:6s} {'+'.join(r['why']):6s} {r['B']:7.2f} {r['D']:+7.2f} +- {r['D_se']:4.2f} {r['dec']:5s} {r['dmD_C']:+7.3f} ({r['dmD_se']:5.3f}) {r['mE_C']:6.3f} {r['dmD_B']:+7.3f} {r['mE_B']:6.3f} | "
+    print(f"{r['id']:6s} {'+'.join(r['why']):6s} {r['B']:7.2f} {r['D']:+7.2f} +- {r['D_se']:4.2f} {r['dec']:5s} {r['dmD_C']:+7.3f} ({r['dmD_se']:5.3f}) {r['mE_C']:6.3f} ({r['mE_se']:6.4f}) {r['dmD_B']:+7.3f} {r['mE_B']:6.3f} | "
           f"{q['dmD_C']:+11.3f} {q['mE_C']:6.3f} {q['dec']:5s}")
 dd = np.array([r['dmD_C']-r['R200']['dmD_C'] for r in recs if r['id'] != 'UNIF'])
 dm = np.array([r['mE_C']-r['R200']['mE_C'] for r in recs if r['id'] != 'UNIF'])
@@ -44,13 +44,13 @@ for r in sorted(recs, key=lambda r: -r['dmD_C']): print(f"{r['id']:6s} {lam_tabl
 ok = [r for r in recs if r['dec'] == 'ok']; fr = [ok[i] for i in pareto_front(ok)]
 print(f"\nTable 6. Empirical Pareto front of the evaluated qualified candidates at R={R2} (seed {SEED2}): {len(fr)} points")
 for r in fr:
-    print(f"  {r['id']:6s} p={fmt_p(r)} chi={fmt_chi(r)} B={r['B']:7.2f} D={r['D']:+6.2f}+-{r['D_se']:.2f} dmD_C={r['dmD_C']:+.3f}({r['dmD_se']:.3f}) mE_C={r['mE_C']:.3f}")
+    print(f"  {r['id']:6s} p={fmt_p(r)} chi={fmt_chi(r)} B={r['B']:7.2f} D={r['D']:+6.2f}+-{r['D_se']:.2f} dmD_C={r['dmD_C']:+.3f}({r['dmD_se']:.3f}) mE_C={r['mE_C']:.3f}({r['mE_se']:.4f})")
 print(f"\nTable 7. Re-ranking at R={R2} only: best qualified candidate subject to m_E^(C) >= lambda0")
 best = {}
 for lab, l0 in [('none', None), ('0.3', 0.3), ('0.5', 0.5), ('0.7', 0.7)]:
     feas = [r for r in ok if l0 is None or r['mE_C'] >= l0-1e-9]; b = max(feas, key=lambda r: r['dmD_C']); best[lab] = b['id']
     sec = sorted(feas, key=lambda r: -r['dmD_C'])[1] if len(feas) > 1 else None
-    print(f"  lambda0={lab:4s}: {b['id']:6s} dmD_C={b['dmD_C']:+.3f} (se {b['dmD_se']:.3f}) mE_C={b['mE_C']:.3f} D={b['D']:+.2f}+-{b['D_se']:.2f}"
+    print(f"  lambda0={lab:4s}: {b['id']:6s} dmD_C={b['dmD_C']:+.3f} (se {b['dmD_se']:.3f}) mE_C={b['mE_C']:.3f} (se {b['mE_se']:.4f}) D={b['D']:+.2f}+-{b['D_se']:.2f}"
           + (f"   runner-up {sec['id']} {sec['dmD_C']:+.3f} (se {sec['dmD_se']:.3f}), mE_C={sec['mE_C']:.3f}; difference {b['dmD_C']-sec['dmD_C']:+.4f} (paired batch se {diff_se(b, sec):.4f})" if sec else ''))
 vals = [max(r['dmD_C'] for r in ok if l0 is None or r['mE_C'] >= l0-1e-9) for l0 in (None, 0.3, 0.5, 0.7)]
 print(f"P2 at R={R2} (refined set): max dmD_C for lambda0 = none/0.3/0.5/0.7: {np.round(vals, 3).tolist()} -> non-increasing: {all(np.diff(vals) <= 0)}")

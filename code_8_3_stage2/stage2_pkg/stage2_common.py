@@ -11,7 +11,9 @@ New here:
   - evaluate_crn(a, chi, Zb): mc85_scan.evaluate on a given block of common draws Zb (same arithmetic, same
     summation order), plus per-batch log det, gap histogram, event rate q_k and w_k for stage-2 reporting.
   - summarize_s2(): per-candidate record (B, paired D +- se, decision, Delta m_D^(C),(B), paired batch se,
-    nine generalized eigenvalues vs (C), m_E^(C),(B), gaps, window AC powers).
+    nine generalized eigenvalues vs (C), m_E^(C) with paired batch se, m_E^(B), gaps, window AC powers).
+    Batch se of m_E: sd over the nbatch per-batch values lambda_min(J_b, J_C,b) / sqrt(nbatch); the per-batch values
+    are biased low relative to the full-R estimate (smaller samples), only their spread is used.
 Parametrisation (protocol): p = softmax(z1,z2,z3,0), a_m = sqrt(p_m); chi continuous, reduced mod 2*pi only
 when forming the input (here, inside evaluate_crn) and when saving."""
 import os
@@ -110,10 +112,11 @@ def evaluate_crn(a, chi, Zb, nbatch=10, chunk=200, extras=False):
             c = np.concatenate([[1.0], cc[j]]); Wsum += c; Wb[i//bs] += c
         qsum += eps.sum(0)
     wk = Wsum/Rn; J = (Hc*wk[:, None]).T@Hc/s**2
-    ldb = np.array([np.linalg.slogdet((Hc*(Wb[b]/bs)[:, None]).T@Hc/s**2)[1] for b in range(nbatch)])
+    Jbat = np.array([(Hc*(Wb[b]/bs)[:, None]).T@Hc/s**2 for b in range(nbatch)])
+    ldb = np.array([np.linalg.slogdet(Jbat[b])[1] for b in range(nbatch)])
     uac = xc-G(0)*a0; Eout = np.mean(uac**2)
     uin = sum(a[m]*np.cos(w[m]*t+chi[m]) for m in range(4)); Ein = np.mean(uin**2)
-    res = dict(cnt=cnt, J=J, ldb=ldb, gap=float(np.mean(gapm)), ghist=ghist, Ein=float(Ein), Eout=float(Eout))
+    res = dict(cnt=cnt, J=J, ldb=ldb, Jbat=Jbat, gap=float(np.mean(gapm)), ghist=ghist, Ein=float(Ein), Eout=float(Eout))
     if extras: res.update(q=qsum/Rn, x=xc, wk=wk)
     return res
 
@@ -129,10 +132,11 @@ def summarize_s2(cid, a, chi, res, ref, R_, seed_, src=''):
     Dr = res['cnt']-ref['cnt']; ld = np.linalg.slogdet(res['J'])[1]; ldC = np.linalg.slogdet(ref['J'])[1]
     lamC = eigh(res['J'], ref['J'], eigvals_only=True); lamB = eigh(res['J'], Jb, eigvals_only=True)
     dlb = res['ldb']-ref['ldb']; nb = dlb.size
+    mEb = np.array([eigh(res['Jbat'][b], ref['Jbat'][b], eigvals_only=True)[0] for b in range(nb)])   # paired per-batch m_E
     r = dict(id=cid, src=src, R=R_, seed=seed_, a=a.tolist(), p=(a**2).tolist(), chi=chi_s.tolist(),
              B=float(res['cnt'].mean()), D=float(Dr.mean()), D_se=float(Dr.std(ddof=1)/np.sqrt(R_)),
              dmD_C=float(ld-ldC), dmD_B=float(ld-ldB), dmD_batch=float(dlb.mean()), dmD_se=float(dlb.std(ddof=1)/np.sqrt(nb)),
-             mE_C=float(lamC[0]), mE_B=float(lamB[0]), lamC=lamC.tolist(),
+             mE_C=float(lamC[0]), mE_se=float(mEb.std(ddof=1)/np.sqrt(nb)), mE_batch=float(mEb.mean()), mE_B=float(lamB[0]), lamC=lamC.tolist(),
              gap=res['gap'], gapq=hist_quantiles(res['ghist']), Ein=res['Ein'], Eout=res['Eout'], ldb=res['ldb'].tolist())
     r['dec'] = qual(r)
     return r
