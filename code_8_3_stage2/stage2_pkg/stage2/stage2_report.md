@@ -52,6 +52,8 @@ Runtime per stage (`runtime.log`; 4 workers). No stage came near the 2-hour limi
 | stage2_figs | 2.0 s |
 | stage2_followup | 51.7 s |
 
+The table shows the first runs. The re-runs for the review corrections (§7) are appended to `runtime.log`.
+
 ## 1. Merge and screening: R = 200, seed 20261010 (`stage2_post.py`)
 
 **Merge.** 1465 stage-1 candidates (84 amp, 1296 phase, 85 amp20) plus 3000 LHS candidates gave 4465.
@@ -119,20 +121,28 @@ The stage-1 headline value of P5014 (+0.597 at R = 200) is +0.569 at R = 2000.
 | λ0 = 0.5 | P5014 | P4312 | P3022 |
 | λ0 = 0.7 | P5014 | P4312 | UNIF |
 
-**Runs.** 12 runs used 1800 evaluations at R = 500 (wall time 221 s).
-- **Region A starts under λ0 ≥ 0.3:** these runs never reached feasibility (end m_E 0.047) and followed identical paths. The m_E penalty only shifts f by a constant there.
+**Runs.** 12 runs used 1800 evaluations at R = 500 (stage runtime in `runtime.log`).
+- **Region A starts under λ0 ≥ 0.3:** these runs never reached feasibility (end m_E 0.047) and followed identical paths.
+  - Wherever the floor is violated, the E-penalty is 20(λ0 − m_E(x)) = 20λ0 − 20 m_E(x). Changing λ0 adds only the constant 20λ0; the penalty still varies with x through −20 m_E(x).
+  - In these three runs the floor was violated at every evaluation: the largest m_E over all 150 evaluations is 0.0483 in each (Table F7, `stage2_followup.log`).
+  - So their objectives differed by a constant throughout, and Nelder–Mead, which only compares values of f, took the same steps.
 - **Run 0.7/P4312:** ended infeasible (m_E 0.623).
 
-**New candidates.** 10 new distinct candidates (9 run results plus the archive-best for λ0 = 0.5) were re-evaluated at R = 2000 on the refinement draws.
+**New candidates.** 10 new distinct candidates (9 run results plus one archive-best point, AB-0.5) were re-evaluated at R = 2000 on the refinement draws.
 All 10 qualify (Table 9).
+- **Provenance** is recorded per candidate in two fields (Table 9c, `stage2_local.log`; `origin_run` and `selected_by` in `pool_R2000.json`):
+  - `origin_run`: the run(s) whose archive contains the point, as target, start and evaluation number;
+  - `selected_by`: the target floor(s) that selected it, either as that target's run result or as the best penalised point over the archives of all runs.
+- **AB-0.5** was *selected by* the λ0 = 0.5 floor from the archives of all runs, but *originates* in run 0.3/P4312, evaluation 42 of 150. It is not an outcome of the λ0 = 0.5 search.
 - **Search optimism:** R = 2000 minus R = 500 for Δm_D^(C) has mean −0.0367, range [−0.0524, −0.0143].
 - **Ranking:** only the R = 2000 values enter it.
 
 **Table A. Prediction-1 control** (source: Table 9b, `stage2_local.log`; R = 2000, seed 20261012).
-The projection keeps the same χ and sets p = 1/4. The amplitude part is the winner minus its projection; the phase part is the projection minus the start.
-Brackets are paired batch se.
+The rows are the best qualified feasible candidate *selected for* each floor (`selected_by`).
+The projection keeps the same χ and sets p = 1/4. The amplitude part is the candidate minus its projection; the phase part is the projection minus the start of the run that produced it.
+Brackets are paired batch se. AB-0.5 has no start entry in the log; it originates in run 0.3/P4312 (evaluation 42).
 
-| search best | Δm_D^(C) | phase-only projection: Δm_D^(C), m_E, D ± se, decision | amplitude part | start | phase part |
+| selected for the floor | Δm_D^(C) | phase-only projection: Δm_D^(C), m_E, D ± se, decision | amplitude part | start | phase part |
 |---|---|---|---|---|---|
 | NM-none-P5514 | +0.689 | +0.678, 0.045, −1.40 ± 0.06, ok | +0.0112 (0.0069) | P5514 +0.569 | +0.1089 (0.0062) |
 | NM-0.3-P4312 | +0.426 | +0.744, 0.437, +14.82 ± 0.07, **over** | −0.3182 (0.0074) | P4312 +0.440 | +0.3045 (0.0068) |
@@ -165,15 +175,16 @@ Brackets are paired batch se (10 × 200).
 | NM-0.7-UNIF | (0.246,0.264,0.243,0.246) | (0.284,6.220,0.001,6.282) | 316.54 | −0.36 ± 0.07 | +0.024 (0.010) | 0.702 (0.0013) |
 | UNIF | uniform | (0.000,0.000,0.000,0.000) | 316.90 | +0.00 ± 0.00 | +0.000 (0.000) | 1.000 (0.0000) |
 
-**Table C. Per target** (source: Table 12, `stage2_local.log`; R = 2000, seed 20261012).
-For each target, the best qualified candidate in the pool with m_E^(C) ≥ λ0, against the best start.
+**Table C. Per target** (source: Table 12, `stage2_local.log`; R = 2000, seed 20261012). Two different quantities are reported:
+- **Shared-pool best:** the best qualified candidate with m_E^(C) ≥ λ0 among all 54 candidates evaluated at R = 2000, whatever produced it.
+- **Own-search outcome:** the best qualified feasible candidate whose `origin_run` is one of that target's own runs. It is compared with the target's best feasible start.
 
-| λ0 | best in pool | Δm_D^(C) (se) | m_E^(C) (se) | runner-up, difference (paired se) | best feasible start | gain over start (paired se) |
-|---|---|---|---|---|---|---|
-| none | NM-none-P5514 | +0.689 (0.008) | 0.045 (0.0001) | PO-NM-none-P5514, +0.0112 (0.0069) | P5514 +0.569 | +0.1201 (0.0071) |
-| 0.3 | NM-0.3-P4312 | +0.426 (0.009) | 0.421 (0.0004) | AB-0.5, +0.0430 (0.0075) | P3022 +0.207 | +0.2192 (0.0103) |
-| 0.5 | AB-0.5 | +0.383 (0.011) | 0.531 (0.0004) | NM-0.5-P4312, +0.1435 (0.0063) | P3022 +0.207 | +0.1762 (0.0081) |
-| 0.7 | NM-0.7-UNIF | +0.024 (0.010) | 0.702 (0.0013) | UNIF, +0.0244 (0.0098) | UNIF 0.000 | +0.0244 (0.0098) |
+| λ0 | shared-pool best | Δm_D^(C) (se) | m_E^(C) (se) | runner-up, difference (paired se) | own-search outcome [origin run#evaluation] | own-search Δm_D^(C) | best feasible start | own-search gain over start (paired se) |
+|---|---|---|---|---|---|---|---|---|
+| none | NM-none-P5514 | +0.689 (0.008) | 0.045 (0.0001) | PO-NM-none-P5514, +0.0112 (0.0069) | NM-none-P5514 [none/P5514#136] | +0.689 | P5514 +0.569 | +0.1201 (0.0071) |
+| 0.3 | NM-0.3-P4312 | +0.426 (0.009) | 0.421 (0.0004) | AB-0.5, +0.0430 (0.0075) | NM-0.3-P4312 [0.3/P4312#141] | +0.426 | P3022 +0.207 | +0.2192 (0.0103) |
+| 0.5 | AB-0.5 (origin 0.3/P4312#42) | +0.383 (0.011) | 0.531 (0.0004) | NM-0.5-P4312, +0.1435 (0.0063) | NM-0.5-P4312 [0.5/P4312#140] | +0.240 | P3022 +0.207 | +0.0328 (0.0061) |
+| 0.7 | NM-0.7-UNIF | +0.024 (0.010) | 0.702 (0.0013) | UNIF, +0.0244 (0.0098) | NM-0.7-UNIF [0.7/UNIF#150] | +0.024 | UNIF 0.000 | +0.0244 (0.0098) |
 
 Two of these results are not resolved by the data:
 - **λ0 = 0.7 winner vs uniform:** NM-0.7-UNIF beats UNIF by 2.5 paired se, a small gain.
@@ -189,7 +200,7 @@ Two of these results are not resolved by the data:
 |---|---|
 | NM-none-P5514 | best unconstrained; front region A; best with non-uniform amplitudes |
 | NM-0.3-P4312 | best with m_E ≥ 0.3; front region C |
-| AB-0.5 | best with m_E ≥ 0.5 |
+| AB-0.5 | best with m_E ≥ 0.5 in the shared pool (origin: run 0.3/P4312, evaluation 42) |
 | NM-0.7-UNIF | best with m_E ≥ 0.7 |
 | UNIF | uniform reference |
 | NM-none-P5450 | front region B |
@@ -234,6 +245,7 @@ On an independent batch (seed 20261015, R = 4000) all three constrained winners 
 **Table F. Worst combination** (source: Tables 15 and 15b, `stage2_final.log`; batch 1).
 The combination is a = J_C v_min, normalised so that v_min^T J_C v_min = 1 (printed `vJv` = 1.000 for all), with sign chosen so the largest |a_i| > 0.
 The CRLB variance of a^T θ is 1/λ_min times the reference's; the printed `check` equals 1/λ_min for all rows.
+Empirical check from the batch-2 ML samples (Table F6, `stage2_followup.log`): for NM-none-P5514 the ML-sample variance of a^T θ̂ is 23.08 times the uniform reference's ML-sample variance (22.78 relative to J_C^{-1}), against the FIM value 22.21. One sample variance has relative se 0.0224 at R = 4000.
 The table shows a/‖a‖ to read which parameters dominate.
 The un-normalised a (entries of order 10^4) is in Table 15 and `final_batch1.json`.
 
@@ -251,36 +263,42 @@ UNIF is omitted because all its eigenvalues equal 1, so v_min is arbitrary (the 
 - **Constrained winners:** it moves towards tone 1 (Im1, Re1).
 
 **Table G. Gaps, event rate and window AC power** (source: Table 16, `stage2_final.log`; batch 1, R = 4000, seed 20261013).
-Gaps are in clock steps, pooled over runs. q_k is the event rate per clock point: the mean is over all k; p99 and max are over k ≥ 1, because k = 0 is always an event.
-P_in and P_out are the window mean AC powers of input and output.
+- **Gaps** are in clock steps, with two mean conventions. "Run-mean" is the mean over runs of each run's mean gap, as in stage 1. "Pooled" is the mean of all gaps pooled over the R = 4000 runs. The quantiles are from the pooled gaps.
+- **q_k** is the event rate per clock point: the mean is over all k; p99 and max are over k ≥ 1, because k = 0 is always an event.
+- **P_in and P_out** are the window mean AC powers of input and output, approximated by the clock-grid average, e.g. (1/K)Σ_k u_ac(t_k)².
 
-| id | mean gap | min | q05 | q25 | q50 | q75 | q95 | q99 | max | mean q_k | q_k p99 | q_k max | P_in | P_out |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| NM-none-P5514 | 15.83 | 5 | 8 | 9 | 12 | 18 | 33 | 92 | 166 | 0.0633 | 0.158 | 0.378 | 0.3668 | 1.529e-03 |
-| NM-0.3-P4312 | 15.68 | 5 | 7 | 8 | 11 | 16 | 33 | 105 | 253 | 0.0633 | 0.204 | 0.334 | 0.6364 | 1.338e-03 |
-| AB-0.5 | 15.69 | 5 | 7 | 8 | 11 | 16 | 37 | 102 | 189 | 0.0633 | 0.201 | 0.342 | 0.6753 | 1.332e-03 |
-| NM-0.7-UNIF | 15.67 | 4 | 6 | 7 | 9 | 15 | 46 | 117 | 247 | 0.0633 | 0.211 | 0.427 | 0.7033 | 1.510e-03 |
-| UNIF | 15.67 | 4 | 6 | 7 | 9 | 14 | 42 | 126 | 254 | 0.0634 | 0.216 | 0.446 | 0.7051 | 1.514e-03 |
-| NM-none-P5450 | 15.86 | 6 | 8 | 9 | 12 | 17 | 34 | 94 | 160 | 0.0632 | 0.160 | 0.534 | 0.4308 | 1.523e-03 |
-| P5014 | 15.98 | 4 | 7 | 10 | 12 | 17 | 35 | 91 | 210 | 0.0627 | 0.155 | 0.253 | 0.3558 | 1.491e-03 |
+| id | run-mean gap | pooled mean gap | min | q05 | q25 | q50 | q75 | q95 | q99 | max | mean q_k | q_k p99 | q_k max | P_in | P_out |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| NM-none-P5514 | 15.83 | 15.83 | 5 | 8 | 9 | 12 | 18 | 33 | 92 | 166 | 0.0633 | 0.158 | 0.378 | 0.3668 | 1.529e-03 |
+| NM-0.3-P4312 | 15.68 | 15.68 | 5 | 7 | 8 | 11 | 16 | 33 | 105 | 253 | 0.0633 | 0.204 | 0.334 | 0.6364 | 1.338e-03 |
+| AB-0.5 | 15.69 | 15.69 | 5 | 7 | 8 | 11 | 16 | 37 | 102 | 189 | 0.0633 | 0.201 | 0.342 | 0.6753 | 1.332e-03 |
+| NM-0.7-UNIF | 15.67 | 15.67 | 4 | 6 | 7 | 9 | 15 | 46 | 117 | 247 | 0.0633 | 0.211 | 0.427 | 0.7033 | 1.510e-03 |
+| UNIF | 15.67 | 15.67 | 4 | 6 | 7 | 9 | 14 | 42 | 126 | 254 | 0.0634 | 0.216 | 0.446 | 0.7051 | 1.514e-03 |
+| NM-none-P5450 | 15.86 | 15.86 | 6 | 8 | 9 | 12 | 17 | 34 | 94 | 160 | 0.0632 | 0.160 | 0.534 | 0.4308 | 1.523e-03 |
+| P5014 | 15.98 | 15.97 | 4 | 7 | 10 | 12 | 17 | 35 | 91 | 210 | 0.0627 | 0.155 | 0.253 | 0.3558 | 1.491e-03 |
 
 All candidates send at the budget rate, but they distribute the sends differently.
 - **High-D candidates:** fewer very short gaps (q05 = 7–8 vs 6) and shorter long gaps (q99 91–94 vs 126; max 160–210 vs 254). The event rate is flatter (q_k p99 0.155–0.160 vs 0.216).
-- **Window input power:** P_in is about half the uniform value (0.36–0.43 vs 0.705). The window is short relative to the close pair ω3 = 12, ω4 = 12.3: the beat period 2π/0.3 ≈ 21 s is longer than T = 5 s. With χ3 − χ4 ≈ π the two tones cancel over the window.
+- **Window input power:** for the group of high-D candidates (NM-none-P5514, NM-none-P5450, P5014), the window input power is 50–61% of the uniform reference (0.505–0.611; Table F3).
+  - For NM-none-P5514 (χ3 − χ4 = 3.173) and P5014 (χ3 − χ4 = π), the close pair ω3 = 12, ω4 = 12.3 is in antiphase. The beat period 2π/0.3 ≈ 21 s is longer than T = 5 s, so the two tones cancel over the window.
+  - NM-none-P5450 has χ3 − χ4 = 5.171, so this antiphase explanation is not claimed for it.
 - **Output power** barely changes, because tone 1 dominates the output.
 
 **Window input power vs long-run power** (source: Table F3, `stage2_followup.log`; deterministic, no draws).
-P_in = (1/T)∫u_ac² over the T = 5 s window, as in Table G. The long-run power is Σ a_m²/2. P_out is the window mean AC output power.
+- **P_in** is the window mean AC input power over the T = 5 s window, approximated by the clock-grid average (1/K)Σ_k u_ac(t_k)², as in Table G.
+- **Check column:** the continuous integral (1/T)∫u_ac² dt, computed analytically. UNIF is 0.705339 continuous vs 0.705086 on the grid; the largest grid–continuous difference over the seven candidates is 0.000253.
+- **Long-run power** is Σ a_m²/2.
+- **P_out** is the window mean AC output power (clock-grid average).
 
-| id | P_in (window) | long-run Σ a_m²/2 | P_in / long-run | P_in / P_in(UNIF) | P_out (window) |
-|---|---|---|---|---|---|
-| NM-none-P5514 | 0.3668 | 0.5000 | 0.734 | 0.520 | 1.5286e-03 |
-| NM-0.3-P4312 | 0.6364 | 0.5000 | 1.273 | 0.903 | 1.3376e-03 |
-| AB-0.5 | 0.6753 | 0.5000 | 1.351 | 0.958 | 1.3315e-03 |
-| NM-0.7-UNIF | 0.7033 | 0.5000 | 1.407 | 0.998 | 1.5100e-03 |
-| UNIF | 0.7051 | 0.5000 | 1.410 | 1.000 | 1.5137e-03 |
-| NM-none-P5450 | 0.4308 | 0.5000 | 0.862 | 0.611 | 1.5226e-03 |
-| P5014 | 0.3558 | 0.5000 | 0.712 | 0.505 | 1.4910e-03 |
+| id | P_in (window, grid) | long-run Σ a_m²/2 | P_in / long-run | P_in / P_in(UNIF) | P_out (window, grid) | check: P_in continuous |
+|---|---|---|---|---|---|---|
+| NM-none-P5514 | 0.3668 | 0.5000 | 0.734 | 0.520 | 1.5286e-03 | 0.366775 |
+| NM-0.3-P4312 | 0.6364 | 0.5000 | 1.273 | 0.903 | 1.3376e-03 | 0.636211 |
+| AB-0.5 | 0.6753 | 0.5000 | 1.351 | 0.958 | 1.3315e-03 | 0.675156 |
+| NM-0.7-UNIF | 0.7033 | 0.5000 | 1.407 | 0.998 | 1.5100e-03 | 0.703556 |
+| UNIF | 0.7051 | 0.5000 | 1.410 | 1.000 | 1.5137e-03 | 0.705339 |
+| NM-none-P5450 | 0.4308 | 0.5000 | 0.862 | 0.611 | 1.5226e-03 | 0.430913 |
+| P5014 | 0.3558 | 0.5000 | 0.712 | 0.505 | 1.4910e-03 | 0.355731 |
 
 The high-D candidates (NM-none-P5514, NM-none-P5450, P5014) obtain more information than the uniform reference with about half its window input energy.
 - Their P_in is 0.3558–0.4308 against 0.7051, i.e. 0.505–0.611 of the uniform value.
@@ -289,7 +307,9 @@ The high-D candidates (NM-none-P5514, NM-none-P5450, P5014) obtain more informat
 - This is a consequence of normalising the long-run power rather than the window energy, as noted in §8.1.6 of the main document.
 
 **Figure: q_k, x_k and w_k.** The figure below plots q_k, x_k and w_k for three representatives (`final_qxw.npz` holds all 7 and the reference).
-- **Steady state:** q_k follows the output slope, with zeros at the turning points of x_k.
+- **Steady state:** q_k rises and falls with the magnitude of the output's rate of change, and drops markedly near turning points, but not to zero (Table F4, `stage2_followup.log`).
+  - At the 53 turning points with t > 1 s (all seven candidates), q_k is 0.0013–0.0060 at the turning-point clock step.
+  - The smallest value within ±5 steps is 0.0003–0.0018. The resolution of q_k at R = 4000 is 0.00025.
 - **First ~0.3–1 s:** q_k shows a comb-like transient after the forced event at k = 0. This is visible in the figure; it is not analysed further here.
 
 ![q_k, x_k and w_k for the best unconstrained candidate, the best with m_E ≥ 0.5, and the uniform reference; batch 1, R=4000, seed 20261013](fig_qxw.png)
@@ -308,17 +328,18 @@ The Wishart benchmark uses 5000 draws, seed 1.
 | NM-none-P5450 | 4000/4000 | 0.991–1.014 | 2.84 | +0.001 | 0.0751 | 0.839 | 14.74 | 0.100 | +1.974 |
 | P5014 | 4000/4000 | 0.986–1.006 | 3.00 | −0.082 | 0.0736 | 0.868 | 11.87 | 0.223 | +1.899 |
 
-**Variance.** For all seven candidates, the censored-likelihood MLE reaches the CRLB within MC precision.
+**Variance.** For all seven candidates, the empirical covariance of the censored-likelihood MLE agrees with J^{-1} within MC precision, with small finite-sample biases detected (see **Bias** below).
 - Per-parameter sd ratios lie in 0.972–1.020, with batch se about 0.01.
 - The spread of the whitened eigenvalues is consistent with the Wishart benchmark (tail probabilities 0.055–0.868).
-- So the information gains in Tables D and E translate into estimator covariance, including the 22-fold weaker combination at the high-D end.
+- So the information gains in Tables D and E show up in the estimator covariance, including the 22-fold weaker combination at the high-D end. For NM-none-P5514 the ML-sample ratio is 23.08 (22.78 relative to J_C^{-1}) against the FIM value 22.21 (Table F6).
 
 **Bias.** Hotelling T² rejects zero joint bias at 5% for NM-none-P5514 (p = 0.017) and AB-0.5 (p = 0.001).
 - **Largest component:** Im1 in both, with bias/sd −0.038 and −0.050 (t = −2.4 and −3.1).
 - **Shared sign:** Im1 bias/sd is negative for all seven candidates (−0.012 to −0.050). Batch 2 uses the same draws for every candidate, so these are not seven independent findings. An independent batch would be needed to separate a systematic small-sample bias from a shared noise realisation; §8.2 runs that check.
-- **Size:** a bias of ≤ 0.05 sd changes the MSE by ≤ 0.25%.
+- **Size, per parameter:** max_i |b_i|/s_i is 0.038 (NM-none-P5514) and 0.050 (AB-0.5), and at most 0.050 over all seven (Table F5, `stage2_followup.log`). For each parameter's point estimate this is an MSE share of at most 0.25%.
+- **Size, joint:** the joint standardised bias √(T²/R) is 0.0710 and 0.0843 for the two rejected candidates, and 0.0438–0.0843 over all seven. In the worst linear combination, the squared bias relative to the variance, b^T S^{-1} b = T²/R, is 0.50% and 0.71% (Table F5). These are larger than the per-parameter values.
 
-**Naive control.** LS on sent samples only is far from the CRLB: logdet diff +1.837 to +1.989, and per-parameter biases up to 8.8 sd. This matches §8.4.
+**Naive control.** LS on sent samples only is far from the CRLB: logdet diff +1.837 to +1.989, and per-parameter biases up to 8.8 sd. This matches §8.4 of the main document.
 
 ## 5. Predictions of the protocol, checked
 
@@ -332,9 +353,11 @@ The Wishart benchmark uses 5000 draws, seed 1.
 
 **Prediction 2** says: the maximal D is non-increasing in λ0; the front is steep near m_E ~ 1 and flat for m_E < 0.1.
 
-- **Monotonicity: confirmed.** Max Δm_D^(C) over the pool for λ0 = none / 0.3 / 0.5 / 0.7 is +0.689 / +0.426 / +0.383 / +0.024, non-increasing (R = 2000, seed 20261012; `stage2_local.log`, P2 lines).
-  - On a fixed set this holds automatically. The non-trivial check is that each target's *own* search delivered these values, also non-increasing: +0.689, +0.426, +0.383, +0.024.
-  - So no constrained search found a point that beat the unconstrained search.
+- **Monotonicity: confirmed, for both sequences** (R = 2000, seed 20261012; `stage2_local.log`, P2 lines and Table 12).
+  - **Shared-pool best under each floor** (any evaluated candidate), for λ0 = none / 0.3 / 0.5 / 0.7: +0.689 / +0.426 / +0.383 / +0.024. Non-increasing; on a fixed set this holds automatically.
+  - **Own-search outcomes** (best qualified feasible candidate originating in that target's runs): +0.689 / +0.426 / +0.240 (NM-0.5-P4312) / +0.024. Also non-increasing.
+  - The shared-pool best for λ0 = 0.5, AB-0.5 (+0.383), originates in the λ0 = 0.3 run from P4312 (evaluation 42). It is not the λ0 = 0.5 search's own outcome.
+  - So no constrained search's own outcome beat the unconstrained search's.
   - The grid version (λ0 = 0, 0.05, …, 1) is also non-increasing.
 - **Shape: partly confirmed.** Steep near m_E = 1 holds. "Flat for m_E < 0.1" holds only in a weak sense, and the front is step-like rather than steep-then-flat.
   - **Steep near m_E = 1, confirmed:** the segment UNIF → NM-0.7-UNIF has slope −12.21 per nat. m_E drops from 1.000 to 0.702 for +0.024 nat.
@@ -344,8 +367,12 @@ The Wishart benchmark uses 5000 draws, seed 1.
   - Gaps on the front reflect where candidates were evaluated (§7).
 
 **Prediction 3** was left open: whether χ3 − χ4 keeps its role, and whether power moves away from uniform. Read off:
-- **χ3 − χ4.** At the high-D end the stage-1 pattern persists. The top unconstrained candidates have χ3 − χ4 ≈ π: 3.173 (NM-none-P5514), 3.092 (NM-0.3-P5014), and exactly π for the stage-1 points (`stage2_local.log`, P3 lines). The m_E-constrained winners sit near χ3 − χ4 ≈ 0: 5.931 rad (NM-0.3-P4312) and 6.160 rad (AB-0.5), which are −0.35 and −0.12 rad; NM-0.7-UNIF has 0.001 (Table 16b, `stage2_final.log`). The power descriptors ‖p − 1/4‖₁ of all final candidates are in the same table.
-- **Within the LHS cloud** amplitudes dominate: η² of Δm_D on binned χ3 − χ4 is 0.014 (for B, 0.024), while η² on p1 is 0.342 and corr(p1, B) = 0.955 (`stage2_post.log`, P3 lines).
+- **χ3 − χ4.** At the high-D end the stage-1 pattern persists for some candidates, not all. NM-none-P5514 (3.173), NM-0.3-P5014 (3.092) and the stage-1 points (exactly π) have χ3 − χ4 ≈ π (`stage2_local.log`, P3 lines). NM-none-P5450 (+0.645) has 5.171 (Table 16b, `stage2_final.log`). The m_E-constrained winners sit near χ3 − χ4 ≈ 0: 5.931 rad (NM-0.3-P4312) and 6.160 rad (AB-0.5), which are −0.35 and −0.12 rad; NM-0.7-UNIF has 0.001 (Table 16b, `stage2_final.log`). The power descriptors ‖p − 1/4‖₁ of all final candidates are in the same table.
+- **Within the LHS cloud:** within this LHS distribution and binning, the marginal association of p1 is clearly stronger than that of χ3 − χ4. This is univariate binning; joint phase effects are not excluded. Source: `stage2_post.log`, P3 lines.
+  - **χ3 − χ4:** η² of Δm_D on six equal-width bins is 0.014 (for B, 0.024).
+  - **p1, equal-width bins:** six bins on [0, 1] (counts 1232/869/517/281/93/8) give η² = 0.342.
+  - **p1, sextile bins:** six equal-count bins give 0.444.
+  - corr(p1, B) = 0.955.
 - **Power distribution.** The best unconstrained candidate keeps uniform power (‖p − 1/4‖₁ = 0.010). The constrained winners move power away from tone 1 (p1 = 0.212 and 0.209; ‖p − 1/4‖₁ = 0.077 and 0.082), for the budget reason given under prediction 1.
 
 **Prediction 4** says: corr(B, Δm_D) stays strongly positive across the LHS cloud, with counter-examples.
@@ -365,13 +392,16 @@ The Wishart benchmark uses 5000 draws, seed 1.
    - Δm_D^(C) is +0.689 ± 0.008 at R = 2000 (seed 20261012) and +0.697 ± 0.004 on independent draws (R = 4000, seed 20261013).
    - That is +0.13 nat over the stage-1 phase-only best on the same draws.
    - Its amplitudes are uniform within 0.010 in ‖p − 1/4‖₁; the gain over its start is a phase effect.
-   - Its m_E^(C) is 0.045: one fixed combination, dominated by tones 3–4 and G0, has 22.2 times the reference CRLB variance.
+   - Its m_E^(C) is 0.045: one fixed combination, dominated by tones 3–4 and G0, has 22.2 times the reference CRLB variance. The ML-sample empirical ratio is 23.08 (Table F6).
 2. **D under an m_E floor.** The empirical Pareto front of the evaluated candidates trades D against m_E in steps.
    - About +0.43 nat is available at m_E ≥ 0.42, and +0.38 nat at m_E ≥ 0.53. Both require lowering tone-1 power to stay inside the budget.
    - Above m_E 0.7 essentially nothing is gained over uniform: +0.024, with the m_E floor itself not resolved at 2 se.
    - The three constrained winners qualify by margins of only 0.148–0.268 sends (at most 0.085% of the budget) on batches 1 and 3. None of them flips to undecided on the independent batch 3 (seed 20261015; §8.1).
-3. **CRLB attainment.** For all seven final candidates the MLE covariance matches the CRLB within MC precision (batch 2, R = 4000, seed 20261014). A small joint bias (≤ 0.05 sd, mostly Im1) is detected for two of them. On independent draws (seed 20261016) the joint rejection reproduces for NM-none-P5514 but not for AB-0.5, and the negative Im1 bias reproduces for both (§8.2).
-4. **Not established.** These are local improvements found with 12 × 150 evaluations from 3 starts per target. Points between the evaluated ones, or far from the stage-1 phase grid, were not explored at R = 2000.
+3. **Agreement with J^{-1}.** For all seven final candidates the empirical covariance agrees with J^{-1} within MC precision, with small finite-sample biases detected (batch 2, R = 4000, seed 20261014).
+   - Per parameter the bias is at most 0.050 sd, mostly in Im1.
+   - Zero joint bias is rejected at 5% for two candidates. Their joint standardised bias √(T²/R) is 0.071 and 0.084, and the worst-combination squared bias is 0.50% and 0.71% of the variance.
+   - On independent draws (seed 20261016) the joint rejection reproduces for NM-none-P5514 but not for AB-0.5, and the negative Im1 bias reproduces for both (§8.2).
+4. **Not established.** These are local improvements found with 12 × 150 evaluations from 3 starts per target. Points between the evaluated ones were not explored. Only a small number of LHS candidates (8) were evaluated at R = 2000; those regions were not explored systematically.
 
 ## 7. Modelling choices and limitations (stated, not settled)
 
@@ -385,9 +415,37 @@ The Wishart benchmark uses 5000 draws, seed 1.
 - **CRLB in batch 2:** from the batch-1 J at R = 4000, not R = 10000 as in `mc84.py`; its MC error is small relative to the sd-ratio se but not zero.
 - **Common draws in batch 2:** batch 2 uses the same draws for every candidate, so cross-candidate patterns in the bias estimates are not independent.
 
+### Corrections after review
+
+Changes are in place in the sections named. Re-run: `stage2_post.py`, `stage2_local.py`, `stage2_final.py` and `stage2_followup.py`.
+Every previously logged scientific number is unchanged. This was checked by diffing each log against the pre-correction version and comparing every previously stored JSON field: all identical.
+Only labels, wall times and the new columns and tables differ.
+
+1. **Provenance (§3, §4, §5).**
+   - `stage2_local.py` now records `origin_run` and `selected_by` per new candidate.
+   - AB-0.5 was the archive-best for λ0 = 0.5 but originates in run 0.3/P4312 (evaluation 42). It had been counted as the λ0 = 0.5 search's own result.
+   - Table C now reports the own-search outcomes (+0.689 / +0.426 / +0.240 / +0.024) separately from the shared-pool best (+0.689 / +0.426 / +0.383 / +0.024). Both sequences are non-increasing.
+   - The former λ0 = 0.5 "gain over start" (+0.1762, which was AB-0.5 minus P3022; in the pre-correction `stage2_local.log`, commit 4ee9989) is replaced by the own-search gain +0.0328 (0.0061).
+   - The prediction-1 controls are unchanged: they were, and are, chosen per floor by `selected_by`.
+2. **Window power definition (§4, Table G).** The text now says "window mean AC power, approximated by the clock-grid average". The continuous integral is added as a check column (Table F3).
+3. **Event rate near turning points (§4).** "Zeros at turning points" is replaced by measured values: 0.0013–0.0060 at the turning point, 0.0003–0.0018 within ±5 steps (Table F4).
+4. **χ3 − χ4 ≈ π attribution (§4, §5).** The antiphase explanation is limited to NM-none-P5514 and P5014. For the high-D group only the window input power ratio (50–61% of uniform) is stated.
+5. **Bias wording (§4, §6, §8.2).**
+   - The per-parameter maximum |b_i|/s_i (≤ 0.050) and the joint standardised bias √(T²/R) (0.0710 and 0.0843 on batch 2) are now reported separately. The MSE statement "≤ 0.25%" is restricted to per-parameter point estimates; the worst combination gives 0.50% and 0.71% (Table F5).
+   - "CRLB attained" is replaced by "the empirical covariance agrees with J^{-1} within MC precision, with small finite-sample biases detected".
+   - The ML-sample worst-combination ratio is added: 23.08, or 22.78 relative to J_C^{-1}, vs FIM 22.21 (Table F6).
+6. **p1 binning (§5).** `stage2_post.py` printed "sextile-bins" but used six equal-width bins on [0, 1]. These are now labelled equal-width, with counts; the sextile value (0.444) is added, and the sentence is softened.
+7. **Coverage wording (§6).** Now states that only 8 LHS candidates were evaluated at R = 2000 and those regions were not explored systematically.
+8. **Gap statistics (§4, Table G).** Both mean conventions are shown: run-mean (as before) and pooled (`gapq['mean']`). The quantiles are from the pooled gaps.
+9. **Penalty remark (§3).** States that λ0 only adds a constant where the floor is violated throughout. In those runs the largest m_E was 0.0483 (Table F7).
+10. **LHS part convention.**
+    - `mc85_lhs.py`: its docstring said 500 per part, while the code used 250. Both now state the shipped convention: part 0 = indices 0–499, parts 2–11 = 250 each, no part 1.
+    - `stage2_post.py` asserts this convention (full coverage of 0–2999, no part-1 file, exact match with the regenerated design).
+    - The shipped inputs load unchanged.
+
 ## 8. Follow-up (`stage2_followup.py`)
 
-All numbers in this section come from `stage2_followup.log`; runtime 51.7 s. Nothing above was re-run or changed.
+All numbers in this section come from `stage2_followup.log` (first run 51.7 s). When §8.1–8.3 were written, nothing above was re-run. The later review corrections, which re-ran some stages without changing any previously logged scientific number, are listed in §7.
 
 ### 8.1 Budget margin and an independent re-run of the paired decision
 
@@ -425,12 +483,21 @@ It was run for NM-none-P5514 and AB-0.5 on batch 4 (R = 4000, seed 20261016), wi
 - **Joint bias:** the 5%-level rejection of zero joint bias reproduces on independent draws for NM-none-P5514 (p = 0.040), but not for AB-0.5 (p = 0.497).
 - **Im1:** the bias reproduces for both candidates in sign and size: bias/sd −0.043 and −0.038, t = −2.75 and −2.37. Im1 was singled out on batch 2, so this is a check of a pre-specified parameter.
 - **Two candidates, one replication:** within batch 4 the two candidates share draws. Their batch-4 results are each independent of batch 2, but not of each other, so this is one independent replication, not two.
-- **Variance unchanged:** on batch 4 the sd ratios (0.986–1.017 and 0.986–1.020), the whitened-eigenvalue Wishart tail probabilities (0.700 and 0.705) and the log-det differences (+0.055 and +0.040) again show the CRLB attained (Table F2a).
-- **Size:** the Im1 bias stays at about 0.04 sd.
+- **Variance unchanged:** on batch 4 the sd ratios (0.986–1.017 and 0.986–1.020), the whitened-eigenvalue Wishart tail probabilities (0.700 and 0.705) and the log-det differences (+0.055 and +0.040) again show the empirical covariance agreeing with J^{-1} within MC precision (Table F2a).
+- **Size:** per parameter, max |b_i|/s_i on batch 4 is 0.043 and 0.038 (both Im1). The joint standardised bias √(T²/R) is 0.0664 and 0.0458, i.e. T²/R = 0.44% and 0.21% (Table F5).
 
 ### 8.3 Window input power
 
 See "Window input power vs long-run power" in §4 (Table F3, `stage2_followup.log`).
+
+### 8.4 Review checks (no new draws)
+
+These tables in `stage2_followup.log` support the review corrections of §7; the numbers are cited where they are used.
+- **Table F3:** continuous-integral check of the window input power (§4).
+- **Table F4:** q_k at the turning points of x_k (§4).
+- **Table F5:** per-parameter vs joint bias size, batches 2 and 4 (§4, §8.2).
+- **Table F6:** empirical worst-combination variance ratios from the batch-2 ML samples (§4).
+- **Table F7:** largest m_E in the Region-A Nelder–Mead runs (§3).
 
 ## Reproduce
 

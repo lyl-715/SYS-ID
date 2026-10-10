@@ -4,3 +4,7 @@ stage2_local	started 2026-10-10 13:17:39	elapsed 232.2 s (3.87 min)	12 NM runs, 
 stage2_final	started 2026-10-10 13:34:59	elapsed 127.8 s (2.13 min)	7 final candidates, batch 1 + batch 2 at R=4000
 stage2_figs	started 2026-10-10 13:37:07	elapsed 2.0 s (0.03 min)	3 figures
 stage2_followup	started 2026-10-10 14:06:16	elapsed 51.7 s (0.86 min)	batch 3 (seed 20261015) decisions for 4 inputs, batch 4 (seed 20261016) ML check for 2, window power
+stage2_post	started 2026-10-10 16:22:46	elapsed 6.4 s (0.11 min)	4458 candidates merged, 40 selected
+stage2_local	started 2026-10-10 16:22:59	elapsed 184.3 s (3.07 min)	12 NM runs, 10 new candidates + 4 controls at R=2000
+stage2_final	started 2026-10-10 16:26:05	elapsed 99.4 s (1.66 min)	7 final candidates, batch 1 + batch 2 at R=4000
+stage2_followup	started 2026-10-10 16:28:59	elapsed 37.2 s (0.62 min)	batch 3 (seed 20261015) decisions for 4 inputs, batch 4 (seed 20261016) ML check for 2, window power

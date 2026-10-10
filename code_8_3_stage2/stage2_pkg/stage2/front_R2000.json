@@ -88,6 +88,23 @@
     1.0969395125410395,
     4.207133021554178
    ],
+   "origin_run": [
+    {
+     "target": "none",
+     "start": "P5514",
+     "eval": 136
+    }
+   ],
+   "selected_by": [
+    {
+     "target": "none",
+     "how": "run result"
+    },
+    {
+     "target": "none",
+     "how": "archive best (all runs)"
+    }
+   ],
    "R500": {
     "dmD": 0.7310485182043465,
     "mE": 0.045271204565156965,
@@ -180,7 +197,10 @@
    "dec": "ok",
    "why": [
     "phase-only projection of NM-none-P5514"
-   ]
+   ],
+   "control_of": "NM-none-P5514",
+   "origin_run": [],
+   "selected_by": []
   },
   {
    "id": "NM-0.3-P5014",
@@ -268,6 +288,37 @@
     -0.12402180892768919,
     1.0627730177319585,
     4.25413399963603
+   ],
+   "origin_run": [
+    {
+     "target": "0.3",
+     "start": "P5014",
+     "eval": 114
+    },
+    {
+     "target": "0.5",
+     "start": "P5014",
+     "eval": 114
+    },
+    {
+     "target": "0.7",
+     "start": "P5014",
+     "eval": 114
+    }
+   ],
+   "selected_by": [
+    {
+     "target": "0.3",
+     "how": "run result"
+    },
+    {
+     "target": "0.5",
+     "how": "run result"
+    },
+    {
+     "target": "0.7",
+     "how": "run result"
+    }
    ],
    "R500": {
     "dmD": 0.7216986677933335,
@@ -370,6 +421,19 @@
     4.471194969784627,
     5.216135588771384,
     0.045152989211844796
+   ],
+   "origin_run": [
+    {
+     "target": "none",
+     "start": "P5450",
+     "eval": 146
+    }
+   ],
+   "selected_by": [
+    {
+     "target": "none",
+     "how": "run result"
+    }
    ],
    "R500": {
     "dmD": 0.6847589326911532,
@@ -984,6 +1048,23 @@
     1.3910033868060543,
     1.7431213370899603
    ],
+   "origin_run": [
+    {
+     "target": "0.3",
+     "start": "P4312",
+     "eval": 141
+    }
+   ],
+   "selected_by": [
+    {
+     "target": "0.3",
+     "how": "run result"
+    },
+    {
+     "target": "0.3",
+     "how": "archive best (all runs)"
+    }
+   ],
    "R500": {
     "dmD": 0.4525932148595473,
     "mE": 0.4230907969071693,
@@ -1086,6 +1167,19 @@
     1.4595786339079106,
     1.58297235485432
    ],
+   "origin_run": [
+    {
+     "target": "0.3",
+     "start": "P4312",
+     "eval": 42
+    }
+   ],
+   "selected_by": [
+    {
+     "target": "0.5",
+     "how": "archive best (all runs)"
+    }
+   ],
    "R500": {
     "dmD": 0.39722803770132487,
     "mE": 0.5308300457835128,
@@ -1187,6 +1281,19 @@
     3.924353032938651,
     1.5155018787582586,
     1.5593091806196335
+   ],
+   "origin_run": [
+    {
+     "target": "0.7",
+     "start": "P4312",
+     "eval": 147
+    }
+   ],
+   "selected_by": [
+    {
+     "target": "0.7",
+     "how": "run result"
+    }
    ],
    "R500": {
     "dmD": 0.25657681173677815,
@@ -1630,6 +1737,23 @@
     -0.06295006254409721,
     0.000510103896636268,
     -0.0007719257849418278
+   ],
+   "origin_run": [
+    {
+     "target": "0.7",
+     "start": "UNIF",
+     "eval": 150
+    }
+   ],
+   "selected_by": [
+    {
+     "target": "0.7",
+     "how": "run result"
+    },
+    {
+     "target": "0.7",
+     "how": "archive best (all runs)"
+    }
    ],
    "R500": {
     "dmD": 0.06552041816993892,

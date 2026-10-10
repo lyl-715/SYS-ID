@@ -14,9 +14,14 @@ C: m_E>=0.3 (uniform included); in each region the start is the front point with
 target's penalised objective.
 Every new candidate (each run's result and, per target, the best penalised point visited by any run) is re-evaluated
 at R=2000 on the refinement draws (seed 20261012) before any ranking; rankings use R=2000 estimates only.
+Provenance, recorded per new candidate: origin_run = every run whose archive contains the point (target, start, evaluation
+number, 1-based; identical runs are all listed), selected_by = the target(s) whose floor selected it ('run result' of that
+target's run, or 'archive best' over the archives of ALL runs). An archive-best point can therefore originate in another
+target's run (AB-0.5 originates in run 0.3/P4312). The own-search outcome of a target uses origin_run; the shared-pool best
+uses every R=2000 candidate.
 Control for prediction 1 ("most of any gain comes from phases"): for each target, the best qualified feasible candidate
-produced by its search is also evaluated with the same phases and exactly uniform amplitudes (id PO-...), on the same
-R=2000 draws; these controls enter the R=2000 pool like any other evaluated candidate.
+selected for that target's floor (selected_by) is also evaluated with the same phases and exactly uniform amplitudes
+(id PO-...), on the same R=2000 draws; these controls enter the R=2000 pool like any other evaluated candidate.
 Run from code_8_3_stage2/stage2_pkg/:  python3 stage2_local.py
 Outputs (stage2/): stage2_local.log, local_runs.json, local_R2000.json, pool_R2000.json, front_R2000.json"""
 exec(open('stage2_common.py').read())
@@ -78,16 +83,19 @@ for r in runs:
 
 # --- new candidates: each run's result + per target the best penalised point over all archives -----------------------------
 new = {}
-def add(cid_, x, why):
+def origins(x):
+    """every run whose archive contains exactly this point: target, start, evaluation number (1-based)"""
+    return [dict(target=r['target'], start=r['start'], eval=i+1) for r in runs for i, v in enumerate(r['archive']) if v['x'] == list(x)]
+def add(cid_, x, why, sel):
     a, chi = x_to_input(x); key = tuple(np.round(a**2, 7))+tuple(np.round(chi, 7))
-    if key in new: new[key]['why'].append(why); return
-    new[key] = dict(id=cid_, a=a.tolist(), chi=chi.tolist(), x=list(x), why=[why])
+    if key in new: new[key]['why'].append(why); new[key]['selected_by'].append(sel); return
+    new[key] = dict(id=cid_, a=a.tolist(), chi=chi.tolist(), x=list(x), why=[why], origin_run=origins(x), selected_by=[sel])
 startkeys = {}
 for r in recs2: startkeys[tuple(np.round(np.array(r['p']), 7))+tuple(np.round(np.mod(r['chi'], TWO_PI), 7))] = r['id']
-for r in runs: add(f"NM-{r['target']}-{r['start']}", r['x'], f"run {r['target']}/{r['start']}")
+for r in runs: add(f"NM-{r['target']}-{r['start']}", r['x'], f"run {r['target']}/{r['start']}", dict(target=r['target'], how='run result'))
 allv = [v for r in runs for v in r['archive']]
 for lab, l0 in TARGETS:
-    b = min(allv, key=lambda v: pen(v['dmD'], v['mE'], v['D'], v['Dse'], l0)); add(f"AB-{lab}", b['x'], f"archive-best {lab}")
+    b = min(allv, key=lambda v: pen(v['dmD'], v['mE'], v['D'], v['Dse'], l0)); add(f"AB-{lab}", b['x'], f"archive-best {lab}", dict(target=lab, how='archive best (all runs)'))
 newl = []
 for key, c in new.items():
     if key in startkeys: print(f"  {c['id']} ({'; '.join(c['why'])}) coincides with refined candidate {startkeys[key]} -> no new evaluation"); continue
@@ -99,6 +107,7 @@ raw = eval_many(newl, Z2); newrecs = []
 s500 = {tuple(np.round(np.array(v['x']), 12)): v for v in allv}
 for c, res in zip(newl, raw):
     r = summarize_s2(c['id'], c['a'], c['chi'], res, ref, R2, SEED2, src='nm'); r['why'] = c['why']; r['x'] = c['x']
+    r['origin_run'] = c['origin_run']; r['selected_by'] = c['selected_by']; assert r['origin_run'], c['id']
     r['R500'] = s500.get(tuple(np.round(np.array(c['x']), 12)), {}); newrecs.append(r)
 print(f"\nTable 9. New candidates at R={R2} (seed {SEED2}); R={RS} search values for comparison")
 print(f"{'id':16s} {'B':>7s} {'D +- se':>14s} {'dec':5s} {'dmD_C':>7s} {'(se)':>7s} {'mE_C':>6s} {'(se)':>8s} | {'R500 dmD':>8s} {'mE':>6s}  p, chi")
@@ -108,24 +117,31 @@ for r in sorted(newrecs, key=lambda r: -r['dmD_C']):
           f"{q.get('dmD', np.nan):+8.3f} {q.get('mE', np.nan):6.3f}  p={fmt_p(r)} chi={fmt_chi(r)}")
 d5 = np.array([r['dmD_C']-r['R500']['dmD'] for r in newrecs if r['R500']])
 print(f"R=2000 minus R=500 (search optimism) for dmD_C: mean {d5.mean():+.4f}, range [{d5.min():+.4f},{d5.max():+.4f}]")
+print("Table 9c. Provenance of the new candidates: origin_run = run(s) whose archive contains the point (target/start#evaluation, 1-based); "
+      "selected_by = target floor(s) that selected it")
+for r in sorted(newrecs, key=lambda r: -r['dmD_C']):
+    print(f"  {r['id']:16s} origin_run: {', '.join(f"{o['target']}/{o['start']}#{o['eval']}" for o in r['origin_run']):40s} "
+          f"selected_by: {', '.join(f"{q['target']} ({q['how']})" for q in r['selected_by'])}")
 print(f"\nTable 10. Nine generalized eigenvalues vs (C), new candidates, R={R2}")
 for r in sorted(newrecs, key=lambda r: -r['dmD_C']): print(f"{r['id']:16s} {lam_table_row(r)}")
 
-# --- control: same phases, exactly uniform amplitudes, for each target's search-best (prediction 1) ---------------------
-def runs_of(lab, r): return any(w.startswith(f"run {lab}/") or w == f"archive-best {lab}" for w in r['why'])
+# --- control: same phases, exactly uniform amplitudes, for the best candidate selected for each floor (prediction 1) -----
+def selected_for(lab, r): return any(q['target'] == lab for q in r.get('selected_by', []))     # run result or archive best
+def own_search(lab, r): return any(o['target'] == lab for o in r.get('origin_run', []))       # produced by this target's runs
 sbest = {}
 for lab, l0 in TARGETS:
-    mine = [r for r in newrecs if r['dec'] == 'ok' and (l0 is None or r['mE_C'] >= l0-1e-9) and runs_of(lab, r)]
+    mine = [r for r in newrecs if r['dec'] == 'ok' and (l0 is None or r['mE_C'] >= l0-1e-9) and selected_for(lab, r)]
     if mine: sbest[lab] = max(mine, key=lambda r: r['dmD_C'])
 ctrl = {}
 for lab, r in sbest.items():
     if not np.allclose(r['p'], 0.25): ctrl.setdefault(r['id'], dict(id=f"PO-{r['id']}", a=a_u.tolist(), chi=r['chi'], of=r['id']))
 ctrl = list(ctrl.values()); rawc = eval_many(ctrl, Z2); ctrlrecs = []
 for c, res in zip(ctrl, rawc):
-    r = summarize_s2(c['id'], c['a'], c['chi'], res, ref, R2, SEED2, src='ctrl'); r['why'] = [f"phase-only projection of {c['of']}"]; ctrlrecs.append(r)
+    r = summarize_s2(c['id'], c['a'], c['chi'], res, ref, R2, SEED2, src='ctrl'); r['why'] = [f"phase-only projection of {c['of']}"]
+    r['control_of'] = c['of']; r['origin_run'] = []; r['selected_by'] = []; ctrlrecs.append(r)
 startof = {f"NM-{t[0]}-{t[2]}": t[2] for t in tasks}
 byid = {r['id']: r for r in recs2+newrecs+ctrlrecs}
-print(f"\nTable 9b. Prediction-1 control at R={R2}: gain of each search-best over its start, split into the phase-only projection "
+print(f"\nTable 9b. Prediction-1 control at R={R2}: for the best qualified feasible candidate selected for each floor (selected_by), its gain over its start, split into the phase-only projection "
       "(same chi, p = 1/4) and the remainder (amplitudes + interaction); paired batch se in brackets")
 for c, rc in zip(ctrl, ctrlrecs):
     w_ = byid[c['of']]; st = byid.get(startof.get(c['of'], ''), None)
@@ -142,22 +158,23 @@ print(f"\nTable 11. Empirical Pareto front of the evaluated qualified candidates
       f"(refined {len(recs2)} + new {len(newrecs)-len(ctrlrecs)} + controls {len(ctrlrecs)}): {len(fr)} points")
 for r in fr:
     print(f"  {r['id']:16s} p={fmt_p(r)} chi={fmt_chi(r)} B={r['B']:7.2f} D={r['D']:+6.2f}+-{r['D_se']:.2f} dmD_C={r['dmD_C']:+.3f}({r['dmD_se']:.3f}) mE_C={r['mE_C']:.3f}({r['mE_se']:.4f})")
-print(f"\nTable 12. Per target, R={R2}: best qualified in the pool with m_E^(C) >= lambda0, and best produced by that target's search")
+print(f"\nTable 12. Per target, R={R2}: shared-pool best (any evaluated candidate) with m_E^(C) >= lambda0, and the target's own-search outcome "
+      "(best qualified feasible candidate whose origin_run is one of this target's runs)")
 best = {}; pool_best = []; search_best = []
 for lab, l0 in TARGETS:
     feas = [r for r in okp if l0 is None or r['mE_C'] >= l0-1e-9]; srt = sorted(feas, key=lambda r: -r['dmD_C']); b = srt[0]; best[lab] = b['id']
-    mine = [r for r in newrecs if r['src'] == 'nm' and r['dec'] == 'ok' and (l0 is None or r['mE_C'] >= l0-1e-9) and runs_of(lab, r)]
+    mine = [r for r in newrecs if r['src'] == 'nm' and r['dec'] == 'ok' and (l0 is None or r['mE_C'] >= l0-1e-9) and own_search(lab, r)]
     starts = [r for r in recs2 if r['id'] in {t[2] for t in tasks if t[0] == lab} and r['dec'] == 'ok' and (l0 is None or r['mE_C'] >= l0-1e-9)]
     sb = max(mine, key=lambda r: r['dmD_C']) if mine else None; st = max(starts, key=lambda r: r['dmD_C']) if starts else None
     pool_best.append(b['dmD_C']); search_best.append(sb['dmD_C'] if sb else np.nan)
     print(f"  lambda0={lab:4s}: pool best {b['id']:16s} dmD_C={b['dmD_C']:+.3f} (se {b['dmD_se']:.3f}) mE_C={b['mE_C']:.3f} (se {b['mE_se']:.4f}) D={b['D']:+.2f}+-{b['D_se']:.2f} "
           f"runner-up {srt[1]['id']} {srt[1]['dmD_C']:+.3f} (diff {b['dmD_C']-srt[1]['dmD_C']:+.4f}, paired se {diff_se(b, srt[1]):.4f})")
-    print(f"               search best (qualified, feasible, from this target's runs) "
-          + (f"{sb['id']} dmD_C={sb['dmD_C']:+.3f} mE_C={sb['mE_C']:.3f}" if sb else "none")
+    print(f"               own-search outcome (origin_run in this target's runs) "
+          + (f"{sb['id']} dmD_C={sb['dmD_C']:+.3f} mE_C={sb['mE_C']:.3f} [origin {', '.join(o['target']+'/'+o['start']+'#'+str(o['eval']) for o in sb['origin_run'])}]" if sb else "none")
           + (f"; best feasible start {st['id']} dmD_C={st['dmD_C']:+.3f}; gain {sb['dmD_C']-st['dmD_C']:+.4f} (paired se {diff_se(sb, st):.4f})" if sb and st else ""))
-print(f"P2 (R={R2}): pool max dmD_C for lambda0 = none/0.3/0.5/0.7: {np.round(pool_best, 3).tolist()} -> non-increasing: {all(np.diff(pool_best) <= 0)}")
+print(f"P2 (R={R2}): shared-pool best dmD_C for lambda0 = none/0.3/0.5/0.7: {np.round(pool_best, 3).tolist()} -> non-increasing: {all(np.diff(pool_best) <= 0)}")
 sbv = np.array(search_best); fin = np.isfinite(sbv)
-print(f"    per-target search outcomes: {np.round(sbv, 3).tolist()} -> non-increasing over the targets with an outcome: {all(np.diff(sbv[fin]) <= 0)}")
+print(f"    per-target own-search outcomes (origin_run): {np.round(sbv, 3).tolist()} -> non-increasing over the targets with an outcome: {all(np.diff(sbv[fin]) <= 0)}")
 lam_grid = np.round(np.arange(0, 1.0001, 0.05), 2)
 Dst = [max(r['dmD_C'] for r in okp if r['mE_C'] >= l-1e-9) for l in lam_grid]
 print("    pool max dmD_C over qualified with mE_C >= lambda0 (grid): " + ', '.join(f"{l:.2f}:{d_:+.3f}" for l, d_ in zip(lam_grid, Dst)) + f" -> non-increasing: {all(np.diff(Dst) <= 0)}")

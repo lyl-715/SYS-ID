@@ -14,7 +14,11 @@ check_trigger()
 s1 = []
 for k in range(5): s1 += json.load(open(f'mc85_scan_part{k}.json'))['results']
 s1 += json.load(open('mc85_amp20.json'))
-lhs_idx = {0: range(0, 500)}; lhs_idx.update({k: range(500+(k-2)*250, 500+(k-1)*250) for k in range(2, 12)})
+# LHS part convention (mc85_lhs.py): part 0 = indices 0-499; part k = 2..11 = indices 250k..250k+249; there is no part 1
+lhs_idx = {0: range(0, 500)}; lhs_idx.update({k: range(250*k, 250*(k+1)) for k in range(2, 12)})
+assert sorted(i for rg in lhs_idx.values() for i in rg) == list(range(3000)), "LHS parts must cover indices 0-2999 exactly once"
+assert not os.path.exists('mc85_lhs_part1.json'), "mc85_lhs_part1.json would overlap part 0 (indices 250-499); see mc85_lhs.py"
+
 lhs = []
 for k, rg in lhs_idx.items():
     part = json.load(open(f'mc85_lhs_part{k}.json')); assert len(part) == len(rg)
@@ -23,6 +27,7 @@ for k, rg in lhs_idx.items():
 rs = np.random.default_rng(20261011); P = rs.dirichlet(np.ones(4), size=3000); Ul = np.zeros((3000, 4))
 for m in range(4): Ul[:, m] = (rs.permutation(3000)+rs.random(3000))/3000*2*np.pi
 mis = max(max(np.abs(np.array(r['a'])-np.sqrt(P[r['lhs_index']])).max(), np.abs(np.array(r['chi'])-Ul[r['lhs_index']]).max()) for r in lhs)
+assert mis == 0, "stored LHS inputs differ from the regenerated design / part convention"
 print(f"loaded stage-1: {len(s1)} (amp {sum(r['tag']=='amp' for r in s1)}, phase {sum(r['tag']=='phase' for r in s1)}, amp20 {sum(r['tag']=='amp20' for r in s1)}); "
       f"LHS: {len(lhs)}; max |stored - regenerated LHS design| = {mis:.1e}")
 
@@ -107,12 +112,15 @@ print(f"    front points with mE_C<0.1: {len(lo)}, dmD_C span {max(r['dmD_C'] fo
 L = [r for r in merged if r['src'] == 'lhs']; chiL = np.array([r['chi'] for r in L]); DmL = np.array([r['dmD_C'] for r in L]); BL = np.array([r['B'] for r in L])
 def eta2(y, g): return sum(y[g == v].size*(y[g == v].mean()-y.mean())**2 for v in np.unique(g))/y.size/y.var()
 def bins(v, nb=6): return np.floor(np.mod(v, TWO_PI)/(TWO_PI/nb)).astype(int)
-print("P3 (not predicted; read off). LHS cloud, 6 bins: eta^2 of dmD_C / of B on")
+print("P3 (not predicted; read off). LHS cloud, 6 equal-width bins on [0,2pi): eta^2 of dmD_C / of B on")
 for lab, v in [('chi1', chiL[:, 0]), ('chi2', chiL[:, 1]), ('chi3', chiL[:, 2]), ('chi4', chiL[:, 3]), ('chi3-chi4', chiL[:, 2]-chiL[:, 3]),
                ('chi1-chi2', chiL[:, 0]-chiL[:, 1]), ('chi1-chi4', chiL[:, 0]-chiL[:, 3]), ('chi2-chi3', chiL[:, 1]-chiL[:, 2])]:
     print(f"    {lab:10s} eta2(dmD)={eta2(DmL, bins(v)):.3f}  eta2(B)={eta2(BL, bins(v)):.3f}")
 pL = np.array([r['p'] for r in L])
-print(f"    LHS: eta2(dmD) on p1 sextile-bins = {eta2(DmL, np.minimum((pL[:, 0]*6).astype(int), 5)):.3f}; corr(p1, dmD)={np.corrcoef(pL[:, 0], DmL)[0, 1]:.3f}, corr(p1, B)={np.corrcoef(pL[:, 0], BL)[0, 1]:.3f}")
+g_eq = np.minimum((pL[:, 0]*6).astype(int), 5)                                   # six equal-width bins on [0,1]
+print(f"    LHS: eta2(dmD) on p1, six equal-width bins on [0,1] (counts {np.bincount(g_eq, minlength=6).tolist()}) = {eta2(DmL, g_eq):.3f}; corr(p1, dmD)={np.corrcoef(pL[:, 0], DmL)[0, 1]:.3f}, corr(p1, B)={np.corrcoef(pL[:, 0], BL)[0, 1]:.3f}")
+g_sx = np.searchsorted(np.quantile(pL[:, 0], np.arange(1, 6)/6), pL[:, 0], side='right')   # six sextile (equal-count) bins
+print(f"    LHS: eta2(dmD) on p1, six sextile bins (counts {np.bincount(g_sx, minlength=6).tolist()}) = {eta2(DmL, g_sx):.3f}")
 top = sorted(ok, key=lambda r: -r['dmD_C'])[:10]
 print("    top-10 qualified: (chi3-chi4) mod 2pi and ||p - 1/4||_1")
 for r in top: print(f"     {r['id']:6s} dmD_C={r['dmD_C']:+.3f} mE_C={r['mE_C']:.3f} chi3-chi4={np.mod(r['chi'][2]-r['chi'][3], TWO_PI):.3f} ||p-1/4||_1={np.abs(np.array(r['p'])-0.25).sum():.3f}")

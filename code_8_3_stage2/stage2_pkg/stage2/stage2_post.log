@@ -78,7 +78,7 @@ P2: max dmD_C over qualified with mE_C >= lambda0:
      P4055(+0.055,0.666) -> P3533(+0.028,0.679): slope -0.48 per nat
      P3533(+0.028,0.679) -> UNIF(+0.000,1.000): slope -11.62 per nat
     front points with mE_C<0.1: 2, dmD_C span 0.026 nat; with mE_C>=0.6: 4, dmD_C span 0.171 nat, mE_C span 0.359
-P3 (not predicted; read off). LHS cloud, 6 bins: eta^2 of dmD_C / of B on
+P3 (not predicted; read off). LHS cloud, 6 equal-width bins on [0,2pi): eta^2 of dmD_C / of B on
     chi1       eta2(dmD)=0.000  eta2(B)=0.001
     chi2       eta2(dmD)=0.002  eta2(B)=0.001
     chi3       eta2(dmD)=0.001  eta2(B)=0.002
@@ -87,7 +87,8 @@ P3 (not predicted; read off). LHS cloud, 6 bins: eta^2 of dmD_C / of B on
     chi1-chi2  eta2(dmD)=0.002  eta2(B)=0.001
     chi1-chi4  eta2(dmD)=0.001  eta2(B)=0.004
     chi2-chi3  eta2(dmD)=0.000  eta2(B)=0.002
-    LHS: eta2(dmD) on p1 sextile-bins = 0.342; corr(p1, dmD)=0.488, corr(p1, B)=0.955
+    LHS: eta2(dmD) on p1, six equal-width bins on [0,1] (counts [1232, 869, 517, 281, 93, 8]) = 0.342; corr(p1, dmD)=0.488, corr(p1, B)=0.955
+    LHS: eta2(dmD) on p1, six sextile bins (counts [500, 500, 500, 500, 500, 500]) = 0.444
     top-10 qualified: (chi3-chi4) mod 2pi and ||p - 1/4||_1
      P5014  dmD_C=+0.597 mE_C=0.045 chi3-chi4=3.142 ||p-1/4||_1=0.000
      P5514  dmD_C=+0.571 mE_C=0.044 chi3-chi4=3.142 ||p-1/4||_1=0.000
@@ -147,4 +148,4 @@ Table 3. Selected for refinement: 40 candidates (F1 front 11, F2 second layer 13
   L0633  lhs   p=(0.164,0.211,0.269,0.356) chi=(0.377,1.550,4.824,4.758) B=298.82 D=-17.68+-0.21 ok    dmD_C=-0.427 mE_C=0.419 dmD_B=+2.621  [FL]
   L2290  lhs   p=(0.237,0.303,0.188,0.273) chi=(4.847,3.013,0.657,0.695) B=296.29 D=-20.21+-0.22 ok    dmD_C=-0.518 mE_C=0.431 dmD_B=+2.531  [FL]
   L0818  lhs   p=(0.167,0.455,0.176,0.201) chi=(3.610,6.235,3.195,3.269) B=290.26 D=-26.24+-0.23 ok    dmD_C=-1.036 mE_C=0.441 dmD_B=+2.013  [FL]
-RUNTIME stage2_post	started 2026-10-10 13:02:45	elapsed 5.3 s (0.09 min)	4458 candidates merged, 40 selected
+RUNTIME stage2_post	started 2026-10-10 16:22:46	elapsed 6.4 s (0.11 min)	4458 candidates merged, 40 selected

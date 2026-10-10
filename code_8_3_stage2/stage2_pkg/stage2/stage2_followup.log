@@ -11,7 +11,7 @@ UNIF               +0.000  0.000  0.000   +0.000    +0.000% ok     (qualifies by
 NM-none-P5450      -0.960  0.045  0.089   +0.871    +0.275% ok   
 P5014              -3.491  0.043  0.087   +3.405    +1.074% ok   
 
-batch 3 evaluated in 10 s; reference (C) uniform: B_u = 316.813 +- 0.035 (se)
+batch 3 evaluated in 7 s; reference (C) uniform: B_u = 316.813 +- 0.035 (se)
 Table F1b. Paired 8.3.6(g) decision on batch 3 (R=4000, seed 20261015, same draws for the candidates and the reference); batch-1 decision for comparison (not combined)
 id                      B        D     se   margin margin/B_u dec   |      dmD_C (se)    mE_C | batch 1:         D +- se dec  
 NM-0.3-P4312      316.565   -0.248  0.048   +0.152    +0.048% ok    |  +0.436 (0.005)  0.4209 |  -0.302 +- 0.049 ok   
@@ -22,7 +22,7 @@ decisions on batch 3: {'NM-0.3-P4312': 'ok', 'AB-0.5': 'ok', 'NM-0.7-UNIF': 'ok'
 
 === independent bias check: batch 4, seed 20261016, R=4000; candidates ['NM-none-P5514', 'AB-0.5']; CRLB from batch 1 (seed 20261013) ===
 
-batch 4 (independent bias check): 2x4000 ML fits in 37 s
+batch 4 (independent bias check): 2x4000 ML fits in 26 s
 
 ######## NM-none-P5514 [best unconstrained; front region A; best non-uniform amplitudes]: converged 4000/4000, mean Newton iterations 4.0; CRLB from batch 1 J (seed 20261013)
 
@@ -92,7 +92,7 @@ Table F2a. ML covariance check, batch 4 (independent bias check) (R=4000, seed 2
 id                    conv sd ratio min    max max|t| logdet diff max|lam-1| W-tail      T2  p(T2) | LS-sent logdet diff
 NM-none-P5514    4000/4000        0.986  1.017   2.75      +0.055     0.0799  0.700   17.66  0.040 | +2.011
 AB-0.5           4000/4000        0.986  1.020   2.37      +0.040     0.0798  0.705    8.39  0.497 | +1.995
-batch 4 done in 41 s
+batch 4 done in 30 s
 
 Table F2b. Im1 bias and joint bias, batch 4 (R=4000, seed 20261016) next to batch 2 (R=4000, seed 20261014); each batch on its own, not combined; CRLB from batch 1 (seed 20261013) in both
 id                batch      seed      T2  p(T2) reject 5% Im1 bias/sd  Im1 t sd ratio min    max
@@ -102,13 +102,53 @@ AB-0.5                2  20261014   28.43  0.001       yes      -0.050  -3.15   
 AB-0.5                4  20261016    8.39  0.497        no      -0.038  -2.37        0.986  1.020
 5%-level rejection of zero joint bias on batch 4: ['NM-none-P5514'] (batch 2 rejected for both NM-none-P5514 and AB-0.5)
 
-Table F3. Window mean AC power over T = 5.0 s vs long-run power, final candidates (deterministic; P_in, P_out as in Table G)
-id               P_in window long-run sum a^2/2  ratio P_in/P_in(UNIF) P_out window Table G P_in chi3-chi4
-NM-none-P5514         0.3668             0.5000  0.734           0.520   1.5286e-03       0.3668     3.173
-NM-0.3-P4312          0.6364             0.5000  1.273           0.903   1.3376e-03       0.6364     5.931
-AB-0.5                0.6753             0.5000  1.351           0.958   1.3315e-03       0.6753     6.160
-NM-0.7-UNIF           0.7033             0.5000  1.407           0.998   1.5100e-03       0.7033     0.001
-UNIF                  0.7051             0.5000  1.410           1.000   1.5137e-03       0.7051     0.000
-NM-none-P5450         0.4308             0.5000  0.862           0.611   1.5226e-03       0.4308     5.171
-P5014                 0.3558             0.5000  0.712           0.505   1.4910e-03       0.3558     3.142
-RUNTIME stage2_followup	started 2026-10-10 14:06:16	elapsed 51.7 s (0.86 min)	batch 3 (seed 20261015) decisions for 4 inputs, batch 4 (seed 20261016) ML check for 2, window power
+Table F3. Window mean AC power over T = 5.0 s (clock-grid average (1/K) sum_k u_ac(t_k)^2, as in Table G) vs long-run power, final candidates (deterministic); check column: continuous (1/T) int u_ac^2 dt
+id               P_in window long-run sum a^2/2  ratio P_in/P_in(UNIF) P_out window Table G P_in chi3-chi4 P_in continuous
+NM-none-P5514         0.3668             0.5000  0.734           0.520   1.5286e-03       0.3668     3.173        0.366775
+NM-0.3-P4312          0.6364             0.5000  1.273           0.903   1.3376e-03       0.6364     5.931        0.636211
+AB-0.5                0.6753             0.5000  1.351           0.958   1.3315e-03       0.6753     6.160        0.675156
+NM-0.7-UNIF           0.7033             0.5000  1.407           0.998   1.5100e-03       0.7033     0.001        0.703556
+UNIF                  0.7051             0.5000  1.410           1.000   1.5137e-03       0.7051     0.000        0.705339
+NM-none-P5450         0.4308             0.5000  0.862           0.611   1.5226e-03       0.4308     5.171        0.430913
+P5014                 0.3558             0.5000  0.712           0.505   1.4910e-03       0.3558     3.142        0.355731
+  grid vs continuous, UNIF: 0.705086 vs 0.705339; max |grid - continuous| over the final candidates = 0.000253
+
+Table F4. Event rate q_k at the turning points of x_k, t > 1 s, batch 1 (R=4000, seed 20261013); 'at tp' = q_k at the clock point where x_k changes direction, 'min +-5' = smallest q_k within +-5 clock steps
+id               n tp q at tp: min     max min +-5: min     max | mean q_k
+NM-none-P5514       5       0.0022  0.0045       0.0010  0.0018 |   0.0633
+NM-0.3-P4312        8       0.0022  0.0045       0.0005  0.0018 |   0.0633
+AB-0.5              8       0.0018  0.0057       0.0003  0.0018 |   0.0633
+NM-0.7-UNIF        10       0.0018  0.0053       0.0008  0.0018 |   0.0633
+UNIF               12       0.0013  0.0053       0.0003  0.0018 |   0.0634
+NM-none-P5450       5       0.0015  0.0053       0.0005  0.0015 |   0.0632
+P5014               5       0.0025  0.0060       0.0005  0.0013 |   0.0627
+  all 53 turning points: q at tp in [0.0013, 0.0060]; min within +-5 steps in [0.0003, 0.0018]; q resolution 1/R = 0.00025
+
+Table F5. Bias size, ML estimates: per-parameter max_i |b_i|/s_i (and its MSE share max_i (b_i/s_i)^2), joint standardised bias sqrt(T^2/R) and T^2/R = b^T S^-1 b = largest (c^T b)^2 / c^T S c over linear combinations c (R=4000)
+id               batch max|b_i|/s_i param max (b_i/s_i)^2 sqrt(T2/R)     T2/R  p(T2)
+NM-none-P5514        2        0.038   Im1           0.14%     0.0710    0.50%  0.017
+NM-0.3-P4312         2        0.026   Re4           0.07%     0.0496    0.25%  0.366
+AB-0.5               2        0.050   Im1           0.25%     0.0843    0.71%  0.001
+NM-0.7-UNIF          2        0.030   Im1           0.09%     0.0610    0.37%  0.096
+UNIF                 2        0.030   Im1           0.09%     0.0438    0.19%  0.571
+NM-none-P5450        2        0.045   Im1           0.20%     0.0607    0.37%  0.100
+P5014                2        0.047   Im1           0.23%     0.0545    0.30%  0.223
+NM-none-P5514        4        0.043   Im1           0.19%     0.0664    0.44%  0.040
+AB-0.5               4        0.038   Im1           0.14%     0.0458    0.21%  0.497
+
+Table F6. Worst combination a = J_C v_min (batch 1): FIM ratio 1/lambda_min vs empirical variance ratios of a^T theta_hat from the batch-2 ML samples (R=4000, seed 20261014; common draws for all candidates)
+id               FIM 1/lam_min aS_u a / aS_UNIF a aS_u a / aJ_C^-1 a
+NM-none-P5514            22.21              23.08              22.78
+NM-0.3-P4312              2.38               2.39               2.39
+AB-0.5                    1.88               1.82               1.84
+NM-0.7-UNIF               1.43               1.33               1.41
+UNIF                      1.00               1.00               0.99
+NM-none-P5450             8.29               8.31               8.24
+P5014                    22.21              22.35              22.06
+  relative se of one sample variance at R=4000 (Gaussian): sqrt(2/(R-1)) = 0.0224
+
+Table F7. Region-A Nelder-Mead runs (start P5014) under lambda0 >= 0.3: largest m_E^(C) over all evaluations of the run (R=500 search values)
+  lambda0=0.3  start P5014: 150 evaluations, max m_E = 0.0483 -> floor violated throughout: True
+  lambda0=0.5  start P5014: 150 evaluations, max m_E = 0.0483 -> floor violated throughout: True
+  lambda0=0.7  start P5014: 150 evaluations, max m_E = 0.0483 -> floor violated throughout: True
+RUNTIME stage2_followup	started 2026-10-10 16:28:59	elapsed 37.2 s (0.62 min)	batch 3 (seed 20261015) decisions for 4 inputs, batch 4 (seed 20261016) ML check for 2, window power

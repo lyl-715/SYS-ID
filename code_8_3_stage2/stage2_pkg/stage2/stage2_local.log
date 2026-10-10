@@ -16,7 +16,7 @@ R=2000 front (stage2_refine.py) by region: A: P5514,P5014,P3425; B: P5450,P4534,
   target lambda0=0.7  region B: start P4312  (R=2000: dmD_C=+0.440, mE_C=0.146, penalised f=+10.638)
   target lambda0=0.7  region C: start UNIF   (R=2000: dmD_C=+0.000, mE_C=1.000, penalised f=+0.000)
 
-12 Nelder-Mead runs, 1800 evaluations at R=500, wall 221 s
+12 Nelder-Mead runs, 1800 evaluations at R=500, wall 175 s
 
 Table 8. Nelder-Mead runs (values at R=500, seed 20261010; f = penalised objective of the run's target)
 target start  nfev  f(start)    f(end) | end:   dmD_C   mE_C       D +- se  p, chi (mod 2pi)
@@ -48,6 +48,17 @@ NM-0.7-P4312      313.91   -2.99 +- 0.07 ok     +0.232 (0.006)  0.622 (0.0005) |
 NM-0.5-P3022      316.44   -0.47 +- 0.07 ok     +0.206 (0.010)  0.599 (0.0005) |   +0.257  0.601  p=(0.249,0.243,0.260,0.247) chi=(3.155,6.264,2.077,2.100)
 NM-0.7-UNIF       316.54   -0.36 +- 0.07 ok     +0.024 (0.010)  0.702 (0.0013) |   +0.066  0.707  p=(0.246,0.264,0.243,0.246) chi=(0.284,6.220,0.001,6.282)
 R=2000 minus R=500 (search optimism) for dmD_C: mean -0.0367, range [-0.0524,-0.0143]
+Table 9c. Provenance of the new candidates: origin_run = run(s) whose archive contains the point (target/start#evaluation, 1-based); selected_by = target floor(s) that selected it
+  NM-none-P5514    origin_run: none/P5514#136                           selected_by: none (run result), none (archive best (all runs))
+  NM-0.3-P5014     origin_run: 0.3/P5014#114, 0.5/P5014#114, 0.7/P5014#114 selected_by: 0.3 (run result), 0.5 (run result), 0.7 (run result)
+  NM-none-P5450    origin_run: none/P5450#146                           selected_by: none (run result)
+  NM-0.3-P4312     origin_run: 0.3/P4312#141                            selected_by: 0.3 (run result), 0.3 (archive best (all runs))
+  AB-0.5           origin_run: 0.3/P4312#42                             selected_by: 0.5 (archive best (all runs))
+  NM-none-P3022    origin_run: none/P3022#143, 0.3/P3022#143            selected_by: none (run result), 0.3 (run result)
+  NM-0.5-P4312     origin_run: 0.5/P4312#140                            selected_by: 0.5 (run result)
+  NM-0.7-P4312     origin_run: 0.7/P4312#147                            selected_by: 0.7 (run result)
+  NM-0.5-P3022     origin_run: 0.5/P3022#130                            selected_by: 0.5 (run result)
+  NM-0.7-UNIF      origin_run: 0.7/UNIF#150                             selected_by: 0.7 (run result), 0.7 (archive best (all runs))
 
 Table 10. Nine generalized eigenvalues vs (C), new candidates, R=2000
 NM-none-P5514      0.045   0.053   0.858   1.040   1.100   1.250   1.471  20.828  22.381
@@ -61,7 +72,7 @@ NM-0.7-P4312       0.622   0.630   0.756   0.843   0.998   1.163   1.240   1.719
 NM-0.5-P3022       0.599   0.633   0.840   0.881   1.052   1.130   1.363   1.492   1.811
 NM-0.7-UNIF        0.702   0.885   0.903   0.947   1.013   1.057   1.148   1.180   1.331
 
-Table 9b. Prediction-1 control at R=2000: gain of each search-best over its start, split into the phase-only projection (same chi, p = 1/4) and the remainder (amplitudes + interaction); paired batch se in brackets
+Table 9b. Prediction-1 control at R=2000: for the best qualified feasible candidate selected for each floor (selected_by), its gain over its start, split into the phase-only projection (same chi, p = 1/4) and the remainder (amplitudes + interaction); paired batch se in brackets
   NM-none-P5514    dmD_C=+0.689 | PO-NM-none-P5514    dmD_C=+0.678 mE_C=0.045 D=-1.40+-0.06 ok    | amplitude part (winner - projection) +0.0112 (0.0069); start P5514 +0.569: phase part (projection - start) +0.1089 (0.0062)
   NM-0.3-P4312     dmD_C=+0.426 | PO-NM-0.3-P4312     dmD_C=+0.744 mE_C=0.437 D=+14.82+-0.07 over  | amplitude part (winner - projection) -0.3182 (0.0074); start P4312 +0.440: phase part (projection - start) +0.3045 (0.0068)
   AB-0.5           dmD_C=+0.383 | PO-AB-0.5           dmD_C=+0.720 mE_C=0.580 D=+14.94+-0.07 over  | amplitude part (winner - projection) -0.3374 (0.0056)
@@ -88,17 +99,17 @@ Table 11. Empirical Pareto front of the evaluated qualified candidates, R=2000 (
   NM-0.7-UNIF      p=(0.246,0.264,0.243,0.246) chi=(0.284,6.220,0.001,6.282) B= 316.54 D= -0.36+-0.07 dmD_C=+0.024(0.010) mE_C=0.702(0.0013)
   UNIF             p=(0.250,0.250,0.250,0.250) chi=(0.000,0.000,0.000,0.000) B= 316.90 D= +0.00+-0.00 dmD_C=+0.000(0.000) mE_C=1.000(0.0000)
 
-Table 12. Per target, R=2000: best qualified in the pool with m_E^(C) >= lambda0, and best produced by that target's search
+Table 12. Per target, R=2000: shared-pool best (any evaluated candidate) with m_E^(C) >= lambda0, and the target's own-search outcome (best qualified feasible candidate whose origin_run is one of this target's runs)
   lambda0=none: pool best NM-none-P5514    dmD_C=+0.689 (se 0.008) mE_C=0.045 (se 0.0001) D=-0.46+-0.06 runner-up PO-NM-none-P5514 +0.678 (diff +0.0112, paired se 0.0069)
-               search best (qualified, feasible, from this target's runs) NM-none-P5514 dmD_C=+0.689 mE_C=0.045; best feasible start P5514 dmD_C=+0.569; gain +0.1201 (paired se 0.0071)
+               own-search outcome (origin_run in this target's runs) NM-none-P5514 dmD_C=+0.689 mE_C=0.045 [origin none/P5514#136]; best feasible start P5514 dmD_C=+0.569; gain +0.1201 (paired se 0.0071)
   lambda0=0.3 : pool best NM-0.3-P4312     dmD_C=+0.426 (se 0.009) mE_C=0.421 (se 0.0004) D=-0.31+-0.07 runner-up AB-0.5 +0.383 (diff +0.0430, paired se 0.0075)
-               search best (qualified, feasible, from this target's runs) NM-0.3-P4312 dmD_C=+0.426 mE_C=0.421; best feasible start P3022 dmD_C=+0.207; gain +0.2192 (paired se 0.0103)
+               own-search outcome (origin_run in this target's runs) NM-0.3-P4312 dmD_C=+0.426 mE_C=0.421 [origin 0.3/P4312#141]; best feasible start P3022 dmD_C=+0.207; gain +0.2192 (paired se 0.0103)
   lambda0=0.5 : pool best AB-0.5           dmD_C=+0.383 (se 0.011) mE_C=0.531 (se 0.0004) D=-0.52+-0.07 runner-up NM-0.5-P4312 +0.240 (diff +0.1435, paired se 0.0063)
-               search best (qualified, feasible, from this target's runs) AB-0.5 dmD_C=+0.383 mE_C=0.531; best feasible start P3022 dmD_C=+0.207; gain +0.1762 (paired se 0.0081)
+               own-search outcome (origin_run in this target's runs) NM-0.5-P4312 dmD_C=+0.240 mE_C=0.510 [origin 0.5/P4312#140]; best feasible start P3022 dmD_C=+0.207; gain +0.0328 (paired se 0.0061)
   lambda0=0.7 : pool best NM-0.7-UNIF      dmD_C=+0.024 (se 0.010) mE_C=0.702 (se 0.0013) D=-0.36+-0.07 runner-up UNIF +0.000 (diff +0.0244, paired se 0.0098)
-               search best (qualified, feasible, from this target's runs) NM-0.7-UNIF dmD_C=+0.024 mE_C=0.702; best feasible start UNIF dmD_C=+0.000; gain +0.0244 (paired se 0.0098)
-P2 (R=2000): pool max dmD_C for lambda0 = none/0.3/0.5/0.7: [0.689, 0.426, 0.383, 0.024] -> non-increasing: True
-    per-target search outcomes: [0.689, 0.426, 0.383, 0.024] -> non-increasing over the targets with an outcome: True
+               own-search outcome (origin_run in this target's runs) NM-0.7-UNIF dmD_C=+0.024 mE_C=0.702 [origin 0.7/UNIF#150]; best feasible start UNIF dmD_C=+0.000; gain +0.0244 (paired se 0.0098)
+P2 (R=2000): shared-pool best dmD_C for lambda0 = none/0.3/0.5/0.7: [0.689, 0.426, 0.383, 0.024] -> non-increasing: True
+    per-target own-search outcomes (origin_run): [0.689, 0.426, 0.24, 0.024] -> non-increasing over the targets with an outcome: True
     pool max dmD_C over qualified with mE_C >= lambda0 (grid): 0.00:+0.689, 0.05:+0.645, 0.10:+0.645, 0.15:+0.426, 0.20:+0.426, 0.25:+0.426, 0.30:+0.426, 0.35:+0.426, 0.40:+0.426, 0.45:+0.383, 0.50:+0.383, 0.55:+0.232, 0.60:+0.232, 0.65:+0.040, 0.70:+0.024, 0.75:+0.000, 0.80:+0.000, 0.85:+0.000, 0.90:+0.000, 0.95:+0.000, 1.00:+0.000 -> non-increasing: True
     front shape, segment slopes d mE / d dmD along the R=2000 front:
      NM-none-P5514(+0.689,0.045) -> PO-NM-none-P5514(+0.678,0.045): -0.02 per nat
@@ -130,4 +141,4 @@ P3 (read off), top-8 qualified in the pool: (chi3-chi4) mod 2pi, ||p-1/4||_1
    P5014            dmD_C=+0.569 mE_C=0.045 chi3-chi4=3.142 ||p-1/4||_1=0.000 p=(0.250,0.250,0.250,0.250)
    P3425            dmD_C=+0.561 mE_C=0.045 chi3-chi4=3.142 ||p-1/4||_1=0.000 p=(0.250,0.250,0.250,0.250)
    P0152            dmD_C=+0.550 mE_C=0.045 chi3-chi4=3.142 ||p-1/4||_1=0.000 p=(0.250,0.250,0.250,0.250)
-RUNTIME stage2_local	started 2026-10-10 13:17:39	elapsed 232.2 s (3.87 min)	12 NM runs, 10 new candidates + 4 controls at R=2000
+RUNTIME stage2_local	started 2026-10-10 16:22:59	elapsed 184.3 s (3.07 min)	12 NM runs, 10 new candidates + 4 controls at R=2000

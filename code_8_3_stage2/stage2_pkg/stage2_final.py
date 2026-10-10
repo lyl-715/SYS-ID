@@ -7,7 +7,7 @@ Batch 1 (seed 20261013, R=4000, the same draws for all candidates and the refere
 uniform, Delta m_D^(C),(B) with paired batch se (10x400), nine generalized eigenvalues vs (C), worst combination
 a = J_C v_min with v_min^T J_C v_min = 1 (parameter order G0,Re1,Im1,Re2,Im2,Re3,Im3,Re4,Im4; sign: largest |a_i| > 0),
 event rate per clock point q_k = (1/R) sum_r eps_k^(r) saved with x_k and w_k, gap quantiles (clock steps),
-window mean AC power of input and output. q_k summaries: mean over all k; p99 and max over k>=1 (the first clock point
+window mean AC power of input and output (clock-grid average (1/K) sum_k u_ac(t_k)^2, approximating (1/T) int u_ac^2). q_k summaries: mean over all k; p99 and max over k>=1 (the first clock point
 is always an event).
 Batch 2 (seed 20261014, R=4000): ML covariance check as in mc84.py (functions nll_grad_hess, mle, report exec'd verbatim
 from mc84.py with H = the candidate's regressors; CRLB = inverse of the batch-1 J of the same candidate): sd ratios with
@@ -72,11 +72,12 @@ print(f"{'id':16s} " + ' '.join(f"{n:>7s}" for n in PNAMES) + f" {'1/lam_min':>9
 for r in b1: print(f"{r['id']:16s} " + ' '.join(f"{v:+7.3f}" for v in r['a_worst']) + f" {1/r['mE_C']:9.2f} {r['crlb_ratio_worst']:7.2f} {r['vJv']:6.3f}")
 print("Table 15b. Same directions normalised to unit Euclidean norm (as in mc837.py), for reading which parameters dominate")
 for r in b1: print(f"{r['id']:16s} " + ' '.join(f"{v:+7.3f}" for v in np.array(r['a_worst'])/np.linalg.norm(r['a_worst'])))
-print(f"\nTable 16. Gaps (clock steps, pooled over R={R4}), event rate q_k, window mean AC power (batch 1)")
-print(f"{'id':16s} {'gap':>6s} {'min':>4s} {'q01':>4s} {'q05':>4s} {'q25':>4s} {'q50':>4s} {'q75':>4s} {'q95':>4s} {'q99':>4s} {'max':>5s} | {'q_mean':>7s} {'q_p99':>6s} {'q_max':>6s} | {'P_in':>7s} {'P_out':>9s}")
+print(f"\nTable 16. Gaps (clock steps), event rate q_k, window mean AC power (clock-grid average) (batch 1). Gap conventions: "
+      f"'run-mean' = mean over runs of each run's mean gap (as in stage 1); 'pooled' = mean of all gaps pooled over R={R4}; quantiles from the pooled gaps")
+print(f"{'id':16s} {'run-mean':>8s} {'pooled':>6s} {'min':>4s} {'q01':>4s} {'q05':>4s} {'q25':>4s} {'q50':>4s} {'q75':>4s} {'q95':>4s} {'q99':>4s} {'max':>5s} | {'q_mean':>7s} {'q_p99':>6s} {'q_max':>6s} | {'P_in':>7s} {'P_out':>9s}")
 for r in b1:
     g = r['gapq']
-    print(f"{r['id']:16s} {r['gap']:6.2f} {g['min']:4d} {g['q01']:4d} {g['q05']:4d} {g['q25']:4d} {g['q50']:4d} {g['q75']:4d} {g['q95']:4d} {g['q99']:4d} {g['max']:5d} | "
+    print(f"{r['id']:16s} {r['gap']:8.2f} {g['mean']:6.2f} {g['min']:4d} {g['q01']:4d} {g['q05']:4d} {g['q25']:4d} {g['q50']:4d} {g['q75']:4d} {g['q95']:4d} {g['q99']:4d} {g['max']:5d} | "
           f"{r['q_mean']:7.4f} {r['q_p99']:6.3f} {r['q_max']:6.3f} | {r['Ein']:7.4f} {r['Eout']:9.3e}")
 print("Table 16b. Input descriptors of the final candidates (prediction 3): p, ||p - 1/4||_1, (chi3 - chi4) mod 2pi")
 for r in b1: print(f"{r['id']:16s} p={fmt_p(r)} ||p-1/4||_1={np.abs(np.array(r['p'])-0.25).sum():.3f} chi3-chi4={np.mod(r['chi'][2]-r['chi'][3], TWO_PI):.3f}")
