@@ -133,7 +133,7 @@ def summarize_s2(cid, a, chi, res, ref, R_, seed_, src=''):
              B=float(res['cnt'].mean()), D=float(Dr.mean()), D_se=float(Dr.std(ddof=1)/np.sqrt(R_)),
              dmD_C=float(ld-ldC), dmD_B=float(ld-ldB), dmD_batch=float(dlb.mean()), dmD_se=float(dlb.std(ddof=1)/np.sqrt(nb)),
              mE_C=float(lamC[0]), mE_B=float(lamB[0]), lamC=lamC.tolist(),
-             gap=res['gap'], gapq=hist_quantiles(res['ghist']), Ein=res['Ein'], Eout=res['Eout'])
+             gap=res['gap'], gapq=hist_quantiles(res['ghist']), Ein=res['Ein'], Eout=res['Eout'], ldb=res['ldb'].tolist())
     r['dec'] = qual(r)
     return r
 
@@ -152,3 +152,21 @@ def fmt_p(r): return '(' + ','.join(f"{v:.3f}" for v in np.array(r['a'])**2) + '
 def fmt_chi(r): return '(' + ','.join(f"{v:.3f}" for v in np.mod(r['chi'], TWO_PI)) + ')'
 
 def pool(n=4): return mp.get_context('fork').Pool(n)
+
+
+# --- parallel evaluation of many candidates on one block of common draws (fork: workers share Zb) --------
+def _eval_worker(args):
+    a, chi, extras = args
+    return evaluate_crn(a, chi, _ZW, extras=extras)
+
+def eval_many(cands, Zb, extras=False, nproc=4):
+    global _ZW
+    _ZW = Zb
+    with pool(nproc) as pl: return pl.map(_eval_worker, [(c['a'], c['chi'], extras) for c in cands], chunksize=1)
+
+def diff_se(r1, r2):
+    """paired batch se of Delta m_D(r1) - Delta m_D(r2) (same draws, same batches)."""
+    d = np.array(r1['ldb'])-np.array(r2['ldb']); return float(d.std(ddof=1)/np.sqrt(d.size))
+
+def lam_table_row(r):
+    return ' '.join(f"{v:7.3f}" for v in r['lamC'])
