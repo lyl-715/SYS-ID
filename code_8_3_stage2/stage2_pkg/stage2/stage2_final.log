@@ -12,14 +12,14 @@ final set (7), R=2000 values (seed 20261012) for reference:
 batch 1 evaluated in 13 s; reference (C): B_u=316.881, log det J_C=197.2020, (B) offset C-B=+3.0467
 
 Table 13. Final candidates, batch 1 (R=4000, seed 20261013); D = paired send-count difference vs uniform on the same draws; dmD_C se = paired batch se 10x400
-id                      B         D +- se dec     dmD_C    (se)   dmD_B   mE_C   mE_B
-NM-none-P5514     316.466  -0.414 +- 0.046 ok     +0.697 (0.004)  +3.744  0.045  0.067
-NM-0.3-P4312      316.579  -0.302 +- 0.049 ok     +0.428 (0.006)  +3.474  0.420  0.666
-AB-0.5            316.513  -0.368 +- 0.050 ok     +0.397 (0.004)  +3.444  0.531  0.821
-NM-0.7-UNIF       316.563  -0.317 +- 0.048 ok     +0.023 (0.005)  +3.069  0.701  0.768
-UNIF              316.881  +0.000 +- 0.000 ok     +0.000 (0.000)  +3.047  1.000  0.765
-NM-none-P5450     315.921  -0.960 +- 0.045 ok     +0.650 (0.005)  +3.697  0.121  0.192
-P5014             313.389  -3.491 +- 0.043 ok     +0.566 (0.004)  +3.612  0.045  0.067
+id                      B         D +- se dec     dmD_C    (se)   dmD_B    mE_C     (se)   mE_B
+NM-none-P5514     316.466  -0.414 +- 0.046 ok     +0.697 (0.004)  +3.744  0.0450 (0.0000)  0.067
+NM-0.3-P4312      316.579  -0.302 +- 0.049 ok     +0.428 (0.006)  +3.474  0.4203 (0.0003)  0.666
+AB-0.5            316.513  -0.368 +- 0.050 ok     +0.397 (0.004)  +3.444  0.5313 (0.0002)  0.821
+NM-0.7-UNIF       316.563  -0.317 +- 0.048 ok     +0.023 (0.005)  +3.069  0.7011 (0.0010)  0.768
+UNIF              316.881  +0.000 +- 0.000 ok     +0.000 (0.000)  +3.047  1.0000 (0.0000)  0.765
+NM-none-P5450     315.921  -0.960 +- 0.045 ok     +0.650 (0.005)  +3.697  0.1206 (0.0001)  0.192
+P5014             313.389  -3.491 +- 0.043 ok     +0.566 (0.004)  +3.612  0.0450 (0.0000)  0.067
   (UNIF in the pool vs reference: D=+0.000, dmD_C=+0.0e+00; reference B_u=316.881 +- 0.036 (se))
 
 Table 14. Nine generalized eigenvalues vs (C), batch 1 (R=4000, seed 20261013)
@@ -64,6 +64,13 @@ paired differences of Delta m_D^(C) between consecutive final candidates (batch 
   P5014 - NM-0.3-P4312: +0.1380 (paired batch se 0.0057)
   NM-0.3-P4312 - AB-0.5: +0.0303 (paired batch se 0.0050)
   AB-0.5 - NM-0.7-UNIF: +0.3747 (paired batch se 0.0057)
+paired differences of Delta m_D^(C) vs the stage-1 phase-only best P5014 (batch 1):
+  NM-none-P5514 - P5014: +0.1315 (paired batch se 0.0054)
+  NM-0.3-P4312 - P5014: -0.1380 (paired batch se 0.0057)
+  AB-0.5 - P5014: -0.1683 (paired batch se 0.0066)
+  NM-0.7-UNIF - P5014: -0.5430 (paired batch se 0.0046)
+  UNIF - P5014: -0.5655 (paired batch se 0.0044)
+  NM-none-P5450 - P5014: +0.0848 (paired batch se 0.0039)
 batch 1 done, 13 s
 
 batch 2: 7x4000 ML fits in 111 s
@@ -301,4 +308,4 @@ NM-0.7-UNIF      4000/4000        0.972  1.014   1.87      -0.059     0.1075  0.
 UNIF             4000/4000        0.988  1.017   1.91      +0.051     0.0858  0.507    7.66  0.571 | +1.930
 NM-none-P5450    4000/4000        0.991  1.014   2.84      +0.001     0.0751  0.839   14.74  0.100 | +1.974
 P5014            4000/4000        0.986  1.006   3.00      -0.082     0.0736  0.868   11.87  0.223 | +1.899
-RUNTIME stage2_final	started 2026-10-10 13:22:46	elapsed 129.2 s (2.15 min)	7 final candidates, batch 1 + batch 2 at R=4000
+RUNTIME stage2_final	started 2026-10-10 13:29:22	elapsed 128.8 s (2.15 min)	7 final candidates, batch 1 + batch 2 at R=4000

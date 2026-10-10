@@ -1,0 +1,5 @@
+fig_pareto_R2000.png: 51 qualified points at R=2000 (10 from Nelder-Mead, 1 phase-only controls), front 19 points
+fig_dmD_vs_B_R200.png: 4458 candidates (LHS 3000), budget line at B_unif=316.50
+fig_qxw.png panel NM-none-P5514: q mean 0.0633 max over k>=1 0.378; w mean 0.0973 min 0.0000
+fig_qxw.png panel AB-0.5: q mean 0.0633 max over k>=1 0.342; w mean 0.0958 min 0.0000
+fig_qxw.png panel UNIF: q mean 0.0634 max over k>=1 0.446; w mean 0.0932 min 0.0000

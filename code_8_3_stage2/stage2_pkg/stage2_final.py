@@ -60,8 +60,8 @@ np.savez_compressed(f'{OUT}/final_qxw.npz', **qxw); np.savez(f'{OUT}/final_J.npz
 
 print(f"\nTable 13. Final candidates, batch 1 (R={R4}, seed {SEED_B1}); D = paired send-count difference vs uniform on the same draws; "
       f"dmD_C se = paired batch se 10x{R4//10}")
-print(f"{'id':16s} {'B':>8s} {'D +- se':>15s} {'dec':5s} {'dmD_C':>7s} {'(se)':>7s} {'dmD_B':>7s} {'mE_C':>6s} {'mE_B':>6s}")
-for r in b1: print(f"{r['id']:16s} {r['B']:8.3f} {r['D']:+7.3f} +- {r['D_se']:5.3f} {r['dec']:5s} {r['dmD_C']:+7.3f} ({r['dmD_se']:5.3f}) {r['dmD_B']:+7.3f} {r['mE_C']:6.3f} {r['mE_B']:6.3f}")
+print(f"{'id':16s} {'B':>8s} {'D +- se':>15s} {'dec':5s} {'dmD_C':>7s} {'(se)':>7s} {'dmD_B':>7s} {'mE_C':>7s} {'(se)':>8s} {'mE_B':>6s}")
+for r in b1: print(f"{r['id']:16s} {r['B']:8.3f} {r['D']:+7.3f} +- {r['D_se']:5.3f} {r['dec']:5s} {r['dmD_C']:+7.3f} ({r['dmD_se']:5.3f}) {r['dmD_B']:+7.3f} {r['mE_C']:7.4f} ({r['mE_se']:6.4f}) {r['mE_B']:6.3f}")
 for r in b1:
     if r['id'] != 'UNIF': continue
     print(f"  (UNIF in the pool vs reference: D={r['D']:+.3f}, dmD_C={r['dmD_C']:+.1e}; reference B_u={ref['cnt'].mean():.3f} +- {ref['cnt'].std(ddof=1)/np.sqrt(R4):.3f} (se))")
@@ -81,6 +81,10 @@ for r in b1:
 srt = sorted([r for r in b1 if r['id'] != 'UNIF'], key=lambda r: -r['dmD_C'])
 print("paired differences of Delta m_D^(C) between consecutive final candidates (batch 1):")
 for r1, r2 in zip(srt[:-1], srt[1:]): print(f"  {r1['id']} - {r2['id']}: {r1['dmD_C']-r2['dmD_C']:+.4f} (paired batch se {diff_se(r1, r2):.4f})")
+r5 = [r for r in b1 if r['id'] == 'P5014'][0]
+print("paired differences of Delta m_D^(C) vs the stage-1 phase-only best P5014 (batch 1):")
+for r in b1:
+    if r['id'] != 'P5014': print(f"  {r['id']} - P5014: {r['dmD_C']-r5['dmD_C']:+.4f} (paired batch se {diff_se(r, r5):.4f})")
 json.dump(dict(R=R4, seed=SEED_B1, ldC=ldC, B_u=float(ref['cnt'].mean()), B_u_se=float(ref['cnt'].std(ddof=1)/np.sqrt(R4)), records=b1), open(f'{OUT}/final_batch1.json', 'w'), indent=1)
 print(f"batch 1 done, {time.time()-t1:.0f} s")
 
