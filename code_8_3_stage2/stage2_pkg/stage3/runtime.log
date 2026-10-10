@@ -1,1 +1,2 @@
 stage3_peak	started 2026-10-10 16:51:41	elapsed 25.1 s (0.42 min)	512 sweep evaluations at R=200 (main + control block)
+stage3_unconstrained	started 2026-10-10 16:53:08	elapsed 236.5 s (3.94 min)	10 NM runs (maxfev 200), 10 endpoints at R=2000
