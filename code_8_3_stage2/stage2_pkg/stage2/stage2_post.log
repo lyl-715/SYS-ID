@@ -1,0 +1,150 @@
+=== stage2_post.py: merge, decisions, empirical Pareto front at R=200 (seed 20261010) ===
+trigger check: sod_batch == mc83.sod (eps, r, overshoots, bitwise) on 100/100 trajectories (31827 events)
+loaded stage-1: 1465 (amp 84, phase 1296, amp20 85); LHS: 3000; max |stored - regenerated LHS design| = 0.0e+00
+  duplicate group ['A2233', 'Q4466']: identical stored values = True
+  duplicate group ['A2323', 'Q4646']: identical stored values = True
+  duplicate group ['A2332', 'Q4664']: identical stored values = True
+  duplicate group ['A3223', 'Q6446']: identical stored values = True
+  duplicate group ['A3232', 'Q6464']: identical stored values = True
+  duplicate group ['A3322', 'Q6644']: identical stored values = True
+  duplicate group ['P0000', 'Q5555']: identical stored values = True
+merged: 4465 -> 4458 unique candidates after deduplication
+reproduction of 5 stored candidates (P5014, A4222, Q5735, L0000, L2999) with evaluate_crn at R=200: max |diff| = 0.0e+00; reference ldC = 197.203779, B_u = 316.50
+
+Table 1. Counts and ranges (R=200, seed 20261010); decision 8.3.6(g), uniform reference qualifies by definition
+set                    n    ok  over undec          dmD_C range       mE_C range          B range  corr(B,dmD) Spearman
+stage-1 amp (84)      84    49    35     0   [ -4.671, +0.610]   [0.099,0.779]   [ 259.9, 458.9]        0.757    0.871
+stage-1 amp20         78    39    36     3   [ -1.330, +0.448]   [0.295,0.786]   [ 286.1, 353.1]        0.900    0.919
+stage-1 phase       1296   852   429    15   [ -0.885, +1.140]   [0.032,1.000]   [ 275.2, 347.8]        0.910    0.899
+LHS                 3000  1796  1191    13   [-21.521, +1.842]   [0.000,0.586]   [  81.7, 541.5]        0.554    0.635
+all merged          4458  2736  1691    31   [-21.521, +1.842]   [0.000,1.000]   [  81.7, 541.5]        0.496    0.565
+qualified only: n=2736, dmD_C [-21.521,+0.597], mE_C [0.000,1.000], corr(B,dmD)=0.768
+
+Table 2. Empirical Pareto front of the evaluated qualified candidates (R=200, seed 20261010): 11 points
+  P5014  phase p=(0.250,0.250,0.250,0.250) chi=(5.236,0.000,1.047,4.189) B=313.41 D= -3.09+-0.21 ok    dmD_C=+0.597 mE_C=0.045 dmD_B=+3.645
+  P0152  phase p=(0.250,0.250,0.250,0.250) chi=(0.000,1.047,5.236,2.094) B=311.71 D= -4.79+-0.22 ok    dmD_C=+0.571 mE_C=0.045 dmD_B=+3.619
+  P2123  phase p=(0.250,0.250,0.250,0.250) chi=(2.094,1.047,2.094,3.142) B=313.40 D= -3.10+-0.22 ok    dmD_C=+0.523 mE_C=0.121 dmD_B=+3.572
+  P5450  phase p=(0.250,0.250,0.250,0.250) chi=(5.236,4.189,5.236,0.000) B=313.45 D= -3.05+-0.22 ok    dmD_C=+0.510 mE_C=0.122 dmD_B=+3.558
+  P1001  phase p=(0.250,0.250,0.250,0.250) chi=(1.047,0.000,0.000,1.047) B=315.18 D= -1.32+-0.21 ok    dmD_C=+0.459 mE_C=0.140 dmD_B=+3.507
+  P0501  phase p=(0.250,0.250,0.250,0.250) chi=(0.000,5.236,0.000,1.047) B=309.60 D= -6.91+-0.22 ok    dmD_C=+0.357 mE_C=0.144 dmD_B=+3.406
+  P5133  phase p=(0.250,0.250,0.250,0.250) chi=(5.236,1.047,3.142,3.142) B=312.71 D= -3.79+-0.23 ok    dmD_C=+0.220 mE_C=0.593 dmD_B=+3.269
+  P4111  phase p=(0.250,0.250,0.250,0.250) chi=(4.189,1.047,1.047,1.047) B=315.80 D= -0.70+-0.21 ok    dmD_C=+0.171 mE_C=0.641 dmD_B=+3.220
+  P4055  phase p=(0.250,0.250,0.250,0.250) chi=(4.189,0.000,5.236,5.236) B=309.68 D= -6.83+-0.24 ok    dmD_C=+0.055 mE_C=0.666 dmD_B=+3.103
+  P3533  phase p=(0.250,0.250,0.250,0.250) chi=(3.142,5.236,3.142,3.142) B=314.75 D= -1.75+-0.23 ok    dmD_C=+0.028 mE_C=0.679 dmD_B=+3.076
+  UNIF   phase p=(0.250,0.250,0.250,0.250) chi=(0.000,0.000,0.000,0.000) B=316.50 D= +0.00+-0.00 ok    dmD_C=+0.000 mE_C=1.000 dmD_B=+3.048
+
+--- prediction checks at R=200 (screening level; re-checked at R=2000 in stage2_refine/local) ---
+P1: stage-1 phase-only best (qualified) = P5014 dmD_C=+0.597; prediction: joint best qualified in (+0.597, +1.097)
+    best qualified overall: P5014 dmD_C=+0.597; best qualified LHS (amplitude+phase): L0413 dmD_C=+0.259 mE_C=0.071 B=312.5
+    LHS qualified with dmD_C > +0.597: 0;  LHS (any decision) with dmD_C > +0.597: 130 (of which over budget: 130)
+    top-5 qualified LHS:
+     L0413  lhs   p=(0.291,0.247,0.269,0.194) chi=(2.043,2.215,3.591,5.077) B=312.53 D= -3.97+-0.22 ok    dmD_C=+0.259 mE_C=0.071 dmD_B=+3.308
+     L0881  lhs   p=(0.283,0.215,0.173,0.329) chi=(1.239,2.827,4.284,0.627) B=309.79 D= -6.71+-0.21 ok    dmD_C=+0.080 mE_C=0.039 dmD_B=+3.128
+     L1549  lhs   p=(0.247,0.245,0.212,0.296) chi=(1.815,1.207,6.156,2.285) B=293.45 D=-23.05+-0.22 ok    dmD_C=+0.073 mE_C=0.045 dmD_B=+3.122
+     L2489  lhs   p=(0.218,0.284,0.240,0.258) chi=(0.125,1.390,4.262,1.613) B=299.69 D=-16.81+-0.21 ok    dmD_C=+0.062 mE_C=0.044 dmD_B=+3.110
+     L0195  lhs   p=(0.282,0.234,0.301,0.183) chi=(5.725,5.630,3.084,4.895) B=310.65 D= -5.85+-0.20 ok    dmD_C=+0.016 mE_C=0.059 dmD_B=+3.065
+P2: max dmD_C over qualified with mE_C >= lambda0:
+    lambda0=0.00  max dmD_C=+0.597  (P5014)
+    lambda0=0.05  max dmD_C=+0.523  (P2123)
+    lambda0=0.10  max dmD_C=+0.523  (P2123)
+    lambda0=0.15  max dmD_C=+0.220  (P5133)
+    lambda0=0.20  max dmD_C=+0.220  (P5133)
+    lambda0=0.25  max dmD_C=+0.220  (P5133)
+    lambda0=0.30  max dmD_C=+0.220  (P5133)
+    lambda0=0.35  max dmD_C=+0.220  (P5133)
+    lambda0=0.40  max dmD_C=+0.220  (P5133)
+    lambda0=0.45  max dmD_C=+0.220  (P5133)
+    lambda0=0.50  max dmD_C=+0.220  (P5133)
+    lambda0=0.55  max dmD_C=+0.220  (P5133)
+    lambda0=0.60  max dmD_C=+0.171  (P4111)
+    lambda0=0.65  max dmD_C=+0.055  (P4055)
+    lambda0=0.70  max dmD_C=+0.000  (UNIF)
+    lambda0=0.75  max dmD_C=+0.000  (UNIF)
+    lambda0=0.80  max dmD_C=+0.000  (UNIF)
+    lambda0=0.85  max dmD_C=+0.000  (UNIF)
+    lambda0=0.90  max dmD_C=+0.000  (UNIF)
+    lambda0=0.95  max dmD_C=+0.000  (UNIF)
+    lambda0=1.00  max dmD_C=+0.000  (UNIF)
+    non-increasing in lambda0: True
+    front segments (sorted by dmD_C desc): slope d mE / d dmD
+     P5014(+0.597,0.045) -> P0152(+0.571,0.045): slope -0.01 per nat
+     P0152(+0.571,0.045) -> P2123(+0.523,0.121): slope -1.59 per nat
+     P2123(+0.523,0.121) -> P5450(+0.510,0.122): slope -0.06 per nat
+     P5450(+0.510,0.122) -> P1001(+0.459,0.140): slope -0.36 per nat
+     P1001(+0.459,0.140) -> P0501(+0.357,0.144): slope -0.03 per nat
+     P0501(+0.357,0.144) -> P5133(+0.220,0.593): slope -3.28 per nat
+     P5133(+0.220,0.593) -> P4111(+0.171,0.641): slope -0.97 per nat
+     P4111(+0.171,0.641) -> P4055(+0.055,0.666): slope -0.22 per nat
+     P4055(+0.055,0.666) -> P3533(+0.028,0.679): slope -0.48 per nat
+     P3533(+0.028,0.679) -> UNIF(+0.000,1.000): slope -11.62 per nat
+    front points with mE_C<0.1: 2, dmD_C span 0.026 nat; with mE_C>=0.6: 4, dmD_C span 0.171 nat, mE_C span 0.359
+P3 (not predicted; read off). LHS cloud, 6 bins: eta^2 of dmD_C / of B on
+    chi1       eta2(dmD)=0.000  eta2(B)=0.001
+    chi2       eta2(dmD)=0.002  eta2(B)=0.001
+    chi3       eta2(dmD)=0.001  eta2(B)=0.002
+    chi4       eta2(dmD)=0.001  eta2(B)=0.001
+    chi3-chi4  eta2(dmD)=0.014  eta2(B)=0.024
+    chi1-chi2  eta2(dmD)=0.002  eta2(B)=0.001
+    chi1-chi4  eta2(dmD)=0.001  eta2(B)=0.004
+    chi2-chi3  eta2(dmD)=0.000  eta2(B)=0.002
+    LHS: eta2(dmD) on p1 sextile-bins = 0.342; corr(p1, dmD)=0.488, corr(p1, B)=0.955
+    top-10 qualified: (chi3-chi4) mod 2pi and ||p - 1/4||_1
+     P5014  dmD_C=+0.597 mE_C=0.045 chi3-chi4=3.142 ||p-1/4||_1=0.000
+     P5514  dmD_C=+0.571 mE_C=0.044 chi3-chi4=3.142 ||p-1/4||_1=0.000
+     P0152  dmD_C=+0.571 mE_C=0.045 chi3-chi4=3.142 ||p-1/4||_1=0.000
+     P3425  dmD_C=+0.571 mE_C=0.045 chi3-chi4=3.142 ||p-1/4||_1=0.000
+     P4352  dmD_C=+0.568 mE_C=0.044 chi3-chi4=3.142 ||p-1/4||_1=0.000
+     P4341  dmD_C=+0.564 mE_C=0.043 chi3-chi4=3.142 ||p-1/4||_1=0.000
+     P2241  dmD_C=+0.554 mE_C=0.045 chi3-chi4=3.142 ||p-1/4||_1=0.000
+     P1014  dmD_C=+0.544 mE_C=0.044 chi3-chi4=3.142 ||p-1/4||_1=0.000
+     P1025  dmD_C=+0.538 mE_C=0.044 chi3-chi4=3.142 ||p-1/4||_1=0.000
+     P2341  dmD_C=+0.523 mE_C=0.045 chi3-chi4=3.142 ||p-1/4||_1=0.000
+    top-20 qualified LHS: mean p = [0.25  0.242 0.266 0.241], mean ||p-1/4||_1 = 0.204 (all LHS: 0.625); resultant length of (chi3-chi4) = 0.258, circular mean 3.536 rad
+P4: LHS cloud corr(B, dmD_C) Pearson=0.554 Spearman=0.635 (stage 1: 0.76 amplitude, 0.91 phase)
+    counter-examples: ordered LHS pairs with B_i-B_j >= 10 sends: 4161905; of these dmD_C,i <= dmD_C,j - 0.3 nat: 937489 (22.5%)
+    most pronounced: L0694 B=479.8 dmD_C=-18.218 vs L0473 B=153.2 dmD_C=-7.560
+    restricted to non-degenerate pairs (both dmD_C >= -1, 762 LHS points): 256709 pairs with B_i-B_j >= 10, of these 63503 (24.7%) with dmD_C,i <= dmD_C,j - 0.3; most pronounced: L1459 B=478.2 dmD_C=-0.919 vs L1657 B=384.9 dmD_C=+1.640
+    qualified LHS only: Pearson=0.644, Spearman=0.666
+
+Table 3. Selected for refinement: 40 candidates (F1 front 11, F2 second layer 13, FL LHS front 8, BB budget-boundary 8; overlaps counted once; uniform reference included via F1)
+  P5014  phase p=(0.250,0.250,0.250,0.250) chi=(5.236,0.000,1.047,4.189) B=313.41 D= -3.09+-0.21 ok    dmD_C=+0.597 mE_C=0.045 dmD_B=+3.645  [F1]
+  P5514  phase p=(0.250,0.250,0.250,0.250) chi=(5.236,5.236,1.047,4.189) B=314.38 D= -2.12+-0.20 ok    dmD_C=+0.571 mE_C=0.044 dmD_B=+3.620  [F2]
+  P0152  phase p=(0.250,0.250,0.250,0.250) chi=(0.000,1.047,5.236,2.094) B=311.71 D= -4.79+-0.22 ok    dmD_C=+0.571 mE_C=0.045 dmD_B=+3.619  [F1]
+  P3425  phase p=(0.250,0.250,0.250,0.250) chi=(3.142,4.189,2.094,5.236) B=311.75 D= -4.75+-0.21 ok    dmD_C=+0.571 mE_C=0.045 dmD_B=+3.619  [F2]
+  P2123  phase p=(0.250,0.250,0.250,0.250) chi=(2.094,1.047,2.094,3.142) B=313.40 D= -3.10+-0.22 ok    dmD_C=+0.523 mE_C=0.121 dmD_B=+3.572  [F1]
+  P5450  phase p=(0.250,0.250,0.250,0.250) chi=(5.236,4.189,5.236,0.000) B=313.45 D= -3.05+-0.22 ok    dmD_C=+0.510 mE_C=0.122 dmD_B=+3.558  [F1]
+  P3445  phase p=(0.250,0.250,0.250,0.250) chi=(3.142,4.189,4.189,5.236) B=316.15 D= -0.35+-0.20 undec dmD_C=+0.503 mE_C=0.123 dmD_B=+3.551  [BB]
+  P3240  phase p=(0.250,0.250,0.250,0.250) chi=(3.142,2.094,4.189,0.000) B=308.88 D= -7.62+-0.21 ok    dmD_C=+0.499 mE_C=0.056 dmD_B=+3.547  [F2]
+  P1201  phase p=(0.250,0.250,0.250,0.250) chi=(1.047,2.094,0.000,1.047) B=316.48 D= -0.02+-0.20 undec dmD_C=+0.496 mE_C=0.131 dmD_B=+3.545  [BB]
+  P4534  phase p=(0.250,0.250,0.250,0.250) chi=(4.189,5.236,3.142,4.189) B=316.21 D= -0.28+-0.22 undec dmD_C=+0.490 mE_C=0.131 dmD_B=+3.538  [BB]
+  P1045  phase p=(0.250,0.250,0.250,0.250) chi=(1.047,0.000,4.189,5.236) B=316.34 D= -0.16+-0.21 undec dmD_C=+0.462 mE_C=0.141 dmD_B=+3.511  [BB]
+  P1001  phase p=(0.250,0.250,0.250,0.250) chi=(1.047,0.000,0.000,1.047) B=315.18 D= -1.32+-0.21 ok    dmD_C=+0.459 mE_C=0.140 dmD_B=+3.507  [F1]
+  P0412  phase p=(0.250,0.250,0.250,0.250) chi=(0.000,4.189,1.047,2.094) B=315.81 D= -0.69+-0.19 ok    dmD_C=+0.454 mE_C=0.129 dmD_B=+3.503  [F2]
+  P3145  phase p=(0.250,0.250,0.250,0.250) chi=(3.142,1.047,4.189,5.236) B=315.87 D= -0.63+-0.19 ok    dmD_C=+0.445 mE_C=0.129 dmD_B=+3.494  [F2]
+  P3345  phase p=(0.250,0.250,0.250,0.250) chi=(3.142,3.142,4.189,5.236) B=315.21 D= -1.28+-0.21 ok    dmD_C=+0.445 mE_C=0.129 dmD_B=+3.493  [F2]
+  P4334  phase p=(0.250,0.250,0.250,0.250) chi=(4.189,3.142,3.142,4.189) B=315.35 D= -1.16+-0.21 ok    dmD_C=+0.444 mE_C=0.139 dmD_B=+3.492  [F2]
+  P4312  phase p=(0.250,0.250,0.250,0.250) chi=(4.189,3.142,1.047,2.094) B=316.35 D= -0.15+-0.23 undec dmD_C=+0.442 mE_C=0.146 dmD_B=+3.491  [BB]
+  P0501  phase p=(0.250,0.250,0.250,0.250) chi=(0.000,5.236,0.000,1.047) B=309.60 D= -6.91+-0.22 ok    dmD_C=+0.357 mE_C=0.144 dmD_B=+3.406  [F1]
+  P3234  phase p=(0.250,0.250,0.250,0.250) chi=(3.142,2.094,3.142,4.189) B=309.38 D= -7.12+-0.22 ok    dmD_C=+0.351 mE_C=0.141 dmD_B=+3.399  [F2]
+  L0413  lhs   p=(0.291,0.247,0.269,0.194) chi=(2.043,2.215,3.591,5.077) B=312.53 D= -3.97+-0.22 ok    dmD_C=+0.259 mE_C=0.071 dmD_B=+3.308  [FL]
+  P5133  phase p=(0.250,0.250,0.250,0.250) chi=(5.236,1.047,3.142,3.142) B=312.71 D= -3.79+-0.23 ok    dmD_C=+0.220 mE_C=0.593 dmD_B=+3.269  [F1]
+  P3022  phase p=(0.250,0.250,0.250,0.250) chi=(3.142,0.000,2.094,2.094) B=316.47 D= -0.03+-0.22 undec dmD_C=+0.220 mE_C=0.627 dmD_B=+3.269  [BB]
+  P0355  phase p=(0.250,0.250,0.250,0.250) chi=(0.000,3.142,5.236,5.236) B=316.59 D= +0.09+-0.23 undec dmD_C=+0.202 mE_C=0.620 dmD_B=+3.251  [BB]
+  P2400  phase p=(0.250,0.250,0.250,0.250) chi=(2.094,4.189,0.000,0.000) B=312.55 D= -3.95+-0.23 ok    dmD_C=+0.181 mE_C=0.551 dmD_B=+3.230  [F2]
+  P4111  phase p=(0.250,0.250,0.250,0.250) chi=(4.189,1.047,1.047,1.047) B=315.80 D= -0.70+-0.21 ok    dmD_C=+0.171 mE_C=0.641 dmD_B=+3.220  [F1]
+  P1444  phase p=(0.250,0.250,0.250,0.250) chi=(1.047,4.189,4.189,4.189) B=316.12 D= -0.38+-0.22 undec dmD_C=+0.161 mE_C=0.642 dmD_B=+3.210  [BB]
+  P4511  phase p=(0.250,0.250,0.250,0.250) chi=(4.189,5.236,1.047,1.047) B=311.07 D= -5.42+-0.23 ok    dmD_C=+0.157 mE_C=0.558 dmD_B=+3.205  [F2]
+  P1322  phase p=(0.250,0.250,0.250,0.250) chi=(1.047,3.142,2.094,2.094) B=309.39 D= -7.11+-0.23 ok    dmD_C=+0.077 mE_C=0.599 dmD_B=+3.125  [F2]
+  P4055  phase p=(0.250,0.250,0.250,0.250) chi=(4.189,0.000,5.236,5.236) B=309.68 D= -6.83+-0.24 ok    dmD_C=+0.055 mE_C=0.666 dmD_B=+3.103  [F1]
+  P3533  phase p=(0.250,0.250,0.250,0.250) chi=(3.142,5.236,3.142,3.142) B=314.75 D= -1.75+-0.23 ok    dmD_C=+0.028 mE_C=0.679 dmD_B=+3.076  [F1]
+  P0200  phase p=(0.250,0.250,0.250,0.250) chi=(0.000,2.094,0.000,0.000) B=314.74 D= -1.76+-0.23 ok    dmD_C=+0.004 mE_C=0.671 dmD_B=+3.052  [F2]
+  UNIF   phase p=(0.250,0.250,0.250,0.250) chi=(0.000,0.000,0.000,0.000) B=316.50 D= +0.00+-0.00 ok    dmD_C=+0.000 mE_C=1.000 dmD_B=+3.048  [F1]
+  L1104  lhs   p=(0.222,0.266,0.164,0.348) chi=(3.147,3.970,6.184,0.471) B=307.93 D= -8.57+-0.23 ok    dmD_C=-0.108 mE_C=0.200 dmD_B=+2.940  [FL]
+  Q5456  amp20 p=(0.250,0.200,0.250,0.300) chi=(0.000,0.000,0.000,0.000) B=315.45 D= -1.05+-0.24 ok    dmD_C=-0.117 mE_C=0.780 dmD_B=+2.932  [F2]
+  L2803  lhs   p=(0.190,0.167,0.341,0.302) chi=(4.682,5.991,3.616,4.188) B=302.88 D=-13.62+-0.22 ok    dmD_C=-0.238 mE_C=0.293 dmD_B=+2.811  [FL]
+  L0436  lhs   p=(0.226,0.321,0.189,0.265) chi=(2.353,1.484,0.890,1.253) B=306.09 D=-10.41+-0.24 ok    dmD_C=-0.243 mE_C=0.312 dmD_B=+2.806  [FL]
+  L2872  lhs   p=(0.191,0.280,0.217,0.312) chi=(3.277,6.178,5.215,4.916) B=301.94 D=-14.55+-0.23 ok    dmD_C=-0.396 mE_C=0.381 dmD_B=+2.652  [FL]
+  L0633  lhs   p=(0.164,0.211,0.269,0.356) chi=(0.377,1.550,4.824,4.758) B=298.82 D=-17.68+-0.21 ok    dmD_C=-0.427 mE_C=0.419 dmD_B=+2.621  [FL]
+  L2290  lhs   p=(0.237,0.303,0.188,0.273) chi=(4.847,3.013,0.657,0.695) B=296.29 D=-20.21+-0.22 ok    dmD_C=-0.518 mE_C=0.431 dmD_B=+2.531  [FL]
+  L0818  lhs   p=(0.167,0.455,0.176,0.201) chi=(3.610,6.235,3.195,3.269) B=290.26 D=-26.24+-0.23 ok    dmD_C=-1.036 mE_C=0.441 dmD_B=+2.013  [FL]
+RUNTIME stage2_post	started 2026-10-10 13:02:45	elapsed 5.3 s (0.09 min)	4458 candidates merged, 40 selected
