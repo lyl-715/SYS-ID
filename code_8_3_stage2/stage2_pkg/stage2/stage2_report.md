@@ -37,6 +37,8 @@ It reproduced the stored values with `max |diff| = 0.0e+00` (`stage2_post.log`).
 | Nelder–Mead search | 20261010 (extended) | 500 | inside the search only (§3); never used for ranking |
 | final batch 1 | 20261013 | 4000 | J, D, Δm_D, eigenvalues, worst combination, q_k, gaps, powers (§4) |
 | final batch 2 | 20261014 | 4000 | ML covariance check (§4) |
+| follow-up batch 3 | 20261015 | 4000 | independent re-run of the paired budget decision (§8.1) |
+| follow-up batch 4 | 20261016 | 4000 | independent ML bias check (§8.2) |
 | Wishart benchmark | 1 | 5000 draws | as in `mc84.py` |
 
 Runtime per stage (`runtime.log`; 4 workers). No stage came near the 2-hour limit.
@@ -48,6 +50,7 @@ Runtime per stage (`runtime.log`; 4 workers). No stage came near the 2-hour limi
 | stage2_local | 232.2 s (3.87 min) |
 | stage2_final | 127.8 s (2.13 min) |
 | stage2_figs | 2.0 s |
+| stage2_followup | 51.7 s |
 
 ## 1. Merge and screening: R = 200, seed 20261010 (`stage2_post.py`)
 
@@ -192,22 +195,29 @@ Two of these results are not resolved by the data:
 | NM-none-P5450 | front region B |
 | P5014 | stage-1 phase-only best, for prediction 1 |
 
-**Table D** (source: Table 13 and the paired differences vs P5014, `stage2_final.log`; batch 1, R = 4000, seed 20261013).
+**Table D** (source: Table 13 and the paired differences vs P5014, `stage2_final.log`; margin column: Table F1a, `stage2_followup.log`; batch 1, R = 4000, seed 20261013).
 D is the paired send-count difference vs uniform on the same draws. The se of Δm_D^(C) is the paired batch se (10 × 400).
 Reference: B_u = 316.881 ± 0.036 and log det J_C = 197.2020.
 
-| id | B | D ± se | dec | Δm_D^(C) (se) | Δm_D^(B) | m_E^(C) (se) | m_E^(B) | Δm_D − Δm_D(P5014) (paired se) |
-|---|---|---|---|---|---|---|---|---|
-| NM-none-P5514 | 316.466 | −0.414 ± 0.046 | ok | +0.697 (0.004) | +3.744 | 0.0450 (0.0000) | 0.067 | +0.1315 (0.0054) |
-| NM-0.3-P4312 | 316.579 | −0.302 ± 0.049 | ok | +0.428 (0.006) | +3.474 | 0.4203 (0.0003) | 0.666 | −0.1380 (0.0057) |
-| AB-0.5 | 316.513 | −0.368 ± 0.050 | ok | +0.397 (0.004) | +3.444 | 0.5313 (0.0002) | 0.821 | −0.1683 (0.0066) |
-| NM-0.7-UNIF | 316.563 | −0.317 ± 0.048 | ok | +0.023 (0.005) | +3.069 | 0.7011 (0.0010) | 0.768 | −0.5430 (0.0046) |
-| UNIF | 316.881 | 0 | ok | 0 | +3.047 | 1.0000 | 0.765 | −0.5655 (0.0044) |
-| NM-none-P5450 | 315.921 | −0.960 ± 0.045 | ok | +0.650 (0.005) | +3.697 | 0.1206 (0.0001) | 0.192 | +0.0848 (0.0039) |
-| P5014 | 313.389 | −3.491 ± 0.043 | ok | +0.566 (0.004) | +3.612 | 0.0450 (0.0000) | 0.067 | — |
+| id | B | D ± se | dec | margin = −(D + 2se) (sends) | Δm_D^(C) (se) | Δm_D^(B) | m_E^(C) (se) | m_E^(B) | Δm_D − Δm_D(P5014) (paired se) |
+|---|---|---|---|---|---|---|---|---|---|
+| NM-none-P5514 | 316.466 | −0.414 ± 0.046 | ok | +0.323 | +0.697 (0.004) | +3.744 | 0.0450 (0.0000) | 0.067 | +0.1315 (0.0054) |
+| NM-0.3-P4312 | 316.579 | −0.302 ± 0.049 | ok | +0.205 | +0.428 (0.006) | +3.474 | 0.4203 (0.0003) | 0.666 | −0.1380 (0.0057) |
+| AB-0.5 | 316.513 | −0.368 ± 0.050 | ok | +0.268 | +0.397 (0.004) | +3.444 | 0.5313 (0.0002) | 0.821 | −0.1683 (0.0066) |
+| NM-0.7-UNIF | 316.563 | −0.317 ± 0.048 | ok | +0.221 | +0.023 (0.005) | +3.069 | 0.7011 (0.0010) | 0.768 | −0.5430 (0.0046) |
+| UNIF | 316.881 | 0 | ok | — (by definition) | 0 | +3.047 | 1.0000 | 0.765 | −0.5655 (0.0044) |
+| NM-none-P5450 | 315.921 | −0.960 ± 0.045 | ok | +0.871 | +0.650 (0.005) | +3.697 | 0.1206 (0.0001) | 0.192 | +0.0848 (0.0039) |
+| P5014 | 313.389 | −3.491 ± 0.043 | ok | +3.405 | +0.566 (0.004) | +3.612 | 0.0450 (0.0000) | 0.067 | — |
 
 The R = 2000 estimates hold on the independent batch-1 draws to within about 0.015 nat; for example NM-none-P5514 goes from +0.689 to +0.697.
 NM-0.7-UNIF has m_E = 0.7011 ± 0.0010 in batch 1. That is again above 0.7, but by about 1 se only.
+
+**Budget margin.** The three m_E-constrained winners qualify by a thin margin (Table F1a, `stage2_followup.log`).
+- NM-0.3-P4312, AB-0.5 and NM-0.7-UNIF have D = −0.302, −0.368 and −0.317 sends against 2se = 0.097, 0.099 and 0.096.
+- So margin = −(D + 2se) is +0.205, +0.268 and +0.221 sends, which is 0.065%, 0.085% and 0.070% of B_u = 316.881.
+- NM-none-P5514 has a margin of +0.323 sends (0.102%). NM-none-P5450 has +0.871 (0.275%) and P5014 has +3.405 (1.074%).
+
+On an independent batch (seed 20261015, R = 4000) all three constrained winners stay qualified, with margins of +0.152, +0.148 and +0.209 sends (§8.1).
 
 **Table E. Nine generalized eigenvalues vs (C)** (source: Table 14, `stage2_final.log`; batch 1, R = 4000, seed 20261013).
 
@@ -259,6 +269,25 @@ All candidates send at the budget rate, but they distribute the sends differentl
 - **Window input power:** P_in is about half the uniform value (0.36–0.43 vs 0.705). The window is short relative to the close pair ω3 = 12, ω4 = 12.3: the beat period 2π/0.3 ≈ 21 s is longer than T = 5 s. With χ3 − χ4 ≈ π the two tones cancel over the window.
 - **Output power** barely changes, because tone 1 dominates the output.
 
+**Window input power vs long-run power** (source: Table F3, `stage2_followup.log`; deterministic, no draws).
+P_in = (1/T)∫u_ac² over the T = 5 s window, as in Table G. The long-run power is Σ a_m²/2. P_out is the window mean AC output power.
+
+| id | P_in (window) | long-run Σ a_m²/2 | P_in / long-run | P_in / P_in(UNIF) | P_out (window) |
+|---|---|---|---|---|---|
+| NM-none-P5514 | 0.3668 | 0.5000 | 0.734 | 0.520 | 1.5286e-03 |
+| NM-0.3-P4312 | 0.6364 | 0.5000 | 1.273 | 0.903 | 1.3376e-03 |
+| AB-0.5 | 0.6753 | 0.5000 | 1.351 | 0.958 | 1.3315e-03 |
+| NM-0.7-UNIF | 0.7033 | 0.5000 | 1.407 | 0.998 | 1.5100e-03 |
+| UNIF | 0.7051 | 0.5000 | 1.410 | 1.000 | 1.5137e-03 |
+| NM-none-P5450 | 0.4308 | 0.5000 | 0.862 | 0.611 | 1.5226e-03 |
+| P5014 | 0.3558 | 0.5000 | 0.712 | 0.505 | 1.4910e-03 |
+
+The high-D candidates (NM-none-P5514, NM-none-P5450, P5014) obtain more information than the uniform reference with about half its window input energy.
+- Their P_in is 0.3558–0.4308 against 0.7051, i.e. 0.505–0.611 of the uniform value.
+- Measured against the long-run power, which is 0.5 for every candidate by the normalisation, their window ratio is 0.712–0.862; the uniform reference's is 1.410.
+- The budget constraint is on sends, not on input energy.
+- This is a consequence of normalising the long-run power rather than the window energy, as noted in §8.1.6 of the main document.
+
 **Figure: q_k, x_k and w_k.** The figure below plots q_k, x_k and w_k for three representatives (`final_qxw.npz` holds all 7 and the reference).
 - **Steady state:** q_k follows the output slope, with zeros at the turning points of x_k.
 - **First ~0.3–1 s:** q_k shows a comb-like transient after the forced event at k = 0. This is visible in the figure; it is not analysed further here.
@@ -286,7 +315,7 @@ The Wishart benchmark uses 5000 draws, seed 1.
 
 **Bias.** Hotelling T² rejects zero joint bias at 5% for NM-none-P5514 (p = 0.017) and AB-0.5 (p = 0.001).
 - **Largest component:** Im1 in both, with bias/sd −0.038 and −0.050 (t = −2.4 and −3.1).
-- **Shared sign:** Im1 bias/sd is negative for all seven candidates (−0.012 to −0.050). Batch 2 uses the same draws for every candidate, so these are not seven independent findings. An independent batch would be needed to separate a systematic small-sample bias from a shared noise realisation.
+- **Shared sign:** Im1 bias/sd is negative for all seven candidates (−0.012 to −0.050). Batch 2 uses the same draws for every candidate, so these are not seven independent findings. An independent batch would be needed to separate a systematic small-sample bias from a shared noise realisation; §8.2 runs that check.
 - **Size:** a bias of ≤ 0.05 sd changes the MSE by ≤ 0.25%.
 
 **Naive control.** LS on sent samples only is far from the CRLB: logdet diff +1.837 to +1.989, and per-parameter biases up to 8.8 sd. This matches §8.4.
@@ -340,7 +369,8 @@ The Wishart benchmark uses 5000 draws, seed 1.
 2. **D under an m_E floor.** The empirical Pareto front of the evaluated candidates trades D against m_E in steps.
    - About +0.43 nat is available at m_E ≥ 0.42, and +0.38 nat at m_E ≥ 0.53. Both require lowering tone-1 power to stay inside the budget.
    - Above m_E 0.7 essentially nothing is gained over uniform: +0.024, with the m_E floor itself not resolved at 2 se.
-3. **CRLB attainment.** For all seven final candidates the MLE covariance matches the CRLB within MC precision (batch 2, R = 4000, seed 20261014). A small joint bias (≤ 0.05 sd, mostly Im1) is detected for two of them.
+   - The three constrained winners qualify by margins of only 0.148–0.268 sends (at most 0.085% of the budget) on batches 1 and 3. None of them flips to undecided on the independent batch 3 (seed 20261015; §8.1).
+3. **CRLB attainment.** For all seven final candidates the MLE covariance matches the CRLB within MC precision (batch 2, R = 4000, seed 20261014). A small joint bias (≤ 0.05 sd, mostly Im1) is detected for two of them. On independent draws (seed 20261016) the joint rejection reproduces for NM-none-P5514 but not for AB-0.5, and the negative Im1 bias reproduces for both (§8.2).
 4. **Not established.** These are local improvements found with 12 × 150 evaluations from 3 starts per target. Points between the evaluated ones, or far from the stage-1 phase grid, were not explored at R = 2000.
 
 ## 7. Modelling choices and limitations (stated, not settled)
@@ -355,10 +385,57 @@ The Wishart benchmark uses 5000 draws, seed 1.
 - **CRLB in batch 2:** from the batch-1 J at R = 4000, not R = 10000 as in `mc84.py`; its MC error is small relative to the sd-ratio se but not zero.
 - **Common draws in batch 2:** batch 2 uses the same draws for every candidate, so cross-candidate patterns in the bias estimates are not independent.
 
+## 8. Follow-up (`stage2_followup.py`)
+
+All numbers in this section come from `stage2_followup.log`; runtime 51.7 s. Nothing above was re-run or changed.
+
+### 8.1 Budget margin and an independent re-run of the paired decision
+
+Batch-1 margins for all seven final candidates are in Table D (column "margin"; Table F1a).
+
+**Table F1b** (source: Table F1b, `stage2_followup.log`; batch 3, R = 4000, seed 20261015).
+The candidates and the reference use the same draws; the batch-3 reference has B_u = 316.813 ± 0.035.
+Batch 1 is shown for comparison and is not pooled with batch 3.
+
+| id | B | D | se | margin = −(D + 2se) | margin / B_u | decision (batch 3) | batch 1: D ± se, decision |
+|---|---|---|---|---|---|---|---|
+| NM-0.3-P4312 | 316.565 | −0.248 | 0.048 | +0.152 | +0.048% | ok | −0.302 ± 0.049, ok |
+| AB-0.5 | 316.566 | −0.247 | 0.050 | +0.148 | +0.047% | ok | −0.368 ± 0.050, ok |
+| NM-0.7-UNIF | 316.506 | −0.307 | 0.049 | +0.209 | +0.066% | ok | −0.317 ± 0.048, ok |
+| UNIF | 316.813 | 0 | 0 | — | — | ok (by definition) | 0, ok |
+
+- **All three stay qualified on batch 3; none flips to undecided.**
+- For NM-0.3-P4312 and AB-0.5 the margin is smaller on batch 3 than on batch 1: +0.152 and +0.148 against +0.205 and +0.268 sends.
+- Batch 3 also yields Δm_D^(C) of +0.436 (0.005), +0.400 (0.005) and +0.027 (0.006), and m_E^(C) of 0.4209, 0.5309 and 0.7015, for NM-0.3-P4312, AB-0.5 and NM-0.7-UNIF.
+
+### 8.2 Independent check of the Im1 bias
+
+This is the ML covariance check of `stage2_final.py`, with its batch-2 code exec'd verbatim (only the printed labels are renamed).
+It was run for NM-none-P5514 and AB-0.5 on batch 4 (R = 4000, seed 20261016), with the CRLB from batch 1 (seed 20261013) as before.
+
+**Table F2b** (source: Tables F2a and F2b, `stage2_followup.log`). Each batch is reported on its own; the two are not combined.
+
+| id | batch (seed) | Hotelling T² | p | reject at 5% | Im1 bias/sd | Im1 t | sd ratio range |
+|---|---|---|---|---|---|---|---|
+| NM-none-P5514 | 2 (20261014) | 20.15 | 0.017 | yes | −0.038 | −2.40 | 0.989–1.020 |
+| NM-none-P5514 | 4 (20261016) | 17.66 | 0.040 | yes | −0.043 | −2.75 | 0.986–1.017 |
+| AB-0.5 | 2 (20261014) | 28.43 | 0.001 | yes | −0.050 | −3.15 | 0.984–1.014 |
+| AB-0.5 | 4 (20261016) | 8.39 | 0.497 | no | −0.038 | −2.37 | 0.986–1.020 |
+
+- **Joint bias:** the 5%-level rejection of zero joint bias reproduces on independent draws for NM-none-P5514 (p = 0.040), but not for AB-0.5 (p = 0.497).
+- **Im1:** the bias reproduces for both candidates in sign and size: bias/sd −0.043 and −0.038, t = −2.75 and −2.37. Im1 was singled out on batch 2, so this is a check of a pre-specified parameter.
+- **Two candidates, one replication:** within batch 4 the two candidates share draws. Their batch-4 results are each independent of batch 2, but not of each other, so this is one independent replication, not two.
+- **Variance unchanged:** on batch 4 the sd ratios (0.986–1.017 and 0.986–1.020), the whitened-eigenvalue Wishart tail probabilities (0.700 and 0.705) and the log-det differences (+0.055 and +0.040) again show the CRLB attained (Table F2a).
+- **Size:** the Im1 bias stays at about 0.04 sd.
+
+### 8.3 Window input power
+
+See "Window input power vs long-run power" in §4 (Table F3, `stage2_followup.log`).
+
 ## Reproduce
 
 From `code_8_3_stage2/stage2_pkg/`, needing numpy, scipy, matplotlib and numba:
 
-    python3 stage2_post.py && python3 stage2_refine.py && python3 stage2_local.py && python3 stage2_final.py && python3 stage2_figs.py
+    python3 stage2_post.py && python3 stage2_refine.py && python3 stage2_local.py && python3 stage2_final.py && python3 stage2_figs.py && python3 stage2_followup.py
 
 All stages are deterministic given the seeds above; re-runs reproduced the logged numbers exactly.

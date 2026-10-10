@@ -35,4 +35,5 @@ Key numbers: Delta_* = 0.002384694482635785 (N^nf = 321), sigma = Delta_*/20, B_
 | stage2_local.py | penalised Nelder-Mead (R=500 inside, maxfev=150, 4 targets x 3 front regions); every new point re-evaluated at R=2000, seed 20261012; phase-only controls |
 | stage2_final.py | 7 final candidates: batch 1 (seed 20261013, R=4000) J, D, eigenvalues, worst combination, q_k/x_k/w_k, gaps, powers; batch 2 (seed 20261014, R=4000) ML covariance check with mc84.py functions |
 | stage2_figs.py | figures for stage2/stage2_report.md |
+| stage2_followup.py | report §8: budget margins and an independent decision re-run (seed 20261015), independent ML bias check for NM-none-P5514 and AB-0.5 (seed 20261016, batch-2 code of stage2_final.py exec'd verbatim), window vs long-run input power |
 | stage2/stage2_report.md | report; every number traceable to stage2/*.log |
