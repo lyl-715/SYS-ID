@@ -1,3 +1,4 @@
 stage2_post	started 2026-10-10 13:02:45	elapsed 5.3 s (0.09 min)	4458 candidates merged, 40 selected
 stage2_refine	started 2026-10-10 13:17:15	elapsed 23.5 s (0.39 min)	40 candidates at R=2000
 stage2_local	started 2026-10-10 13:17:39	elapsed 232.2 s (3.87 min)	12 NM runs, 10 new candidates + 4 controls at R=2000
+stage2_final	started 2026-10-10 13:22:46	elapsed 129.2 s (2.15 min)	7 final candidates, batch 1 + batch 2 at R=4000

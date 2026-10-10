@@ -1,0 +1,304 @@
+=== stage2_final.py: batch 1 seed 20261013 R=4000; batch 2 seed 20261014 R=4000 ===
+trigger check: sod_batch == mc83.sod (eps, r, overshoots, bitwise) on 100/100 trajectories (31827 events)
+final set (7), R=2000 values (seed 20261012) for reference:
+  NM-none-P5514    [best unconstrained; front region A; best non-uniform amplitudes] p=(0.252,0.251,0.252,0.245) chi=(5.140,5.338,1.097,4.207) dmD_C=+0.689 mE_C=0.045 D=-0.46+-0.06
+  NM-0.3-P4312     [best m_E>=0.3; front region C] p=(0.212,0.262,0.260,0.266) chi=(4.018,3.487,1.391,1.743) dmD_C=+0.426 mE_C=0.421 D=-0.31+-0.07
+  AB-0.5           [best m_E>=0.5] p=(0.209,0.265,0.254,0.272) chi=(4.069,3.520,1.460,1.583) dmD_C=+0.383 mE_C=0.531 D=-0.52+-0.07
+  NM-0.7-UNIF      [best m_E>=0.7] p=(0.246,0.264,0.243,0.246) chi=(0.284,6.220,0.001,6.282) dmD_C=+0.024 mE_C=0.702 D=-0.36+-0.07
+  UNIF             [uniform reference] p=(0.250,0.250,0.250,0.250) chi=(0.000,0.000,0.000,0.000) dmD_C=+0.000 mE_C=1.000 D=+0.00+-0.00
+  NM-none-P5450    [front region B] p=(0.252,0.240,0.250,0.258) chi=(5.272,4.471,5.216,0.045) dmD_C=+0.645 mE_C=0.121 D=-0.95+-0.06
+  P5014            [stage-1 phase-only best] p=(0.250,0.250,0.250,0.250) chi=(5.236,0.000,1.047,4.189) dmD_C=+0.569 mE_C=0.045 D=-3.55+-0.06
+
+batch 1 evaluated in 13 s; reference (C): B_u=316.881, log det J_C=197.2020, (B) offset C-B=+3.0467
+
+Table 13. Final candidates, batch 1 (R=4000, seed 20261013); D = paired send-count difference vs uniform on the same draws; dmD_C se = paired batch se 10x400
+id                      B         D +- se dec     dmD_C    (se)   dmD_B   mE_C   mE_B
+NM-none-P5514     316.466  -0.414 +- 0.046 ok     +0.697 (0.004)  +3.744  0.045  0.067
+NM-0.3-P4312      316.579  -0.302 +- 0.049 ok     +0.428 (0.006)  +3.474  0.420  0.666
+AB-0.5            316.513  -0.368 +- 0.050 ok     +0.397 (0.004)  +3.444  0.531  0.821
+NM-0.7-UNIF       316.563  -0.317 +- 0.048 ok     +0.023 (0.005)  +3.069  0.701  0.768
+UNIF              316.881  +0.000 +- 0.000 ok     +0.000 (0.000)  +3.047  1.000  0.765
+NM-none-P5450     315.921  -0.960 +- 0.045 ok     +0.650 (0.005)  +3.697  0.121  0.192
+P5014             313.389  -3.491 +- 0.043 ok     +0.566 (0.004)  +3.612  0.045  0.067
+  (UNIF in the pool vs reference: D=+0.000, dmD_C=+0.0e+00; reference B_u=316.881 +- 0.036 (se))
+
+Table 14. Nine generalized eigenvalues vs (C), batch 1 (R=4000, seed 20261013)
+NM-none-P5514      0.045   0.053   0.858   1.041   1.100   1.251   1.474  20.830  22.388
+NM-0.3-P4312       0.420   0.461   0.757   0.934   1.014   1.179   1.369   2.444   2.795
+AB-0.5             0.531   0.638   0.748   0.902   1.019   1.206   1.356   1.796   2.176
+NM-0.7-UNIF        0.701   0.885   0.901   0.947   1.014   1.055   1.149   1.179   1.331
+UNIF               1.000   1.000   1.000   1.000   1.000   1.000   1.000   1.000   1.000
+NM-none-P5450      0.121   0.144   0.834   1.034   1.113   1.242   1.403   7.679   8.618
+P5014              0.045   0.050   0.904   0.983   1.087   1.265   1.388  20.832  22.291
+
+Table 15. Worst combination a = J_C v_min, v_min^T J_C v_min = 1 (batch 1); CRLB variance of a^T theta is 1/lambda_min times the reference's
+id                    G0     Re1     Im1     Re2     Im2     Re3     Im3     Re4     Im4 1/lam_min   check    vJv
+NM-none-P5514    -34955.020 -19293.431 +27343.542 -5043.015 +6918.139 -35189.502 +53006.196 +8692.832 +62410.476     22.21   22.21  1.000
+NM-0.3-P4312     -17569.391 -22899.565 +42287.450 -15859.624 +5932.931 +24677.665 +32580.604 +38572.706 +22837.686      2.38    2.38  1.000
+AB-0.5           -27932.994 -33628.401 +53582.690 -18830.170 +11659.906 +3722.478 +22276.047 +18718.357 +28812.957      1.88    1.88  1.000
+NM-0.7-UNIF      -40094.992 +43738.304 -25771.628 -845.767 +4635.622 -3611.435 -15888.629 -24832.842 -13463.265      1.43    1.43  1.000
+UNIF              -0.000 -19645.973 +18228.989 -23851.728 +17258.033 -762.277 +38227.287 +21641.555 +45480.151      1.00    1.00  1.000
+NM-none-P5450    -30157.939 -24683.734 +24482.098 -10535.563 +11474.736 -39156.843 +45666.230 -7605.704 +60267.438      8.29    8.29  1.000
+P5014            -31999.605 -19849.723 +24918.854 -7865.514 +6812.158 -44521.300 +45168.144 -3506.609 +63115.687     22.21   22.21  1.000
+Table 15b. Same directions normalised to unit Euclidean norm (as in mc837.py), for reading which parameters dominate
+NM-none-P5514     -0.342  -0.189  +0.268  -0.049  +0.068  -0.345  +0.519  +0.085  +0.611
+NM-0.3-P4312      -0.216  -0.282  +0.521  -0.195  +0.073  +0.304  +0.401  +0.475  +0.281
+AB-0.5            -0.335  -0.403  +0.642  -0.226  +0.140  +0.045  +0.267  +0.224  +0.345
+NM-0.7-UNIF       -0.552  +0.602  -0.355  -0.012  +0.064  -0.050  -0.219  -0.342  -0.185
+UNIF              -0.000  -0.263  +0.244  -0.319  +0.231  -0.010  +0.512  +0.290  +0.609
+NM-none-P5450     -0.307  -0.251  +0.249  -0.107  +0.117  -0.398  +0.464  -0.077  +0.613
+P5014             -0.317  -0.197  +0.247  -0.078  +0.068  -0.442  +0.448  -0.035  +0.626
+
+Table 16. Gaps (clock steps, pooled over R=4000), event rate q_k, window mean AC power (batch 1)
+id                  gap  min  q01  q05  q25  q50  q75  q95  q99   max |  q_mean  q_p99  q_max |    P_in     P_out
+NM-none-P5514     15.83    5    7    8    9   12   18   33   92   166 |  0.0633  0.158  0.378 |  0.3668 1.529e-03
+NM-0.3-P4312      15.68    5    7    7    8   11   16   33  105   253 |  0.0633  0.204  0.334 |  0.6364 1.338e-03
+AB-0.5            15.69    5    6    7    8   11   16   37  102   189 |  0.0633  0.201  0.342 |  0.6753 1.332e-03
+NM-0.7-UNIF       15.67    4    5    6    7    9   15   46  117   247 |  0.0633  0.211  0.427 |  0.7033 1.510e-03
+UNIF              15.67    4    5    6    7    9   14   42  126   254 |  0.0634  0.216  0.446 |  0.7051 1.514e-03
+NM-none-P5450     15.86    6    7    8    9   12   17   34   94   160 |  0.0632  0.160  0.534 |  0.4308 1.523e-03
+P5014             15.98    4    6    7   10   12   17   35   91   210 |  0.0627  0.155  0.253 |  0.3558 1.491e-03
+paired differences of Delta m_D^(C) between consecutive final candidates (batch 1):
+  NM-none-P5514 - NM-none-P5450: +0.0467 (paired batch se 0.0038)
+  NM-none-P5450 - P5014: +0.0848 (paired batch se 0.0039)
+  P5014 - NM-0.3-P4312: +0.1380 (paired batch se 0.0057)
+  NM-0.3-P4312 - AB-0.5: +0.0303 (paired batch se 0.0050)
+  AB-0.5 - NM-0.7-UNIF: +0.3747 (paired batch se 0.0057)
+batch 1 done, 13 s
+
+batch 2: 7x4000 ML fits in 111 s
+
+######## NM-none-P5514 [best unconstrained; front region A; best non-uniform amplitudes]: converged 4000/4000, mean Newton iterations 4.0; CRLB from batch 1 J (seed 20261013)
+
+[MLE, censored likelihood]
+ param   sd(MC)      sqrt(CRLB)  ratio   (batch se)   bias/sd  t
+ G0    5.453e-06  5.515e-06  0.989  (0.011)     +0.002  +0.1
+ Re1   1.604e-05  1.615e-05  0.993  (0.014)     +0.035  +2.2
+ Im1   1.600e-05  1.586e-05  1.009  (0.012)     -0.038  -2.4
+ Re2   1.568e-05  1.564e-05  1.002  (0.009)     +0.005  +0.3
+ Im2   1.646e-05  1.656e-05  0.994  (0.013)     -0.004  -0.2
+ Re3   3.663e-05  3.636e-05  1.007  (0.013)     +0.003  +0.2
+ Im3   3.839e-05  3.765e-05  1.020  (0.014)     +0.007  +0.4
+ Re4   3.735e-05  3.702e-05  1.009  (0.009)     +0.023  +1.4
+ Im4   3.881e-05  3.864e-05  1.004  (0.011)     -0.001  -0.1
+ logdet(Sigma_MC) - logdet(J^-1) = +0.082  (per-axis geometric mean ratio 1.005)
+ eigenvalues of J^(1/2) Sigma_MC J^(1/2): [0.932 0.951 0.968 0.997 1.018 1.032 1.038 1.064 1.093]
+
+[LS on sent samples only (control)]
+ param   sd(MC)      sqrt(CRLB)  ratio   (batch se)   bias/sd  t
+ G0    6.117e-06  5.515e-06  1.109  (0.012)     +0.006  +0.4
+ Re1   1.795e-05  1.615e-05  1.111  (0.014)     +3.014  +190.6
+ Im1   1.780e-05  1.586e-05  1.122  (0.012)     -8.558  -541.2
+ Re2   1.755e-05  1.564e-05  1.122  (0.013)     -0.539  -34.1
+ Im2   1.841e-05  1.656e-05  1.112  (0.012)     +0.912  +57.7
+ Re3   4.088e-05  3.636e-05  1.124  (0.018)     +1.377  +87.1
+ Im3   4.241e-05  3.765e-05  1.126  (0.018)     +0.870  +55.1
+ Re4   4.148e-05  3.702e-05  1.120  (0.014)     +2.246  +142.0
+ Im4   4.322e-05  3.864e-05  1.118  (0.016)     -0.911  -57.6
+ logdet(Sigma_MC) - logdet(J^-1) = +1.989  (per-axis geometric mean ratio 1.117)
+ eigenvalues of J^(1/2) Sigma_MC J^(1/2): [1.18  1.19  1.196 1.221 1.248 1.264 1.28  1.299 1.361]
+ whitened eigenvalues (MLE): max|lambda-1| = 0.0929; Wishart benchmark tail probability = 0.291 (5000 draws, seed 1)
+ Hotelling T2 = 20.149, p = 0.017
+
+######## NM-0.3-P4312 [best m_E>=0.3; front region C]: converged 4000/4000, mean Newton iterations 4.0; CRLB from batch 1 J (seed 20261013)
+
+[MLE, censored likelihood]
+ param   sd(MC)      sqrt(CRLB)  ratio   (batch se)   bias/sd  t
+ G0    5.534e-06  5.588e-06  0.990  (0.012)     -0.013  -0.8
+ Re1   1.701e-05  1.729e-05  0.984  (0.012)     +0.008  +0.5
+ Im1   1.865e-05  1.829e-05  1.020  (0.012)     -0.012  -0.8
+ Re2   1.554e-05  1.552e-05  1.001  (0.010)     -0.014  -0.9
+ Im2   1.591e-05  1.610e-05  0.988  (0.010)     -0.016  -1.0
+ Re3   3.706e-05  3.736e-05  0.992  (0.011)     +0.012  +0.8
+ Im3   3.716e-05  3.742e-05  0.993  (0.007)     +0.020  +1.3
+ Re4   3.582e-05  3.651e-05  0.981  (0.010)     -0.026  -1.6
+ Im4   3.687e-05  3.724e-05  0.990  (0.012)     -0.006  -0.4
+ logdet(Sigma_MC) - logdet(J^-1) = -0.161  (per-axis geometric mean ratio 0.991)
+ eigenvalues of J^(1/2) Sigma_MC J^(1/2): [0.912 0.932 0.959 0.963 0.982 0.996 1.002 1.026 1.078]
+
+[LS on sent samples only (control)]
+ param   sd(MC)      sqrt(CRLB)  ratio   (batch se)   bias/sd  t
+ G0    6.254e-06  5.588e-06  1.119  (0.010)     -0.145  -9.1
+ Re1   1.902e-05  1.729e-05  1.100  (0.012)     +2.230  +141.1
+ Im1   2.089e-05  1.829e-05  1.142  (0.008)     -7.247  -458.4
+ Re2   1.727e-05  1.552e-05  1.112  (0.012)     -0.240  -15.2
+ Im2   1.782e-05  1.610e-05  1.106  (0.014)     -0.060  -3.8
+ Re3   4.146e-05  3.736e-05  1.110  (0.012)     -0.704  -44.5
+ Im3   4.141e-05  3.742e-05  1.107  (0.009)     +1.053  +66.6
+ Re4   4.009e-05  3.651e-05  1.098  (0.012)     -0.754  -47.7
+ Im4   4.142e-05  3.724e-05  1.112  (0.012)     -1.799  -113.8
+ logdet(Sigma_MC) - logdet(J^-1) = +1.837  (per-axis geometric mean ratio 1.107)
+ eigenvalues of J^(1/2) Sigma_MC J^(1/2): [1.126 1.161 1.176 1.195 1.219 1.251 1.281 1.294 1.352]
+ whitened eigenvalues (MLE): max|lambda-1| = 0.0883; Wishart benchmark tail probability = 0.419 (5000 draws, seed 1)
+ Hotelling T2 = 9.839, p = 0.366
+
+######## AB-0.5 [best m_E>=0.5]: converged 4000/4000, mean Newton iterations 4.0; CRLB from batch 1 J (seed 20261013)
+
+[MLE, censored likelihood]
+ param   sd(MC)      sqrt(CRLB)  ratio   (batch se)   bias/sd  t
+ G0    5.593e-06  5.596e-06  0.999  (0.013)     +0.008  +0.5
+ Re1   1.737e-05  1.720e-05  1.010  (0.013)     +0.019  +1.2
+ Im1   1.843e-05  1.858e-05  0.992  (0.008)     -0.050  -3.1
+ Re2   1.558e-05  1.552e-05  1.004  (0.010)     +0.005  +0.3
+ Im2   1.610e-05  1.587e-05  1.014  (0.014)     -0.007  -0.5
+ Re3   3.789e-05  3.783e-05  1.002  (0.011)     -0.020  -1.3
+ Im3   3.793e-05  3.825e-05  0.992  (0.009)     -0.012  -0.8
+ Re4   3.552e-05  3.610e-05  0.984  (0.008)     +0.003  +0.2
+ Im4   3.740e-05  3.708e-05  1.009  (0.010)     -0.008  -0.5
+ logdet(Sigma_MC) - logdet(J^-1) = +0.009  (per-axis geometric mean ratio 1.000)
+ eigenvalues of J^(1/2) Sigma_MC J^(1/2): [0.928 0.938 0.979 0.989 0.994 1.025 1.038 1.049 1.077]
+
+[LS on sent samples only (control)]
+ param   sd(MC)      sqrt(CRLB)  ratio   (batch se)   bias/sd  t
+ G0    6.193e-06  5.596e-06  1.107  (0.014)     -0.079  -5.0
+ Re1   1.925e-05  1.720e-05  1.119  (0.018)     +1.655  +104.6
+ Im1   2.099e-05  1.858e-05  1.130  (0.007)     -7.147  -452.0
+ Re2   1.744e-05  1.552e-05  1.124  (0.010)     -0.251  -15.9
+ Im2   1.801e-05  1.587e-05  1.135  (0.010)     -0.301  -19.0
+ Re3   4.192e-05  3.783e-05  1.108  (0.013)     -0.591  -37.3
+ Im3   4.264e-05  3.825e-05  1.115  (0.011)     +0.941  +59.5
+ Re4   3.985e-05  3.610e-05  1.104  (0.012)     -0.362  -22.9
+ Im4   4.137e-05  3.708e-05  1.116  (0.010)     -1.792  -113.3
+ logdet(Sigma_MC) - logdet(J^-1) = +1.961  (per-axis geometric mean ratio 1.115)
+ eigenvalues of J^(1/2) Sigma_MC J^(1/2): [1.134 1.18  1.206 1.219 1.24  1.257 1.296 1.304 1.371]
+ whitened eigenvalues (MLE): max|lambda-1| = 0.0774; Wishart benchmark tail probability = 0.777 (5000 draws, seed 1)
+ Hotelling T2 = 28.426, p = 0.001
+
+######## NM-0.7-UNIF [best m_E>=0.7]: converged 4000/4000, mean Newton iterations 3.5; CRLB from batch 1 J (seed 20261013)
+
+[MLE, censored likelihood]
+ param   sd(MC)      sqrt(CRLB)  ratio   (batch se)   bias/sd  t
+ G0    5.535e-06  5.647e-06  0.980  (0.011)     +0.017  +1.0
+ Re1   2.040e-05  2.058e-05  0.991  (0.013)     -0.006  -0.4
+ Im1   1.629e-05  1.606e-05  1.014  (0.008)     -0.030  -1.9
+ Re2   1.564e-05  1.577e-05  0.992  (0.009)     -0.009  -0.6
+ Im2   1.574e-05  1.575e-05  0.999  (0.013)     -0.013  -0.8
+ Re3   3.836e-05  3.789e-05  1.013  (0.009)     +0.028  +1.8
+ Im3   3.756e-05  3.779e-05  0.994  (0.011)     +0.010  +0.7
+ Re4   3.729e-05  3.836e-05  0.972  (0.006)     -0.013  -0.8
+ Im4   3.949e-05  3.929e-05  1.005  (0.009)     +0.006  +0.4
+ logdet(Sigma_MC) - logdet(J^-1) = -0.059  (per-axis geometric mean ratio 0.997)
+ eigenvalues of J^(1/2) Sigma_MC J^(1/2): [0.892 0.932 0.959 0.979 0.994 1.022 1.034 1.048 1.097]
+
+[LS on sent samples only (control)]
+ param   sd(MC)      sqrt(CRLB)  ratio   (batch se)   bias/sd  t
+ G0    6.196e-06  5.647e-06  1.097  (0.013)     +0.389  +24.6
+ Re1   2.309e-05  2.058e-05  1.122  (0.012)     +2.306  +145.9
+ Im1   1.813e-05  1.606e-05  1.129  (0.011)     -3.724  -235.5
+ Re2   1.753e-05  1.577e-05  1.112  (0.009)     -0.065  -4.1
+ Im2   1.752e-05  1.575e-05  1.112  (0.014)     -1.899  -120.1
+ Re3   4.221e-05  3.789e-05  1.114  (0.008)     +0.483  +30.5
+ Im3   4.134e-05  3.779e-05  1.094  (0.010)     -0.689  -43.6
+ Re4   4.151e-05  3.836e-05  1.082  (0.010)     -0.468  -29.6
+ Im4   4.350e-05  3.929e-05  1.107  (0.009)     +0.554  +35.1
+ logdet(Sigma_MC) - logdet(J^-1) = +1.862  (per-axis geometric mean ratio 1.109)
+ eigenvalues of J^(1/2) Sigma_MC J^(1/2): [1.128 1.161 1.172 1.207 1.241 1.26  1.266 1.307 1.342]
+ whitened eigenvalues (MLE): max|lambda-1| = 0.1075; Wishart benchmark tail probability = 0.055 (5000 draws, seed 1)
+ Hotelling T2 = 14.867, p = 0.096
+
+######## UNIF [uniform reference]: converged 4000/4000, mean Newton iterations 3.9; CRLB from batch 1 J (seed 20261013)
+
+[MLE, censored likelihood]
+ param   sd(MC)      sqrt(CRLB)  ratio   (batch se)   bias/sd  t
+ G0    5.781e-06  5.682e-06  1.017  (0.012)     +0.012  +0.7
+ Re1   1.917e-05  1.904e-05  1.007  (0.012)     -0.007  -0.4
+ Im1   1.746e-05  1.746e-05  1.000  (0.010)     -0.030  -1.9
+ Re2   1.655e-05  1.638e-05  1.011  (0.005)     +0.006  +0.4
+ Im2   1.599e-05  1.618e-05  0.989  (0.010)     +0.008  +0.5
+ Re3   3.758e-05  3.729e-05  1.008  (0.014)     +0.009  +0.6
+ Im3   3.634e-05  3.678e-05  0.988  (0.011)     +0.025  +1.6
+ Re4   3.735e-05  3.682e-05  1.014  (0.011)     -0.016  -1.0
+ Im4   3.930e-05  3.935e-05  0.999  (0.012)     -0.009  -0.6
+ logdet(Sigma_MC) - logdet(J^-1) = +0.051  (per-axis geometric mean ratio 1.003)
+ eigenvalues of J^(1/2) Sigma_MC J^(1/2): [0.914 0.954 0.978 0.992 1.017 1.024 1.04  1.06  1.084]
+
+[LS on sent samples only (control)]
+ param   sd(MC)      sqrt(CRLB)  ratio   (batch se)   bias/sd  t
+ G0    6.419e-06  5.682e-06  1.130  (0.012)     +0.704  +44.6
+ Re1   2.176e-05  1.904e-05  1.143  (0.009)     -0.383  -24.2
+ Im1   1.980e-05  1.746e-05  1.134  (0.013)     -4.733  -299.3
+ Re2   1.819e-05  1.638e-05  1.111  (0.010)     -0.311  -19.7
+ Im2   1.782e-05  1.618e-05  1.102  (0.010)     -1.734  -109.7
+ Re3   4.155e-05  3.729e-05  1.114  (0.014)     -0.335  -21.2
+ Im3   3.997e-05  3.678e-05  1.086  (0.012)     -0.750  -47.4
+ Re4   4.105e-05  3.682e-05  1.115  (0.012)     +0.912  +57.7
+ Im4   4.358e-05  3.935e-05  1.107  (0.008)     -0.312  -19.7
+ logdet(Sigma_MC) - logdet(J^-1) = +1.930  (per-axis geometric mean ratio 1.113)
+ eigenvalues of J^(1/2) Sigma_MC J^(1/2): [1.145 1.172 1.18  1.212 1.231 1.247 1.274 1.323 1.386]
+ whitened eigenvalues (MLE): max|lambda-1| = 0.0858; Wishart benchmark tail probability = 0.507 (5000 draws, seed 1)
+ Hotelling T2 = 7.658, p = 0.571
+
+######## NM-none-P5450 [front region B]: converged 4000/4000, mean Newton iterations 4.0; CRLB from batch 1 J (seed 20261013)
+
+[MLE, censored likelihood]
+ param   sd(MC)      sqrt(CRLB)  ratio   (batch se)   bias/sd  t
+ G0    5.458e-06  5.507e-06  0.991  (0.006)     +0.008  +0.5
+ Re1   1.632e-05  1.608e-05  1.014  (0.010)     +0.019  +1.2
+ Im1   1.606e-05  1.592e-05  1.008  (0.009)     -0.045  -2.8
+ Re2   1.605e-05  1.601e-05  1.002  (0.014)     -0.014  -0.9
+ Im2   1.663e-05  1.654e-05  1.005  (0.015)     +0.031  +2.0
+ Re3   3.708e-05  3.705e-05  1.001  (0.009)     -0.015  -1.0
+ Im3   3.808e-05  3.812e-05  0.999  (0.008)     +0.013  +0.8
+ Re4   3.757e-05  3.765e-05  0.998  (0.007)     -0.010  -0.6
+ Im4   3.664e-05  3.657e-05  1.002  (0.008)     -0.018  -1.1
+ logdet(Sigma_MC) - logdet(J^-1) = +0.001  (per-axis geometric mean ratio 1.000)
+ eigenvalues of J^(1/2) Sigma_MC J^(1/2): [0.925 0.943 0.977 0.982 1.013 1.029 1.034 1.043 1.063]
+
+[LS on sent samples only (control)]
+ param   sd(MC)      sqrt(CRLB)  ratio   (batch se)   bias/sd  t
+ G0    6.046e-06  5.507e-06  1.098  (0.008)     +0.272  +17.2
+ Re1   1.818e-05  1.608e-05  1.131  (0.011)     +3.129  +197.9
+ Im1   1.793e-05  1.592e-05  1.126  (0.010)     -8.601  -544.0
+ Re2   1.787e-05  1.601e-05  1.116  (0.011)     -0.225  -14.3
+ Im2   1.874e-05  1.654e-05  1.133  (0.013)     +1.289  +81.5
+ Re3   4.131e-05  3.705e-05  1.115  (0.012)     -1.477  -93.4
+ Im3   4.258e-05  3.812e-05  1.117  (0.011)     +0.984  +62.3
+ Re4   4.195e-05  3.765e-05  1.114  (0.012)     -1.908  -120.7
+ Im4   4.106e-05  3.657e-05  1.123  (0.013)     -1.549  -97.9
+ logdet(Sigma_MC) - logdet(J^-1) = +1.974  (per-axis geometric mean ratio 1.116)
+ eigenvalues of J^(1/2) Sigma_MC J^(1/2): [1.162 1.18  1.182 1.231 1.25  1.273 1.293 1.32  1.329]
+ whitened eigenvalues (MLE): max|lambda-1| = 0.0751; Wishart benchmark tail probability = 0.839 (5000 draws, seed 1)
+ Hotelling T2 = 14.737, p = 0.100
+
+######## P5014 [stage-1 phase-only best]: converged 4000/4000, mean Newton iterations 4.0; CRLB from batch 1 J (seed 20261013)
+
+[MLE, censored likelihood]
+ param   sd(MC)      sqrt(CRLB)  ratio   (batch se)   bias/sd  t
+ G0    5.472e-06  5.547e-06  0.986  (0.013)     -0.007  -0.4
+ Re1   1.640e-05  1.634e-05  1.004  (0.022)     -0.007  -0.5
+ Im1   1.618e-05  1.608e-05  1.006  (0.012)     -0.047  -3.0
+ Re2   1.589e-05  1.591e-05  0.999  (0.009)     -0.015  -0.9
+ Im2   1.653e-05  1.671e-05  0.989  (0.012)     -0.004  -0.2
+ Re3   3.736e-05  3.759e-05  0.994  (0.012)     +0.011  +0.7
+ Im3   3.730e-05  3.762e-05  0.991  (0.011)     +0.012  +0.8
+ Re4   3.743e-05  3.769e-05  0.993  (0.009)     +0.015  +1.0
+ Im4   3.881e-05  3.871e-05  1.003  (0.016)     +0.004  +0.3
+ logdet(Sigma_MC) - logdet(J^-1) = -0.082  (per-axis geometric mean ratio 0.995)
+ eigenvalues of J^(1/2) Sigma_MC J^(1/2): [0.929 0.93  0.96  0.967 0.995 1.012 1.027 1.035 1.074]
+
+[LS on sent samples only (control)]
+ param   sd(MC)      sqrt(CRLB)  ratio   (batch se)   bias/sd  t
+ G0    6.177e-06  5.547e-06  1.114  (0.017)     -0.530  -33.5
+ Re1   1.845e-05  1.634e-05  1.129  (0.019)     +3.057  +193.3
+ Im1   1.801e-05  1.608e-05  1.120  (0.014)     -8.759  -554.0
+ Re2   1.775e-05  1.591e-05  1.116  (0.010)     -0.867  -54.8
+ Im2   1.854e-05  1.671e-05  1.109  (0.014)     +1.199  +75.8
+ Re3   4.157e-05  3.759e-05  1.106  (0.013)     +0.933  +59.0
+ Im3   4.157e-05  3.762e-05  1.105  (0.009)     +1.658  +104.9
+ Re4   4.169e-05  3.769e-05  1.106  (0.012)     +2.640  +166.9
+ Im4   4.335e-05  3.871e-05  1.120  (0.017)     +0.141  +8.9
+ logdet(Sigma_MC) - logdet(J^-1) = +1.899  (per-axis geometric mean ratio 1.111)
+ eigenvalues of J^(1/2) Sigma_MC J^(1/2): [1.149 1.166 1.194 1.214 1.23  1.251 1.267 1.305 1.351]
+ whitened eigenvalues (MLE): max|lambda-1| = 0.0736; Wishart benchmark tail probability = 0.868 (5000 draws, seed 1)
+ Hotelling T2 = 11.868, p = 0.223
+
+Table 17. ML covariance check, batch 2 (R=4000, seed 20261014); CRLB = J^-1 from batch 1 (R=4000, seed 20261013); Wishart benchmark 5000 draws seed 1
+id                    conv sd ratio min    max max|t| logdet diff max|lam-1| W-tail      T2  p(T2) | LS-sent logdet diff
+NM-none-P5514    4000/4000        0.989  1.020   2.40      +0.082     0.0929  0.291   20.15  0.017 | +1.989
+NM-0.3-P4312     4000/4000        0.981  1.020   1.62      -0.161     0.0883  0.419    9.84  0.366 | +1.837
+AB-0.5           4000/4000        0.984  1.014   3.15      +0.009     0.0774  0.777   28.43  0.001 | +1.961
+NM-0.7-UNIF      4000/4000        0.972  1.014   1.87      -0.059     0.1075  0.055   14.87  0.096 | +1.862
+UNIF             4000/4000        0.988  1.017   1.91      +0.051     0.0858  0.507    7.66  0.571 | +1.930
+NM-none-P5450    4000/4000        0.991  1.014   2.84      +0.001     0.0751  0.839   14.74  0.100 | +1.974
+P5014            4000/4000        0.986  1.006   3.00      -0.082     0.0736  0.868   11.87  0.223 | +1.899
+RUNTIME stage2_final	started 2026-10-10 13:22:46	elapsed 129.2 s (2.15 min)	7 final candidates, batch 1 + batch 2 at R=4000
