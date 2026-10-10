@@ -78,6 +78,8 @@ for r in b1:
     g = r['gapq']
     print(f"{r['id']:16s} {r['gap']:6.2f} {g['min']:4d} {g['q01']:4d} {g['q05']:4d} {g['q25']:4d} {g['q50']:4d} {g['q75']:4d} {g['q95']:4d} {g['q99']:4d} {g['max']:5d} | "
           f"{r['q_mean']:7.4f} {r['q_p99']:6.3f} {r['q_max']:6.3f} | {r['Ein']:7.4f} {r['Eout']:9.3e}")
+print("Table 16b. Input descriptors of the final candidates (prediction 3): p, ||p - 1/4||_1, (chi3 - chi4) mod 2pi")
+for r in b1: print(f"{r['id']:16s} p={fmt_p(r)} ||p-1/4||_1={np.abs(np.array(r['p'])-0.25).sum():.3f} chi3-chi4={np.mod(r['chi'][2]-r['chi'][3], TWO_PI):.3f}")
 srt = sorted([r for r in b1 if r['id'] != 'UNIF'], key=lambda r: -r['dmD_C'])
 print("paired differences of Delta m_D^(C) between consecutive final candidates (batch 1):")
 for r1, r2 in zip(srt[:-1], srt[1:]): print(f"  {r1['id']} - {r2['id']}: {r1['dmD_C']-r2['dmD_C']:+.4f} (paired batch se {diff_se(r1, r2):.4f})")

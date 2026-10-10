@@ -9,7 +9,7 @@ final set (7), R=2000 values (seed 20261012) for reference:
   NM-none-P5450    [front region B] p=(0.252,0.240,0.250,0.258) chi=(5.272,4.471,5.216,0.045) dmD_C=+0.645 mE_C=0.121 D=-0.95+-0.06
   P5014            [stage-1 phase-only best] p=(0.250,0.250,0.250,0.250) chi=(5.236,0.000,1.047,4.189) dmD_C=+0.569 mE_C=0.045 D=-3.55+-0.06
 
-batch 1 evaluated in 13 s; reference (C): B_u=316.881, log det J_C=197.2020, (B) offset C-B=+3.0467
+batch 1 evaluated in 12 s; reference (C): B_u=316.881, log det J_C=197.2020, (B) offset C-B=+3.0467
 
 Table 13. Final candidates, batch 1 (R=4000, seed 20261013); D = paired send-count difference vs uniform on the same draws; dmD_C se = paired batch se 10x400
 id                      B         D +- se dec     dmD_C    (se)   dmD_B    mE_C     (se)   mE_B
@@ -58,6 +58,14 @@ NM-0.7-UNIF       15.67    4    5    6    7    9   15   46  117   247 |  0.0633 
 UNIF              15.67    4    5    6    7    9   14   42  126   254 |  0.0634  0.216  0.446 |  0.7051 1.514e-03
 NM-none-P5450     15.86    6    7    8    9   12   17   34   94   160 |  0.0632  0.160  0.534 |  0.4308 1.523e-03
 P5014             15.98    4    6    7   10   12   17   35   91   210 |  0.0627  0.155  0.253 |  0.3558 1.491e-03
+Table 16b. Input descriptors of the final candidates (prediction 3): p, ||p - 1/4||_1, (chi3 - chi4) mod 2pi
+NM-none-P5514    p=(0.252,0.251,0.252,0.245) ||p-1/4||_1=0.010 chi3-chi4=3.173
+NM-0.3-P4312     p=(0.212,0.262,0.260,0.266) ||p-1/4||_1=0.077 chi3-chi4=5.931
+AB-0.5           p=(0.209,0.265,0.254,0.272) ||p-1/4||_1=0.082 chi3-chi4=6.160
+NM-0.7-UNIF      p=(0.246,0.264,0.243,0.246) ||p-1/4||_1=0.029 chi3-chi4=0.001
+UNIF             p=(0.250,0.250,0.250,0.250) ||p-1/4||_1=0.000 chi3-chi4=0.000
+NM-none-P5450    p=(0.252,0.240,0.250,0.258) ||p-1/4||_1=0.020 chi3-chi4=5.171
+P5014            p=(0.250,0.250,0.250,0.250) ||p-1/4||_1=0.000 chi3-chi4=3.142
 paired differences of Delta m_D^(C) between consecutive final candidates (batch 1):
   NM-none-P5514 - NM-none-P5450: +0.0467 (paired batch se 0.0038)
   NM-none-P5450 - P5014: +0.0848 (paired batch se 0.0039)
@@ -71,7 +79,7 @@ paired differences of Delta m_D^(C) vs the stage-1 phase-only best P5014 (batch 
   NM-0.7-UNIF - P5014: -0.5430 (paired batch se 0.0046)
   UNIF - P5014: -0.5655 (paired batch se 0.0044)
   NM-none-P5450 - P5014: +0.0848 (paired batch se 0.0039)
-batch 1 done, 13 s
+batch 1 done, 12 s
 
 batch 2: 7x4000 ML fits in 111 s
 
@@ -308,4 +316,4 @@ NM-0.7-UNIF      4000/4000        0.972  1.014   1.87      -0.059     0.1075  0.
 UNIF             4000/4000        0.988  1.017   1.91      +0.051     0.0858  0.507    7.66  0.571 | +1.930
 NM-none-P5450    4000/4000        0.991  1.014   2.84      +0.001     0.0751  0.839   14.74  0.100 | +1.974
 P5014            4000/4000        0.986  1.006   3.00      -0.082     0.0736  0.868   11.87  0.223 | +1.899
-RUNTIME stage2_final	started 2026-10-10 13:29:22	elapsed 128.8 s (2.15 min)	7 final candidates, batch 1 + batch 2 at R=4000
+RUNTIME stage2_final	started 2026-10-10 13:34:59	elapsed 127.8 s (2.13 min)	7 final candidates, batch 1 + batch 2 at R=4000

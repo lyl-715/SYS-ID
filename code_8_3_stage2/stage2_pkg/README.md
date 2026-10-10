@@ -25,3 +25,14 @@ Key numbers: Delta_* = 0.002384694482635785 (N^nf = 321), sigma = Delta_*/20, B_
 - mc85_lhs.py + mc85_lhs_part{0,2..11}.json: 3000 joint candidates, R=200, seed 20261010 draws (part0 holds indices 0-499, parts 2-11 hold 500-2999 in blocks of 250).
 - mc85_scan_part{0..4}.json, mc85_amp20.json: stage-1 candidates on the same draws.
 - wk_d20_10000.npy: 10000-run weights of the uniform input (from mc837.py), used by mc84.py.
+
+## Stage 2 analysis (added 2026-10-10; run from this directory, in this order; outputs in stage2/)
+| file | what it does |
+|---|---|
+| stage2_common.py | shared setup exec'd by the stage-2 scripts: reuses mc83/mc85_scan setup, `qual` from mc85_post; numba trigger `sod_batch` proved bitwise equal to `sod()` on 100 trajectories at every start; `evaluate_crn` (reproduces stored stage-1/LHS values exactly) |
+| stage2_post.py | merge 3000 LHS + 1465 stage-1 candidates (R=200, seed 20261010), dedupe, 8.3.6(g) decisions, R=200 Pareto front, predictions 1-4, selection of 40 for refinement |
+| stage2_refine.py | the 40 at R=2000, seed 20261012 (same draws incl. reference): D +- se, decisions, Delta m_D with paired batch se, eigenvalues, re-ranking |
+| stage2_local.py | penalised Nelder-Mead (R=500 inside, maxfev=150, 4 targets x 3 front regions); every new point re-evaluated at R=2000, seed 20261012; phase-only controls |
+| stage2_final.py | 7 final candidates: batch 1 (seed 20261013, R=4000) J, D, eigenvalues, worst combination, q_k/x_k/w_k, gaps, powers; batch 2 (seed 20261014, R=4000) ML covariance check with mc84.py functions |
+| stage2_figs.py | figures for stage2/stage2_report.md |
+| stage2/stage2_report.md | report; every number traceable to stage2/*.log |
