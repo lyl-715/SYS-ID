@@ -1,0 +1,55 @@
+fig_front.png: qualified records 177 (stage 2-3: 107, stage 4: 70); stage-3 front 16 points, stage-4 front 15 points
+  stage-4 front (dmD_C, mE_C): S4-0.5-S3-none-G-P5514(0,0,-30,-30) (+0.697, 0.045); S4-0.5-NM-none-P5514 (+0.691, 0.045); S4-0.3-S3-none-PO-NM-none-P5514 (+0.680, 0.046); S4-0.3-S3-0.3-NM-0.3-P5014 (+0.672, 0.047); S3-0.3-NM-0.3-P5014 (+0.672, 0.047); S4-noneC-S3-none-NM-none-P5450 (+0.650, 0.135); P1001 (+0.463, 0.141); S4-0.5-S3-none-NM-none-P5450 (+0.460, 0.584); G-AB05(30,30,60,60) (+0.318, 0.605); S4-0.7-S3-0.3-NM-0.3-P4312 (+0.302, 0.614); S4-0.7-S3-0.3-NM-0.7-P4312 (+0.298, 0.625); S4-none-S3-0.7-P4055 (+0.280, 0.697); S4-0.5-S3-0.7-P4055 (+0.270, 0.703); S4-0.7-S3-0.7-P4055 (+0.264, 0.706); UNIF (+0.000, 1.000)
+
+fig_confirm.png: 21 candidates, Delta m_D^(C) and m_E^(C) with intervals +- 4.5899 se (seed 20261020, R=8000); near-optimal membership per floor:
+  S4-0.5-S3-none-G-P5514(0,0,-30,-30)  dmD [+0.6922,+0.7291] mE [0.0445,0.0447] member of: none
+  S4-0.5-NM-none-P5514                 dmD [+0.6843,+0.7170] mE [0.0449,0.0451] member of: none
+  NM-none-P5514                        dmD [+0.6839,+0.7167] mE [0.0449,0.0451] member of: none
+  S4-0.3-S3-none-PO-NM-none-P5514      dmD [+0.6827,+0.7092] mE [0.0457,0.0459] member of: none
+  S3-0.3-NM-0.3-P5014                  dmD [+0.6695,+0.6943] mE [0.0467,0.0469] member of: none
+  S4-0.3-S3-0.3-NM-0.3-P5014           dmD [+0.6694,+0.6940] mE [0.0467,0.0469] member of: none
+  S4-noneC-S3-none-NM-none-P5450       dmD [+0.6436,+0.6743] mE [0.1346,0.1352] member of: -
+  NM-none-P5450                        dmD [+0.6331,+0.6624] mE [0.1203,0.1207] member of: -
+  P5014                                dmD [+0.5477,+0.5846] mE [0.0449,0.0451] member of: -
+  P1001                                dmD [+0.4535,+0.4909] mE [0.1402,0.1412] member of: -
+  S4-0.5-S3-none-NM-none-P5450         dmD [+0.4490,+0.4897] mE [0.5829,0.5852] member of: 0.3, 0.5
+  NM-0.3-P4312                         dmD [+0.4109,+0.4481] mE [0.4195,0.4211] member of: -
+  AB-0.5                               dmD [+0.3726,+0.4133] mE [0.5294,0.5321] member of: -
+  G-AB05(30,30,60,60)                  dmD [+0.3012,+0.3372] mE [0.6036,0.6071] member of: -
+  S4-0.7-S3-0.3-NM-0.3-P4312           dmD [+0.2917,+0.3244] mE [0.6124,0.6165] member of: -
+  S4-0.7-S3-0.3-NM-0.7-P4312           dmD [+0.2876,+0.3260] mE [0.6239,0.6270] member of: -
+  S4-0.5-S3-0.7-P4055                  dmD [+0.2617,+0.2999] mE [0.7007,0.7059] member of: 0.7
+  S4-none-S3-0.7-P4055                 dmD [+0.2592,+0.2979] mE [0.6944,0.6989] member of: -
+  S4-0.7-S3-0.7-P4055                  dmD [+0.2548,+0.2890] mE [0.7043,0.7079] member of: 0.7
+  NM-0.7-UNIF                          dmD [+0.0143,+0.0449] mE [0.7003,0.7041] member of: -
+  UNIF                                 dmD [+0.0000,+0.0000] mE [1.0000,1.0000] member of: -
+
+fig_scenarios.png: representatives at d = 5, 20 (control), 50; seed 20261021, R=4000
+  none S4-0.5-S3-none-G-P5514(0,0,-30,-30)  dmD_C d=5: +0.442 d=20: +0.716 d=50: +0.726 | D d=5: -5.510+-0.067 d=20: -0.417+-0.045 d=50: +1.238+-0.038
+  0.3  S4-0.3-G-AB05(30,30,60,60)           dmD_C d=5: +0.315 d=20: +0.461 d=50: +0.476 | D d=5: -2.663+-0.070 d=20: -0.430+-0.047 d=50: +0.904+-0.046
+  0.5  S4-0.5-S3-none-NM-none-P5450         dmD_C d=5: +0.282 d=20: +0.473 d=50: +0.468 | D d=5: -3.039+-0.071 d=20: -0.389+-0.049 d=50: +0.374+-0.041
+  0.7  S4-0.5-S3-0.7-P4055                  dmD_C d=5: +0.061 d=20: +0.281 d=50: +0.286 | D d=5: -3.540+-0.070 d=20: -0.431+-0.047 d=50: +0.334+-0.039
+figures saved
+
+Derived checks (Script 1, R=2000 seed 20261012, from front_R2000.json 'start_end'):
+  P1.3 floor 0.3: 8 feasible endpoints; end m_E - floor = [0.14, 0.121, 0.13, 0.153, 0.192, 0.208, 0.126, 0.015]; within 0.03: 1
+  P1.3 floor 0.5: 7 feasible endpoints; end m_E - floor = [0.084, 0.058, 0.203, 0.042, 0.053, 0.011, 0.025]; within 0.03: 2
+  P1.3 floor 0.7: 1 feasible endpoints; end m_E - floor = [0.006]; within 0.03: 1
+  P1.4 feasible front starts: n=13, change median +0.0084, |change| <= 0.03: 10, larger: none/P1045 +0.1453 (m_E 0.141 -> 0.104), 0.3/G-AB05(30,30,60,60) +0.1216 (m_E 0.605 -> 0.430), 0.5/G-AB05(30,30,60,60) +0.0778 (m_E 0.605 -> 0.542)
+  P1.4 R=200 pool starts, floor none: start feasible 6/6, end feasible 6/6; start failures ['']; changes of feasible starts +0.502, +5.812, +4.578, +4.123, +4.415, +1.116; best feasible end +0.588
+  P1.4 R=200 pool starts, floor 0.3: start feasible 0/6, end feasible 4/6; start failures ['m_E<0.3']; changes of feasible starts -; best feasible end +0.343
+  P1.4 R=200 pool starts, floor 0.5: start feasible 0/6, end feasible 3/6; start failures ['m_E<0.5']; changes of feasible starts -; best feasible end +0.259
+  P1.4 R=200 pool starts, floor 0.7: start feasible 0/6, end feasible 0/6; start failures ['m_E<0.7']; changes of feasible starts -; best feasible end -
+
+Derived check: new stage-4 front points vs the start of the run that produced them (R=2000, seed 20261012):
+  S4-0.5-S3-none-G-P5514(0,0,-30,-30)  from run 0.5/S3-none-G-P5514(0,0,-30,-30) (endpoint #294): max|dp| = 1.9e-05, max|dchi| = 1.8e-04 rad, dmD_C +0.6969 -> +0.6973 (+0.0004), mE_C 0.045 -> 0.045
+  S4-0.5-NM-none-P5514                 from run 0.5/NM-none-P5514 (endpoint #261): max|dp| = 1.2e-04, max|dchi| = 5.6e-04 rad, dmD_C +0.6891 -> +0.6909 (+0.0018), mE_C 0.045 -> 0.045
+  S4-0.3-S3-none-PO-NM-none-P5514      from run 0.3/S3-none-PO-NM-none-P5514 (endpoint #294): max|dp| = 9.1e-04, max|dchi| = 2.1e-03 rad, dmD_C +0.6746 -> +0.6803 (+0.0057), mE_C 0.046 -> 0.046
+  S4-0.3-S3-0.3-NM-0.3-P5014           from run 0.3/S3-0.3-NM-0.3-P5014 (endpoint #289): max|dp| = 1.1e-05, max|dchi| = 2.3e-05 rad, dmD_C +0.6719 -> +0.6721 (+0.0002), mE_C 0.047 -> 0.047
+  S4-noneC-S3-none-NM-none-P5450       from run none/S3-none-NM-none-P5450 (constrained best #300): max|dp| = 2.6e-06, max|dchi| = 8.5e-06 rad, dmD_C +0.6499 -> +0.6501 (+0.0002), mE_C 0.135 -> 0.135
+  S4-0.5-S3-none-NM-none-P5450         from run 0.5/S3-none-NM-none-P5450 (endpoint #282): max|dp| = 4.8e-02, max|dchi| = 5.7e-01 rad, dmD_C +0.6499 -> +0.4603 (-0.1896), mE_C 0.135 -> 0.584
+  S4-0.7-S3-0.3-NM-0.3-P4312           from run 0.7/S3-0.3-NM-0.3-P4312 (endpoint #300): max|dp| = 2.3e-02, max|dchi| = 2.3e-01 rad, dmD_C +0.4249 -> +0.3016 (-0.1233), mE_C 0.423 -> 0.614
+  S4-0.7-S3-0.3-NM-0.7-P4312           from run 0.7/S3-0.3-NM-0.7-P4312 (endpoint #283): max|dp| = 2.2e-02, max|dchi| = 1.8e-01 rad, dmD_C +0.3871 -> +0.2979 (-0.0892), mE_C 0.440 -> 0.625
+  S4-none-S3-0.7-P4055                 from run none/S3-0.7-P4055 (endpoint #284): max|dp| = 2.8e-03, max|dchi| = 2.0e-02 rad, dmD_C +0.2617 -> +0.2802 (+0.0185), mE_C 0.705 -> 0.697
+  S4-0.5-S3-0.7-P4055                  from run 0.5/S3-0.7-P4055 (endpoint #287): max|dp| = 3.7e-03, max|dchi| = 4.4e-03 rad, dmD_C +0.2617 -> +0.2700 (+0.0084), mE_C 0.705 -> 0.703
+  S4-0.7-S3-0.7-P4055                  from run 0.7/S3-0.7-P4055 (endpoint #292): max|dp| = 1.0e-03, max|dchi| = 1.1e-03 rad, dmD_C +0.2617 -> +0.2644 (+0.0028), mE_C 0.705 -> 0.706

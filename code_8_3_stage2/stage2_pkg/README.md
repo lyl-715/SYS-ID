@@ -37,3 +37,14 @@ Key numbers: Delta_* = 0.002384694482635785 (N^nf = 321), sigma = Delta_*/20, B_
 | stage2_figs.py | figures for stage2/stage2_report.md |
 | stage2_followup.py | report §8: budget margins and an independent decision re-run (seed 20261015), independent ML bias check for NM-none-P5514 and AB-0.5 (seed 20261016, batch-2 code of stage2_final.py exec'd verbatim), window vs long-run input power |
 | stage2/stage2_report.md | report; every number traceable to stage2/*.log |
+
+## Stage 4 (added 2026-10-13; run from this directory, in this order; outputs in stage4/)
+| file | what it does |
+|---|---|
+| stage4/predictions.md, stage4/design.md | predictions and every rule not fixed by the prompt, committed before any stage-4 run |
+| stage4_common.py | bookkeeping only (stage-2/3 pool loader, used-start keys, feasibility rule, representative rule); exec's stage3_common.py unchanged |
+| stage4_search.py | Script 1: 12 new NM starts per floor (6 front by m_E stratum, 6 from the qualified R=200 pool, seed 20261018), maxfev 300, R=500 inside; 10 unbudgeted starts; endpoint + constrained archive best per run; everything at R=2000 (seed 20261012); merged front, per-floor and unbudgeted previous vs new best |
+| stage4_confirm.py | Script 2: `freeze` (pool, incumbents, delta, method, family, M, t; committed before the draw), then `draw` (seed 20261020, R=8000, 20x400 batch-mean t-intervals with t_{19,1-0.05/(2M)}); classification and candidate near-optimal sets |
+| stage4_scenarios.py | Script 3: the four floor representatives + UNIF at d=5 and d=50 (and a d=20 control), seed 20261021, R=4000 CRN; sigma_d, Jb, ldB rebound per scenario |
+| stage4_figs.py | report figures and derived checks from the JSON outputs |
+| stage4/stage4_report.md | report; every number traceable to stage4/*.log |
