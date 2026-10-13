@@ -1,0 +1,32 @@
+=== stage4_confirm.py freeze: no noise is drawn in this invocation ===
+pool: 21 candidates (Script-1 front 15 points + 7 stage-2 finalists, deduplicated by key; no truncation)
+  # id                                 roles                        | R=2000 (seed 20261012):   dmD_C   mE_C        D +- se dec  
+  1 S4-0.5-S3-none-G-P5514(0,0,-30,-30) front                        |  +0.697  0.045  -0.61 +- 0.07 ok   
+  2 S4-0.5-NM-none-P5514               front                        |  +0.691  0.045  -0.47 +- 0.06 ok   
+  3 S4-0.3-S3-none-PO-NM-none-P5514    front                        |  +0.680  0.046  -1.20 +- 0.06 ok   
+  4 S4-0.3-S3-0.3-NM-0.3-P5014         front                        |  +0.672  0.047  -0.58 +- 0.06 ok   
+  5 S3-0.3-NM-0.3-P5014                front                        |  +0.672  0.047  -0.58 +- 0.06 ok   
+  6 S4-noneC-S3-none-NM-none-P5450     front                        |  +0.650  0.135  -0.33 +- 0.07 ok   
+  7 P1001                              front                        |  +0.463  0.141  -1.47 +- 0.06 ok   
+  8 S4-0.5-S3-none-NM-none-P5450       front                        |  +0.460  0.584  -0.43 +- 0.07 ok   
+  9 G-AB05(30,30,60,60)                front                        |  +0.318  0.605  -2.32 +- 0.07 ok   
+ 10 S4-0.7-S3-0.3-NM-0.3-P4312         front                        |  +0.302  0.614  -1.07 +- 0.07 ok   
+ 11 S4-0.7-S3-0.3-NM-0.7-P4312         front                        |  +0.298  0.625  -0.36 +- 0.07 ok   
+ 12 S4-none-S3-0.7-P4055               front                        |  +0.280  0.697  -0.46 +- 0.06 ok   
+ 13 S4-0.5-S3-0.7-P4055                front                        |  +0.270  0.703  -0.44 +- 0.07 ok   
+ 14 S4-0.7-S3-0.7-P4055                front                        |  +0.264  0.706  -0.41 +- 0.07 ok   
+ 15 UNIF                               front, stage-2 finalist      |  +0.000  1.000  +0.00 +- 0.00 ok   
+ 16 NM-none-P5514                      stage-2 finalist             |  +0.689  0.045  -0.46 +- 0.06 ok   
+ 17 NM-0.3-P4312                       stage-2 finalist             |  +0.426  0.421  -0.31 +- 0.07 ok   
+ 18 AB-0.5                             stage-2 finalist             |  +0.383  0.531  -0.52 +- 0.07 ok   
+ 19 NM-0.7-UNIF                        stage-2 finalist             |  +0.024  0.702  -0.36 +- 0.07 ok   
+ 20 NM-none-P5450                      stage-2 finalist             |  +0.645  0.121  -0.95 +- 0.06 ok   
+ 21 P5014                              stage-2 finalist             |  +0.569  0.045  -3.55 +- 0.06 ok   
+incumbent per floor (Script-1 best at R=2000): none: S4-0.5-S3-none-G-P5514(0,0,-30,-30); 0.3: S4-0.5-S3-none-NM-none-P5450; 0.5: S4-0.5-S3-none-NM-none-P5450; 0.7: S4-0.5-S3-0.7-P4055
+delta = 0.02 nat; confidence 0.95; method: batch-mean t-intervals: 20 batches of 400 consecutive draws, 19 df; point estimates from the full R=8000 matrices, se = sd(batch statistics, ddof=1)/sqrt(20), differences formed within each batch first
+stopping rule: this single batch (seed 20261020, R=8000); no augmentation
+comparison family: 20 intervals for D = B_c - B_UNIF (non-uniform candidates); 20 intervals for m_E^(C) (non-uniform candidates; one per candidate, serving all floors); 210 intervals for Delta m_D^(C)(i) - Delta m_D^(C)(j), all unordered pairs (contains every comparison vs UNIF and vs the incumbents)
+M = 2(n-1) + C(n,2) = 2*20 + 210 = 250; critical value t_{19, 1-0.05/(2M)} = t_{19, 0.99990000} = 4.5899
+draw: seed 20261020, R=8000 (not drawn here)
+written stage4/confirm_frozen.json; sha256 db460522dedf7cc6f7f6a142e847c1d92ea859f27a95540d7b1b300834b3f2c6
+RUNTIME stage4_confirm freeze	started 2026-10-13 13:45:12	elapsed 0.0 s (0.00 min)	pool n=21, M=250, t=4.5899

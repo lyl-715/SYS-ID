@@ -1,1 +1,2 @@
 stage4_search	started 2026-10-13 13:13:16	elapsed 1846.3 s (30.77 min)	48 budgeted + 10 unbudgeted NM runs (maxfev 300), 90 new records at R=2000
+stage4_confirm freeze	started 2026-10-13 13:45:12	elapsed 0.0 s (0.00 min)	pool n=21, M=250, t=4.5899
