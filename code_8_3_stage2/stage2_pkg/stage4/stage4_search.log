@@ -1,0 +1,271 @@
+=== stage4_search.py: Nelder-Mead maxfev=300, R=500 inside (seed 20261010), MU_B=1.0, MU_E=20.0, h=(0.25,0.25); start selection seed 20261018; re-evaluation R=2000 seed 20261012 ===
+trigger check: sod_batch == mc83.sod (eps, r, overshoots, bitwise) on 100/100 trajectories (31827 events)
+stage-2/3 pool: 120 records at R=2000 (seed 20261012); qualified 107; current empirical front 16 points (= stage3/front_union_R2000.json); stage-2/3 Nelder-Mead starts: 40 tasks, 27 distinct keys
+
+Table S1. Current front (16) and eligibility as a start (design.md §1.3); strata on R=2000 m_E^(C): L [0.0,0.1), M [0.1,0.5), H [0.5,inf)
+  S3-none-G-P5514(0,0,-30,-30)   dmD_C=+0.697 mE_C=0.045 stratum L eligible
+  NM-none-P5514                  dmD_C=+0.689 mE_C=0.045 stratum L eligible
+  PO-NM-none-P5514               dmD_C=+0.678 mE_C=0.045 stratum L USED (dense_runs.json:none/PO-NM-none-P5514)
+  S3-none-PO-NM-none-P5514       dmD_C=+0.675 mE_C=0.046 stratum L eligible
+  S3-0.3-NM-0.3-P5014            dmD_C=+0.672 mE_C=0.047 stratum L eligible
+  S3-none-NM-none-P5450          dmD_C=+0.650 mE_C=0.135 stratum M eligible
+  P1001                          dmD_C=+0.463 mE_C=0.141 stratum M USED (dense_runs.json:0.3/P1001; dense_runs.json:0.5/P1001; dense_runs.json:0.7/P1001)
+  P1045                          dmD_C=+0.442 mE_C=0.141 stratum M eligible
+  P4312                          dmD_C=+0.440 mE_C=0.146 stratum M USED (local_runs.json:0.3/P4312; local_runs.json:0.5/P4312; local_runs.json:0.7/P4312)
+  NM-0.3-P4312                   dmD_C=+0.426 mE_C=0.421 stratum M USED (dense_runs.json:none/NM-0.3-P4312; dense_runs.json:0.3/NM-0.3-P4312)
+  S3-0.3-NM-0.3-P4312            dmD_C=+0.425 mE_C=0.423 stratum M eligible
+  S3-0.3-NM-0.7-P4312            dmD_C=+0.387 mE_C=0.440 stratum M eligible
+  AB-0.5                         dmD_C=+0.383 mE_C=0.531 stratum H eligible
+  G-AB05(30,30,60,60)            dmD_C=+0.318 mE_C=0.605 stratum H eligible
+  S3-0.7-P4055                   dmD_C=+0.262 mE_C=0.705 stratum H eligible
+  UNIF                           dmD_C=+0.000 mE_C=1.000 stratum H USED (local_runs.json:0.7/UNIF)
+  stratum L: 4 eligible; permutation (seed 20261018): ['NM-none-P5514', 'S3-none-G-P5514(0,0,-30,-30)', 'S3-0.3-NM-0.3-P5014', 'S3-none-PO-NM-none-P5514']
+  stratum M: 4 eligible; permutation (seed 20261018): ['S3-none-NM-none-P5450', 'P1045', 'S3-0.3-NM-0.7-P4312', 'S3-0.3-NM-0.3-P4312']
+  stratum H: 3 eligible; permutation (seed 20261018): ['AB-0.5', 'S3-0.7-P4055', 'G-AB05(30,30,60,60)']
+
+qualified R=200 pool (stage2/merged_R200.json, dec 'ok'): 2736; eligible after removing used starts, front starts and UNIF: 2729; 24 drawn without replacement (seed 20261018, after the permutations)
+
+Table S2. Starts per floor (R=2000 values for front starts; R=200 values, seed 20261010, for pool starts)
+  none front L  NM-none-P5514                  R2000: dmD_C=+0.689 mE_C=0.045 D=-0.46+-0.06 ok
+  none front L  S3-none-G-P5514(0,0,-30,-30)   R2000: dmD_C=+0.697 mE_C=0.045 D=-0.61+-0.06 ok
+  none front M  S3-none-NM-none-P5450          R2000: dmD_C=+0.650 mE_C=0.135 D=-0.33+-0.07 ok
+  none front M  P1045                          R2000: dmD_C=+0.442 mE_C=0.141 D=-0.58+-0.06 ok
+  none front H  AB-0.5                         R2000: dmD_C=+0.383 mE_C=0.531 D=-0.52+-0.07 ok
+  none front H  S3-0.7-P4055                   R2000: dmD_C=+0.262 mE_C=0.705 D=-0.42+-0.07 ok
+  none R200     P5335                          R200:  dmD_C=-0.030 mE_C=0.048 D=-23.39+-0.21 ok  p=(0.250,0.250,0.250,0.250) chi=(5.236,3.142,3.142,5.236)
+  none R200     L1097                          R200:  dmD_C=-5.419 mE_C=0.084 D=-65.42+-0.22 ok  p=(0.178,0.030,0.172,0.620) chi=(2.848,6.028,0.463,1.473)
+  none R200     A1171                          R200:  dmD_C=-4.671 mE_C=0.105 D=-56.59+-0.21 ok  p=(0.100,0.100,0.700,0.100) chi=(0.000,0.000,0.000,0.000)
+  none R200     L2761                          R200:  dmD_C=-3.757 mE_C=0.080 D=-97.74+-0.24 ok  p=(0.061,0.352,0.388,0.199) chi=(0.785,2.263,2.898,3.964)
+  none R200     L0001                          R200:  dmD_C=-3.834 mE_C=0.122 D=-95.31+-0.22 ok  p=(0.091,0.106,0.351,0.452) chi=(4.778,5.435,4.954,6.075)
+  none R200     L0489                          R200:  dmD_C=-1.041 mE_C=0.032 D=-28.79+-0.23 ok  p=(0.209,0.325,0.120,0.347) chi=(2.223,0.387,1.693,5.618)
+  0.3  front L  S3-0.3-NM-0.3-P5014            R2000: dmD_C=+0.672 mE_C=0.047 D=-0.58+-0.06 ok
+  0.3  front L  S3-none-PO-NM-none-P5514       R2000: dmD_C=+0.675 mE_C=0.046 D=-1.30+-0.06 ok
+  0.3  front M  S3-0.3-NM-0.7-P4312            R2000: dmD_C=+0.387 mE_C=0.440 D=-0.61+-0.07 ok
+  0.3  front M  S3-0.3-NM-0.3-P4312            R2000: dmD_C=+0.425 mE_C=0.423 D=-0.35+-0.07 ok
+  0.3  front H  G-AB05(30,30,60,60)            R2000: dmD_C=+0.318 mE_C=0.605 D=-2.32+-0.07 ok
+  0.3  front H  AB-0.5                         R2000: dmD_C=+0.383 mE_C=0.531 D=-0.52+-0.07 ok
+  0.3  R200     L0660                          R200:  dmD_C=-1.754 mE_C=0.037 D=-37.84+-0.20 ok  p=(0.197,0.243,0.472,0.088) chi=(3.835,4.895,2.466,4.370)
+  0.3  R200     P0141                          R200:  dmD_C=+0.469 mE_C=0.045 D=-5.38+-0.22 ok  p=(0.250,0.250,0.250,0.250) chi=(0.000,1.047,4.189,1.047)
+  0.3  R200     P4501                          R200:  dmD_C=-0.449 mE_C=0.111 D=-29.00+-0.22 ok  p=(0.250,0.250,0.250,0.250) chi=(4.189,5.236,0.000,1.047)
+  0.3  R200     L2936                          R200:  dmD_C=-5.108 mE_C=0.047 D=-66.08+-0.26 ok  p=(0.021,0.279,0.200,0.500) chi=(5.643,1.059,0.086,5.371)
+  0.3  R200     P3242                          R200:  dmD_C=+0.198 mE_C=0.061 D=-3.83+-0.23 ok  p=(0.250,0.250,0.250,0.250) chi=(3.142,2.094,4.189,2.094)
+  0.3  R200     P3403                          R200:  dmD_C=+0.235 mE_C=0.044 D=-10.16+-0.21 ok  p=(0.250,0.250,0.250,0.250) chi=(3.142,4.189,0.000,3.142)
+  0.5  front L  NM-none-P5514                  R2000: dmD_C=+0.689 mE_C=0.045 D=-0.46+-0.06 ok
+  0.5  front L  S3-none-G-P5514(0,0,-30,-30)   R2000: dmD_C=+0.697 mE_C=0.045 D=-0.61+-0.06 ok
+  0.5  front M  S3-none-NM-none-P5450          R2000: dmD_C=+0.650 mE_C=0.135 D=-0.33+-0.07 ok
+  0.5  front M  P1045                          R2000: dmD_C=+0.442 mE_C=0.141 D=-0.58+-0.06 ok
+  0.5  front H  S3-0.7-P4055                   R2000: dmD_C=+0.262 mE_C=0.705 D=-0.42+-0.07 ok
+  0.5  front H  G-AB05(30,30,60,60)            R2000: dmD_C=+0.318 mE_C=0.605 D=-2.32+-0.07 ok
+  0.5  R200     L0197                          R200:  dmD_C=-4.085 mE_C=0.014 D=-33.47+-0.22 ok  p=(0.157,0.362,0.025,0.456) chi=(3.160,4.166,3.932,2.314)
+  0.5  R200     L1792                          R200:  dmD_C=-2.730 mE_C=0.018 D=-24.50+-0.22 ok  p=(0.205,0.586,0.083,0.126) chi=(2.892,5.359,4.458,1.898)
+  0.5  R200     L2003                          R200:  dmD_C=-9.051 mE_C=0.002 D=-74.69+-0.23 ok  p=(0.112,0.279,0.605,0.005) chi=(5.097,0.853,4.336,1.324)
+  0.5  R200     L2049                          R200:  dmD_C=-8.031 mE_C=0.024 D=-76.17+-0.24 ok  p=(0.022,0.694,0.043,0.241) chi=(4.398,5.544,3.796,3.064)
+  0.5  R200     P3442                          R200:  dmD_C=-0.197 mE_C=0.054 D=-8.95+-0.21 ok  p=(0.250,0.250,0.250,0.250) chi=(3.142,4.189,4.189,2.094)
+  0.5  R200     P2034                          R200:  dmD_C=-0.244 mE_C=0.112 D=-19.28+-0.21 ok  p=(0.250,0.250,0.250,0.250) chi=(2.094,0.000,3.142,4.189)
+  0.7  front L  S3-0.3-NM-0.3-P5014            R2000: dmD_C=+0.672 mE_C=0.047 D=-0.58+-0.06 ok
+  0.7  front L  S3-none-PO-NM-none-P5514       R2000: dmD_C=+0.675 mE_C=0.046 D=-1.30+-0.06 ok
+  0.7  front M  S3-0.3-NM-0.7-P4312            R2000: dmD_C=+0.387 mE_C=0.440 D=-0.61+-0.07 ok
+  0.7  front M  S3-0.3-NM-0.3-P4312            R2000: dmD_C=+0.425 mE_C=0.423 D=-0.35+-0.07 ok
+  0.7  front H  AB-0.5                         R2000: dmD_C=+0.383 mE_C=0.531 D=-0.52+-0.07 ok
+  0.7  front H  S3-0.7-P4055                   R2000: dmD_C=+0.262 mE_C=0.705 D=-0.42+-0.07 ok
+  0.7  R200     L0055                          R200:  dmD_C=-6.854 mE_C=0.027 D=-105.56+-0.19 ok  p=(0.082,0.074,0.732,0.112) chi=(4.617,4.971,0.204,3.868)
+  0.7  R200     L1529                          R200:  dmD_C=-14.158 mE_C=0.001 D=-163.41+-0.24 ok  p=(0.001,0.293,0.246,0.460) chi=(4.693,5.990,2.385,4.365)
+  0.7  R200     P1451                          R200:  dmD_C=-0.224 mE_C=0.047 D=-25.98+-0.23 ok  p=(0.250,0.250,0.250,0.250) chi=(1.047,4.189,5.236,1.047)
+  0.7  R200     P1034                          R200:  dmD_C=-0.242 mE_C=0.125 D=-21.02+-0.21 ok  p=(0.250,0.250,0.250,0.250) chi=(1.047,0.000,3.142,4.189)
+  0.7  R200     L0676                          R200:  dmD_C=-0.628 mE_C=0.195 D=-12.21+-0.23 ok  p=(0.232,0.347,0.154,0.268) chi=(2.474,5.498,0.067,5.842)
+  0.7  R200     L2033                          R200:  dmD_C=-3.341 mE_C=0.040 D=-79.08+-0.22 ok  p=(0.175,0.091,0.536,0.199) chi=(5.373,4.512,4.837,0.938)
+unbudgeted starts (the 10 highest R=200 dmD_C of stage2/merged_R200.json not used as stage-2/3 starts):
+  L0299  R200: dmD_C=+1.354 mE_C=0.042 B=362.4 D=+45.9 over p=(0.343,0.241,0.177,0.239) chi=(3.616,2.352,1.905,5.425)
+  L1573  R200: dmD_C=+1.349 mE_C=0.046 B=358.5 D=+42.0 over p=(0.334,0.212,0.230,0.224) chi=(4.499,3.932,5.810,3.230)
+  L2029  R200: dmD_C=+1.344 mE_C=0.102 B=408.2 D=+91.7 over p=(0.473,0.176,0.127,0.224) chi=(1.883,3.227,1.933,2.903)
+  L0295  R200: dmD_C=+1.320 mE_C=0.120 B=373.9 D=+57.4 over p=(0.343,0.219,0.284,0.153) chi=(0.340,1.609,4.253,3.233)
+  L2207  R200: dmD_C=+1.314 mE_C=0.140 B=409.6 D=+93.1 over p=(0.487,0.143,0.176,0.195) chi=(2.511,0.167,2.301,3.230)
+  L2375  R200: dmD_C=+1.288 mE_C=0.142 B=378.9 D=+62.4 over p=(0.396,0.171,0.183,0.250) chi=(6.193,4.147,2.927,3.899)
+  L1870  R200: dmD_C=+1.283 mE_C=0.051 B=370.2 D=+53.7 over p=(0.368,0.234,0.185,0.213) chi=(2.648,4.215,0.421,4.588)
+  L0190  R200: dmD_C=+1.259 mE_C=0.193 B=400.9 D=+84.4 over p=(0.394,0.165,0.112,0.329) chi=(0.801,5.423,5.982,5.501)
+  L2916  R200: dmD_C=+1.250 mE_C=0.571 B=386.5 D=+70.0 over p=(0.414,0.150,0.233,0.203) chi=(4.363,4.063,4.679,4.610)
+  L2066  R200: dmD_C=+1.245 mE_C=0.278 B=414.1 D=+97.6 over p=(0.444,0.096,0.273,0.187) chi=(0.503,4.737,5.654,5.039)
+front starts: 24 slots, 11 distinct points (13 re-uses across floors, unavoidable: 11 eligible for 24 slots)
+search reference (uniform, R=500, seed 20261010): B_u=316.852, log det J_C=197.1997
+one search evaluation at R=500: 0.39 s (single process)
+
+48 budgeted Nelder-Mead runs, 14331 evaluations at R=500, wall 1416 s
+10 unbudgeted Nelder-Mead runs (MU_B=0, no floor), 3000 evaluations at R=500, wall 384 s
+
+Archive rule: 98 kept points from 58 runs -> 56 distinct after deduplication by key
+runs with no archived point satisfying their own constraints on the search draws (endpoint only kept; constraint not relaxed): 18: ['0.3/S3-0.3-NM-0.3-P5014', '0.3/S3-none-PO-NM-none-P5514', '0.3/P0141', '0.3/P3403', '0.5/NM-none-P5514', '0.5/S3-none-G-P5514(0,0,-30,-30)', '0.5/L2003', '0.5/P2034', '0.7/S3-0.3-NM-0.3-P5014', '0.7/S3-none-PO-NM-none-P5514', '0.7/S3-0.3-NM-0.7-P4312', '0.7/S3-0.3-NM-0.3-P4312', '0.7/AB-0.5', '0.7/L0055', '0.7/L1529', '0.7/P1451', '0.7/P1034', '0.7/L0676']
+
+45 distinct starts evaluated at R=2000 in 19 s; 11 already in the stage-2/3 pool reproduce their stored records exactly (B, D, D_se, dmD_C, dmD_se, mE_C, mE_se, dmD_B, mE_B, lamC, ldb); 34 new start records
+56 new kept points evaluated at R=2000 in 24 s
+
+Table S3. New stage-4 records at R=2000 (seed 20261012), sorted by dmD_C (top 40; all in search_R2000.json); kept_as = run / kind#evaluation; R500 = search value at that evaluation
+id                                       B        D +- se dec     dmD_C    (se)   mE_C    (se) | R500 dmD     mE  kept_as
+S4U-L1573                           421.53 +104.63 +- 0.07 over   +2.105 (0.009)  0.175 (0.0002) |   +2.138  0.176  unbudgeted/L1573 endpoint#287; unbudgeted/L1573 constrained best#287
+S4U-L2066                           419.07 +102.17 +- 0.06 over   +2.091 (0.009)  0.192 (0.0003) |   +2.118  0.192  unbudgeted/L2066 endpoint#295; unbudgeted/L2066 constrained best#295
+S4U-L0295                           426.18 +109.28 +- 0.06 over   +2.085 (0.012)  0.173 (0.0002) |   +2.118  0.173  unbudgeted/L0295 endpoint#298; unbudgeted/L0295 constrained best#298
+S4U-L2029                           419.29 +102.38 +- 0.06 over   +2.083 (0.010)  0.228 (0.0002) |   +2.102  0.229  unbudgeted/L2029 endpoint#263; unbudgeted/L2029 constrained best#263
+S4U-L0190                           417.45 +100.54 +- 0.06 over   +2.066 (0.010)  0.247 (0.0003) |   +2.109  0.249  unbudgeted/L0190 endpoint#298; unbudgeted/L0190 constrained best#298
+S4U-L2916                           414.55  +97.65 +- 0.06 over   +2.027 (0.008)  0.211 (0.0002) |   +2.071  0.212  unbudgeted/L2916 endpoint#265; unbudgeted/L2916 constrained best#265
+S4U-L0299                           422.24 +105.34 +- 0.06 over   +2.016 (0.009)  0.115 (0.0001) |   +2.059  0.116  unbudgeted/L0299 endpoint#284; unbudgeted/L0299 constrained best#284
+S4U-L1870                           425.61 +108.71 +- 0.06 over   +1.965 (0.008)  0.224 (0.0003) |   +2.006  0.224  unbudgeted/L1870 endpoint#291; unbudgeted/L1870 constrained best#291
+S4U-L2375                           420.36 +103.45 +- 0.07 over   +1.933 (0.011)  0.144 (0.0002) |   +1.967  0.145  unbudgeted/L2375 endpoint#297; unbudgeted/L2375 constrained best#297
+S4U-L2207                           407.30  +90.40 +- 0.06 over   +1.789 (0.011)  0.260 (0.0004) |   +1.827  0.262  unbudgeted/L2207 endpoint#246; unbudgeted/L2207 constrained best#246
+L0299                               362.47  +45.56 +- 0.06 over   +1.358 (0.008)  0.041 (0.0000) |     +nan    nan  start
+L1573                               358.42  +41.52 +- 0.07 over   +1.352 (0.009)  0.046 (0.0001) |     +nan    nan  start
+L2029                               408.02  +91.11 +- 0.07 over   +1.345 (0.009)  0.102 (0.0001) |     +nan    nan  start
+L0295                               374.05  +57.15 +- 0.06 over   +1.316 (0.011)  0.121 (0.0002) |     +nan    nan  start
+L2207                               409.39  +92.49 +- 0.06 over   +1.298 (0.008)  0.140 (0.0001) |     +nan    nan  start
+L1870                               370.03  +53.12 +- 0.06 over   +1.291 (0.010)  0.051 (0.0000) |     +nan    nan  start
+L2916                               386.62  +69.72 +- 0.06 over   +1.262 (0.008)  0.571 (0.0008) |     +nan    nan  start
+L0190                               401.02  +84.11 +- 0.07 over   +1.252 (0.009)  0.192 (0.0003) |     +nan    nan  start
+L2375                               379.11  +62.20 +- 0.06 over   +1.242 (0.010)  0.141 (0.0002) |     +nan    nan  start
+L2066                               414.13  +97.22 +- 0.06 over   +1.227 (0.011)  0.278 (0.0004) |     +nan    nan  start
+S4-0.5-S3-none-G-P5514(0,0,-30,-30)  316.30   -0.61 +- 0.07 ok     +0.697 (0.011)  0.045 (0.0000) |   +0.748  0.045  0.5/S3-none-G-P5514(0,0,-30,-30) endpoint#294
+S4-none-S3-none-G-P5514(0,0,-30,-30)  316.29   -0.61 +- 0.06 ok     +0.697 (0.011)  0.045 (0.0001) |   +0.748  0.045  none/S3-none-G-P5514(0,0,-30,-30) endpoint#288; none/S3-none-G-P5514(0,0,-30,-30) constrained best#288
+S4-0.5-NM-none-P5514                316.44   -0.47 +- 0.06 ok     +0.691 (0.007)  0.045 (0.0001) |   +0.733  0.045  0.5/NM-none-P5514 endpoint#261
+S4-none-NM-none-P5514               316.45   -0.45 +- 0.06 ok     +0.688 (0.008)  0.045 (0.0001) |   +0.733  0.045  none/NM-none-P5514 endpoint#259; none/NM-none-P5514 constrained best#259
+S4-0.3-S3-none-PO-NM-none-P5514     315.70   -1.20 +- 0.06 ok     +0.680 (0.012)  0.046 (0.0001) |   +0.722  0.046  0.3/S3-none-PO-NM-none-P5514 endpoint#294; 0.7/S3-none-PO-NM-none-P5514 endpoint#294
+S4-0.3-S3-0.3-NM-0.3-P5014          316.32   -0.58 +- 0.06 ok     +0.672 (0.009)  0.047 (0.0001) |   +0.726  0.047  0.3/S3-0.3-NM-0.3-P5014 endpoint#289; 0.7/S3-0.3-NM-0.3-P5014 endpoint#289
+S4-noneC-S3-none-NM-none-P5450      316.58   -0.33 +- 0.07 ok     +0.650 (0.008)  0.135 (0.0002) |   +0.697  0.136  none/S3-none-NM-none-P5450 constrained best#300
+S4-none-S3-none-NM-none-P5450       316.58   -0.33 +- 0.07 ok     +0.650 (0.008)  0.135 (0.0002) |   +0.697  0.136  none/S3-none-NM-none-P5450 endpoint#294
+S4-0.3-P0141                        316.02   -0.89 +- 0.06 ok     +0.594 (0.011)  0.049 (0.0001) |   +0.644  0.049  0.3/P0141 endpoint#279
+S4-none-P1045                       316.04   -0.86 +- 0.06 ok     +0.588 (0.013)  0.104 (0.0001) |   +0.619  0.105  none/P1045 endpoint#297; none/P1045 constrained best#297
+S4-none-L0001                       316.14   -0.77 +- 0.06 ok     +0.588 (0.012)  0.114 (0.0002) |   +0.643  0.114  none/L0001 endpoint#261; none/L0001 constrained best#261
+S4-0.3-P3403                        316.52   -0.38 +- 0.06 ok     +0.556 (0.010)  0.050 (0.0001) |   +0.604  0.050  0.3/P3403 endpoint#292
+S4-0.7-L0055                        316.70   -0.20 +- 0.06 ok     +0.490 (0.010)  0.060 (0.0001) |   +0.508  0.060  0.7/L0055 endpoint#299
+S4-none-P5335                       315.89   -1.01 +- 0.06 ok     +0.482 (0.010)  0.052 (0.0000) |   +0.528  0.052  none/P5335 endpoint#296; none/P5335 constrained best#296
+P0141                               311.18   -5.73 +- 0.06 ok     +0.469 (0.011)  0.045 (0.0000) |     +nan    nan  start
+S4-0.5-S3-none-NM-none-P5450        316.48   -0.43 +- 0.07 ok     +0.460 (0.011)  0.584 (0.0007) |   +0.512  0.588  0.5/S3-none-NM-none-P5450 endpoint#282; 0.5/S3-none-NM-none-P5450 constrained best#282
+S4-0.3-G-AB05(30,30,60,60)          316.45   -0.45 +- 0.07 ok     +0.439 (0.008)  0.430 (0.0003) |   +0.500  0.434  0.3/G-AB05(30,30,60,60) endpoint#293; 0.3/G-AB05(30,30,60,60) constrained best#293
+S4-0.3-S3-0.3-NM-0.3-P4312          316.55   -0.35 +- 0.07 ok     +0.421 (0.012)  0.421 (0.0004) |   +0.470  0.424  0.3/S3-0.3-NM-0.3-P4312 endpoint#271; 0.3/S3-0.3-NM-0.3-P4312 constrained best#271
+S4-none-AB-0.5                      316.38   -0.52 +- 0.07 ok     +0.404 (0.009)  0.453 (0.0005) |   +0.457  0.456  none/AB-0.5 endpoint#273; none/AB-0.5 constrained best#273; 0.3/AB-0.5 endpoint#273; 0.3/AB-0.5 constrained best#273
+S4-0.5-G-AB05(30,30,60,60)          316.29   -0.61 +- 0.07 ok     +0.395 (0.013)  0.542 (0.0008) |   +0.440  0.544  0.5/G-AB05(30,30,60,60) endpoint#289; 0.5/G-AB05(30,30,60,60) constrained best#289
+R=2000 minus R=500 (search optimism) for dmD_C over the 56 new kept points: mean -0.0417, median -0.0432, range [-0.0617,-0.0177]
+decisions of the new kept points at R=2000: {'ok': 46, 'over': 10, 'undec': 0}
+
+Table S4. Empirical Pareto front of the evaluated candidates, R=2000 (seed 20261012): merged pool 210 (stage 2-3: 120, stage 4: 90), qualified 177; front 15 points ('*' = new in stage 4)
+  * S4-0.5-S3-none-G-P5514(0,0,-30,-30) p=(0.253,0.252,0.249,0.246) chi=(5.130,5.355,0.597,3.682) B= 316.30 D= -0.61+-0.07 dmD_C=+0.697(0.011) mE_C=0.045(0.0000)
+  * S4-0.5-NM-none-P5514               p=(0.252,0.251,0.252,0.245) chi=(5.140,5.338,1.096,4.207) B= 316.44 D= -0.47+-0.06 dmD_C=+0.691(0.007) mE_C=0.045(0.0001)
+  * S4-0.3-S3-none-PO-NM-none-P5514    p=(0.251,0.245,0.250,0.254) chi=(5.180,5.506,1.114,4.197) B= 315.70 D= -1.20+-0.06 dmD_C=+0.680(0.012) mE_C=0.046(0.0001)
+  * S4-0.3-S3-0.3-NM-0.3-P5014         p=(0.250,0.247,0.257,0.246) chi=(5.320,6.160,1.062,4.254) B= 316.32 D= -0.58+-0.06 dmD_C=+0.672(0.009) mE_C=0.047(0.0001)
+    S3-0.3-NM-0.3-P5014                p=(0.250,0.247,0.257,0.246) chi=(5.320,6.160,1.062,4.254) B= 316.32 D= -0.58+-0.06 dmD_C=+0.672(0.009) mE_C=0.047(0.0001)
+  * S4-noneC-S3-none-NM-none-P5450     p=(0.248,0.226,0.271,0.255) chi=(5.270,4.610,5.211,6.259) B= 316.58 D= -0.33+-0.07 dmD_C=+0.650(0.008) mE_C=0.135(0.0002)
+    P1001                              p=(0.250,0.250,0.250,0.250) chi=(1.047,0.000,0.000,1.047) B= 315.43 D= -1.47+-0.06 dmD_C=+0.463(0.008) mE_C=0.141(0.0001)
+  * S4-0.5-S3-none-NM-none-P5450       p=(0.204,0.274,0.245,0.277) chi=(5.531,4.552,5.780,5.849) B= 316.48 D= -0.43+-0.07 dmD_C=+0.460(0.011) mE_C=0.584(0.0007)
+    G-AB05(30,30,60,60)                p=(0.209,0.265,0.254,0.272) chi=(4.593,4.043,2.507,2.630) B= 314.58 D= -2.32+-0.07 dmD_C=+0.318(0.011) mE_C=0.605(0.0005)
+  * S4-0.7-S3-0.3-NM-0.3-P4312         p=(0.223,0.255,0.237,0.285) chi=(4.249,3.639,1.590,1.661) B= 315.83 D= -1.07+-0.07 dmD_C=+0.302(0.013) mE_C=0.614(0.0011)
+  * S4-0.7-S3-0.3-NM-0.7-P4312         p=(0.229,0.264,0.233,0.274) chi=(4.281,3.875,1.683,1.764) B= 316.55 D= -0.36+-0.07 dmD_C=+0.298(0.008) mE_C=0.625(0.0006)
+  * S4-none-S3-0.7-P4055               p=(0.260,0.256,0.232,0.251) chi=(4.259,6.191,5.247,5.248) B= 316.44 D= -0.46+-0.06 dmD_C=+0.280(0.007) mE_C=0.697(0.0009)
+  * S4-0.5-S3-0.7-P4055                p=(0.261,0.255,0.233,0.251) chi=(4.257,6.176,5.268,5.249) B= 316.46 D= -0.44+-0.07 dmD_C=+0.270(0.011) mE_C=0.703(0.0010)
+  * S4-0.7-S3-0.7-P4055                p=(0.261,0.260,0.229,0.251) chi=(4.256,6.171,5.267,5.252) B= 316.50 D= -0.41+-0.07 dmD_C=+0.264(0.011) mE_C=0.706(0.0007)
+    UNIF                               p=(0.250,0.250,0.250,0.250) chi=(0.000,0.000,0.000,0.000) B= 316.90 D= +0.00+-0.00 dmD_C=+0.000(0.000) mE_C=1.000(0.0000)
+  stage-3 front points no longer on the front: ['AB-0.5', 'NM-0.3-P4312', 'NM-none-P5514', 'P1045', 'P4312', 'PO-NM-none-P5514', 'S3-0.3-NM-0.3-P4312', 'S3-0.3-NM-0.7-P4312', 'S3-0.7-P4055', 'S3-none-G-P5514(0,0,-30,-30)', 'S3-none-NM-none-P5450', 'S3-none-PO-NM-none-P5514']
+
+Table S5. Per floor, R=2000 (seed 20261012): previous best (stage-2/3 pool) vs new best (merged pool); paired difference with batch se (10x200, same draws); exploratory interval +- t_9,0.975 se = +- 2.262 se; threshold 0.02 nat
+lambda0 previous best                    dmD_C   mE_C | new best                             dmD_C   mE_C  margin |     diff     (se)            interval | pt>0.02 lo>0.02
+none    S3-none-G-P5514(0,0,-30,-30)    +0.697  0.045 | S4-0.5-S3-none-G-P5514(0,0,-30,-30)  +0.697  0.045  +0.478 |  +0.0004 (0.0010) [ -0.0019, +0.0027] |      no      no
+        top-4 feasible in the merged pool: S4-0.5-S3-none-G-P5514(0,0,-30,-30) +0.697 (mE 0.045); S3-none-G-P5514(0,0,-30,-30) +0.697 (mE 0.045); S4-none-S3-none-G-P5514(0,0,-30,-30) +0.697 (mE 0.045); S4-0.5-NM-none-P5514 +0.691 (mE 0.045)
+0.3     NM-0.3-P4312                    +0.426  0.421 | S4-0.5-S3-none-NM-none-P5450        +0.460  0.584  +0.293 |  +0.0343 (0.0083) [ +0.0155, +0.0531] |     yes      no
+        top-4 feasible in the merged pool: S4-0.5-S3-none-NM-none-P5450 +0.460 (mE 0.584); S4-0.3-G-AB05(30,30,60,60) +0.439 (mE 0.430); NM-0.3-P4312 +0.426 (mE 0.421); S3-0.3-NM-0.3-P4312 +0.425 (mE 0.423)
+0.5     AB-0.5                          +0.383  0.531 | S4-0.5-S3-none-NM-none-P5450        +0.460  0.584  +0.293 |  +0.0773 (0.0033) [ +0.0699, +0.0847] |     yes     yes
+        top-4 feasible in the merged pool: S4-0.5-S3-none-NM-none-P5450 +0.460 (mE 0.584); S4-0.5-G-AB05(30,30,60,60) +0.395 (mE 0.542); AB-0.5 +0.383 (mE 0.531); G-AB05(0,60,30,30) +0.371 (mE 0.520)
+0.7     S3-0.7-P4055                    +0.262  0.705 | S4-0.5-S3-0.7-P4055                 +0.270  0.703  +0.312 |  +0.0084 (0.0050) [ -0.0030, +0.0197] |      no      no
+        top-4 feasible in the merged pool: S4-0.5-S3-0.7-P4055 +0.270 (mE 0.703); S4-0.7-S3-0.7-P4055 +0.264 (mE 0.706); S3-0.7-P4055 +0.262 (mE 0.705); NM-0.7-UNIF +0.024 (mE 0.702)
+new best per floor none/0.3/0.5/0.7: [0.697, 0.46, 0.46, 0.27] -> non-increasing: True
+max dmD_C over qualified with mE_C >= lambda0, stage-2/3 pool -> merged: 0.00:+0.697->+0.697, 0.05:+0.650->+0.650, 0.10:+0.650->+0.650, 0.15:+0.426->+0.460, 0.20:+0.426->+0.460, 0.25:+0.426->+0.460, 0.30:+0.426->+0.460, 0.35:+0.426->+0.460, 0.40:+0.426->+0.460, 0.45:+0.383->+0.460, 0.50:+0.383->+0.460, 0.55:+0.318->+0.460, 0.60:+0.318->+0.318, 0.65:+0.262->+0.280, 0.70:+0.262->+0.270, 0.75:+0.000->+0.000, 0.80:+0.000->+0.000, 0.85:+0.000->+0.000, 0.90:+0.000->+0.000, 0.95:+0.000->+0.000, 1.00:+0.000->+0.000
+
+Table S6. Search budget added vs improvement found (Nelder-Mead evaluations at R=500; stage-3 grids, 625 points each at R=200, not counted)
+target     stage 2 runs/evals stage 3 runs/evals stage 4 runs/evals | own-search best (stage 4 origin)              | improvement of the floor best (se)
+none              3/450              5/1000            12/3591      | S4-none-S3-none-G-P5514(0,0,-30,-30) +0.697 mE 0.045 |                   +0.0004 (0.0010)
+0.3               3/450              4/800             12/3557      | S4-0.3-G-AB05(30,30,60,60) +0.439 mE 0.430    |                   +0.0343 (0.0083)
+0.5               3/450              5/1000            12/3583      | S4-0.5-S3-none-NM-none-P5450 +0.460 mE 0.584  |                   +0.0773 (0.0033)
+0.7               3/450              4/800             12/3600      | S4-0.7-S3-0.7-P4055 +0.264 mE 0.706           |                   +0.0084 (0.0050)
+unbudgeted        0/0               10/2000            10/3000      | S4U-L1573 +2.105 mE 0.175                     |                     (see Table S8)
+
+Table S7. Start -> endpoint per budgeted run, R=2000 (seed 20261012). feasible = qual 'ok' and m_E^(C) >= lambda0 (budget only for none). (i) feasible starts: dmD change end - start with paired batch se; (ii) infeasible starts: feasibility transition with the failing constraint(s). cb = constrained best on the search draws
+run                                      src   start dmD     mE start fails      |  end dmD     mE end fails        |       change (se) |  cb dmD     mE cb fails    
+none/NM-none-P5514                       front    +0.689  0.045 feasible         |   +0.688  0.045 feasible         |  -0.0007 (0.0006) |  +0.688  0.045 feasible    
+none/S3-none-G-P5514(0,0,-30,-30)        front    +0.697  0.045 feasible         |   +0.697  0.045 feasible         |  -0.0000 (0.0002) |  +0.697  0.045 feasible    
+none/S3-none-NM-none-P5450               front    +0.650  0.135 feasible         |   +0.650  0.135 feasible         |  +0.0002 (0.0002) |  +0.650  0.135 feasible    
+none/P1045                               front    +0.442  0.141 feasible         |   +0.588  0.104 feasible         |  +0.1453 (0.0094) |  +0.588  0.104 feasible    
+none/AB-0.5                              front    +0.383  0.531 feasible         |   +0.404  0.453 feasible         |  +0.0209 (0.0060) |  +0.404  0.453 feasible    
+none/S3-0.7-P4055                        front    +0.262  0.705 feasible         |   +0.280  0.697 feasible         |  +0.0185 (0.0073) |  +0.280  0.697 feasible    
+none/P5335                               R200     -0.019  0.048 feasible         |   +0.482  0.052 feasible         |  +0.5016 (0.0097) |  +0.482  0.052 feasible    
+none/L1097                               R200     -5.457  0.084 feasible         |   +0.355  0.066 feasible         |  +5.8116 (0.0086) |  +0.355  0.066 feasible    
+none/A1171                               R200     -4.680  0.105 feasible         |   -0.102  0.346 feasible         |  +4.5779 (0.0086) |  -0.102  0.346 feasible    
+none/L2761                               R200     -3.743  0.080 feasible         |   +0.380  0.146 feasible         |  +4.1232 (0.0087) |  +0.380  0.146 feasible    
+none/L0001                               R200     -3.827  0.122 feasible         |   +0.588  0.114 feasible         |  +4.4148 (0.0083) |  +0.588  0.114 feasible    
+none/L0489                               R200     -1.047  0.032 feasible         |   +0.069  0.050 feasible         |  +1.1158 (0.0055) |  +0.069  0.050 feasible    
+0.3/S3-0.3-NM-0.3-P5014                  front    +0.672  0.047 m_E<0.3          |   +0.672  0.047 m_E<0.3          | (ii) ->infeasible |        none (endpoint only)
+0.3/S3-none-PO-NM-none-P5514             front    +0.675  0.046 m_E<0.3          |   +0.680  0.046 m_E<0.3          | (ii) ->infeasible |        none (endpoint only)
+0.3/S3-0.3-NM-0.7-P4312                  front    +0.387  0.440 feasible         |   +0.386  0.440 feasible         |  -0.0006 (0.0009) |  +0.386  0.440 feasible    
+0.3/S3-0.3-NM-0.3-P4312                  front    +0.425  0.423 feasible         |   +0.421  0.421 feasible         |  -0.0040 (0.0038) |  +0.421  0.421 feasible    
+0.3/G-AB05(30,30,60,60)                  front    +0.318  0.605 feasible         |   +0.439  0.430 feasible         |  +0.1216 (0.0056) |  +0.439  0.430 feasible    
+0.3/AB-0.5                               front    +0.383  0.531 feasible         |   +0.404  0.453 feasible         |  +0.0209 (0.0060) |  +0.404  0.453 feasible    
+0.3/L0660                                R200     -1.775  0.037 m_E<0.3          |   +0.343  0.492 feasible         |   (ii) ->feasible |  +0.343  0.492 feasible    
+0.3/P0141                                R200     +0.469  0.045 m_E<0.3          |   +0.594  0.049 m_E<0.3          | (ii) ->infeasible |        none (endpoint only)
+0.3/P4501                                R200     -0.465  0.110 m_E<0.3          |   +0.160  0.508 feasible         |   (ii) ->feasible |  +0.160  0.508 feasible    
+0.3/L2936                                R200     -5.123  0.047 m_E<0.3          |   +0.091  0.426 feasible         |   (ii) ->feasible |  +0.091  0.426 feasible    
+0.3/P3242                                R200     +0.177  0.061 m_E<0.3          |   +0.098  0.315 feasible         |   (ii) ->feasible |  +0.098  0.315 feasible    
+0.3/P3403                                R200     +0.236  0.044 m_E<0.3          |   +0.556  0.050 m_E<0.3          | (ii) ->infeasible |        none (endpoint only)
+0.5/NM-none-P5514                        front    +0.689  0.045 m_E<0.5          |   +0.691  0.045 m_E<0.5          | (ii) ->infeasible |        none (endpoint only)
+0.5/S3-none-G-P5514(0,0,-30,-30)         front    +0.697  0.045 m_E<0.5          |   +0.697  0.045 m_E<0.5          | (ii) ->infeasible |        none (endpoint only)
+0.5/S3-none-NM-none-P5450                front    +0.650  0.135 m_E<0.5          |   +0.460  0.584 feasible         |   (ii) ->feasible |  +0.460  0.584 feasible    
+0.5/P1045                                front    +0.442  0.141 m_E<0.5          |   +0.255  0.558 feasible         |   (ii) ->feasible |  +0.255  0.558 feasible    
+0.5/S3-0.7-P4055                         front    +0.262  0.705 feasible         |   +0.270  0.703 feasible         |  +0.0084 (0.0050) |  +0.270  0.703 feasible    
+0.5/G-AB05(30,30,60,60)                  front    +0.318  0.605 feasible         |   +0.395  0.542 feasible         |  +0.0778 (0.0082) |  +0.395  0.542 feasible    
+0.5/L0197                                R200     -4.118  0.014 m_E<0.5          |   +0.190  0.553 feasible         |   (ii) ->feasible |  +0.190  0.553 feasible    
+0.5/L1792                                R200     -2.747  0.018 m_E<0.5          |   +0.056  0.511 feasible         |   (ii) ->feasible |  +0.056  0.511 feasible    
+0.5/L2003                                R200     -9.073  0.002 m_E<0.5          |   -4.621  0.004 m_E<0.5          | (ii) ->infeasible |        none (endpoint only)
+0.5/L2049                                R200     -8.047  0.024 m_E<0.5          |   +0.258  0.500 m_E<0.5          | (ii) ->infeasible |  +0.258  0.500 m_E<0.5     
+0.5/P3442                                R200     -0.190  0.054 m_E<0.5          |   +0.259  0.525 feasible         |   (ii) ->feasible |  +0.259  0.525 feasible    
+0.5/P2034                                R200     -0.294  0.112 m_E<0.5          |   +0.129  0.489 m_E<0.5          | (ii) ->infeasible |        none (endpoint only)
+0.7/S3-0.3-NM-0.3-P5014                  front    +0.672  0.047 m_E<0.7          |   +0.672  0.047 m_E<0.7          | (ii) ->infeasible |        none (endpoint only)
+0.7/S3-none-PO-NM-none-P5514             front    +0.675  0.046 m_E<0.7          |   +0.680  0.046 m_E<0.7          | (ii) ->infeasible |        none (endpoint only)
+0.7/S3-0.3-NM-0.7-P4312                  front    +0.387  0.440 m_E<0.7          |   +0.298  0.625 m_E<0.7          | (ii) ->infeasible |        none (endpoint only)
+0.7/S3-0.3-NM-0.3-P4312                  front    +0.425  0.423 m_E<0.7          |   +0.302  0.614 m_E<0.7          | (ii) ->infeasible |        none (endpoint only)
+0.7/AB-0.5                               front    +0.383  0.531 m_E<0.7          |   +0.224  0.605 m_E<0.7          | (ii) ->infeasible |        none (endpoint only)
+0.7/S3-0.7-P4055                         front    +0.262  0.705 feasible         |   +0.264  0.706 feasible         |  +0.0028 (0.0040) |  +0.264  0.706 feasible    
+0.7/L0055                                R200     -6.866  0.027 m_E<0.7          |   +0.490  0.060 m_E<0.7          | (ii) ->infeasible |        none (endpoint only)
+0.7/L1529                                R200    -14.187  0.001 m_E<0.7          |   -0.211  0.627 m_E<0.7          | (ii) ->infeasible |        none (endpoint only)
+0.7/P1451                                R200     -0.283  0.047 m_E<0.7          |   -0.514  0.555 m_E<0.7          | (ii) ->infeasible |        none (endpoint only)
+0.7/P1034                                R200     -0.247  0.125 m_E<0.7          |   +0.058  0.506 m_E<0.7          | (ii) ->infeasible |        none (endpoint only)
+0.7/L0676                                R200     -0.688  0.193 m_E<0.7          |   +0.062  0.637 m_E<0.7          | (ii) ->infeasible |        none (endpoint only)
+0.7/L2033                                R200     -3.321  0.040 m_E<0.7          |   +0.069  0.698 m_E<0.7          | (ii) ->infeasible |  +0.069  0.698 m_E<0.7     
+Summary (i), starts feasible at R=2000:
+  none: n=12, end feasible 12/12; change mean +1.7274, median +0.3235, range [-0.0007,+5.8116]; change > +2se: 9, < -2se: 0, |change| <= 2se: 3
+  0.3 : n= 4, end feasible 4/4; change mean +0.0345, median +0.0102, range [-0.0040,+0.1216]; change > +2se: 2, < -2se: 0, |change| <= 2se: 2
+  0.5 : n= 2, end feasible 2/2; change mean +0.0431, median +0.0431, range [+0.0084,+0.0778]; change > +2se: 1, < -2se: 0, |change| <= 2se: 1
+  0.7 : n= 1, end feasible 1/1; change mean +0.0028, median +0.0028, range [+0.0028,+0.0028]; change > +2se: 0, < -2se: 0, |change| <= 2se: 1
+  all : n=19, end feasible 19/19; change mean +1.1030, median +0.0209, range [-0.0040,+5.8116]; change > +2se: 12, < -2se: 0, |change| <= 2se: 7
+Summary (ii), starts infeasible at R=2000 (transition to the endpoint; failing constraints at the start):
+  none: no infeasible start
+  0.3 : n= 8, infeasible->feasible 4, infeasible->infeasible 4; constrained-best point feasible at R=2000: 4; start fails: {'m_E<0.3': 8}
+  0.5 : n=10, infeasible->feasible 5, infeasible->infeasible 5; constrained-best point feasible at R=2000: 5; start fails: {'m_E<0.5': 10}
+  0.7 : n=11, infeasible->feasible 0, infeasible->infeasible 11; constrained-best point feasible at R=2000: 0; start fails: {'m_E<0.7': 11}
+  all : n=29, infeasible->feasible 9, infeasible->infeasible 20; constrained-best point feasible at R=2000: 9; start fails: {'m_E<0.3': 8, 'm_E<0.5': 10, 'm_E<0.7': 11}
+  by start source front: 24 runs; start feasible 13, end feasible 15; best end dmD_C among feasible ends: +0.697
+  by start source R200: 24 runs; start feasible 6, end feasible 13; best end dmD_C among feasible ends: +0.588
+  runs from the same start ending at the same point under different floors: AB-0.5: none, 0.3; S3-0.3-NM-0.3-P5014: 0.3, 0.7; S3-none-PO-NM-none-P5514: 0.3, 0.7
+
+Table S8. Unbudgeted problem (power only), R=2000 (seed 20261012); start R=200 and R=2000 values, endpoint R=500 and R=2000; any decision
+start     R200   R2000 | endpoint        R500   dmD_C    (se)   mE_C        B         D +- se dec   | change (se)  p, chi
+L0299   +1.354  +1.358 | S4U-L0299     +2.059  +2.016 (0.009)  0.115   422.24 +105.34 +- 0.06 over  | +0.658 (0.006)  p=(0.442,0.185,0.187,0.187) chi=(3.368,2.626,0.771,5.946)
+L1573   +1.349  +1.352 | S4U-L1573     +2.138  +2.105 (0.009)  0.175   421.53 +104.63 +- 0.07 over  | +0.753 (0.006)  p=(0.429,0.174,0.190,0.207) chi=(4.668,4.611,4.487,3.663)
+L2029   +1.344  +1.345 | S4U-L2029     +2.102  +2.083 (0.010)  0.228   419.29 +102.38 +- 0.06 over  | +0.738 (0.006)  p=(0.426,0.173,0.199,0.202) chi=(1.984,2.766,2.599,1.829)
+L0295   +1.320  +1.316 | S4U-L0295     +2.118  +2.085 (0.012)  0.173   426.18 +109.28 +- 0.06 over  | +0.769 (0.008)  p=(0.442,0.184,0.200,0.173) chi=(0.495,5.717,4.679,3.859)
+L2207   +1.314  +1.298 | S4U-L2207     +1.827  +1.789 (0.011)  0.260   407.30  +90.40 +- 0.06 over  | +0.490 (0.005)  p=(0.426,0.176,0.196,0.202) chi=(2.099,0.579,2.914,2.297)
+L2375   +1.288  +1.242 | S4U-L2375     +1.967  +1.933 (0.011)  0.144   420.36 +103.45 +- 0.07 over  | +0.691 (0.005)  p=(0.442,0.174,0.183,0.201) chi=(0.044,4.780,3.266,2.332)
+L1870   +1.283  +1.291 | S4U-L1870     +2.006  +1.965 (0.008)  0.224   425.61 +108.71 +- 0.06 over  | +0.674 (0.008)  p=(0.456,0.162,0.190,0.192) chi=(3.197,3.334,6.264,5.583)
+L0190   +1.259  +1.252 | S4U-L0190     +2.109  +2.066 (0.010)  0.247   417.45 +100.54 +- 0.06 over  | +0.813 (0.006)  p=(0.419,0.196,0.192,0.193) chi=(0.657,5.933,5.108,4.501)
+L2916   +1.250  +1.262 | S4U-L2916     +2.071  +2.027 (0.008)  0.211   414.55  +97.65 +- 0.06 over  | +0.765 (0.005)  p=(0.411,0.163,0.211,0.215) chi=(4.809,4.347,4.884,4.117)
+L2066   +1.245  +1.227 | S4U-L2066     +2.118  +2.091 (0.009)  0.192   419.07 +102.17 +- 0.06 over  | +0.863 (0.004)  p=(0.420,0.177,0.195,0.208) chi=(0.575,5.761,5.120,4.308)
+unbudgeted best evaluated: previous U-L1657 +2.101 -> merged S4U-L1573 +2.105 (p=(0.429,0.174,0.190,0.207), B=421.53, mE=0.175); difference +0.0038 (paired se 0.0057), interval [-0.0090,+0.0166]; point > 0.02: no; lower end > 0.02: no
+  six highest dmD_C in the merged pool (any decision): S4U-L1573 +2.105 p1=0.429; U-L1657 +2.101 p1=0.434; U-L0492 +2.095 p1=0.419; S4U-L2066 +2.091 p1=0.420; U-L1948 +2.089 p1=0.448; S4U-L0295 +2.085 p1=0.442
+
+Representatives for stage4_scenarios.py (design.md §3: strictest floor first, feasible non-uniform, largest dmD_C not already chosen):
+  none: S4-0.5-S3-none-G-P5514(0,0,-30,-30) dmD_C=+0.697 mE_C=0.045 (floor best S4-0.5-S3-none-G-P5514(0,0,-30,-30); replaced: False)
+  0.3 : S4-0.3-G-AB05(30,30,60,60)         dmD_C=+0.439 mE_C=0.430 (floor best S4-0.5-S3-none-NM-none-P5450; replaced: True)
+  0.5 : S4-0.5-S3-none-NM-none-P5450       dmD_C=+0.460 mE_C=0.584 (floor best S4-0.5-S3-none-NM-none-P5450; replaced: False)
+  0.7 : S4-0.5-S3-0.7-P4055                dmD_C=+0.270 mE_C=0.703 (floor best S4-0.5-S3-0.7-P4055; replaced: False)
+RUNTIME stage4_search	started 2026-10-13 13:13:16	elapsed 1846.3 s (30.77 min)	48 budgeted + 10 unbudgeted NM runs (maxfev 300), 90 new records at R=2000
