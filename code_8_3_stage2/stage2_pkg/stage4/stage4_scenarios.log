@@ -1,0 +1,92 @@
+=== stage4_scenarios.py: d in (5, 50) + d=20 control, sigma_d = Delta*/d, Delta* = 0.002384694482635785; seed 20261021, R=4000 (CRN shared across d) ===
+trigger check: sod_batch == mc83.sod (eps, r, overshoots, bitwise) on 100/100 trajectories (31827 events)
+representatives (design.md §3; R=2000, seed 20261012 values at d=20):
+  none S4-0.5-S3-none-G-P5514(0,0,-30,-30) p=(0.253,0.252,0.249,0.246) chi=(5.130,5.355,0.597,3.682) dmD_C=+0.697 mE_C=0.0446 1/mE=22.42 D=-0.61+-0.07 ok Ein=0.359691
+  0.3  S4-0.3-G-AB05(30,30,60,60)         p=(0.207,0.250,0.260,0.282) chi=(4.451,4.267,2.482,2.865) dmD_C=+0.439 mE_C=0.4302 1/mE=2.32 D=-0.45+-0.07 ok Ein=0.653787
+  0.5  S4-0.5-S3-none-NM-none-P5450       p=(0.204,0.274,0.245,0.277) chi=(5.531,4.552,5.780,5.849) dmD_C=+0.460 mE_C=0.5844 1/mE=1.71 D=-0.43+-0.07 ok Ein=0.667481
+  0.7  S4-0.5-S3-0.7-P4055                p=(0.261,0.255,0.233,0.251) chi=(4.257,6.176,5.268,5.249) dmD_C=+0.270 mE_C=0.7027 1/mE=1.42 D=-0.44+-0.07 ok Ein=0.691154
+  ref  UNIF                               p=(0.250,0.250,0.250,0.250) chi=(0.000,0.000,0.000,0.000) dmD_C=+0.000 mE_C=1.0000 1/mE=1.00 D=+0.00+-0.00 ok Ein=0.705086
+Script-2 status (seed 20261020, R=8000; does not change the representatives):
+  S4-0.5-S3-none-G-P5514(0,0,-30,-30) budget confirmed; feasibility none: confirmed, 0.3: rejected, 0.5: rejected, 0.7: rejected; dmD_C=+0.7107 [+0.6922,+0.7291], mE=0.0446
+  S4-0.3-G-AB05(30,30,60,60): not in the frozen pool
+  S4-0.5-S3-none-NM-none-P5450       budget confirmed; feasibility none: confirmed, 0.3: confirmed, 0.5: confirmed, 0.7: rejected; dmD_C=+0.4693 [+0.4490,+0.4897], mE=0.5840
+  S4-0.5-S3-0.7-P4055                budget confirmed; feasibility none: confirmed, 0.3: confirmed, 0.5: confirmed, 0.7: confirmed; dmD_C=+0.2808 [+0.2617,+0.2999], mE=0.7033
+  UNIF                               budget confirmed (definition); feasibility none: confirmed, 0.3: confirmed, 0.5: confirmed, 0.7: confirmed; dmD_C=+0.0000 [+0.0000,+0.0000], mE=1.0000
+
+=== d = 5: sigma = Delta*/5 = 4.769389e-04 ===
+trigger check: sod_batch == mc83.sod (eps, r, overshoots, bitwise) on 100/100 trajectories (30392 events)
+uniform reference (C)_5: B_hat = 304.365 +- 0.052 (se), sd 3.30; N_5 = floor(B_hat) = 304; log det J_C = 175.9233
+J_per(u_unif, N=304) at sigma_5: rank 9/9, condition number 9.8724e+01, log det 168.8536; (C)-(B) offset log det J_C - log det J_per = +7.0698
+Table Sc-5. d = 5, R=4000, seed 20261021; D = paired send-count difference vs (C)_5 (decision by qual, 8.3.6(g)); dmD_C se = paired batch se 10x400; dmD_B vs J_per(u_unif, 304) at sigma_5; P_in = window input power (= d=20 record: checked)
+floor id                                        B         D +- se dec     dmD_C    (se)    mE_C    (se)    1/mE    dmD_B     P_in
+none  S4-0.5-S3-none-G-P5514(0,0,-30,-30)  298.855  -5.510 +- 0.067 ok     +0.442 (0.008)  0.0438 (0.0001)   22.86   +7.512  0.35969
+0.3   S4-0.3-G-AB05(30,30,60,60)          301.702  -2.663 +- 0.070 ok     +0.315 (0.007)  0.4424 (0.0004)    2.26   +7.384  0.65379
+0.5   S4-0.5-S3-none-NM-none-P5450        301.325  -3.039 +- 0.071 ok     +0.282 (0.006)  0.6033 (0.0004)    1.66   +7.351  0.66748
+0.7   S4-0.5-S3-0.7-P4055                 300.825  -3.540 +- 0.070 ok     +0.061 (0.007)  0.7179 (0.0011)    1.39   +7.131  0.69115
+ref   UNIF                                304.365  +0.000 +- 0.000 ok     +0.000 (0.000)  1.0000 (0.0000)    1.00   +7.070  0.70509
+Nine generalized eigenvalues vs (C)_5:
+  S4-0.5-S3-none-G-P5514(0,0,-30,-30)   0.044   0.052   0.875   1.032   1.054   1.165   1.360  20.218  22.317
+  S4-0.3-G-AB05(30,30,60,60)           0.442   0.480   0.688   0.873   1.021   1.106   1.342   2.472   2.866
+  S4-0.5-S3-none-NM-none-P5450         0.603   0.721   0.829   0.924   0.970   1.134   1.271   1.534   1.854
+  S4-0.5-S3-0.7-P4055                  0.718   0.734   0.791   0.888   0.899   1.153   1.190   1.314   1.771
+  UNIF                                 1.000   1.000   1.000   1.000   1.000   1.000   1.000   1.000   1.000
+d = 5 done in 9 s
+
+=== d = 50: sigma = Delta*/50 = 4.769389e-05 ===
+trigger check: sod_batch == mc83.sod (eps, r, overshoots, bitwise) on 100/100 trajectories (32143 events)
+uniform reference (C)_50: B_hat = 319.165 +- 0.029 (se), sd 1.85; N_50 = floor(B_hat) = 319; log det J_C = 211.8891
+J_per(u_unif, N=319) at sigma_50: rank 9/9, condition number 9.8719e+01, log det 210.7336; (C)-(B) offset log det J_C - log det J_per = +1.1556
+Table Sc-50. d = 50, R=4000, seed 20261021; D = paired send-count difference vs (C)_50 (decision by qual, 8.3.6(g)); dmD_C se = paired batch se 10x400; dmD_B vs J_per(u_unif, 319) at sigma_50; P_in = window input power (= d=20 record: checked)
+floor id                                        B         D +- se dec     dmD_C    (se)    mE_C    (se)    1/mE    dmD_B     P_in
+none  S4-0.5-S3-none-G-P5514(0,0,-30,-30)  320.403  +1.238 +- 0.038 over   +0.726 (0.003)  0.0444 (0.0000)   22.54   +1.882  0.35969
+0.3   S4-0.3-G-AB05(30,30,60,60)          320.069  +0.904 +- 0.046 over   +0.476 (0.004)  0.4230 (0.0004)    2.36   +1.632  0.65379
+0.5   S4-0.5-S3-none-NM-none-P5450        319.539  +0.374 +- 0.041 over   +0.468 (0.004)  0.5669 (0.0003)    1.76   +1.623  0.66748
+0.7   S4-0.5-S3-0.7-P4055                 319.499  +0.334 +- 0.039 over   +0.286 (0.004)  0.6892 (0.0002)    1.45   +1.441  0.69115
+ref   UNIF                                319.165  +0.000 +- 0.000 ok     +0.000 (0.000)  1.0000 (0.0000)    1.00   +1.156  0.70509
+Nine generalized eigenvalues vs (C)_50:
+  S4-0.5-S3-none-G-P5514(0,0,-30,-30)   0.044   0.054   0.851   1.044   1.114   1.291   1.487  20.498  22.210
+  S4-0.3-G-AB05(30,30,60,60)           0.423   0.476   0.715   0.861   1.045   1.142   1.411   2.587   2.976
+  S4-0.5-S3-none-NM-none-P5450         0.567   0.690   0.821   0.936   0.998   1.172   1.337   1.674   2.031
+  S4-0.5-S3-0.7-P4055                  0.689   0.712   0.780   0.866   0.913   1.158   1.220   1.545   2.014
+  UNIF                                 1.000   1.000   1.000   1.000   1.000   1.000   1.000   1.000   1.000
+d = 50 done in 10 s
+
+=== d = 20 (control, same draws): sigma = Delta*/20 = 1.192347e-04 ===
+trigger check: sod_batch == mc83.sod (eps, r, overshoots, bitwise) on 100/100 trajectories (31827 events)
+uniform reference (C)_20: B_hat = 316.894 +- 0.035 (se), sd 2.24; N_20 = floor(B_hat) = 316; log det J_C = 197.1966
+J_per(u_unif, N=316) at sigma_20: rank 9/9, condition number 9.8720e+01, log det 194.1553; (C)-(B) offset log det J_C - log det J_per = +3.0413
+Table Sc-20. d = 20, R=4000, seed 20261021; D = paired send-count difference vs (C)_20 (decision by qual, 8.3.6(g)); dmD_C se = paired batch se 10x400; dmD_B vs J_per(u_unif, 316) at sigma_20; P_in = window input power (= d=20 record: checked)
+floor id                                        B         D +- se dec     dmD_C    (se)    mE_C    (se)    1/mE    dmD_B     P_in
+none  S4-0.5-S3-none-G-P5514(0,0,-30,-30)  316.477  -0.417 +- 0.045 ok     +0.716 (0.008)  0.0446 (0.0000)   22.41   +3.758  0.35969
+0.3   S4-0.3-G-AB05(30,30,60,60)          316.464  -0.430 +- 0.047 ok     +0.461 (0.005)  0.4305 (0.0003)    2.32   +3.502  0.65379
+0.5   S4-0.5-S3-none-NM-none-P5450        316.505  -0.389 +- 0.049 ok     +0.473 (0.005)  0.5844 (0.0003)    1.71   +3.515  0.66748
+0.7   S4-0.5-S3-0.7-P4055                 316.463  -0.431 +- 0.047 ok     +0.281 (0.006)  0.7037 (0.0007)    1.42   +3.322  0.69115
+ref   UNIF                                316.894  +0.000 +- 0.000 ok     +0.000 (0.000)  1.0000 (0.0000)    1.00   +3.041  0.70509
+Nine generalized eigenvalues vs (C)_20:
+  S4-0.5-S3-none-G-P5514(0,0,-30,-30)   0.045   0.053   0.877   1.043   1.109   1.258   1.458  20.575  22.428
+  S4-0.3-G-AB05(30,30,60,60)           0.431   0.476   0.708   0.862   1.042   1.144   1.393   2.572   2.967
+  S4-0.5-S3-none-NM-none-P5450         0.584   0.702   0.824   0.942   1.000   1.183   1.323   1.638   1.968
+  S4-0.5-S3-0.7-P4055                  0.704   0.727   0.789   0.882   0.905   1.170   1.218   1.494   1.927
+  UNIF                                 1.000   1.000   1.000   1.000   1.000   1.000   1.000   1.000   1.000
+d = 20 done in 10 s
+
+Table Sc-cmp. Direction of change relative to the d = 20 control on the same draws (paired: send differences per draw, log det per batch)
+floor id                                   d |      D_d     D_20    D_d - D_20 (se) |   dmD_d  dmD_20         diff (se)  ratio |  1/mE_d 1/mE_20  ratio | dec_d dec_20
+none  S4-0.5-S3-none-G-P5514(0,0,-30,-30)   5 |   -5.510   -0.417    -5.092 (0.079) |  +0.442  +0.716   -0.275 (0.009)   0.62 |   22.86   22.41   1.02 | ok    ok    
+none  S4-0.5-S3-none-G-P5514(0,0,-30,-30)  50 |   +1.238   -0.417    +1.656 (0.057) |  +0.726  +0.716   +0.010 (0.006)   1.01 |   22.54   22.41   1.01 | over  ok    
+0.3   S4-0.3-G-AB05(30,30,60,60)           5 |   -2.663   -0.430    -2.233 (0.082) |  +0.315  +0.461   -0.146 (0.007)   0.68 |    2.26    2.32   0.97 | ok    ok    
+0.3   S4-0.3-G-AB05(30,30,60,60)          50 |   +0.904   -0.430    +1.334 (0.064) |  +0.476  +0.461   +0.016 (0.005)   1.03 |    2.36    2.32   1.02 | over  ok    
+0.5   S4-0.5-S3-none-NM-none-P5450         5 |   -3.039   -0.389    -2.651 (0.084) |  +0.282  +0.473   -0.192 (0.007)   0.60 |    1.66    1.71   0.97 | ok    ok    
+0.5   S4-0.5-S3-none-NM-none-P5450        50 |   +0.374   -0.389    +0.763 (0.061) |  +0.468  +0.473   -0.005 (0.005)   0.99 |    1.76    1.71   1.03 | over  ok    
+0.7   S4-0.5-S3-0.7-P4055                  5 |   -3.540   -0.431    -3.109 (0.083) |  +0.061  +0.281   -0.220 (0.007)   0.22 |    1.39    1.42   0.98 | ok    ok    
+0.7   S4-0.5-S3-0.7-P4055                 50 |   +0.334   -0.431    +0.766 (0.060) |  +0.286  +0.281   +0.005 (0.006)   1.02 |    1.45    1.42   1.02 | over  ok    
+
+Per representative at d = 5 and d = 50 (budget feasibility by qual; sign of the D gain with its paired batch se; m_E below/above 1 and the order of magnitude of 1/m_E):
+  none S4-0.5-S3-none-G-P5514(0,0,-30,-30): d=5: budget ok (D=-5.510+-0.067), dmD_C +0.442 (se 0.008, positive, > 2 se), m_E 0.0438 (below 1), 1/m_E 22.86 (order 10^1) | d=50: budget over (D=+1.238+-0.038), dmD_C +0.726 (se 0.003, positive, > 2 se), m_E 0.0444 (below 1), 1/m_E 22.54 (order 10^1)
+  0.3  S4-0.3-G-AB05(30,30,60,60): d=5: budget ok (D=-2.663+-0.070), dmD_C +0.315 (se 0.007, positive, > 2 se), m_E 0.4424 (below 1), 1/m_E 2.26 (order 10^0) | d=50: budget over (D=+0.904+-0.046), dmD_C +0.476 (se 0.004, positive, > 2 se), m_E 0.4230 (below 1), 1/m_E 2.36 (order 10^0)
+  0.5  S4-0.5-S3-none-NM-none-P5450: d=5: budget ok (D=-3.039+-0.071), dmD_C +0.282 (se 0.006, positive, > 2 se), m_E 0.6033 (below 1), 1/m_E 1.66 (order 10^0) | d=50: budget over (D=+0.374+-0.041), dmD_C +0.468 (se 0.004, positive, > 2 se), m_E 0.5669 (below 1), 1/m_E 1.76 (order 10^0)
+  0.7  S4-0.5-S3-0.7-P4055: d=5: budget ok (D=-3.540+-0.070), dmD_C +0.061 (se 0.007, positive, > 2 se), m_E 0.7179 (below 1), 1/m_E 1.39 (order 10^0) | d=50: budget over (D=+0.334+-0.039), dmD_C +0.286 (se 0.004, positive, > 2 se), m_E 0.6892 (below 1), 1/m_E 1.45 (order 10^0)
+
+Uniform reference across d (same draws): d=5: B_hat=304.365+-0.052, N=304, (C)-(B) offset +7.0698, J_per rank 9, cond 9.872e+01; d=20: B_hat=316.894+-0.035, N=316, (C)-(B) offset +3.0413, J_per rank 9, cond 9.872e+01; d=50: B_hat=319.165+-0.029, N=319, (C)-(B) offset +1.1556, J_per rank 9, cond 9.872e+01
+CRN: the d = 5 and d = 50 scenarios (and the d = 20 control) use the same standard-normal draws scaled by sigma_d; they are not independent batches.
+RUNTIME stage4_scenarios	started 2026-10-13 13:46:42	elapsed 30.8 s (0.51 min)	5 inputs at d in (5, 50) + d=20 control, R=4000
