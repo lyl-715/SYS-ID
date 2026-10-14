@@ -48,3 +48,14 @@ Key numbers: Delta_* = 0.002384694482635785 (N^nf = 321), sigma = Delta_*/20, B_
 | stage4_scenarios.py | Script 3: the four floor representatives + UNIF at d=5 and d=50 (and a d=20 control), seed 20261021, R=4000 CRN; sigma_d, Jb, ldB rebound per scenario |
 | stage4_figs.py | report figures and derived checks from the JSON outputs |
 | stage4/stage4_report.md | report; every number traceable to stage4/*.log |
+
+## Route 1: free-weight D-optimal relaxation (added 2026-10-14; run from anywhere, in this order; outputs in bound/)
+| file | what it does |
+|---|---|
+| bound/predictions.md, bound/review_note.md | predictions committed before any run; review changes (outer search dropped, B at the input's own S(u), cutting-plane certificates, wording) |
+| bound/bound_common.py | shared setup (mc83/mc85_scan setup without its draws; stage-2 parametrisation); certificates (cutting-plane upper value U, duality bound); own solvers: batched pairwise exchange (numba) and spectral projected gradient; cvxpy log_det wrapper |
+| bound/bound_inner.py | Script 1: max log det(sigma^-2 sum xi_k h_k h_k^T) over {0 <= xi <= cap, sum xi = W} at the uniform input: A (W=316, cap 1), B (W=S(u_unif)=465.958, cap 1), C (W=316, no cap); cross-checks SPG, SCS, Clarabel; equivalent sample counts; fig_inner_A.png |
+| bound/bound_dozzi.py | Script 2: Dozzi et al. (arXiv:2605.13120) D-optimal density (eq. 15) on the clock grid, with a cutting-plane bound for the continuous problem, and their greedy sequence (Sec. 4.1) at N=316; fig_dozzi.png |
+| bound/bound_identity.py | Script 3: H(u) = H(u_unif) T(u) identity (random fixed xi, seed 20261022; direct solves at 11 inputs) and the free-placement relaxation gap of the 7 stage-2 finalists at their own S(u) |
+| bound/bound_report.md | report; every number traceable to bound/*.log |
+Needs cvxpy (with SCS, Clarabel) and numba in addition to requirements.txt.
