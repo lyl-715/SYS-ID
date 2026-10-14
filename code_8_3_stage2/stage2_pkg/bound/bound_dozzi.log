@@ -1,0 +1,43 @@
+Route 1 Script 2 (bound_dozzi.py), 2026-10-14 11:54:12
+from bound_inner: U_A = 194.937437, U_C = 194.958106; J_per(316) = 194.155294; J_sod(u_unif) = 197.196558
+
+== (a) D-optimal sampling density, eq. (15), on the clock grid ==
+solved in 31.38 s (49338 sweeps), cutting-plane gap 9.71e-11 (unit-amplitude real regressors, W = 1)
+Kiefer-Wolfowitz check on the clock grid: max_k g_k^T M(p)^-1 g_k = 9.0000000001 (= 9 at the optimum)
+continuous [0, T] (0.01 ms evaluation grid): max_t d(t) = 9.0119280306 at t = 0.00000 s; cutting-plane gap of the grid density for the continuous problem = 1.19e-02 nat
+  restricted to [dt, T] (the span of the clock grid, which has no point at t = 0): max_t d(t) = 9.0000077896 at t = 3.09850 s, gap 7.79e-06 nat; so the continuous-problem gap comes from the endpoint t = 0 that the clock grid t_k = k dt, k = 1..K, does not contain
+support: 32 grid points; (t s, p): (0.001, 0.0795); (0.180, 0.0228); (0.181, 0.0567); (0.378, 0.0058); (0.379, 0.0495); (0.620, 0.0055); (0.621, 0.0633); (0.846, 0.0159); (0.847, 0.0471); (1.038, 0.0245); (1.039, 0.0243); (1.253, 0.0045); (1.254, 0.0611); (1.393, 0.0097); (1.902, 0.0210); (1.903, 0.0087); (3.098, 0.0087); (3.099, 0.0210); (3.608, 0.0097); (3.747, 0.0611); (3.748, 0.0045); (3.962, 0.0242); (3.963, 0.0245); (4.154, 0.0471); (4.155, 0.0159); (4.380, 0.0633); (4.381, 0.0055); (4.622, 0.0495); (4.623, 0.0058); (4.820, 0.0567); (4.821, 0.0228); (5.000, 0.0795)
+expected FIM of N = 316 i.i.d. draws, E[J] = 316 sigma^-2 sum p_k h_k h_k^T: log det = 194.9581063685; U_C = 194.9581063686; diff -9.7e-11; max|316 p - xi_C| = 7.50e-06
+continuous density at N = 316: log det <= 194.9700343990 (upper value), i.e. at most 1.2e-02 nat above the grid density
+largest atom 316 p_max = 25.14 samples at one grid point: not realisable with distinct full samples
+
+== (b) greedy deterministic sequences, N = 316, clock grid ==
+G1 main: eps->0 start, ties->smallest index, no replacement log det  194.929237  -J_per +0.7739  -A -0.0082  share of (A-J_per)  0.990  distinct 316  min gap 1 ms  in supp(A)  38.0%  in first/last 0.5 s 42.4%
+    first 9 picks (s): [0.001, 2.47, 1.235, 3.699, 0.298, 0.777, 4.196, 4.64, 5.0]; time 0.12 s
+G2: eps->0 start, ties->largest index                      log det  194.929237  -J_per +0.7739  -A -0.0082  share of (A-J_per)  0.990  distinct 316  min gap 1 ms  in supp(A)  38.0%  in first/last 0.5 s 42.4%
+    first 9 picks (s): [5.0, 2.531, 3.766, 1.302, 4.703, 4.224, 0.805, 0.361, 0.001]; time 0.12 s
+G3: ridge start R_0 = I, ties->smallest index              log det  194.923809  -J_per +0.7685  -A -0.0136  share of (A-J_per)  0.983  distinct 316  min gap 1 ms  in supp(A)  34.5%  in first/last 0.5 s 42.1%
+    first 9 picks (s): [0.001, 2.47, 1.235, 3.699, 0.298, 0.774, 4.193, 4.643, 4.998]; time 0.13 s
+G4: eps->0 start, t_1 forced to 2.5 s                      log det  194.929260  -J_per +0.7740  -A -0.0082  share of (A-J_per)  0.990  distinct 316  min gap 1 ms  in supp(A)  34.8%  in first/last 0.5 s 42.1%
+    first 9 picks (s): [2.5, 0.031, 1.265, 3.729, 0.328, 0.807, 4.226, 4.67, 0.169]; time 0.11 s
+W1: G1 with replacement (repeats allowed)                  log det  194.948146  -J_per +0.7929  -A +0.0107  share of (A-J_per)  1.014  distinct 243  min gap 0 ms  in supp(A)  33.9%  in first/last 0.5 s 42.7%
+    first 9 picks (s): [0.001, 2.47, 1.235, 3.699, 0.298, 0.777, 4.196, 4.64, 5.0]; time 0.10 s
+G1: 208 blocks of consecutive grid points; lengths min/median/max = 1/1/24
+G1 vs supp(A): |G1| = 316, |supp A| = 328, overlap 120; sum_k min(xi_G1, xi_A) = 116.99 of 316
+spread of log det over G1-G4 (without replacement): 0.0055 nat
+
+== Table 2: Dozzi design between J_per(316) and U_A (log det, nat; bounds quoted as upper values U; ratio = e^{-diff/18}) ==
+row                                             log det   - J_per       - A   - J_sod  ratio vs J_sod
+J_per(316)                                   194.155294   +0.0000   -0.7821   -3.0413          1.1841
+Dozzi greedy G1 (main)                       194.929237   +0.7739   -0.0082   -2.2673          1.1342
+Dozzi greedy G2 (sensitivity)                194.929237   +0.7739   -0.0082   -2.2673          1.1342
+Dozzi greedy G3 (sensitivity)                194.923809   +0.7685   -0.0136   -2.2727          1.1346
+Dozzi greedy G4 (sensitivity)                194.929260   +0.7740   -0.0082   -2.2673          1.1342
+Dozzi greedy W1 (sensitivity)                194.948146   +0.7929   +0.0107   -2.2484          1.1330
+U_A (W=316, cap 1)                           194.937437   +0.7821   +0.0000   -2.2591          1.1337
+Dozzi density E[J], N=316, grid (= U_C)      194.958106   +0.8028   +0.0207   -2.2385          1.1324
+Dozzi density E[J], N=316, continuous (U)    194.970034   +0.8147   +0.0326   -2.2265          1.1317
+J_sod(u_unif)                                197.196558   +3.0413   +2.2591   +0.0000          1.0000
+
+figure: bound/fig_dozzi.png
+RUNTIME bound_dozzi	started 2026-10-14 11:54:12	elapsed 39.9 s (0.66 min)	Dozzi density (eq. 15) and greedy sequence (Sec. 4.1), N = 316, 4 start variants + with replacement

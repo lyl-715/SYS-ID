@@ -1,1 +1,2 @@
 bound_inner	started 2026-10-14 11:47:23	elapsed 322.4 s (5.37 min)	variants A, B (W = S(u_unif)), C at the uniform input; exchange + SPG + Clarabel + SCS; cutting-plane certificates; equivalent W by brentq
+bound_dozzi	started 2026-10-14 11:54:12	elapsed 39.9 s (0.66 min)	Dozzi density (eq. 15) and greedy sequence (Sec. 4.1), N = 316, 4 start variants + with replacement
