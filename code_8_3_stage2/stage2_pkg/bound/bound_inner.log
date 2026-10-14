@@ -1,0 +1,87 @@
+Route 1 Script 1 (bound_inner.py), 2026-10-14 11:47:23
+setup: K=5000, dt=0.001, T=5.0, Delta_*=0.002384694482635785, sigma=Delta_*/20=0.00011923472413178926, tones w=[4.242641, 9.424778, 12.0, 12.3], a0=1.0
+uniform input a=[0.5, 0.5, 0.5, 0.5], chi=[0.0, 0.0, 0.0, 0.0]; regressors(a, chi, t) of mc85_scan.py; max|H_u - mc83.H| = 0.0e+00
+
+== references ==
+log det J_per(316)   = 194.155294   (t_i = i T/316, i = 1..316; NOT on the clock grid)
+log det J_sod(u_unif) = 197.196558   (weights wk_d20_10000.npy, mc837.py, R = 10000, seed 20261006)
+SoD weights: sum = 465.957628, min = 6.415e-50, max = 1.000000 (k = 0), #(w > 1) = 0, #(w > 0.5) = 7
+  -> the SoD weight vector is feasible for (B) (0 <= w_k <= 1, sum = W_B = S(u_unif)), so ld(J_sod) <= bound (B).
+  -> it is NOT feasible for (A): sum w = 465.958 > 316.
+grid-rounded periodic schedule (316 distinct grid points, max |t_i - t_k| = 0.494 ms): log det = 194.155296 (diff to J_per +0.000002); feasible for (A)
+uniform weights W/K on the grid, W = 316.000000: log det = 194.155447 (diff to J_per +0.000153)
+uniform weights W/K on the grid, W = 465.957628: log det = 197.650620 (diff to J_per +3.495325)
+
+== variant (A): W = 316.000000, cap = 1.0 ==
+[exchange, own] cold start (uniform weights): 44.35 s, 60571 sweeps, 1224245 exchanges
+   F(xi~) = 194.9374368696; cutting-plane upper bound U = 194.9374368697, gap 8.89e-11 nat; duality bound 194.9374368697, gap 8.89e-11; xi~^T d = 9.000000000000 (= 9)
+   KKT: nu = 0.0284199075, max violation = 3.52e-11 (1.24e-09 relative); interior (0 < xi < cap) = 32, at cap = 296, support = 328, #(1e-6 < xi < cap - 1e-6) = 32
+[SPG, own] cold start: 58.98 s, 20000 iterations (39122 f/grad evaluations); F = 194.9374345552, U = 194.9374532811, gap 1.87e-05; |F - F_exchange| = 2.31e-06; max|xi - xi_exchange| = 5.15e-01
+[cvxpy CLARABEL] status optimal, 1.19 s; solver objective 194.9374367091; after projection (moved 2.8e-12): F = 194.9374367095, U = 194.9374369561, gap 2.47e-07; |F - F_exchange| = 1.60e-07; max|xi - xi_exchange| = 1.60e-02
+[cvxpy SCS {'eps': 1e-09, 'max_iters': 200000}] status optimal, 6.39 s; solver objective 194.9374368771; after projection (moved 8.4e-09): F = 194.9374368695, U = 194.9374368751, gap 5.61e-09; |F - F_exchange| = 1.20e-10; max|xi - xi_exchange| = 9.75e-04
+   |sum xi - W| = 0.0e+00; min positive weight = 2.017e-01; #(0 < xi <= 1e-9) = 0
+   support blocks (contiguous runs of xi > 0): 18; lengths (points) min/median/max = 9/18/26
+   blocks [t_start, t_end] s (points; weight): [0.001,0.025] (25; 24.96); [0.180,0.205] (26; 25.13); [0.385,0.402] (18; 17.34); [0.617,0.638] (22; 21.78); [0.838,0.857] (20; 19.00); [1.029,1.044] (16; 15.04); [1.229,1.246] (18; 17.64); [1.364,1.372] (9; 7.74); [1.893,1.902] (10; 9.38); [3.099,3.108] (10; 9.38); [3.629,3.637] (9; 7.74); [3.755,3.772] (18; 17.64); [3.957,3.972] (16; 15.04); [4.144,4.163] (20; 19.00); [4.363,4.384] (22; 21.78); [4.599,4.616] (18; 17.34); [4.796,4.821] (26; 25.13); [4.976,5.000] (25; 24.96)
+   weight in (0, 0.5] s: 67.433 (21.3%); SoD weights there: 57.174 (12.3%); window share 10%
+   weight in (0.5, 4.5] s: 181.133 (57.3%); SoD weights there: 350.441 (75.2%); window share 80%
+   weight in (4.5, 5.0] s: 67.433 (21.3%); SoD weights there: 58.343 (12.5%); window share 10%
+
+== variant (B): W = 465.957628, cap = 1.0 ==
+[exchange, own] cold start (uniform weights): 10.84 s, 14576 sweeps, 336449 exchanges
+   F(xi~) = 198.4234663320; cutting-plane upper bound U = 198.4234663321, gap 8.34e-11 nat; duality bound 198.4234663321, gap 8.34e-11; xi~^T d = 9.000000000000 (= 9)
+   KKT: nu = 0.0192553861, max violation = 3.80e-11 (1.97e-09 relative); interior (0 < xi < cap) = 30, at cap = 454, support = 484, #(1e-6 < xi < cap - 1e-6) = 30
+[SPG, own] cold start: 57.96 s, 20000 iterations (39568 f/grad evaluations); F = 198.4234657978, U = 198.4234733441, gap 7.55e-06; |F - F_exchange| = 5.34e-07; max|xi - xi_exchange| = 4.69e-01
+[cvxpy CLARABEL] FAILED: Solver 'CLARABEL' failed. Try another solver, or solve with verbose=True for more information.
+[cvxpy SCS {'eps': 1e-09, 'max_iters': 200000}] status optimal, 5.68 s; solver objective 198.4234663357; after projection (moved 5.5e-09): F = 198.4234663319, U = 198.4234663539, gap 2.20e-08; |F - F_exchange| = 7.33e-11; max|xi - xi_exchange| = 5.57e-04
+   |sum xi - W| = 5.7e-14; min positive weight = 5.041e-03; #(0 < xi <= 1e-9) = 0
+   support blocks (contiguous runs of xi > 0): 18; lengths (points) min/median/max = 15/26/38
+   blocks [t_start, t_end] s (points; weight): [0.001,0.037] (37; 37.00); [0.180,0.217] (38; 37.03); [0.390,0.415] (26; 25.50); [0.616,0.648] (33; 32.15); [0.836,0.863] (28; 27.32); [1.024,1.046] (23; 21.53); [1.214,1.239] (26; 24.05); [1.355,1.370] (16; 14.65); [1.889,1.903] (15; 13.76); [3.098,3.112] (15; 13.76); [3.631,3.646] (16; 14.65); [3.762,3.787] (26; 24.05); [3.955,3.977] (23; 21.53); [4.138,4.165] (28; 27.32); [4.353,4.385] (33; 32.15); [4.586,4.611] (26; 25.50); [4.784,4.821] (38; 37.03); [4.964,5.000] (37; 37.00)
+   weight in (0, 0.5] s: 99.526 (21.4%); SoD weights there: 57.174 (12.3%); window share 10%
+   weight in (0.5, 4.5] s: 266.905 (57.3%); SoD weights there: 350.441 (75.2%); window share 80%
+   weight in (4.5, 5.0] s: 99.526 (21.4%); SoD weights there: 58.343 (12.5%); window share 10%
+
+== variant (C): W = 316.000000, cap = inf ==
+[exchange, own] cold start (uniform weights): 26.97 s, 42006 sweeps, 987308 exchanges
+   F(xi~) = 194.9581063685; cutting-plane upper bound U = 194.9581063686, gap 9.70e-11 nat; duality bound 194.9581063686, gap 9.70e-11; xi~^T d = 9.000000000000 (= 9)
+   KKT: nu = 0.0284810127, max violation = 7.85e-13 (2.76e-11 relative); interior (0 < xi < cap) = 32, at cap = 0, support = 32, #(1e-6 < xi < cap - 1e-6) = 32
+[SPG, own] cold start: 56.95 s, 20000 iterations (38369 f/grad evaluations); F = 194.9580786882, U = 194.9582383716, gap 1.60e-04; |F - F_exchange| = 2.77e-05; max|xi - xi_exchange| = 1.79e+01
+[cvxpy CLARABEL] FAILED: Solver 'CLARABEL' failed. Try another solver, or solve with verbose=True for more information.
+[cvxpy SCS {'eps': 1e-09, 'max_iters': 200000}] status optimal, 8.36 s; solver objective 194.9581063671; after projection (moved 2.2e-11): F = 194.9581063684, U = 194.9581064994, gap 1.31e-07; |F - F_exchange| = 6.71e-11; max|xi - xi_exchange| = 2.86e-02
+   |sum xi - W| = 0.0e+00; min positive weight = 1.408e+00; #(0 < xi <= 1e-9) = 0
+   support points: 32 (Caratheodory limit 45); max weight 25.1355
+   (t s, weight): (0.001, 25.1355); (0.180, 7.2143); (0.181, 17.9326); (0.378, 1.8317); (0.379, 15.6486); (0.620, 1.7320); (0.621, 20.0144); (0.846, 5.0201); (0.847, 14.8731); (1.038, 7.7459); (1.039, 7.6632); (1.253, 1.4080); (1.254, 19.3232); (1.393, 3.0590); (1.902, 6.6357); (1.903, 2.7628); (3.098, 2.7641); (3.099, 6.6344); (3.608, 3.0590); (3.747, 19.3225); (3.748, 1.4088); (3.962, 7.6616); (3.963, 7.7475); (4.154, 14.8718); (4.155, 5.0214); (4.380, 20.0141); (4.381, 1.7322); (4.622, 15.6474); (4.623, 1.8328); (4.820, 17.9321); (4.821, 7.2148); (5.000, 25.1355)
+   weight in (0, 0.5] s: 67.763 (21.4%); SoD weights there: 57.174 (12.3%); window share 10%
+   weight in (0.5, 4.5] s: 180.475 (57.1%); SoD weights there: 350.441 (75.2%); window share 80%
+   weight in (4.5, 5.0] s: 67.763 (21.4%); SoD weights there: 58.343 (12.5%); window share 10%
+
+== checks ==
+U_A >= grid-rounded periodic: 194.937437 >= 194.155296: True
+U_B >= J_sod (SoD weights feasible for B): 198.423466 >= 197.196558: True
+U_C >= F_A (C relaxes A): 194.958106 >= 194.937437: True
+(C) support <= 45: 32
+
+== equivalent total weight (how many full samples would match J_sod?) ==
+uniform placement on the grid: ld_U(W) = ld_U(316) + 9 log(W/316) = J_sod at W = 443.03
+optimal placement with cap 1 (variant-A problem at total W, upper value U): U(W) = J_sod at W = 406.415 (25.9 s, warm-started brentq, xtol 1e-4, inner gap <= 1e-9)
+  i.e. send-on-delta's 316.9 sends carry the information of 406.4 optimally placed full samples on the grid (443.0 uniformly placed ones)
+
+== Table 1: log det at the uniform input (nat); bound rows quote the upper value U; difference to J_sod(u_unif) and to J_per(316); axis ratio e^{-diff/18} ==
+row                                     log det   - J_sod   ratio   - J_per   ratio
+J_per(316)                           194.155294   -3.0413  1.1841   +0.0000  1.0000
+grid-rounded periodic (316)          194.155296   -3.0413  1.1841   +0.0000  1.0000
+uniform weights W=316                194.155447   -3.0411  1.1841   +0.0002  1.0000
+uniform weights W=S=465.958          197.650620   +0.4541  0.9751   +3.4953  0.8235
+J_sod(u_unif)                        197.196558   +0.0000  1.0000   +3.0413  0.8445
+U_A (W=316, cap 1)                   194.937437   -2.2591  1.1337   +0.7821  0.9575
+U_B (W=S=465.958, cap 1)             198.423466   +1.2269  0.9341   +4.2682  0.7889
+U_C (W=316, no cap)                  194.958106   -2.2385  1.1324   +0.8028  0.9564
+ratio = geometric-mean axis ratio of the 95% confidence ellipsoids, row vs reference (< 1: row is more informative).
+U_C - U_A = +0.020669 nat (price of the cap at W = 316)
+U_B - U_A = +3.486029 nat; 9 log(S/316) = 3.495172
+free-placement relaxation gap at equal total weight (uniform input): ld J_sod - U_B = -1.226908 nat
+note: with W = 466 (the rounded total of the original task) instead of S(u_unif) = 465.957628: U = 198.424282 (+0.000816); not used further
+
+Statement. U_A is the relaxation bound for 316 full measurements on the clock grid, each instant at most once: it bounds every scheme whose per-step information weights are each <= 1 and sum to <= 316. Send-on-delta is not such a scheme: with 316.9 sends its weights sum to 465.96, because the non-send steps carry censoring information. U_A is therefore not a limit for send-on-delta. U_B (weights each <= 1, total equal to send-on-delta's own S(u)) is the relaxation that does contain send-on-delta's weight pattern at this input.
+
+figure: bound/fig_inner_A.png
+RUNTIME bound_inner	started 2026-10-14 11:47:23	elapsed 322.4 s (5.37 min)	variants A, B (W = S(u_unif)), C at the uniform input; exchange + SPG + Clarabel + SCS; cutting-plane certificates; equivalent W by brentq
