@@ -141,6 +141,35 @@ def evaluate_fast(name, n, margin_mult=8):
     try: return dr.evaluate('B', name, n, margin_mult)
     finally: dr.run_ab = full
 
+# --- per-step log (spec §3 item 5) ----------------------------------------------------------------------------------------
+NA_DISP = 'not applicable — no next sample'
+
+def write_steps(r, path):
+    """one row per step: the initialisation row (m_2 written into W_2) flagged 'init', then steps k = 2..K. Columns: window
+    [a_k, b_k] and its node count; non-zero nodes of the freshly written mass in [a_k, b_k] (m_2 for init, m_{k+1} after the
+    update of step k) and their first/last index and extent; |x_{k+1} - x_k|/sigma ('not applicable — no next sample' at
+    k = K; for the init row |x_2 - x_1|/sigma); assertion result (init: support of m_2 inside W_2; step k: no non-zero within
+    M nodes outside W_{k+1}, at k = K outside W_K); sum of the written mass."""
+    a, b, nnz, lo, hi, ok, d, ms = r['win_a'], r['win_b'], r['nnz'], r['sup_lo'], r['sup_hi'], r['assert_ok'], r['disp'], r['mass']
+    with open(path, 'w') as f:
+        f.write('row,step,a_k,b_k,window_nodes,nonzero_nodes,support_first,support_last,support_nodes,disp_over_sigma,assertion,mass\n')
+        f.write(f"init,2,{a[1]},{b[1]},{b[1]-a[1]+1},{nnz[0]},{lo[0]},{hi[0]},{hi[0]-lo[0]+1},{d[0]!r},"
+                f"{'pass' if ok[0] else 'FAIL'},{ms[0]!r}\n")
+        for p in range(1, K):
+            f.write(f"update,{p+1},{a[p]},{b[p]},{b[p]-a[p]+1},{nnz[p]},{lo[p]},{hi[p]},{hi[p]-lo[p]+1},"
+                    f"{NA_DISP if np.isnan(d[p]) else repr(d[p])},{'pass' if ok[p] else 'FAIL'},{ms[p]!r}\n")
+
+def step_summary(r):
+    """numbers for the log: assertion count, node counts (initialisation and later updates separately), displacement."""
+    u = slice(1, K); sup = r['sup_hi']-r['sup_lo']+1; wn = r['win_b']-r['win_a']+1
+    return dict(assert_fail_count=int((~r['assert_ok']).sum()), steps_checked=K-1,
+                init_nonzero_nodes=int(r['nnz'][0]), init_support_nodes=int(sup[0]),
+                update_nonzero_nodes_min=int(r['nnz'][u].min()), update_nonzero_nodes_max=int(r['nnz'][u].max()),
+                update_support_nodes_min=int(sup[u].min()), update_support_nodes_max=int(sup[u].max()),
+                window_nodes_min=int(wn[1:].min()), window_nodes_max=int(wn[1:].max()),
+                max_disp_over_sigma=float(np.nanmax(r['disp'])))
+
+
 def _warmup():
     dr._warmup()
     z = np.linspace(-1.0, 1.0, 201); m = np.zeros(201); m[90:110] = 0.05; mn = np.zeros(201); gh = np.zeros(201)
