@@ -1,0 +1,22 @@
+=== evaluator_fast.py --windows; spec {'file': 'reports_CN/plan_speedup_CN.md', 'version': 'v3.1 (frozen)', 'commit': 'd4db8a6'}; R = Delta + 48 sigma = 0.00810796124096167 = 68.0 sigma; rho = 39.0 sigma; displacement bound 5.0 sigma; margin 4.0 sigma
+WIN family bound v_max = dt sqrt(sum (w_m |G(j w_m)|)^2) = 0.0005449492893900499 = 4.570390826649806 sigma (spec: 5.45e-4 = 4.57 sigma; rounded bound 5 sigma)
+WIN U actual max_k |x_(k+1) - x_k| = 3.9878407530954423 sigma (check item, not used in the window); <= family bound 4.5704 sigma: True
+WIN U n=6 8Delta: G = 8788, M = 120; window nodes b_k - a_k + 1 min 815 max 816 (spec bound 2*68*n + 1 = 817); clipped at the grid ends: 0 steps; min a_k - M 433, max b_k + M 8354 (G - 1 = 8787)
+WIN U n=12 8Delta: G = 17574, M = 240; window nodes b_k - a_k + 1 min 1631 max 1632 (spec bound 2*68*n + 1 = 1633); clipped at the grid ends: 0 steps; min a_k - M 865, max b_k + M 16708 (G - 1 = 17573)
+WIN U n=24 8Delta: G = 35146, M = 480; window nodes b_k - a_k + 1 min 3263 max 3264 (spec bound 2*68*n + 1 = 3265); clipped at the grid ends: 0 steps; min a_k - M 1729, max b_k + M 33416 (G - 1 = 35145)
+WIN U n=12 16Delta: G = 21414, M = 240; window nodes b_k - a_k + 1 min 1631 max 1632 (spec bound 2*68*n + 1 = 1633); clipped at the grid ends: 0 steps; min a_k - M 2785, max b_k + M 18628 (G - 1 = 21413)
+WIN D actual max_k |x_(k+1) - x_k| = 3.175876812737922 sigma (check item, not used in the window); <= family bound 4.5704 sigma: True
+WIN D n=6 8Delta: G = 8739, M = 120; window nodes b_k - a_k + 1 min 815 max 816 (spec bound 2*68*n + 1 = 817); clipped at the grid ends: 0 steps; min a_k - M 433, max b_k + M 8305 (G - 1 = 8738)
+WIN D n=12 8Delta: G = 17476, M = 240; window nodes b_k - a_k + 1 min 1631 max 1632 (spec bound 2*68*n + 1 = 1633); clipped at the grid ends: 0 steps; min a_k - M 865, max b_k + M 16610 (G - 1 = 17475)
+WIN D n=24 8Delta: G = 34951, M = 480; window nodes b_k - a_k + 1 min 3263 max 3264 (spec bound 2*68*n + 1 = 3265); clipped at the grid ends: 0 steps; min a_k - M 1729, max b_k + M 33221 (G - 1 = 34950)
+WIN D n=12 16Delta: G = 21316, M = 240; window nodes b_k - a_k + 1 min 1631 max 1632 (spec bound 2*68*n + 1 = 1633); clipped at the grid ends: 0 steps; min a_k - M 2785, max b_k + M 18530 (G - 1 = 21315)
+WIN E actual max_k |x_(k+1) - x_k| = 3.838496198889034 sigma (check item, not used in the window); <= family bound 4.5704 sigma: True
+WIN E n=6 8Delta: G = 8393, M = 120; window nodes b_k - a_k + 1 min 815 max 816 (spec bound 2*68*n + 1 = 817); clipped at the grid ends: 0 steps; min a_k - M 433, max b_k + M 7959 (G - 1 = 8392)
+WIN E n=12 8Delta: G = 16784, M = 240; window nodes b_k - a_k + 1 min 1631 max 1632 (spec bound 2*68*n + 1 = 1633); clipped at the grid ends: 0 steps; min a_k - M 865, max b_k + M 15918 (G - 1 = 16783)
+WIN E n=24 8Delta: G = 33566, M = 480; window nodes b_k - a_k + 1 min 3263 max 3264 (spec bound 2*68*n + 1 = 3265); clipped at the grid ends: 0 steps; min a_k - M 1729, max b_k + M 31836 (G - 1 = 33565)
+WIN E n=12 16Delta: G = 20624, M = 240; window nodes b_k - a_k + 1 min 1631 max 1632 (spec bound 2*68*n + 1 = 1633); clipped at the grid ends: 0 steps; min a_k - M 2785, max b_k + M 17838 (G - 1 = 20623)
+WIN N actual max_k |x_(k+1) - x_k| = 4.03921268381897 sigma (check item, not used in the window); <= family bound 4.5704 sigma: True
+WIN N n=6 8Delta: G = 10817, M = 120; window nodes b_k - a_k + 1 min 815 max 816 (spec bound 2*68*n + 1 = 817); clipped at the grid ends: 0 steps; min a_k - M 433, max b_k + M 10383 (G - 1 = 10816)
+WIN N n=12 8Delta: G = 21632, M = 240; window nodes b_k - a_k + 1 min 1631 max 1632 (spec bound 2*68*n + 1 = 1633); clipped at the grid ends: 0 steps; min a_k - M 865, max b_k + M 20766 (G - 1 = 21631)
+WIN N n=24 8Delta: G = 43262, M = 480; window nodes b_k - a_k + 1 min 3263 max 3264 (spec bound 2*68*n + 1 = 3265); clipped at the grid ends: 0 steps; min a_k - M 1729, max b_k + M 41532 (G - 1 = 43261)
+WIN N n=12 16Delta: G = 25472, M = 240; window nodes b_k - a_k + 1 min 1631 max 1632 (spec bound 2*68*n + 1 = 1633); clipped at the grid ends: 0 steps; min a_k - M 2785, max b_k + M 22686 (G - 1 = 25471)
