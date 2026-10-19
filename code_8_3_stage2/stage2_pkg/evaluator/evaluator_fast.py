@@ -127,6 +127,7 @@ def run_window(xk, n, margin):
                   f"[{an}, {bn}]; full-grid redo from the pre-update buffer: E[N] increment fast {en!r} full {enf!r}, "
                   f"w_k {W[k]!r}, mass {massf!r}; RUN STOPPED")
             raise AssertionStop(f"assertion failed at step {k+1}; run stopped (spec §4)")
+        slo[k], shi[k] = lo, hi
         EN += en; m, mn = mn, m
     disp = np.full(K, np.nan); disp[:-1] = np.abs(np.diff(xk))/s                   # |x_{k+1} - x_k|/sigma; none at k = K
     return dict(EN=EN, ENP=ENP, W=W, mass=mass, minm=minm, kmass=kmass, G=ng, M=M, Delta_over_h=D/dz,
@@ -141,6 +142,19 @@ def evaluate_fast(name, n, margin_mult=8):
     try: return dr.evaluate('B', name, n, margin_mult)
     finally: dr.run_ab = full
 
+def single_step_window(h, Dl=20.0, r=-20.0, L=80.0, sg=1.0):
+    """unit test (b) on the window path: Phat (version B) at the reference node r for a standard-normal measurement
+    (x = 0, sigma = 1), threshold Dl, on the nodes of density_recursion_v1.single_step (j h, j = -L/h .. L/h). The kernel is
+    the accepted _kernel on the window [a, b] = nodes within R = Dl + 48 sigma of x (spec §3 with sigma = 1, Delta = Dl),
+    the prefix sums run on [a-M, b+M] clipped to the grid, and Phat is the accepted _window at r."""
+    N = int(round(L/h)); z = np.arange(-N, N+1)*h; i = int(round((r+L)/h)); M = int(round(Dl/h)); ng = z.size
+    Rw = Dl+48*sg; a = max(int(np.ceil((0.0-Rw-z[0])/h)), 0); b = min(int(np.floor((0.0+Rw-z[0])/h)), ng-1)
+    assert a <= i-M and i+M <= b
+    gh = np.zeros(ng); C = np.empty(ng+1); lo = max(a-M, 0); hi = min(b+M, ng-1)
+    dr._kernel(z[a:b+1], 0.0, sg, h, gh[a:b+1]); dr._prefix(gh[lo:hi+1], C[lo:hi+2]); C[ng] = C[hi+1]
+    return dr._window(gh, C, i, M, dr.WB['B'])[0]
+
+
 # --- per-step log (spec §3 item 5) ----------------------------------------------------------------------------------------
 NA_DISP = 'not applicable — no next sample'
 
@@ -153,11 +167,11 @@ def write_steps(r, path):
     a, b, nnz, lo, hi, ok, d, ms = r['win_a'], r['win_b'], r['nnz'], r['sup_lo'], r['sup_hi'], r['assert_ok'], r['disp'], r['mass']
     with open(path, 'w') as f:
         f.write('row,step,a_k,b_k,window_nodes,nonzero_nodes,support_first,support_last,support_nodes,disp_over_sigma,assertion,mass\n')
-        f.write(f"init,2,{a[1]},{b[1]},{b[1]-a[1]+1},{nnz[0]},{lo[0]},{hi[0]},{hi[0]-lo[0]+1},{d[0]!r},"
-                f"{'pass' if ok[0] else 'FAIL'},{ms[0]!r}\n")
+        f.write(f"init,2,{a[1]},{b[1]},{b[1]-a[1]+1},{nnz[0]},{lo[0]},{hi[0]},{hi[0]-lo[0]+1},{float(d[0])!r},"
+                f"{'pass' if ok[0] else 'FAIL'},{float(ms[0])!r}\n")
         for p in range(1, K):
             f.write(f"update,{p+1},{a[p]},{b[p]},{b[p]-a[p]+1},{nnz[p]},{lo[p]},{hi[p]},{hi[p]-lo[p]+1},"
-                    f"{NA_DISP if np.isnan(d[p]) else repr(d[p])},{'pass' if ok[p] else 'FAIL'},{ms[p]!r}\n")
+                    f"{NA_DISP if np.isnan(d[p]) else repr(float(d[p]))},{'pass' if ok[p] else 'FAIL'},{float(ms[p])!r}\n")
 
 def step_summary(r):
     """numbers for the log: assertion count, node counts (initialisation and later updates separately), displacement."""
