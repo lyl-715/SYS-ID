@@ -94,3 +94,42 @@ Reproduce every table of `evaluator/report_evaluator_CN.md` (needs numpy, scipy,
 Every number of the report is on a log line: `EV` (run_all.log), `MC` / `OLD-U` (mc_reference.log), `CONV`, `STAB`, `TAIL`,
 `ITEM`, `SIGN`, `NONLIN`, `DISPLAY`, `APPX`, `RUNTIME`, `SEARCH-ROUND`, `CRIT`, `P1`-`P9` (analysis.log), `PROFILE`
 (profile_runtime.log). The evaluator's numbers are deterministic; runtimes depend on machine load.
+
+## Evaluator window speed-up, version B only (added 2026-10-19; run from evaluator/; spec `reports_CN/plan_speedup_CN.md` v3.1)
+| file | what it does |
+|---|---|
+| evaluator/predictions_speedup.md | S1-S5 of spec §6, verbatim, committed before the kernel test and any run |
+| evaluator/kernel_zero_test.py | Step 0: the accepted `_kernel` (same compiled function) is exactly 0.0 at 39, 40, 50 sigma from every x_k of U, D, E, N -> rho = 39 sigma (logs/kernel_zero_test.log, config_fast.json) |
+| evaluator/evaluator_fast.py | the window path: `run_window` (B only), `evaluate_fast` (the accepted `evaluate` with its `run_ab` swapped for one call), `--windows` geometry check, `--selftest` synthetic check of the assertion; imports density_recursion_v1.py unchanged, whose full-grid path stays callable |
+| evaluator/regression_fast.py | Step 4: the 12 accepted B evaluations, unit tests (b), (c) for B, tail check, assertion count, node counts; exit 1 on any failure (logs/speedup_regression.log, results/fast/) |
+| evaluator/timing_fast.py, profile_fast.py | Step 5: 12 evaluations x 3, medians, 20000-evaluation search cost (logs/speedup_timing.log); runtime split (logs/speedup_profile.log) |
+| evaluator/report_speedup_CN.md, config_fast.json | report; rho, R, displacement bound, frozen tolerances, hardware |
+
+Window: W_k = {|z - x_k| < R}, R = Delta + 48 sigma = Delta + rho (39 sigma) + displacement bound (5 sigma) + margin (4 sigma);
+step k works on the node range [a_k, b_k] = [ceil((x_k - R - z_0)/h), floor((x_k + R - z_0)/h)], prefix and window sums on
+[a_k - M, b_k + M], both clipped to the grid. Grid, kernel, scheme, cfun and update order are the accepted ones.
+
+Induction invariant (spec §2). The kernel is exactly 0.0 beyond rho (Step 0), so one update gives supp(m_{k+1}) inside
+|z - x_k| < Delta + rho; with |x_{k+1} - x_k| <= 5 sigma this is inside |z - x_{k+1}| < Delta + 44 sigma, inside W_{k+1}.
+Start: supp(m_2) = supp(ghat_1) lies within rho of x_1 and |x_2 - x_1| <= 5 sigma, so inside W_2 (asserted at initialisation).
+
+Assertion and its dependence on the invariant. After the update of step k the destination buffer is checked for any non-zero
+value (not a signed sum) on the M nodes on each side of W_{k+1}. This is enough only because of the invariant and the buffer
+rule: before step k the buffer is zero outside W_{k-1} (its old m_{k-1}), it is zeroed on W_{k-1} and written on W_k only, so
+a non-zero outside W_{k+1} can only sit in W_k \ W_{k+1}, which lies within 5n < M nodes of W_{k+1}. It is not an independent
+check of the whole array. On failure the step is redone on the full grid from the untouched source buffer (the pre-update
+m_k), the step's E[N] increment, w_k and mass entry are replaced, the event is logged, and the whole run stops (diagnostic only).
+
+Last step. As in the accepted version, the update is also done at k = K (m_{K+1} is not used); the assertion then checks that
+the support after the update lies inside W_K (there is no x_{K+1}, no W_{K+1}); the displacement column reads
+"not applicable — no next sample". No sample point is added.
+
+Run the regression (from evaluator/; numpy, scipy, numba):
+
+    python3 kernel_zero_test.py && python3 evaluator_fast.py --windows && python3 evaluator_fast.py --selftest
+    python3 regression_fast.py        # last line "REGRESSION PASS ..."; exit code 1 and "STOP" on any failure or assertion
+    python3 timing_fast.py            # only after the regression passed
+
+The regression compares against the accepted stored outputs results/rec_B_*_m8.json, J_B_*.npy, w_B_*.npy with the tolerances
+in config_fast.json (relative 1e-12 for E[N], S, log det; |Delta| <= 1e-12 (|ref| + max|J_ref|) for J; |Delta| <= 1e-12 (|w_ref| + 1)
+for w_k; own mass drift <= 1e-10; tail check with 1e-11) and requires 0 assertion failures.
