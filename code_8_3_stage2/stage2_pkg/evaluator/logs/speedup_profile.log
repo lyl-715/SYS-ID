@@ -1,0 +1,19 @@
+PROFILE-FAST B/N/n=24: evaluate under cProfile 2.80 s; cfun cumulative 0.95 s over 4999 calls
+         30278 function calls in 2.798 seconds
+
+   Ordered by: internal time
+   List reduced from 88 to 8 due to restriction <8>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    1.845    1.845    2.796    2.796 /home/user/SYS-ID/code_8_3_stage2/stage2_pkg/evaluator/evaluator_fast.py:88(run_window)
+     4999    0.738    0.000    0.948    0.000 <string>:22(cfun)
+     9998    0.208    0.000    0.208    0.000 <string>:21(phi)
+    14997    0.003    0.000    0.003    0.000 /usr/local/lib/python3.13/dist-packages/numpy/_core/multiarray.py:406(where)
+        1    0.001    0.001    0.001    0.001 <string>:13(regressors)
+        1    0.000    0.000    2.798    2.798 /home/user/SYS-ID/code_8_3_stage2/stage2_pkg/evaluator/density_recursion_v1.py:165(evaluate)
+        5    0.000    0.000    0.000    0.000 <string>:17(<genexpr>)
+        2    0.000    0.000    0.000    0.000 {method 'nonzero' of 'numpy.ndarray' objects}
+
+
+
+PROFILE-FAST B/N/n=24: window kernel (zeroing + accepted _kernel on the slice) x 4999 0.22 s; _ab_step_w x 4999 0.89 s (standalone, uninstrumented)
