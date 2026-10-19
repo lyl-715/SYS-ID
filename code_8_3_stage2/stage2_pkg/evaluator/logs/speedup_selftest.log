@@ -1,0 +1,5 @@
+=== evaluator_fast.py --selftest (synthetic checks of the step-2 safety mechanism; not a run)
+SELFTEST (1) assertion with true next window W_3: ok = True
+SELFTEST (1) assertion with next window moved 2M nodes right: ok = False
+SELFTEST (2) first step of U, n = 6: windowed == accepted full-grid (m_3 bitwise, E[N] increment, mass, min, support): True; E[N] increment 2.4218425112023926e-40 vs 2.4218425112023926e-40; mass 0.9999999999999996 vs 0.9999999999999996
+SELFTEST PASS
