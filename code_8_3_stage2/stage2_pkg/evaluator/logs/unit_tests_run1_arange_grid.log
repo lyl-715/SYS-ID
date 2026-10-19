@@ -1,0 +1,12 @@
+=== density_recursion_v1.py unit tests (step 2); config {'file': 'reports_CN/plan_evaluator_CN.md', 'version': 'v4.1 (frozen)', 'bundle_commit': '4e84ebc'}; {'cpu': 'Intel(R) Xeon(R) Processor @ 2.10GHz', 'cores': 4, 'ram_GB': 16, 'python': '3.13.16', 'numpy': '2.5.3', 'scipy': '1.18.1', 'numba': '0.68.0', 'llvmlite': '0.50.0'}
+(a) v0/U/n=12: E[N] = 316.9492 (printed 316.95, spec 316.95), log det = 197.20231 (printed 197.2023, spec 197.2023), S = 466.207 (spec §3 466.21) -> PASS
+(a) bitwise vs prototype run(12): E[N] np.float64(316.9491844631835) vs np.float64(316.9491844631835); W, J, G, mass every 1000 steps identical: True -> PASS
+(b) h=1/12: A = 0.483377404981462 (spec 0.483377404983273, diff -1.8e-12); B = 0.499999999998187 (|B-0.5| = 1.8e-12 <= 1e-6: True)
+(b) h=1/24: A = 0.491688702495263, B = 0.500000000003628 (|B-0.5| = 3.6e-12); A error 1.662260e-02 -> 8.311298e-03, ratio 2.000000 (halving h halves A's error) -> FAIL
+(c) A/U/n=6: max_k |sum m - 1| = 7.327e-14 (<= 1e-10), min m = 0.000e+00 (>= 0), G = 8788, E[N] = 318.1195, log det = 196.92719, runtime 3.32 s -> PASS
+(c) A/U/n=12: max_k |sum m - 1| = 8.238e-14 (<= 1e-10), min m = 0.000e+00 (>= 0), G = 17574, E[N] = 317.5067, log det = 197.06440, runtime 6.27 s -> PASS
+(c) A/U/n=24: max_k |sum m - 1| = 1.975e-13 (<= 1e-10), min m = 0.000e+00 (>= 0), G = 35146, E[N] = 317.1996, log det = 197.13287, runtime 12.54 s -> PASS
+(c) B/U/n=6: max_k |sum m - 1| = 9.337e-14 (<= 1e-10), min m = 0.000e+00 (>= 0), G = 8788, E[N] = 316.9072, log det = 197.19814, runtime 3.25 s -> PASS
+(c) B/U/n=12: max_k |sum m - 1| = 8.271e-14 (<= 1e-10), min m = 0.000e+00 (>= 0), G = 17574, E[N] = 316.8951, log det = 197.20041, runtime 6.50 s -> PASS
+(c) B/U/n=24: max_k |sum m - 1| = 1.977e-13 (<= 1e-10), min m = 0.000e+00 (>= 0), G = 35146, E[N] = 316.8921, log det = 197.20098, runtime 13.33 s -> PASS
+unit tests: FAILURES
