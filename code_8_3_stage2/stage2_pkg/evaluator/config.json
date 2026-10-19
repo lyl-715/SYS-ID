@@ -1,0 +1,202 @@
+{
+ "spec": {
+  "file": "reports_CN/plan_evaluator_CN.md",
+  "version": "v4.1 (frozen)",
+  "bundle_commit": "4e84ebc"
+ },
+ "scenario": {
+  "d": 20,
+  "Delta_star": 0.002384694482635785,
+  "sigma": 0.00011923472413178926,
+  "sigma_def": "Delta_star/20",
+  "dt": 0.001,
+  "K": 5000,
+  "T": 5.0,
+  "system": "G(s) = 2/(1+s)^2",
+  "omega": "[3*sqrt(2), 3*pi, 12, 12.3]",
+  "a0": 1.0,
+  "sum_a2": 1.0
+ },
+ "conventions": {
+  "time_index": "t_k = k*dt, k = 1..K (t_1 = dt, t_K = T); array index k-1 (mc83.py: t = np.arange(1,K+1)*dt)",
+  "output": "x_k = G(0)*1 + sum_m a_m |G(j w_m)| cos(w_m t_k + chi_m + arg G(j w_m)); built by mc85_scan.output(a, chi mod 2pi) (the function stage2_common.evaluate_crn uses), bitwise equal to mc83.x for U",
+  "H_columns": "[1, a_m cos psi_km, -a_m sin psi_km] for m = 1..4, psi_km = w_m t_k + chi_m; parameter order [G(0), Re G(jw_1), Im G(jw_1), ..., Re G(jw_4), Im G(jw_4)]; built by mc85_scan.regressors(a, chi mod 2pi, t), bitwise equal to mc83.H for U; recursion and MC use the same x_k, h_k arrays",
+  "chi_reduction": "chi reduced mod 2pi before forming x and H (as stage2_common.evaluate_crn); all four inputs already lie in [0, 2pi)",
+  "trigger": "as mc83.sod: send iff |z_k - r_k| >= Delta; k = 1 forced send; reference = noisy z_k at the last send",
+  "recursion_start": "f_2 = g_1 (r_2 = z_1); A/B: m_{2,j} = ghat_{1,j}",
+  "EN_main": "A, B: E[N] with the discrete Phat (spec \u00a74, internally consistent); exact-P E[N] recorded as the zero-cost diagnostic. v0: E[N] with the exact P of the prototype (its only E[N]); v0 has no omega-form Phat, so its Phat-E[N] is \"not applicable\"",
+  "reference_matrix": "J_C = U at the same version, grid and margin; Delta m_D = log det J(u) - log det J_C; lambda_i = eigh(J(u), J_C) ascending; m_E = lambda_1"
+ },
+ "inputs": {
+  "U": {
+   "id": "UNIF",
+   "a": [
+    0.5,
+    0.5,
+    0.5,
+    0.5
+   ],
+   "chi": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "p": [
+    0.25,
+    0.25,
+    0.25,
+    0.25
+   ],
+   "sum_a2": 1.0,
+   "source_params": "spec \u00a75 table row U; mc83.py:5 (a=np.full(4,0.5); chi=np.zeros(4))",
+   "source_log": "spec \u00a75"
+  },
+  "D": {
+   "id": "NM-none-P5514",
+   "a": [
+    0.5023487014960141,
+    0.500932888579383,
+    0.5015874665268123,
+    0.49509800713393903
+   ],
+   "chi": [
+    5.1395250078490875,
+    5.337759812830718,
+    1.0969395125410395,
+    4.207133021554178
+   ],
+   "p": [
+    0.25235421789473145,
+    0.2509337588604845,
+    0.25158998657678605,
+    0.24512203666799795
+   ],
+   "sum_a2": 0.9999999999999999,
+   "source_params": "code_8_3_stage2/stage2_pkg/stage2/final_batch1.json records[0] (identical a, chi in stage2/pool_R2000.json records[40])",
+   "source_log": "stage2/stage2_final.log:4 (p=(0.252,0.251,0.252,0.245) chi=(5.140,5.338,1.097,4.207)); stage2/stage2_final.log:16 (dmD_C +0.697 (0.004))",
+   "note": "amp_nm_P5514.json (cited in spec \u00a75) holds name=P5514, best_p=[0.25219196244096403, 0.24019225146422263, 0.24309097233583749, 0.2645248137589759] and no chi: it is not this point. Parameters taken from final_batch1.json records[0] as instructed by the user on 2026-10-19."
+  },
+  "E": {
+   "id": "S3-0.7-P4055",
+   "a": [
+    0.5108312010646204,
+    0.5087222977522703,
+    0.478707528571955,
+    0.501091019553393
+   ],
+   "chi": [
+    4.255711484271091,
+    6.171921067380941,
+    5.26695083096433,
+    5.252104862347821
+   ],
+   "p": [
+    0.2609485159811227,
+    0.25879837623034957,
+    0.2291608979114691,
+    0.2510922098770589
+   ],
+   "sum_a2": 1.0000000000000002,
+   "source_params": "code_8_3_stage2/stage2_pkg/stage3/dense_R2000.json records[15] (identical in stage3/front_union_R2000.json front[14])",
+   "source_log": "stage3/stage3_dense.log:117 (representative of the m_E >= 0.7 floor: p=(0.261,0.259,0.229,0.251) chi=(4.256,6.172,5.267,5.252) dmD_C=+0.262(0.010) mE_C=0.705); also :126, :131"
+  },
+  "N": {
+   "id": "U-L1657",
+   "a": [
+    0.6589278717330475,
+    0.4270232136184812,
+    0.42915920507660504,
+    0.4464164105208477
+   ],
+   "chi": [
+    0.5343112761025717,
+    5.733405535074931,
+    4.943465831064352,
+    4.116768656900249
+   ],
+   "p": [
+    0.4341859401466434,
+    0.18234882496905505,
+    0.18417762330198353,
+    0.199287611582318
+   ],
+   "sum_a2": 1.0,
+   "source_params": "code_8_3_stage2/stage2_pkg/stage3/unconstrained.json records[0]",
+   "source_log": "stage3/stage3_unconstrained.log:31 (\"Best evaluated point of the unbudgeted problem (not an optimum): U-L1657\"); :32 (p, chi), :33 (B=423.96, dmD_C=+2.101 (0.011))",
+   "note": "the log calls it \"best evaluated point (not an optimum)\"; spec \u00a75 calls it the unbudgeted optimum"
+  }
+ },
+ "grids": {
+  "n": [
+   6,
+   12,
+   24
+  ],
+  "h": "sigma/n",
+  "M": "Delta/h = 20 n (integer)",
+  "nodes": "z_i = z_0 + i h, z_0 = min x - margin, z = np.arange(min x - margin, max x + margin + h, h) as in the prototype",
+  "n48": "only by spec \u00a76 (absolute-quantity p_obs off the version's predicted order by > 0.5, or sign change of d1, d2) or \u00a77 (B/n=24 fails the MC comparison and the diagnostic extrapolation passes); then the full grid-switch rule (stability 24/48, W from J_48, U recomputed at n=48, report states the actual grid)",
+  "roundoff_d2": "|d2| <= 1e-8 max(1, |Q(24)|): \"order undeterminable\", never a trigger",
+  "U_relative": "Delta m_D(U) = 0, m_E(U) = 1 identically: p_obs \"not applicable\""
+ },
+ "margins": {
+  "main": "8*Delta",
+  "tail_check": "16*Delta, version B, n = 12, all four inputs (relative quantities need U at 16*Delta)"
+ },
+ "versions": {
+  "v0": "prototype density_recursion.py run(): exact P = ndtr(beta)-ndtr(alpha), F = cumsum(f)*h, F(s+-Delta) by slices F[sh:], F[:-sh] padded with F[-1] and 0; c_k by the prototype's inline formula; no normalisation",
+  "A": "omega_ij = 1 if |i-j| < M else 0",
+  "B": "omega_ij = 1 if |i-j| < M; 1/2 if |i-j| = M; else 0",
+  "common_AB": "ghat_{k,j} = g_k(z_j)/sum_j g_k(z_j); Phat_{k,i} = sum_j ghat_{k,j} omega_ij; m_{k+1,j} = m_{k,j} Phat_{k,j} + ghat_{k,j} sum_i m_{k,i} (1 - omega_ij); no renormalisation of m"
+ },
+ "implementation": {
+  "v0": "numpy, the prototype's arithmetic (regression reference only)",
+  "A_B": "numba-jitted mass recursion, sliding-window sums by prefix sums, O(G) per step; c_k by mc83.cfun (numpy/scipy; the reviewed implementation is reused, not ported) evaluated on the index range where m_k != 0 (exact: m_k = 0 elsewhere); w_k = sum_i m_{k,i} c_k(z_i)",
+  "runtime": "steady state: import and JIT compilation excluded (one warm-up call before timing); serial, one process, OMP/OPENBLAS/MKL threads = 1",
+  "runtime_pass_line": "version B on the accepted grid (n = 24, or 48 if switched): steady-state single evaluation <= 15 s (numba line, spec \u00a76, \u00a79)"
+ },
+ "hardware": {
+  "cpu": "Intel(R) Xeon(R) Processor @ 2.10GHz",
+  "cores": 4,
+  "ram_GB": 16,
+  "python": "3.13.16",
+  "numpy": "2.5.3",
+  "scipy": "1.18.1",
+  "numba": "0.68.0",
+  "llvmlite": "0.50.0"
+ },
+ "mc": {
+  "seed": 20261019,
+  "R": 10000,
+  "B": 20,
+  "batch_size": 500,
+  "draws": "Z = np.random.default_rng(20261019).standard_normal((10000, K)); batch b = rows 500b .. 500b+499; trajectory z = x + sigma Z[i]; the same Z for all four inputs (common random numbers)",
+  "trigger": "stage2_common.sod_batch (bitwise equal to mc83.sod, check_trigger run first)",
+  "weights": "c_k = cfun(alpha, beta) at the pre-update reference, c_1 = 1, arithmetic of stage2_common.evaluate_crn",
+  "point_estimates": "from the pooled weights of all 10000 trajectories: Jbar = sigma^-2 sum_k wbar_k h_k h_k^T; batches only for se",
+  "se": "s_batch/sqrt(20)",
+  "old_U": {
+   "seed": 20261006,
+   "R": 10000,
+   "weights": "code_8_3_stage2/stage2_pkg/wk_d20_10000.npy",
+   "se_old_EN": {
+    "value": 0.022,
+    "source": "code_8_3_stage2/stage2_pkg/README.md:21 (B_hat = 316.87 +- 0.022 (se))"
+   },
+   "se_old_logdet": {
+    "value": 0.003,
+    "source": "reports_CN/section_8_3_single_CN.md:527 (report value, not a raw log line)"
+   },
+   "se_old_S": "not used: the same report gives two values (section_8_3_single_CN.md:522 batch se 0.12; :562 +-0.25); raw difference only"
+  }
+ },
+ "acceptance": {
+  "formal_items": 199,
+  "items": "per input: E[N], S, log det J, tr(Dbar)/9, 45 upper-triangle elements of Dbar (49 x 4 = 196); paired Delta m_D of D, E, N vs U (3)",
+  "bonferroni_count": 202,
+  "threshold": "t_{19, 1-0.05/404} = 4.496",
+  "whitening": "W = J_rec^{-1/2}, J_rec = version B, n = 24 (n = 48 if the input switched); D_b = W Jhat_b W^T - I",
+  "m_E": "display and grid-stability only, not a formal test"
+ }
+}
