@@ -1,0 +1,23 @@
+{
+ "spec": {
+  "file": "reports_CN/plan_speedup_CN.md",
+  "version": "v3.1 (frozen)",
+  "commit": "d4db8a6"
+ },
+ "predictions_commit": "adcdb4b",
+ "rho": {
+  "value": 0.004650154241139781,
+  "definition": "39 sigma",
+  "source": "logs/kernel_zero_test.log (kernel exactly 0.0 at 39, 40, 50 sigma)"
+ },
+ "hardware": {
+  "cpu": "Intel(R) Xeon(R) Processor @ 2.10GHz",
+  "cores": 4,
+  "ram_GB": 16,
+  "python": "3.13.16",
+  "numpy": "2.5.3",
+  "scipy": "1.18.1",
+  "numba": "0.68.0",
+  "llvmlite": "0.50.0"
+ }
+}

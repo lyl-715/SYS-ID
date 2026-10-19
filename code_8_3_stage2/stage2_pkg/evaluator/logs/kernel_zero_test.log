@@ -1,0 +1,22 @@
+=== kernel_zero_test.py (speed-up Step 0, spec §2 lemma 1); kernel = density_recursion_v1._kernel (numba targetoptions {'nopython': True, 'boundscheck': None}); sigma = Delta*/20 = 0.00011923472413178926; hardware {'cpu': 'Intel(R) Xeon(R) Processor @ 2.10GHz', 'cores': 4, 'ram_GB': 16, 'python': '3.13.16', 'numpy': '2.5.3', 'scipy': '1.18.1', 'numba': '0.68.0', 'llvmlite': '0.50.0'}
+KZT U |z-x| = 38.5 sigma: 10000 evaluations (both sides of 5000 x_k), non-zero 10000, min 4.6286e-319, max 4.6286e-319
+KZT U |z-x| = 39.0 sigma: 10000 evaluations (both sides of 5000 x_k), non-zero 0
+KZT U |z-x| = 40.0 sigma: 10000 evaluations (both sides of 5000 x_k), non-zero 0
+KZT U |z-x| = 50.0 sigma: 10000 evaluations (both sides of 5000 x_k), non-zero 0
+KZT D |z-x| = 38.5 sigma: 10000 evaluations (both sides of 5000 x_k), non-zero 10000, min 4.6286e-319, max 4.6286e-319
+KZT D |z-x| = 39.0 sigma: 10000 evaluations (both sides of 5000 x_k), non-zero 0
+KZT D |z-x| = 40.0 sigma: 10000 evaluations (both sides of 5000 x_k), non-zero 0
+KZT D |z-x| = 50.0 sigma: 10000 evaluations (both sides of 5000 x_k), non-zero 0
+KZT E |z-x| = 38.5 sigma: 10000 evaluations (both sides of 5000 x_k), non-zero 10000, min 4.6286e-319, max 4.6286e-319
+KZT E |z-x| = 39.0 sigma: 10000 evaluations (both sides of 5000 x_k), non-zero 0
+KZT E |z-x| = 40.0 sigma: 10000 evaluations (both sides of 5000 x_k), non-zero 0
+KZT E |z-x| = 50.0 sigma: 10000 evaluations (both sides of 5000 x_k), non-zero 0
+KZT N |z-x| = 38.5 sigma: 10000 evaluations (both sides of 5000 x_k), non-zero 10000, min 4.6286e-319, max 4.6286e-319
+KZT N |z-x| = 39.0 sigma: 10000 evaluations (both sides of 5000 x_k), non-zero 0
+KZT N |z-x| = 40.0 sigma: 10000 evaluations (both sides of 5000 x_k), non-zero 0
+KZT N |z-x| = 50.0 sigma: 10000 evaluations (both sides of 5000 x_k), non-zero 0
+KZT value at 38.5 sigma over all four inputs: min 4.6286e-319, max 4.6286e-319, exactly zero 0 of 40000
+KZT all values exactly 0.0 at 39.0 sigma: True
+KZT all values exactly 0.0 at 40.0 sigma: True
+KZT all values exactly 0.0 at 50.0 sigma: True
+KZT PASS: rho = 39 sigma (spec §2)
