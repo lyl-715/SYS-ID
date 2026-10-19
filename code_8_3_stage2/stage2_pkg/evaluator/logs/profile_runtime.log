@@ -1,0 +1,23 @@
+PROFILE B/N/n=24: evaluate() runtime under cProfile 15.20 s (uninstrumented value: logs/run_all.log)
+         30224 function calls in 15.200 seconds
+
+   Ordered by: internal time
+   List reduced from 74 to 12 due to restriction <12>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1   14.065   14.065   15.198   15.198 /home/user/SYS-ID/code_8_3_stage2/stage2_pkg/evaluator/density_recursion_v1.py:136(run_ab)
+     4999    0.883    0.000    1.131    0.000 <string>:22(cfun)
+     9998    0.244    0.000    0.244    0.000 <string>:21(phi)
+    14997    0.005    0.000    0.005    0.000 /usr/local/lib/python3.13/dist-packages/numpy/_core/multiarray.py:406(where)
+        1    0.000    0.000    0.001    0.001 <string>:13(regressors)
+        1    0.000    0.000   15.200   15.200 /home/user/SYS-ID/code_8_3_stage2/stage2_pkg/evaluator/density_recursion_v1.py:165(evaluate)
+        5    0.000    0.000    0.000    0.000 <string>:17(<genexpr>)
+        1    0.000    0.000    0.000    0.000 /home/user/SYS-ID/code_8_3_stage2/stage2_pkg/evaluator/density_recursion_v1.py:56(make_grid)
+        2    0.000    0.000    0.000    0.000 {built-in method numpy.arange}
+        1    0.000    0.000    0.000    0.000 {method 'nonzero' of 'numpy.ndarray' objects}
+        1    0.000    0.000    0.000    0.000 /usr/local/lib/python3.13/dist-packages/numpy/lib/_shape_base_impl.py:607(column_stack)
+        3    0.000    0.000    0.000    0.000 /usr/local/lib/python3.13/dist-packages/numpy/linalg/_linalg.py:1269(eigvalsh)
+
+
+
+PROFILE B/N/n=24: G = 43262; numba _kernel x 4999 3.11 s; numba _ab_step x 4999 10.09 s; cfun (cProfile cumtime) 1.13 s
