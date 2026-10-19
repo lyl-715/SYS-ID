@@ -59,3 +59,38 @@ Key numbers: Delta_* = 0.002384694482635785 (N^nf = 321), sigma = Delta_*/20, B_
 | bound/bound_identity.py | Script 3: H(u) = H(u_unif) T(u) identity (random fixed xi, seed 20261022; direct solves at 11 inputs) and the free-placement relaxation gap of the 7 stage-2 finalists at their own S(u) |
 | bound/bound_report.md | report; every number traceable to bound/*.log |
 Needs cvxpy (with SCS, Clarabel) and numba in addition to requirements.txt.
+
+## Evaluator acceptance (added 2026-10-19; run from evaluator/, in this order; outputs in evaluator/logs and evaluator/results)
+Deterministic evaluator u -> (E[N], S, J) by the 1-D density recursion of the reference value (spec `reports_CN/plan_evaluator_CN.md` v4.1, frozen).
+| file | what it does |
+|---|---|
+| evaluator/make_config.py -> config.json | step 0: the four test inputs U, D, E, N (full a_m, chi_m read from the stored JSON, with source log lines), grids n = 6/12/24, margins 8/16 Delta, constants, MC seed/R/B, hardware |
+| evaluator/predictions.md | step 1: spec §8 P1-P12 and the §9 acceptance table, verbatim, committed before any run |
+| evaluator/density_recursion_v1.py | step 2: `--version v0` (prototype density_recursion.py, numpy, bitwise), `A`, `B` (mass formulation, numba, prefix-sum windows); `--test` runs unit tests (a), (b), (c) -> logs/unit_tests.log |
+| evaluator/run_all.py | step 3: 3 versions x 4 inputs x 3 grids + tail check (B, n=12, 16 Delta), serial and timed; c invariants on every node; §6 trigger check (`--n48 X` only after a trigger) -> logs/run_all.log, results/ |
+| evaluator/mc_reference.py | step 4: MC seed 20261019, R = 10000 = 20 x 500, CRN over the four inputs; bitwise check against stage2_common.evaluate_crn; old-seed U check -> logs/mc_reference.log, results/mc/ |
+| evaluator/analysis.py | step 5: convergence, B stability, tail, 199-item whitened MC test, runtime, §9 criteria, prediction evidence -> logs/analysis.log, results/analysis.json |
+| evaluator/report_tables.py, profile_runtime.py | report tables generated from the stored results (logs/report_tables.md); runtime split of one B evaluation (logs/profile_runtime.log) |
+| evaluator/report_evaluator_CN.md, REVIEW_GUIDE.md, build_review_zip.py | step 6: report (every number traceable to evaluator/logs/*.log), review guide, review package `review_evaluator_8_5.zip` at the repo root |
+
+Trigger conventions, matched to `mc83.sod` (and `stage2_common.sod_batch`, bitwise equal to it):
+- a send happens iff |z_k - r_k| >= Delta (">=", not ">"); z_k = x_k + sigma e_k is the noisy output;
+- k = 1 is a forced send: the recursion starts from f_2 = g_1 (A/B: m_{2,j} = ghat_{1,j}), E[N] starts at 1 and w_1 = 1;
+- the reference after a send is the noisy z_k itself (in the recursion the new reference is the measurement node j);
+- P_k(r) = Phi(beta) - Phi(alpha) is the no-send probability of the open band |z - r| < Delta. Version A counts the node at
+  |i - j| = M (= Delta/h) as a send; version B gives it weight 1/2, the trapezoid rule for the band integral (the physical
+  trigger is still pointwise >= Delta).
+
+Reproduce every table of `evaluator/report_evaluator_CN.md` (needs numpy, scipy, numba; about 7 minutes):
+
+    cd evaluator
+    python3 density_recursion_v1.py --test
+    python3 run_all.py            # resumable: finished evaluations in results/ are skipped; delete results/rec_* to recompute
+    python3 mc_reference.py
+    python3 analysis.py
+    python3 report_tables.py > logs/report_tables.md
+    python3 profile_runtime.py N 24 > logs/profile_runtime.log
+
+Every number of the report is on a log line: `EV` (run_all.log), `MC` / `OLD-U` (mc_reference.log), `CONV`, `STAB`, `TAIL`,
+`ITEM`, `SIGN`, `NONLIN`, `DISPLAY`, `APPX`, `RUNTIME`, `SEARCH-ROUND`, `CRIT`, `P1`-`P9` (analysis.log), `PROFILE`
+(profile_runtime.log). The evaluator's numbers are deterministic; runtimes depend on machine load.
