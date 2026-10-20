@@ -1013,4 +1013,4 @@ XCHECK t = 19.5: cfun c = 0.6638279366224242, Arb c = 0.663827936622, |differenc
 XCHECK t = 20.0: cfun c = 0.8183098861837907, Arb c = 0.818309886184, |difference| = 1.11e-16
 XCHECK t = 25.0: cfun c = 0.9999999906275155, Arb c = 0.999999990628, |difference| = 1.11e-16
 ENV total runtime 0.1 s
-ENV VERDICT: PASS: c <= a q + b certified for all real delta; S <= 1347.119829 < 1348 (解析认证的上界)
+ENV VERDICT: PASS: c <= a q + b certified for all real delta; hence for the true budget B, S <= 1 + a (B - 1) + 4999 b (解析认证的上界); under the additional, uncertified premise B <= 317 this gives S <= 1347.119829 < 1348

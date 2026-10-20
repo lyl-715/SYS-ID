@@ -1,12 +1,13 @@
 === b5_conversion.py (round 2a B5); spec v4.2 commit 6863d7c
+B5 S statement: certified for all real delta: c <= 2.76253 q + 0.094651 (logs/envelope_proof.log); hence for the true budget B, S <= 1 + 2.76253 (B - 1) + 4999*0.094651; under the additional, uncertified premise B <= 317 this gives S <= 1347.119829. Every use of W = 1347.119829 below carries that premise.
 B5 finding: the route-1 certificate U^upper = U_cp = F(xi~) + top_sum(d) - xi~^T d (bound_common.py:96) is computed in plain float64 numpy: F and d from Cholesky / triangular solve / log of the diagonal (bound_common.py:77), top_sum by sorting and summation (bound_common.py:84); no interval arithmetic, outward rounding or rounding-error term is added. bound_report.md mentions none of these (no keyword found). => U^upper is NOT floating-point conservative.
 B5 envelope proof passed (results/envelope_segments.json): True
 B5 U at W = 465.95762809543163 (check: S(u_unif) of route 1 (bound_inner.log:31)): F(xi~) = 198.4234663319864, U^upper (cutting plane) = 198.42346633206978, gap 8.341416446455696e-11; duality bound 198.42346633206978; 14576 sweeps, 8.6 s
-B5 U at W = 1347.119829 (certified S bound): F(xi~) = 207.92857641488476, U^upper (cutting plane) = 207.92857641497693, gap 9.21698273259608e-11; duality bound 207.92857641497693; 877 sweeps, 0.5 s
+B5 U at W = 1347.119829 (S bound under the uncertified premise B <= 317): F(xi~) = 207.92857641488476, U^upper (cutting plane) = 207.92857641497693, gap 9.21698273259608e-11; duality bound 207.92857641497693; 877 sweeps, 0.5 s
 B5 U at W = 1210.9563921988488 (MDP estimate S~_dual): F(xi~) = 206.9777941725253, U^upper (cutting plane) = 206.97779417261597, gap 9.066347672614938e-11; duality bound 206.97779417261597; 1185 sweeps, 0.7 s
 B5 check: U(465.957628) = 198.42346633206978 vs bound_inner.log:31 198.4234663321 (difference -3.02e-11)
-B5 CASE 2: envelope proof passed, U^upper not floating-point conservative -> the only rigorous statement is S <= 1347.119829; the log det number is a 数值证书，未作浮点保守处理, and no claim is made that the original model satisfies it
-B5 log det number at S = 1347.119829: U^upper = 207.92857641497693 (数值证书，未作浮点保守处理)
+B5 CASE 2: envelope proof passed, U^upper not floating-point conservative -> certified: c <= a q + b for all real delta, hence S <= 1 + a (B - 1) + 4999 b for the true budget B (S <= 1347.119829 only under the uncertified premise B <= 317); the numerical certificate value U_cp(1347.119829) is reported without floating-point conservative handling (数值证书，未作浮点保守处理); no claim is made that the original model satisfies the inequality; its S value carries the premise B <= 317
+B5 log det number at W = 1347.119829 (uncertified premise B <= 317): U^upper = U_cp = 207.92857641497693 (数值证书，未作浮点保守处理)
 B5 estimate (not a bound): U^upper - 197.197 = 10.731576414976928 nat (relative-gain estimate; no certified lower bound on log det J_C; 197.197 as in spec §B5, = log det J_sod(u_unif) of the R = 10000 weights, bound_common LD_SOD 197.19655785394153; the evaluator B/n=24 gives 197.20097668224076)
 B5 estimate (not a bound): MDP analogue U(S~_dual = 1210.9563921988488) - 197.197 = 9.78079417261597 nat
 B5 B6 comparison: U^upper(1347.12) - U(465.958) = 9.505110082907152 nat; 9 log(1347/466) = 9.553045880562463

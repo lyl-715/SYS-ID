@@ -140,10 +140,11 @@ for w_k; own mass drift <= 1e-10; tail check with 1e-11) and requires 0 assertio
 | predictions_recheck_bounds.md | R1-R6, B1-B6 of the spec verbatim, committed before any run (v4.2 budget correction noted as a pre-run amendment) |
 | make_config_recheck.py -> config_recheck.json | A0: the seven candidates (stage-2 finalists without UNIF + U-L1657), MC values with R = 4000 paired se, tau_N = 0.04, tau_E = 3e-4, budget B = E[N](u_unif) = 316.892 |
 | recheck7.py -> recheck7_table.md | A1-A2: the seven + U with evaluator_fast.py (B, n = 24), unchanged; feasibility by the numerical criterion (B +- tau_N), lambda0 verdicts, (rec - MC)/se |
-| envelope_proof.py | B2: c <= a q + b on all of R for a = 2.76253, b = 0.094651 (three segments; Arb ball arithmetic on the middle one), hence S <= 1347.119829 < 1348 |
+| envelope_proof.py | B2: c <= a q + b certified on all of R for a = 2.76253, b = 0.094651 (three segments; Arb ball arithmetic on the middle one); hence for the true budget B, S <= 1 + 2.76253 (B - 1) + 4999*0.094651; under the additional, uncertified premise B <= 317 this gives S <= 1347.119829 (B = 316.892 is the evaluator's value, not certified) |
 | mdp_estimate.py, mdp_policy_plots.py | B3/B4: discrete closed-loop MDP (an estimate, not a bound): consistency check, golden section in lambda, policy forward run, figures |
-| b5_conversion.py | B5: route-1 certificate finding (not floating-point conservative), U^upper at the S bound, the B5 case, relative-gain estimates |
-| report_recheck_bounds_CN.md | report; every number traceable to round2a/logs/*.log |
+| b5_conversion.py | B5: route-1 certificate finding (not floating-point conservative), the numerical certificate value U_cp at W = 1347.119829 (reported without floating-point conservative handling; W carries the premise B <= 317), the B5 case, relative-gain estimates |
+| report_recheck_bounds_CN.md | report; every number traceable to round2a/logs/*.log (except the review's count of 284 intermediate-speed nodes at k = 1250, read from results/mdp_policy.npz) |
+| REVIEW_GUIDE.md, build_review_round2a.py | review package `review_round2a.zip` at the repo root (for reading; see the note on reproduction below) |
 Needs numpy, scipy, numba and python-flint (Arb). The route-1 solver (bound/), mc83.cfun and evaluator_fast.py are used unchanged.
 
 The three error sources of the discrete MDP, exactly as the spec lists them (§B3, spec lines 115–117):
@@ -156,7 +157,8 @@ Implementation note: the send-branch sums (the spec's "total minus window") are 
 the same quantity without cancellation (near delta = 0 the masked Gaussian mass is about 1e-88 and total minus window is 0 in
 float64); P_i := 1 - q_i with q_i = Phi(alpha_i) + Phi(-beta_i); ties in max_v go to the smallest |v|.
 
-Reproduce (from evaluator/round2a/; about 12 minutes, mostly the MDP):
+Reproduce (from evaluator/round2a/; about 12 minutes, mostly the MDP). Reproduction needs the full repository checkout (this
+branch); the review zip `review_round2a.zip` alone is not enough.
 
     python3 make_config_recheck.py && python3 recheck7.py && python3 envelope_proof.py
     nohup python3 mdp_estimate.py > logs/mdp.stdout 2>&1 &     # B4 check first; stops without an estimate if it fails

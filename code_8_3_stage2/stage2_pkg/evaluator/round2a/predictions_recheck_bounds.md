@@ -13,6 +13,14 @@ MDP Lagrangian term is 315.892 lambda. This changes the numbers in B1, B2 and B6
 which is not a prediction of this round). R1-R6 are unchanged. This is a correction of the budget definition made before
 any evaluation, not a prediction that was revised after seeing results.
 
+## Post-review note (2026-10-20, after all runs; no prediction is changed)
+
+The amendment above calls B <= 317 a "safe upper bound". That premise is not certified: B = 316.892 is the evaluator's
+numerical value. What is certified is c <= 2.76253 q + 0.094651 for all real delta, hence for the true budget B,
+S <= 1 + 2.76253 (B - 1) + 4999*0.094651; under the additional, uncertified premise B <= 317 this gives S <= 1347.119829.
+The report scores B1 in two parts accordingly (envelope certification passed; budget premise not certified). The prediction
+blocks below are unchanged.
+
 Both blocks below are copied verbatim from the frozen spec `reports_CN/plan_recheck_bounds_CN.md` v4.2 (commit 6863d7c):
 §A5 = spec lines 32–41 (R1–R6), §B6 = spec lines 145–154 (B1–B6), extracted with `sed -n`, not retyped.
 

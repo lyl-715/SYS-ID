@@ -3,8 +3,9 @@
 1. Finding on the route-1 certificate (read from code_8_3_stage2/stage2_pkg/bound/bound_common.py and bound_report.md, logged):
    whether its upper value U^upper (cutting-plane bound U_cp) includes conservative floating-point handling.
 2. U^upper(S; u_unif) with the route-1 solver, unchanged (bound_common.py exec'd in its own namespace; nothing is written to
-   bound/): exchange(H_u, W, cap = 1, tol = 1e-10, batch = 256) and certificate_full, at W = 1347.119829 (the certified S bound,
-   B <= 317), and as checks at W = 465.957628 (reproducing bound_inner.log:31) and at the MDP estimate W = S~_dual.
+   bound/): exchange(H_u, W, cap = 1, tol = 1e-10, batch = 256) and certificate_full, at W = 1347.119829 (the S bound under the
+   additional, uncertified premise B <= 317; the certified statement is S <= 1 + a (B - 1) + 4999 b for the true budget B), and as
+   checks at W = 465.957628 (reproducing bound_inner.log:31) and at the MDP estimate W = S~_dual.
 3. The B5 case: (1) envelope passed and U^upper conservative; (2) passed, not conservative; (3) envelope not passed.
 4. Estimates (all cases): U^upper - 197.197 and U(S~_dual) - 197.197 as estimates of the relative gain, never relative bounds.
 Writes logs/b5_conversion.log. Usage (after envelope_proof.py and mdp_estimate.py): python3 b5_conversion.py"""
@@ -13,7 +14,7 @@ HERE = os.path.dirname(os.path.abspath(__file__)); EV = os.path.dirname(HERE); P
 sys.path.insert(0, EV)
 import density_recursion_v1 as dr
 
-S_BAR = 1347.119829                     # 1 + 316 a + 4999 b (exact rational 1347119829/1000000), logs/envelope_proof.log
+S_BAR = 1347.119829                     # 1 + 316 a + 4999 b (exact rational 1347119829/1000000), logs/envelope_proof.log; S bound only under the uncertified premise B <= 317
 LD_REF = 197.197                        # spec §B5
 
 
@@ -32,6 +33,9 @@ def solve(ns, W):
 if __name__ == '__main__':
     sys.stdout = dr.Tee(os.path.join(HERE, 'logs', 'b5_conversion.log'))
     print("=== b5_conversion.py (round 2a B5); spec v4.2 commit 6863d7c")
+    print("B5 S statement: certified for all real delta: c <= 2.76253 q + 0.094651 (logs/envelope_proof.log); hence for the true "
+          "budget B, S <= 1 + 2.76253 (B - 1) + 4999*0.094651; under the additional, uncertified premise B <= 317 this gives "
+          "S <= 1347.119829. Every use of W = 1347.119829 below carries that premise.")
     src = open(os.path.join(PKG, 'bound', 'bound_common.py')).read().splitlines()
     ln = {k: next(i for i, l in enumerate(src, 1) if l.startswith(k)) for k in ('def ld_grad', 'def top_sum', 'def certificate_full')}
     rep = open(os.path.join(PKG, 'bound', 'bound_report.md')).read()
@@ -48,19 +52,21 @@ if __name__ == '__main__':
     mdp = open(os.path.join(HERE, 'logs', 'mdp_estimate.log')).read()
     S_dual = float(re.search(r"S~_dual = 1 \+ min_lambda \{V~ \+ 315\.892 lambda\} = ([0-9.e+-]+)", mdp).group(1))
     U = {}
-    for lab, W in (('check: S(u_unif) of route 1 (bound_inner.log:31)', ns['W_B']), ('certified S bound', S_BAR),
+    for lab, W in (('check: S(u_unif) of route 1 (bound_inner.log:31)', ns['W_B']), ('S bound under the uncertified premise B <= 317', S_BAR),
                    ('MDP estimate S~_dual', S_dual)):
         cx, rx, tt = solve(ns, W); U[lab] = cx['U_cp']
         print(f"B5 U at W = {W!r} ({lab}): F(xi~) = {cx['F']!r}, U^upper (cutting plane) = {cx['U_cp']!r}, gap {cx['gap_cp']!r}; "
               f"duality bound {float(cx['U_dual'])!r}; {rx['sweeps']} sweeps, {tt:.1f} s")
-    Uu, Ub, Ud = U['check: S(u_unif) of route 1 (bound_inner.log:31)'], U['certified S bound'], U['MDP estimate S~_dual']
+    Uu, Ub, Ud = U['check: S(u_unif) of route 1 (bound_inner.log:31)'], U['S bound under the uncertified premise B <= 317'], U['MDP estimate S~_dual']
     print(f"B5 check: U(465.957628) = {Uu!r} vs bound_inner.log:31 198.4234663321 (difference {Uu-198.4234663321:+.2e})")
     case = 3 if not env['passed'] else 2      # the certificate is not floating-point conservative (finding above)
-    print(f"B5 CASE {case}: " + {2: "envelope proof passed, U^upper not floating-point conservative -> the only rigorous statement is "
-                                    "S <= 1347.119829; the log det number is a 数值证书，未作浮点保守处理, and no claim is made that the original "
-                                    "model satisfies it",
+    print(f"B5 CASE {case}: " + {2: "envelope proof passed, U^upper not floating-point conservative -> certified: c <= a q + b for all "
+                                    "real delta, hence S <= 1 + a (B - 1) + 4999 b for the true budget B (S <= 1347.119829 only under the "
+                                    "uncertified premise B <= 317); the numerical certificate value U_cp(1347.119829) is reported without "
+                                    "floating-point conservative handling (数值证书，未作浮点保守处理); no claim is made that the original "
+                                    "model satisfies the inequality; its S value carries the premise B <= 317",
                                  3: "envelope proof not passed -> no certified S bound and no rigorous log det statement this round"}[case])
-    print(f"B5 log det number at S = 1347.119829: U^upper = {Ub!r} (数值证书，未作浮点保守处理)")
+    print(f"B5 log det number at W = 1347.119829 (uncertified premise B <= 317): U^upper = U_cp = {Ub!r} (数值证书，未作浮点保守处理)")
     print(f"B5 estimate (not a bound): U^upper - {LD_REF} = {Ub-LD_REF!r} nat (relative-gain estimate; no certified lower bound on log det J_C; "
           f"{LD_REF} as in spec §B5, = log det J_sod(u_unif) of the R = 10000 weights, bound_common LD_SOD {ns['LD_SOD']!r}; "
           f"the evaluator B/n=24 gives 197.20097668224076)")

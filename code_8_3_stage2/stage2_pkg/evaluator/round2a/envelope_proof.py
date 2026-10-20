@@ -1,6 +1,7 @@
 """Round 2a, B2: certification of the envelope c(delta) <= a q(delta) + b for all real delta, with the fixed coefficients
 a = 2.76253, b = 0.094651 (spec reports_CN/plan_recheck_bounds_CN.md v4.2, §B2), hence for every input with
-sum_{k>=2} E[q] <= B - 1 <= 316:  S <= 1 + 316 a + 4999 b = 1347.119829 < 1348.
+sum_{k>=2} E[q] = E[N] - 1 <= B - 1, for the true budget B:  S <= 1 + a (B - 1) + 4999 b. Under the additional, uncertified premise
+B <= 317 (B = 316.892 is the evaluator's value, not certified) this gives S <= 1 + 316 a + 4999 b = 1347.119829 < 1348.
 
 Units. With sigma = Delta/20 (the scenario's definition), t := delta/sigma gives alpha = t - 20 and beta = t + 20 exactly, so the
 claim is a statement about the real variable t. Evenness: delta -> -delta maps (alpha, beta) -> (-beta, -alpha), which leaves
@@ -120,7 +121,7 @@ if __name__ == '__main__':
         print(f"XCHECK t = {t}: cfun c = {float(cev[0]+cno[0])!r}, Arb c = {fmt(ca)}, |difference| = {abs(float(cev[0]+cno[0])-float(ca.mid())):.2e}")
     passed = ok_i and ok_ii and ok_iii
     print(f"ENV total runtime {time.time()-t_start:.1f} s")
-    print(f"ENV VERDICT: {'PASS: c <= a q + b certified for all real delta; S <= 1347.119829 < 1348 (解析认证的上界)' if passed else '候选系数未通过认证'}")
+    print(f"ENV VERDICT: {'PASS: c <= a q + b certified for all real delta; hence for the true budget B, S <= 1 + a (B - 1) + 4999 b (解析认证的上界); under the additional, uncertified premise B <= 317 this gives S <= 1347.119829 < 1348' if passed else '候选系数未通过认证'}")
     json.dump(dict(a=str(A_Q), b=str(B_Q), S_bar=str(S_bar), segment_i=ok_i, segment_iii=ok_iii, segments_ii=seg, total_bisections=tot_bis,
                    uncertified=[(str(a), str(b), fmt(u)) for a, b, u in unc], worst=(str(worst[0]), str(worst[1]), fmt(worst[2])), passed=passed),
               open(os.path.join(RES, 'envelope_segments.json'), 'w'), indent=1, ensure_ascii=False)
