@@ -1,0 +1,19 @@
+=== mdp_policy_plots.py; policy at lambda* = 1.8335414994039494 (离散 MDP 对偶估算值, discrete model only); v_1 = -110 h
+SHAPE k=2: v* = 0 on delta/sigma intervals [(-18.625, -18.625), (18.625, 18.625)]
+SHAPE k=2: occupancy mass with 18 <= |delta|/sigma <= 19 (1-2 sigma inside the edges) 3.156338063813629e-41; with |delta|/sigma < 18: 1.0; with |delta|/sigma > 20: 4.5007579215653365e-54
+SHAPE k=2: mean |delta|/sigma 4.583334250597432; most likely delta/sigma 4.583333333333329
+SHAPE k=2: v*/sigma range -4.583333333333333 to 4.583333333333333; send probability under the occupancy 5.685510352152454e-28
+SHAPE k=1250: v* = 0 on delta/sigma intervals [(-18.625, -18.625), (18.625, 18.625)]
+SHAPE k=1250: occupancy mass with 18 <= |delta|/sigma <= 19 (1-2 sigma inside the edges) 0.7472352078084927; with |delta|/sigma < 18: 0.2527647921915062; with |delta|/sigma > 20: 1.2672864323685465e-89
+SHAPE k=1250: mean |delta|/sigma 16.113892902854985; most likely delta/sigma 18.625
+SHAPE k=1250: v*/sigma range -4.583333333333333 to 4.583333333333333; send probability under the occupancy 0.06319330471594187
+SHAPE k=2500: v* = 0 on delta/sigma intervals [(-18.625, -18.625), (18.625, 18.625)]
+SHAPE k=2500: occupancy mass with 18 <= |delta|/sigma <= 19 (1-2 sigma inside the edges) 0.7472352078084927; with |delta|/sigma < 18: 0.2527647921915062; with |delta|/sigma > 20: 1.2672864323685465e-89
+SHAPE k=2500: mean |delta|/sigma 16.113892902854985; most likely delta/sigma 18.625
+SHAPE k=2500: v*/sigma range -4.583333333333333 to 4.583333333333333; send probability under the occupancy 0.06319330471594187
+SHAPE k=4999: v* = 0 on delta/sigma intervals [(-18.917, -18.917), (18.917, 18.917)]
+SHAPE k=4999: occupancy mass with 18 <= |delta|/sigma <= 19 (1-2 sigma inside the edges) 0.7377945183918346; with |delta|/sigma < 18: 0.2622054816081651; with |delta|/sigma > 20: 2.3809319854610765e-90
+SHAPE k=4999: mean |delta|/sigma 16.02347658229129; most likely delta/sigma -18.791666666666664
+SHAPE k=4999: v*/sigma range -4.583333333333333 to 4.583333333333333; send probability under the occupancy 0.0837126784015264
+FIG fig_mdp_policy.png written
+FIG fig_mdp_occupancy.png written
