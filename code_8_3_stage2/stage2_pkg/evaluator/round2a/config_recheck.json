@@ -1,13 +1,17 @@
 {
  "spec": {
   "file": "reports_CN/plan_recheck_bounds_CN.md",
-  "version": "v4.1 (frozen)",
-  "commit": "aab99e6"
+  "version": "v4.2 (frozen; replaces v4.1 aab99e6)",
+  "commit": "6863d7c"
  },
- "predictions_commit": "2cfb3aa",
+ "predictions_commits": {
+  "first": "2cfb3aa (v4.1 text)",
+  "amendment": "pre-run spec correction to v4.2 (budget definition); see the note in predictions_recheck_bounds.md"
+ },
  "user_decisions_2026_10_20": [
   "seven candidates = stage-2 finalists without UNIF + U-L1657; UNIF is the reference row",
-  "U-L1657: (rec - MC)/se column 未定 (no R = 4000 paired se)"
+  "U-L1657: (rec - MC)/se column 未定 (no R = 4000 paired se)",
+  "budget relative to the uniform input, B := E[N](u_unif) (spec v4.2), not the absolute 316 of v4.1"
  ],
  "evaluator": {
   "file": "evaluator/evaluator_fast.py",
@@ -261,8 +265,16 @@
    "evaluator/logs/analysis.log:213: STAB N 12/24 mE 3.2160702993500045e-06 limit 0.002 pass"
   ]
  },
+ "budget_B": {
+  "value": 316.8921168493721,
+  "definition": "B := E[N](u_unif), evaluator_fast.py version B, n = 24, margin 8 Delta (the U row of this run; must equal this value bitwise)",
+  "sources": [
+   "evaluator/logs/run_all.log:1021: EV B/U/n=24/8Delta EN 316.8921168493721",
+   "evaluator/logs/speedup_regression.log:65: REG B/U/n=24/8Delta EN_Phat fast 316.8921168493721 ref 316.8921168493721"
+  ]
+ },
  "rules": {
-  "feasibility": "E[N] <= 316 - tau_N: 按数值判据可行; E[N] >= 316 + tau_N: 按数值判据不可行; otherwise 边界未定 (tau_N is a pre-frozen empirical grey zone, not an error bound)",
+  "feasibility": "budget rule 8.3.6(g) relative to the uniform input: E[N] <= B - tau_N: 按数值判据可行; E[N] >= B + tau_N: 按数值判据不可行; otherwise 边界未定; the uniform input qualifies by definition (按定义合格). tau_N is a pre-frozen empirical grey zone, not an error bound",
   "lambda0": "candidates with a floor lambda0: m_E >= lambda0 + tau_E: 按数值判据满足; m_E <= lambda0 - tau_E: 按数值判据不满足; otherwise 未定; no floor: not applicable",
   "mc_comparison": "(rec - MC)/se with the paired Delta m_D se of the R = 4000 verification batch; no threshold, numbers only"
  }
