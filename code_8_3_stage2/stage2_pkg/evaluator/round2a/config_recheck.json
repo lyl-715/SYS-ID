@@ -1,0 +1,269 @@
+{
+ "spec": {
+  "file": "reports_CN/plan_recheck_bounds_CN.md",
+  "version": "v4.1 (frozen)",
+  "commit": "aab99e6"
+ },
+ "predictions_commit": "2cfb3aa",
+ "user_decisions_2026_10_20": [
+  "seven candidates = stage-2 finalists without UNIF + U-L1657; UNIF is the reference row",
+  "U-L1657: (rec - MC)/se column 未定 (no R = 4000 paired se)"
+ ],
+ "evaluator": {
+  "file": "evaluator/evaluator_fast.py",
+  "version": "B",
+  "n": 24,
+  "margin": "8 Delta",
+  "reference": "UNIF, same evaluator"
+ },
+ "candidates": [
+  {
+   "id": "NM-none-P5514",
+   "floor_lambda0": null,
+   "a": [
+    0.5023487014960141,
+    0.500932888579383,
+    0.5015874665268123,
+    0.49509800713393903
+   ],
+   "chi": [
+    5.1395250078490875,
+    5.337759812830718,
+    1.0969395125410395,
+    4.207133021554178
+   ],
+   "p": [
+    0.25235421789473145,
+    0.2509337588604845,
+    0.25158998657678605,
+    0.24512203666799795
+   ],
+   "source_params": "code_8_3_stage2/stage2_pkg/stage2/final_batch1.json records[0]",
+   "mc": {
+    "dmD": 0.6969740365578332,
+    "paired_se": 0.0035073490518011388,
+    "batch": "stage-2 batch 1, R = 4000 (10 x 400), seed 20261013",
+    "source_log": "stage2/stage2_final.log:16 (Table 13): NM-none-P5514     316.466  -0.414 +- 0.046 ok     +0.697 (0.004)  +3.744  0.0450 (0.0000)  0.067"
+   }
+  },
+  {
+   "id": "NM-0.3-P4312",
+   "floor_lambda0": 0.3,
+   "a": [
+    0.46007506000058696,
+    0.5120359056233351,
+    0.5103540734313475,
+    0.5154501821223639
+   ],
+   "chi": [
+    4.017993837824952,
+    3.487486565315144,
+    1.3910033868060543,
+    1.7431213370899603
+   ],
+   "p": [
+    0.21166906083454368,
+    0.26218076864750894,
+    0.2604612802679693,
+    0.26568889024997816
+   ],
+   "source_params": "code_8_3_stage2/stage2_pkg/stage2/final_batch1.json records[1]",
+   "mc": {
+    "dmD": 0.42752273061796586,
+    "paired_se": 0.0061423136832068105,
+    "batch": "stage-2 batch 1, R = 4000 (10 x 400), seed 20261013",
+    "source_log": "stage2/stage2_final.log:17 (Table 13): NM-0.3-P4312      316.579  -0.302 +- 0.049 ok     +0.428 (0.006)  +3.474  0.4203 (0.0003)  0.666"
+   }
+  },
+  {
+   "id": "AB-0.5",
+   "floor_lambda0": 0.5,
+   "a": [
+    0.4571755230728393,
+    0.5149758143076949,
+    0.5040028808616243,
+    0.5213171279215614
+   ],
+   "chi": [
+    4.069254839118564,
+    3.519606746313345,
+    1.4595786339079106,
+    1.58297235485432
+   ],
+   "p": [
+    0.20900945889692424,
+    0.26520008932187344,
+    0.25401890391681664,
+    0.27177154786438557
+   ],
+   "source_params": "code_8_3_stage2/stage2_pkg/stage2/final_batch1.json records[2]",
+   "mc": {
+    "dmD": 0.3972077829848786,
+    "paired_se": 0.0044935973582165304,
+    "batch": "stage-2 batch 1, R = 4000 (10 x 400), seed 20261013",
+    "source_log": "stage2/stage2_final.log:18 (Table 13): AB-0.5            316.513  -0.368 +- 0.050 ok     +0.397 (0.004)  +3.444  0.5313 (0.0002)  0.821"
+   }
+  },
+  {
+   "id": "NM-0.7-UNIF",
+   "floor_lambda0": 0.7,
+   "a": [
+    0.49635503265603564,
+    0.5142833051814591,
+    0.49300241117342725,
+    0.4960776009313934
+   ],
+   "chi": [
+    0.2840967233992313,
+    6.220235244635489,
+    0.000510103896636268,
+    6.282413381394645
+   ],
+   "p": [
+    0.24636831844297422,
+    0.26448731798836583,
+    0.24305137742281302,
+    0.24609298614584682
+   ],
+   "source_params": "code_8_3_stage2/stage2_pkg/stage2/final_batch1.json records[3]",
+   "mc": {
+    "dmD": 0.022543104111946377,
+    "paired_se": 0.005087388618301073,
+    "batch": "stage-2 batch 1, R = 4000 (10 x 400), seed 20261013",
+    "source_log": "stage2/stage2_final.log:19 (Table 13): NM-0.7-UNIF       316.563  -0.317 +- 0.048 ok     +0.023 (0.005)  +3.069  0.7011 (0.0010)  0.768"
+   }
+  },
+  {
+   "id": "NM-none-P5450",
+   "floor_lambda0": null,
+   "a": [
+    0.5018890677551365,
+    0.4902520707555867,
+    0.49989028814306696,
+    0.5078089902788062
+   ],
+   "chi": [
+    5.2722120473460965,
+    4.471194969784627,
+    5.216135588771384,
+    0.045152989211844796
+   ],
+   "p": [
+    0.25189263633212,
+    0.24034709288014078,
+    0.24989030017975852,
+    0.2578699706079807
+   ],
+   "source_params": "code_8_3_stage2/stage2_pkg/stage2/final_batch1.json records[5]",
+   "mc": {
+    "dmD": 0.6503194033723503,
+    "paired_se": 0.0047124506427351325,
+    "batch": "stage-2 batch 1, R = 4000 (10 x 400), seed 20261013",
+    "source_log": "stage2/stage2_final.log:21 (Table 13): NM-none-P5450     315.921  -0.960 +- 0.045 ok     +0.650 (0.005)  +3.697  0.1206 (0.0001)  0.192"
+   }
+  },
+  {
+   "id": "P5014",
+   "floor_lambda0": null,
+   "a": [
+    0.5,
+    0.5,
+    0.5,
+    0.5
+   ],
+   "chi": [
+    5.235987755982989,
+    0.0,
+    1.0471975511965976,
+    4.1887902047863905
+   ],
+   "p": [
+    0.25,
+    0.25,
+    0.25,
+    0.25
+   ],
+   "source_params": "code_8_3_stage2/stage2_pkg/stage2/final_batch1.json records[6]",
+   "mc": {
+    "dmD": 0.5655080356093549,
+    "paired_se": 0.004433784095166795,
+    "batch": "stage-2 batch 1, R = 4000 (10 x 400), seed 20261013",
+    "source_log": "stage2/stage2_final.log:22 (Table 13): P5014             313.389  -3.491 +- 0.043 ok     +0.566 (0.004)  +3.612  0.0450 (0.0000)  0.067"
+   }
+  },
+  {
+   "id": "U-L1657",
+   "floor_lambda0": null,
+   "a": [
+    0.6589278717330475,
+    0.4270232136184812,
+    0.42915920507660504,
+    0.4464164105208477
+   ],
+   "chi": [
+    0.5343112761025717,
+    5.733405535074931,
+    4.943465831064352,
+    4.116768656900249
+   ],
+   "p": [
+    0.4341859401466434,
+    0.18234882496905505,
+    0.18417762330198353,
+    0.199287611582318
+   ],
+   "source_params": "code_8_3_stage2/stage2_pkg/stage3/unconstrained.json records[0]",
+   "mc": {
+    "dmD": 2.1013023604732837,
+    "paired_se": null,
+    "batch": "none at R = 4000; R = 2000 (seed 20261012) value for reference only",
+    "r2000_paired_se": 0.011434709056649577,
+    "z": "未定 (no R = 4000 verification batch; user decision 2026-10-20)",
+    "source_log": "stage3/stage3_unconstrained.log:31 (best evaluated point, not an optimum); :33: R=2000, seed 20261012: B = 423.96, D = +107.06 +- 0.06 (over), dmD_C = +2.101 (paired batch se 0.011), mE_C = 0.1796 (se 0.0003), dmD_B = +5.157"
+   }
+  }
+ ],
+ "reference": {
+  "id": "UNIF",
+  "a": [
+   0.5,
+   0.5,
+   0.5,
+   0.5
+  ],
+  "chi": [
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "source": "spec §A4; mc83.py:5"
+ },
+ "tau_N": {
+  "value": 0.04,
+  "raw": 0.03784042173265334,
+  "rule": "10 x max over U, D, E, N of |E[N](12) - E[N](24)| (version B), rounded up to one significant figure",
+  "sources": [
+   "evaluator/logs/analysis.log:197: STAB U 12/24 EN 0.003016711365262381 limit 0.02 pass",
+   "evaluator/logs/analysis.log:202: STAB D 12/24 EN 0.003784042173265334 limit 0.02 pass",
+   "evaluator/logs/analysis.log:207: STAB E 12/24 EN 0.0026496006989304988 limit 0.02 pass",
+   "evaluator/logs/analysis.log:212: STAB N 12/24 EN 0.003139204101842097 limit 0.02 pass"
+  ]
+ },
+ "tau_E": {
+  "value": 0.0003,
+  "raw": 0.0002966970396300894,
+  "rule": "10 x max over U, D, E, N of |m_E(12) - m_E(24)| (version B), rounded up to one significant figure",
+  "sources": [
+   "evaluator/logs/analysis.log:198: STAB U 12/24 mE 0.0 limit 0.002 pass (identity for U: Delta m_D = 0, m_E = 1 at every grid)",
+   "evaluator/logs/analysis.log:203: STAB D 12/24 mE 6.119301158152846e-07 limit 0.002 pass",
+   "evaluator/logs/analysis.log:208: STAB E 12/24 mE 2.9669703963008942e-05 limit 0.002 pass",
+   "evaluator/logs/analysis.log:213: STAB N 12/24 mE 3.2160702993500045e-06 limit 0.002 pass"
+  ]
+ },
+ "rules": {
+  "feasibility": "E[N] <= 316 - tau_N: 按数值判据可行; E[N] >= 316 + tau_N: 按数值判据不可行; otherwise 边界未定 (tau_N is a pre-frozen empirical grey zone, not an error bound)",
+  "lambda0": "candidates with a floor lambda0: m_E >= lambda0 + tau_E: 按数值判据满足; m_E <= lambda0 - tau_E: 按数值判据不满足; otherwise 未定; no floor: not applicable",
+  "mc_comparison": "(rec - MC)/se with the paired Delta m_D se of the R = 4000 verification batch; no threshold, numbers only"
+ }
+}
