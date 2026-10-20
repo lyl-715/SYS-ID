@@ -133,3 +133,31 @@ Run the regression (from evaluator/; numpy, scipy, numba):
 The regression compares against the accepted stored outputs results/rec_B_*_m8.json, J_B_*.npy, w_B_*.npy with the tolerances
 in config_fast.json (relative 1e-12 for E[N], S, log det; |Delta| <= 1e-12 (|ref| + max|J_ref|) for J; |Delta| <= 1e-12 (|w_ref| + 1)
 for w_k; own mass drift <= 1e-10; tail check with 1e-11) and requires 0 assertion failures.
+
+## Round 2a: recheck of the seven candidates, analytic S bound, discrete MDP estimate (added 2026-10-20; run from evaluator/round2a/; spec `reports_CN/plan_recheck_bounds_CN.md` v4.2)
+| file | what it does |
+|---|---|
+| predictions_recheck_bounds.md | R1-R6, B1-B6 of the spec verbatim, committed before any run (v4.2 budget correction noted as a pre-run amendment) |
+| make_config_recheck.py -> config_recheck.json | A0: the seven candidates (stage-2 finalists without UNIF + U-L1657), MC values with R = 4000 paired se, tau_N = 0.04, tau_E = 3e-4, budget B = E[N](u_unif) = 316.892 |
+| recheck7.py -> recheck7_table.md | A1-A2: the seven + U with evaluator_fast.py (B, n = 24), unchanged; feasibility by the numerical criterion (B +- tau_N), lambda0 verdicts, (rec - MC)/se |
+| envelope_proof.py | B2: c <= a q + b on all of R for a = 2.76253, b = 0.094651 (three segments; Arb ball arithmetic on the middle one), hence S <= 1347.119829 < 1348 |
+| mdp_estimate.py, mdp_policy_plots.py | B3/B4: discrete closed-loop MDP (an estimate, not a bound): consistency check, golden section in lambda, policy forward run, figures |
+| b5_conversion.py | B5: route-1 certificate finding (not floating-point conservative), U^upper at the S bound, the B5 case, relative-gain estimates |
+| report_recheck_bounds_CN.md | report; every number traceable to round2a/logs/*.log |
+Needs numpy, scipy, numba and python-flint (Arb). The route-1 solver (bound/), mc83.cfun and evaluator_fast.py are used unchanged.
+
+The three error sources of the discrete MDP, exactly as the spec lists them (§B3, spec lines 115–117):
+
+- 状态：$\delta\in[-\Delta-40\sigma,\ \Delta+40\sigma]$，步长 $h=\sigma/24$；两端之外的状态映射到端点（这是近似，记为误差来源之一）。
+- 动作：$v\in\{-Lh,\dots,Lh\}$，$L=110$。$110h=4.5833\sigma>v_{\max}=4.5704\sigma$，所以动作网格既遗漏了区间内部的连续动作，又略微扩大了端点范围；相对于原连续动作优化，数值误差方向不定（误差来源之二）。保留 $L=110$ 做探索估算，不调整。
+- 转移：以概率 $P(\delta_i)$ 到 $\delta_i-v$；以概率 $q(\delta_i)$ 到 $e-v$，$e$ 的条件分布离散到网格并归一化（误差来源之三）。
+
+Implementation note: the send-branch sums (the spec's "total minus window") are computed as left prefix plus right suffix sums,
+the same quantity without cancellation (near delta = 0 the masked Gaussian mass is about 1e-88 and total minus window is 0 in
+float64); P_i := 1 - q_i with q_i = Phi(alpha_i) + Phi(-beta_i); ties in max_v go to the smallest |v|.
+
+Reproduce (from evaluator/round2a/; about 12 minutes, mostly the MDP):
+
+    python3 make_config_recheck.py && python3 recheck7.py && python3 envelope_proof.py
+    nohup python3 mdp_estimate.py > logs/mdp.stdout 2>&1 &     # B4 check first; stops without an estimate if it fails
+    python3 mdp_policy_plots.py && python3 b5_conversion.py      # after mdp_estimate.py has finished
