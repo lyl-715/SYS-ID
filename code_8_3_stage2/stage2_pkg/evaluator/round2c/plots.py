@@ -36,7 +36,7 @@ def fig_gamma():
 
 def fig_dual():
     s = json.load(open(os.path.join(RES, 'part_c2.json'))); sv = s['value']
-    fig, axs = plt.subplots(1, 2, figsize=(12, 4.2), constrained_layout=True, sharey=True); fig.patch.set_facecolor(SURF)
+    fig, axs = plt.subplots(1, 2, figsize=(12, 4.2), constrained_layout=True); fig.patch.set_facecolor(SURF)
     for ax, mod, ttl in zip(axs, ('2d', '1d'), ('2-D model, acceleration constraint', '1-D model, no acceleration constraint')):
         lo_all = []
         for i in (1, 2):
@@ -46,15 +46,15 @@ def fig_dual():
             ax.plot(x, y, color=COL[i], lw=1.5, marker='o', ms=4, mec=SURF, mew=1.0, label=LAB[i])
             ax.plot([r['lam_star_over_gamma_bar']], [r['D_min_minus_LDJC']], marker='o', ms=9, mfc='none', mec=COL[i], mew=1.5)
             ax.annotate(f"min {r['D_min_minus_LDJC']:.3f} at λ*/γ_bar = {r['lam_star_over_gamma_bar']:.3f}", (r['lam_star_over_gamma_bar'], r['D_min_minus_LDJC']),
-                        xytext=(10, -14 if i == 1 else 10), textcoords='offset points', fontsize=8, color=INK2)
+                        xytext=(28, -4 if i == 1 else 6), textcoords='offset points', fontsize=8, color=INK2,
+                        arrowprops=dict(arrowstyle='-', color=MUTED, lw=0.6))
         ax.axhline(sv, color=INK2, lw=1.0, ls='--')
-        ax.annotate(f'S route: U(619.129) − 197.197 = {sv:.3f}', (0.3, sv), xytext=(0, 4), textcoords='offset points', fontsize=8, color=INK2)
-        ax.set_xlim(0, 20); ax.set_title(ttl, fontsize=10, color=INK, loc='left'); style(ax)
-        ax.set_xlabel('λ / γ_bar  (evaluated points of the golden section; λ ∈ [0, 20 γ_bar])', fontsize=9, color=INK2)
-    ymin = min(min(json.load(open(os.path.join(RES, f'outer_{m}_A{i}.json')))['D_min_minus_LDJC'] for i in (1, 2)) for m in ('2d', '1d'))
-    axs[0].set_ylim(ymin-0.5, max(sv, ymin)+6.0); axs[0].set_ylabel('D(A, λ) − 197.197  (nat)', fontsize=9, color=INK2)
+        ax.annotate(f'S route: U(619.129) − 197.197 = {sv:.3f}', (4.9, sv), xytext=(0, 4), textcoords='offset points', fontsize=8, color=INK2, ha='right')
+        ax.set_xlim(0, 5); ax.set_ylim(min(sv, min(lo_all))-0.6, max(lo_all)+6.0); ax.set_title(ttl, fontsize=10, color=INK, loc='left'); style(ax)
+        ax.set_ylabel('D(A, λ) − 197.197  (nat)', fontsize=9, color=INK2)
+        ax.set_xlabel('λ / γ_bar  (evaluated points of the golden section; searched λ ∈ [0, 20 γ_bar], shown up to 5 γ_bar)', fontsize=9, color=INK2)
     axs[0].legend(fontsize=8, frameon=False, loc='upper right')
-    fig.suptitle('Direct route: D(A, λ) − log det J_C on the discrete model (估算; points above the frame are clipped)',
+    fig.suptitle('Direct route: D(A, λ) − log det J_C on the discrete model (estimate on the discrete model; points above each frame are clipped; separate y scales)',
                  fontsize=10, color=INK, x=0.01, ha='left')
     fig.savefig(os.path.join(HERE, 'fig_dual_lambda.png'), dpi=130, facecolor=SURF); plt.close(fig)
 

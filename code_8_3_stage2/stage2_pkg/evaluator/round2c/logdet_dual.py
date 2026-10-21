@@ -22,7 +22,7 @@ DP step k = 2..K uses gamma[k-1].
 Stages (python3 logdet_dual.py <stage>, from this directory; each appends to its own log in logs/):
   construct                                    Part A: A1 regressors and T(u), A2 weights, A3 M, A_i, gamma -> logs/part_a.log
   outer --A {1,2} --model {2d,1d} [--threads]  Part C1 for one case (refuses to run unless results/checks.json says all passed)
-                                               -> logs/part_c1.log, logs/gold_<model>_A<i>.jsonl (per-lambda archive), results/
+                                               -> logs/part_c1_<model>_A<i>.log, logs/gold_<model>_A<i>.jsonl (per-lambda archive)
   sroute                                       Part C2: U(619.1292140245644; u_unif), route-1 solver, cap 1 -> logs/part_c2.log
   table                                        Part C3 from results/ -> logs/part_c3.log, results/part_c3.json"""
 import os, sys, json, time, argparse
@@ -322,7 +322,7 @@ if __name__ == '__main__':
     ap.add_argument('--A', type=int, choices=[1, 2]); ap.add_argument('--model', choices=['2d', '1d']); ap.add_argument('--threads', type=int, default=None)
     args = ap.parse_args()
     if args.threads: set_num_threads(args.threads)
-    logname = {'construct': 'part_a.log', 'outer': 'part_c1.log', 'sroute': 'part_c2.log', 'table': 'part_c3.log'}[args.stage]
+    logname = {'construct': 'part_a.log', 'outer': f'part_c1_{args.model}_A{args.A}.log', 'sroute': 'part_c2.log', 'table': 'part_c3.log'}[args.stage]
     sys.stdout = dr.Tee(os.path.join(LOGS, logname), 'a')
     def log(m): print(m, flush=True)
     T0 = time.time()

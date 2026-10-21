@@ -1,0 +1,8 @@
+
+=== logdet_dual.py sroute started 2026-10-21 10:11:01 (round 2c; 估算 on the discrete model); numba threads 4; load 1.61/1.99/1.81
+C2 route-1 solver: round2a/b5_conversion.solve = bound/bound_common.exchange(H_u, W, cap = 1, tol = 1e-10, batch = 256) + certificate_full (unchanged); H_u equals mc83 H (h_U of Part A) bitwise: True; bound_common LD_SOD = 197.19655785394153 (log det J_C, rounded 197.197 in the spec)
+C2 U at W = 1210.9563921988488 (reproduction of round2a/logs/b5_conversion.log line 6 (W = S~_dual of round 2a, U_cp 206.97779417261597)): F(xi~) = 206.9777941725253; certificate value U_cp (cutting plane) = 206.97779417261597; solver gap 9.066347672614938e-11; duality value U_dual 206.97779417261597; 1185 sweeps, 0.8 s
+C2 U at W = 619.1292140245644 (S-route value at S~_acc of round 2b): F(xi~) = 200.97260053847089; certificate value U_cp (cutting plane) = 200.97260053855936; solver gap 8.846434695897187e-11; duality value U_dual 200.97260053855936; 48660 sweeps, 31.9 s
+C2 reproduction difference U_cp(1210.9563921988488) - 206.97779417261597 = 0.0
+C2 估算 S-route value U(619.1292140245644; u_unif) - 197.197 = 200.97260053855936 - 197.197 = 3.7756005385593596 nat (certificate value U_cp, cap 1; solver gap 8.846434695897187e-11; an estimate on the discrete model: S~_acc is a discrete-model estimate)
+=== logdet_dual.py sroute finished 2026-10-21 10:11:41; wall 39.3 s

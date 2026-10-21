@@ -53,3 +53,44 @@ estimate on the discrete model (估算).
 - DECISION B-6 (Part B run twice). The first run (logs/part_b.log, first block) printed four B4 numbers as
   `np.float64(...)`; the cast was fixed and Part B re-run unchanged otherwise. Both blocks stay in the log; the numbers
   are identical; results/checks.json is from the second run.
+
+## Part C (estimates)
+
+- DECISION C-1 (the constant B − 1). 315.892 exactly as the task and spec write it (`grid30.LAM_BUDGET`, as rounds 2a/2b,
+  round2b DECISION A-1), not (B_full − 1) = 315.8921168…; the difference is 1.17e-4·λ, below 1e-4 nat for λ ≤ 0.44.
+- DECISION C-2 (outer loop). Round 2b's golden section (`grid30.golden`, same arithmetic) on [0, 20 γ̄_i] with γ̄_i the
+  mean of the γ^(i) in use (20 γ̄_1 = 0.38565362149452176, 20 γ̄_2 = 0.4317792308978602), stopped when the bracket width
+  ≤ ε_λ = 4e-6; λ* = the evaluated λ with the smallest D; no refinement (spec §2). Each Ṽ is archived per λ in
+  `logs/gold_<model>_A<i>.jsonl` (key repr(λ)) and in `results/outer_<model>_A<i>.json`. The constant of D is
+  −log det A_i − 9 + γ_1^(i) = log det M_i (Cholesky, Part A) − 9 + γ^(i)[0].
+- DECISION C-3 (scheduling). The two 2-D outer loops ran one after the other with 4 numba threads; then the two 1-D
+  loops ran concurrently, one process each (the 1-D kernels are single-threaded). Every per-λ time carries the thread
+  count and the load average.
+- DECISION C-4 (log files). One log per case, `logs/part_c1_<model>_A<i>.log`. The first launch wrote to
+  `logs/part_c1.log`; to keep the concurrent 1-D runs from interleaving in one file, that file was renamed to
+  `logs/part_c1_2d_A1.log` while the 2-D A₁ run continued (same process, not restarted; its open handle kept writing
+  there) and the file name was made per case for the later runs. No completed λ evaluation was recomputed (see C-7).
+- DECISION C-5 (reading of L7). "二维外层总耗时" is read per outer loop (spec §2 sizes one loop: ~25 evaluations × ~1 min),
+  as the sum of the per-λ DP times of that loop; L7 is judged for each A, and the sum over both A is reported as well.
+- DECISION C-6 (S-route value). U(619.1292140245644; u_unif) = the route-1 certificate value U_cp of
+  `round2a/b5_conversion.solve` (exchange with cap 1, tol 1e-10, batch 256, then certificate_full), at the full-precision
+  S̃_acc of round 2b; its solver gap is logged. The solver is first re-run at W = 1210.9563921988488 and compared with
+  `round2a/logs/b5_conversion.log` line 6 (reproduction check, no pass line).
+- DECISION C-7 (interruption of the 2-D A₂ loop; restart from the λ cache). The 2-D A₂ loop was started at 09:34:38 by a
+  waiting shell script launched with plain `nohup … &`. At about 09:40 the process died together with that shell when
+  a foreground tool call of the session was interrupted (no Traceback; last log line 09:39, the 13th evaluation). The 13
+  completed evaluations were intact in `logs/gold_2d_A2.jsonl` (all lines parse). The loop was restarted at 09:46:46
+  with `setsid nohup sh run_c_rest.sh` (own session, survives the session's tool calls), which then runs the two 1-D
+  loops, C2 and C3. The golden section is deterministic, so the restart replayed exactly the 13 archived λ in the
+  original order (`logs/part_c1_2d_A2.log`, second block, lines marked "cached from logs/gold_2d_A2.jsonl"):
+  0.1649249905666938, 0.2668542403311664, 0.10192924976447254, 0.06299574080222124, 0.038933508962251284,
+  0.024062231839969944, 0.01487127712228134, 0.029742554244562687, 0.02055159952687409, 0.01838190943537719,
+  0.021892541748473045, 0.022721289618370992, 0.021380347396772036; the 14th λ, interrupted before it was archived, and
+  all later λ were computed after the restart. The first block of that log (09:34:38–09:39) stays as written. L7 uses
+  the sum of the per-λ DP times recorded in the cache (each λ once), not the wall clock, which includes the gap.
+- DECISION C-8 (reading of L4). L4 names no model; L2 and L3 are about the 2-D model and L5 is the only prediction
+  stated for the 1-D model, so L4 is judged on the 2-D model (A₂ − A₁ = 0.875 nat). The 1-D difference (2.201 nat) is
+  reported next to it and lies outside 0.2–1.0.
+- DECISION C-9 (figures). `fig_gamma.png` (γ_k of both A over t_k) and `fig_dual_lambda.png` (D − 197.197 at the
+  evaluated λ of each golden section, one panel per model, own y scale, x shown up to 5 γ̄ of the searched 20 γ̄, the
+  S-route value as a dashed line) are drawn by `plots.py` from `results/`; no reported number is read off a figure.
