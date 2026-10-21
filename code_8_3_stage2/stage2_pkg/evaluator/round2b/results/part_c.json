@@ -33,6 +33,7 @@
  ],
  "branch": "10% <= rho <= 35%: 未定",
  "policy_regenerated": false,
+ "policy_regenerated_note": "policy_regenerated = false refers to the second invocation of part_c.py (logs/part_c.log:50-83; line 80: the stored policy's lambda already equals the final lambda* 0.9381038031641779, changed: False), which wrote this file; no further regeneration was needed. It does not refer to the contract's regeneration step (spec §5): that step was done by the first invocation (logs/part_c.log:32-47: lambda* changed 0.9394259423912158 -> 0.9381038031641779, changed: True; memmap, forward S and E[N], T3 statistics, plots and packed copy regenerated). Note added after review (record fix, no new run).",
  "policy": {
   "lam": 0.9381038031641779,
   "S": 1163.7802035753966,
