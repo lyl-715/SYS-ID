@@ -83,6 +83,23 @@ produced is an estimate on the discrete model (估算).
 - DECISION C-7 (final point). (Ã*, λ*) = the evaluated point with the smallest D (D_best), not the last centre; n* and
   w* are that point's own policy's forward values.
 
+- DECISION C-8 (run record). One uninterrupted run, 11:14:02–11:47:50 (`logs/outer.log`); the resume path was not used
+  in the real run (it was tested in development on a synthetic convex oracle: a run killed at its 5th oracle call and
+  resumed gave cuts bit-identical to an uninterrupted run). All 29 master solves returned SCS 'optimal'; Clarabel was
+  never needed (`logs/final.log:22`).
+- DECISION C-9 (final stage run twice). `final` ran at 11:48:08 and again at 11:49:13 after one diagnostic line was added
+  (cut offsets a_i, `logs/final.log:24`); the stage only reads the checkpoint, and every other line of the two blocks is
+  identical. The report cites the second block (lines 15–27). `plot` also ran twice (11:48:10, 11:48:39): the second run
+  only changed the figure (title without CJK glyphs the font lacks, off-scale value printed, linear λ axis,
+  readable r ticks); no number is read off the figure.
+- DECISION C-10 (diagnostics not in the spec). `logs/final.log` also has (i) log det M(w*) of the best point's own policy,
+  (ii) the best mixture of the evaluated policies with Σθ_i n_i ≤ B − 1 (randomised closed-loop policies, spec §1.3;
+  Clarabel), (iii) max |a_i| of the cut offsets. They are labelled "not a spec item" and used in the report only to read
+  M6 and the gap; none enters a prediction verdict. Reading: Ṽ is positively homogeneous in (Ã, λ), so a_i = 0 up to
+  rounding and the master problem without the trust region is the Lagrange dual of "max log det M over mixtures of the
+  evaluated policies" with a 0.5·max(0, n − (B − 1)) term from λ ≤ 0.5; this is why m_global and the mixture value agree
+  to 9e-10.
+
 ## Part D and report
 
 - DECISION D-1 (the +0.701 row). The real evaluated optimum is NM-none-P5514's Δm_D = 0.7012655152921639
@@ -90,3 +107,10 @@ produced is an estimate on the discrete model (估算).
   197.20097668224076, not to 197.197; on the −197.197 scale of the other rows it is 197.90224219753293 − 197.197 =
   0.70524 (logged next to it; the 0.0044 offset is round 2c DECISION A-5). The row is shown as the task gives it (+0.701),
   with the offset stated.
+- DECISION D-2 (reading of M6). M6 says "最优点处策略前向的 n" (the forward n of the policy at the optimal point). Taken
+  literally: n* of the single DP policy at the best evaluated point (iteration 14), the quantity C5 asks for. The mixture
+  of evaluated policies that attains m_global has n = B − 1 (diagnostic, DECISION C-10); it is reported next to the
+  verdict but does not change it.
+- DECISION D-3 (reading of M7). "总耗时" is read as the outer loop of Part C (spec §2 sizes it: ~35 s per iteration,
+  300 iterations ~3 h), measured as the sum of the per-iteration times (`logs/final.log:22`, = the run's wall clock,
+  `logs/outer.log:21`). The checks of Part B (343.5 s) are reported next to it; the verdict is the same with them.

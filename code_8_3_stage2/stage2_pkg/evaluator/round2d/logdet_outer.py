@@ -325,6 +325,10 @@ def stage_final(log):
     log(f"C runtime: sum over iterations {ttot:.1f} s ({ttot/3600:.3f} h; oracle {tor:.1f} s, master problems {tma:.1f} s); accepted steps "
         f"{int(acc.sum())}, rejected {int((1-acc).sum())}; master solves by solver and status {cnt}")
     log(f"C oracle diagnostics: largest forward/backward relative difference {float(Ca['fwd_rel'].max())!r}; policy mismatches total {int(Ca['bad'].sum())}")
+    a = cut_offsets(Ca)
+    log(f"C diagnostic (not a spec item): cut offsets a_i = V~_i - <M~_i, A~_i> + lambda_i n_i: max |a_i| = {float(np.abs(a).max())!r} (V~ is "
+        f"positively homogeneous in (A~, lambda), so every cut passes through the origin up to rounding; then the master problem without the "
+        f"trust region is the Lagrange dual of the mixture problem below with an extra 0.5 max(0, n_mix - (B - 1)) term from lambda <= 0.5)")
     pv, th, nmix, pst = primal_mixture(Ca)
     supp = [(int(i), float(th[i])) for i in np.argsort(-th)[:5] if th[i] > 1e-6]
     Mfull = C1+Ca['Mt2'][b]; ldw = LDM0+logdet_pd(0.5*(Mfull+Mfull.T))[1]; trw = float(np.sum(X*Mfull))
@@ -381,18 +385,23 @@ def stage_plot(log):
     ax.scatter(j[ins & (acc > 0)], D[ins & (acc > 0)], s=22, color=BLUE, edgecolor=SURF, linewidth=1.2, zorder=3, label='D_j, accepted step / start')
     ax.scatter(j[ins & (acc == 0)], D[ins & (acc == 0)], s=22, facecolor=SURF, edgecolor=BLUE, linewidth=1.2, zorder=3, label='D_j, rejected step')
     up = D > hi_
-    if up.any(): ax.scatter(j[up], np.full(up.sum(), hi_), marker='^', s=22, color=MUTED, clip_on=False, zorder=3, label=f'D_j above {hi_:.1f} (off scale)')
+    if up.any():
+        ax.scatter(j[up], np.full(up.sum(), hi_), marker='^', s=22, color=MUTED, clip_on=False, zorder=3, label=f'D_j above {hi_:.1f} (off scale)')
+        for jj in j[up]: ax.annotate(f'{D[jj]:.2f}', (jj, hi_), xytext=(6, -4), textcoords='offset points', fontsize=8, color=INK2)
     lw_ = D < lo_
     if lw_.any(): ax.scatter(j[lw_], np.full(lw_.sum(), lo_), marker='v', s=22, color=MUTED, clip_on=False, zorder=3)
     ax.annotate(f'{Db[-1]:.3f}', (j[-1], Db[-1]), xytext=(6, -2), textcoords='offset points', fontsize=8, color=INK2)
     ax.annotate(f'{mg[-1]:.3f}', (j[-1], mg[-1]), xytext=(6, -8), textcoords='offset points', fontsize=8, color=INK2)
     ax.set_ylabel('nat (value − 197.197)', fontsize=9, color=INK2); style(ax); ax.legend(fontsize=8, frameon=False, loc='upper right', ncol=2)
-    ax.set_title('Round 2d: cutting-plane outer loop over (Ã, λ) — 估算 on the discrete 2-D model', fontsize=10, color=INK, loc='left')
+    ax.set_title('Round 2d: cutting-plane outer loop over (Ã, λ) — estimates on the discrete 2-D model, not bounds', fontsize=10, color=INK, loc='left')
     ax = axs[1]; ax.semilogy(j, np.maximum(gap, 1e-6), color=BLUE, lw=2); ax.axhline(GAP_STOP, color=MUTED, lw=1.0, ls=(0, (4, 3)))
     ax.annotate(f'stop at {GAP_STOP}', (0, GAP_STOP), xytext=(2, 3), textcoords='offset points', fontsize=8, color=INK2)
     ax.set_ylabel('gap D_best − m_global', fontsize=9, color=INK2); style(ax)
-    ax = axs[2]; ax.semilogy(j, r, color=BLUE, lw=2, drawstyle='steps-post'); ax.set_ylabel('trust radius r', fontsize=9, color=INK2); style(ax)
-    ax = axs[3]; ax.plot(j, lam, color=BLUE, lw=0, marker='o', ms=3.5); ax.set_yscale('symlog', linthresh=0.1)
+    ax = axs[2]; ax.semilogy(j, r, color=BLUE, lw=2, drawstyle='steps-post'); ax.set_ylabel('trust radius r\n(after update)', fontsize=9, color=INK2); style(ax)
+    from matplotlib.ticker import FixedLocator, NullLocator, FixedFormatter
+    tk = [v for v in (0.001, 0.003, 0.01, 0.03, 0.1, 0.3, 1, 2) if r.min()/1.5 <= v <= r.max()*1.5]
+    ax.yaxis.set_major_locator(FixedLocator(tk)); ax.yaxis.set_major_formatter(FixedFormatter([f'{v:g}' for v in tk])); ax.yaxis.set_minor_locator(NullLocator())
+    ax = axs[3]; ax.plot(j, lam, color=BLUE, lw=0, marker='o', ms=4.5); ax.set_ylim(-0.05, max(1.15, float(lam.max())*1.05))
     ax.axhline(1.0, color=MUTED, lw=1.0, ls=(0, (4, 3))); ax.set_ylabel('λ_j / λ*_2c', fontsize=9, color=INK2); style(ax)
     ax.set_xlabel('iteration j (oracle call)', fontsize=9, color=INK2)
     fig.savefig(os.path.join(HERE, 'fig_convergence.png'), dpi=130, facecolor=SURF); plt.close(fig)

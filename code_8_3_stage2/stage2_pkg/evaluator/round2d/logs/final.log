@@ -1,0 +1,27 @@
+
+=== logdet_outer.py final started 2026-10-21 11:48:08 (round 2d; 估算 on the discrete model); numba threads 4; load 4.78/5.94/5.66
+C5 status stopped: gap; 15 oracle calls; best evaluated point = iteration 14 (centre at stop: iteration 14, r 0.200225830078125)
+C5 估算 min D - 197.197 = D_best - 197.197 = 3.339266431341514 nat (D_best = 200.53626643134152); final gap D_best - m_global = 0.010971104064026349 nat (<= 0.02: True); m_global - 197.197 = 3.3282953272774876
+C5 ||A~* - I||_F = 0.8757401525546923; eigenvalues of A~* in [0.4789905888472884, 1.0836855927381297]; log det A~* = -2.502340011249127; lambda* = 0.01436024046420818; lambda*/lambda*_2c = 0.7137039018593594 (lambda*_2c = 0.020120725733454057)
+C5 forward of the policy at the best point: n* = sum_(k>=2) E[q] = 407.0112555699785 (from the stored per-step E[q]: 407.0112555699785); n* - (B - 1) = 91.11925556997852; |n* - (B - 1)| <= 5: False; sum_(k>=2) w*_k = 700.5782367166496; v_1 = 120 h
+C4 largest cut violation max_(i, l != i) [cut_l(x_i) - V~_i] over all iterations = -0.0009207560056507802 (at the last iteration, all pairs: -0.0009207560056507802; > 0 would mean D_i < model(x_i)); m_global non-decreasing: smallest step m_global_(j+1) - m_global_j = -8.760935088503174e-09
+C4 m_global - 197.197 sequence: 3.150152, 3.152487, 3.152895, 3.153021, 3.153199, 3.153237, 3.264575, 3.264575, 3.264575, 3.264706, 3.300584, 3.317426, 3.320532, 3.327558, 3.328295
+C runtime: sum over iterations 2028.6 s (0.564 h; oracle 2000.4 s, master problems 28.1 s); accepted steps 8, rejected 6; master solves by solver and status {'no_tr:SCS:optimal': 15, 'tr:SCS:optimal': 14, 'tr:—:not solved (stopped)': 1}
+C oracle diagnostics: largest forward/backward relative difference 2.128840625123825e-14; policy mismatches total 0
+C5 diagnostic (not a spec item): log det M(w*) of the best point's own policy - 197.197 = 4.459579079481216 (n* = 407.0112555699785); tr(A~* M~(w*)) = 10.43965058641086
+C5 diagnostic (not a spec item): best mixture of the 15 evaluated policies with sum theta_i n_i <= B - 1: log det M - 197.197 = 3.3282953281504604 (Clarabel optimal; n of the mixture 315.8919999791377; largest weights [(12, 0.41944221286097594), (13, 0.18850683351500372), (7, 0.14364098861850713), (14, 0.12720430878501024), (11, 0.09215886683936833)]); D_best minus this = 0.010971103191053544 nat
+=== logdet_outer.py final finished 2026-10-21 11:48:09; wall 0.7 s
+
+=== logdet_outer.py final started 2026-10-21 11:49:13 (round 2d; 估算 on the discrete model); numba threads 4; load 1.77/4.82/5.29
+C5 status stopped: gap; 15 oracle calls; best evaluated point = iteration 14 (centre at stop: iteration 14, r 0.200225830078125)
+C5 估算 min D - 197.197 = D_best - 197.197 = 3.339266431341514 nat (D_best = 200.53626643134152); final gap D_best - m_global = 0.010971104064026349 nat (<= 0.02: True); m_global - 197.197 = 3.3282953272774876
+C5 ||A~* - I||_F = 0.8757401525546923; eigenvalues of A~* in [0.4789905888472884, 1.0836855927381297]; log det A~* = -2.502340011249127; lambda* = 0.01436024046420818; lambda*/lambda*_2c = 0.7137039018593594 (lambda*_2c = 0.020120725733454057)
+C5 forward of the policy at the best point: n* = sum_(k>=2) E[q] = 407.0112555699785 (from the stored per-step E[q]: 407.0112555699785); n* - (B - 1) = 91.11925556997852; |n* - (B - 1)| <= 5: False; sum_(k>=2) w*_k = 700.5782367166496; v_1 = 120 h
+C4 largest cut violation max_(i, l != i) [cut_l(x_i) - V~_i] over all iterations = -0.0009207560056507802 (at the last iteration, all pairs: -0.0009207560056507802; > 0 would mean D_i < model(x_i)); m_global non-decreasing: smallest step m_global_(j+1) - m_global_j = -8.760935088503174e-09
+C4 m_global - 197.197 sequence: 3.150152, 3.152487, 3.152895, 3.153021, 3.153199, 3.153237, 3.264575, 3.264575, 3.264575, 3.264706, 3.300584, 3.317426, 3.320532, 3.327558, 3.328295
+C runtime: sum over iterations 2028.6 s (0.564 h; oracle 2000.4 s, master problems 28.1 s); accepted steps 8, rejected 6; master solves by solver and status {'no_tr:SCS:optimal': 15, 'tr:SCS:optimal': 14, 'tr:—:not solved (stopped)': 1}
+C oracle diagnostics: largest forward/backward relative difference 2.128840625123825e-14; policy mismatches total 0
+C diagnostic (not a spec item): cut offsets a_i = V~_i - <M~_i, A~_i> + lambda_i n_i: max |a_i| = 4.813060638762426e-13 (V~ is positively homogeneous in (A~, lambda), so every cut passes through the origin up to rounding; then the master problem without the trust region is the Lagrange dual of the mixture problem below with an extra 0.5 max(0, n_mix - (B - 1)) term from lambda <= 0.5)
+C5 diagnostic (not a spec item): log det M(w*) of the best point's own policy - 197.197 = 4.459579079481216 (n* = 407.0112555699785); tr(A~* M~(w*)) = 10.43965058641086
+C5 diagnostic (not a spec item): best mixture of the 15 evaluated policies with sum theta_i n_i <= B - 1: log det M - 197.197 = 3.3282953281504604 (Clarabel optimal; n of the mixture 315.8919999791377; largest weights [(12, 0.41944221286097594), (13, 0.18850683351500372), (7, 0.14364098861850713), (14, 0.12720430878501024), (11, 0.09215886683936833)]); D_best minus this = 0.010971103191053544 nat
+=== logdet_outer.py final finished 2026-10-21 11:49:14; wall 0.8 s

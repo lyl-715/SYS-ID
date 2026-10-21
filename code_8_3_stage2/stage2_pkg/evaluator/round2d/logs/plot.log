@@ -1,0 +1,8 @@
+
+=== logdet_outer.py plot started 2026-10-21 11:48:10 (round 2d; 估算 on the discrete model); numba threads 4; load 4.78/5.94/5.66
+PLOT fig_convergence.png from results/cuts.npz (15 iterations); panel 1 y range [2.728, 5.185], 1 D_j above it
+=== logdet_outer.py plot finished 2026-10-21 11:48:11; wall 1.0 s
+
+=== logdet_outer.py plot started 2026-10-21 11:48:39 (round 2d; 估算 on the discrete model); numba threads 4; load 3.03/5.41/5.49
+PLOT fig_convergence.png from results/cuts.npz (15 iterations); panel 1 y range [2.728, 5.185], 1 D_j above it
+=== logdet_outer.py plot finished 2026-10-21 11:48:40; wall 1.0 s
