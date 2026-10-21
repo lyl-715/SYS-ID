@@ -49,3 +49,7 @@ T3-2D at k = 4000: Pr{18 <= |delta|/sigma <= 19} = 0.37383859071475406; Pr{|v_pr
 
 === mdp2d_estimate.py pack started 2026-10-21 00:02:14 (round 2b Part A; 离散 MDP 对偶估算值, not a bound); numba threads 4; load average 5.65/6.68/5.64
 A5 packed copy results/policy2d_xordelta.npz: 5057433 bytes (4.82 MiB) for lambda 0.9394259423912158; decoded sha256 860f1113c128e41be997169582eb41e30ec9e575fcaead5d8bbae7d09bf613fe equals the memmap's: True (rebuild: python3 mdp2d_estimate.py unpack)
+
+=== mdp2d_estimate.py plot started 2026-10-21 00:50:36 (round 2b Part A; 离散 MDP 对偶估算值, not a bound); numba threads 4; load average 1.88/3.30/3.70
+PLOT from the stored memmap (lambda 0.9381038031641779, sha256 27126e77307595f0713f25680b3278a1ccf1940b3c7964c97ca7df07f0870d68): forward S 1163.7802035753966, E[N] 897.4791244885172; figures fig_policy2d.png, fig_occupancy2d.png
+=== mdp2d_estimate.py plot finished 2026-10-21 00:52:08; wall 92.1 s

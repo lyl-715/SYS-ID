@@ -1,0 +1,83 @@
+
+=== part_c.py started 2026-10-21 00:46:33; numba threads 4; load 1.67/3.02/3.68
+C0 inputs: S~_1D = 1210.8148788369642 (lambda* 1.9185615985194624, eps 0.01; results/mdp1d_result.json); S~_acc = 619.3919147765878 (lambda* 0.9394259423912158, eps 0.01; results/mdp2d_outer_eps0.01.json); S_found = 491.78650656267973 (nm:R01:145; search_maxS/S_found.json); policy memmap built at lambda 0.9394259423912158
+C1 same discrete model: S~_1D - S~_acc = 591.4229640603764 (48.84503604947948 % of S~_1D); 加入加速度限制后数值下降 591.423（两个对偶估算值之差，均为估算值）
+C2 eps_lambda 0.01: S~_acc 619.3919147765878 (lambda* 0.9394259423912158); rho = 0.2594731789324609 (25.9473 %); band = 4684 eps / S_found = 0.09524458149001715 (9.5245 percentage points); [rho - band, rho + band] = [0.16422859744244378, 0.35471776042247805]; boundaries met: [0.35]
+C2 refinement 1: eps_lambda -> 0.0025 (÷4); re-running the 2-D outer minimisation (golden section from [0, 20], cached lambdas replay)
+GOLD-2D lambda 7.639320225002102 V~ 23.98742853000983 V~ + 315.892 lambda 2437.187573046374 (v_1 = 29 h; cached from logs/gold_2d.jsonl, computed in 51.4 s)
+GOLD-2D lambda 12.360679774997898 V~ 2.0349254482986905 V~ + 315.892 lambda 3906.6747809319345 (v_1 = -28 h; cached from logs/gold_2d.jsonl, computed in 51.4 s)
+GOLD-2D lambda 4.721359549995793 V~ 93.21720724605399 V~ + 315.892 lambda 1584.656918213325 (v_1 = -29 h; cached from logs/gold_2d.jsonl, computed in 51.5 s)
+GOLD-2D lambda 2.9179606750063085 V~ 182.12592608549647 V~ + 315.892 lambda 1103.8863596345893 (v_1 = -30 h; cached from logs/gold_2d.jsonl, computed in 52.7 s)
+GOLD-2D lambda 1.8033988749894845 V~ 255.75306880108985 V~ + 315.892 lambda 825.4323462192681 (v_1 = -30 h; cached from logs/gold_2d.jsonl, computed in 52.4 s)
+GOLD-2D lambda 1.1145618000168238 V~ 307.6606886869979 V~ + 315.892 lambda 659.7418448179124 (v_1 = 30 h; cached from logs/gold_2d.jsonl, computed in 39.3 s)
+GOLD-2D lambda 0.6888370749726602 V~ 545.8938340699715 V~ + 315.892 lambda 763.491955357235 (v_1 = 120 h; cached from logs/gold_2d.jsonl, computed in 31.1 s)
+GOLD-2D lambda 1.377674149945321 V~ 287.2264351586497 V~ + 315.892 lambda 722.4226777331769 (v_1 = -30 h; cached from logs/gold_2d.jsonl, computed in 28.0 s)
+GOLD-2D lambda 0.9519494249011571 V~ 320.62795493644444 V~ + 315.892 lambda 621.3411626673208 (v_1 = 30 h; cached from logs/gold_2d.jsonl, computed in 29.7 s)
+GOLD-2D lambda 0.8514494500883272 V~ 399.5232411691983 V~ + 315.892 lambda 668.4893108565002 (v_1 = 119 h; cached from logs/gold_2d.jsonl, computed in 28.7 s)
+GOLD-2D lambda 1.0140618252039941 V~ 315.6428902218381 V~ + 315.892 lambda 635.9769083091783 (v_1 = 30 h; cached from logs/gold_2d.jsonl, computed in 30.8 s)
+GOLD-2D lambda 0.9135618503911643 V~ 343.79396565411844 V~ + 315.892 lambda 632.3808456978841 (v_1 = 119 h; cached from logs/gold_2d.jsonl, computed in 28.4 s)
+GOLD-2D lambda 0.9756742506940015 V~ 318.7216268189415 V~ + 315.892 lambda 626.929317219171 (v_1 = -30 h; cached from logs/gold_2d.jsonl, computed in 29.9 s)
+GOLD-2D lambda 0.9372866761840088 V~ 322.52226546805383 V~ + 315.892 lambda 618.6036281811728 (v_1 = 119 h; cached from logs/gold_2d.jsonl, computed in 30.3 s)
+GOLD-2D lambda 0.9282245991083125 V~ 330.6464882731407 V~ + 315.892 lambda 623.8652133346637 (v_1 = 119 h; cached from logs/gold_2d.jsonl, computed in 28.4 s)
+GOLD-2D lambda 0.9428873478254606 V~ 321.3564575888239 V~ + 315.892 lambda 619.2070276681043 (v_1 = 30 h; cached from logs/gold_2d.jsonl, computed in 29.9 s)
+GOLD-2D lambda 0.9338252707497641 V~ 325.62535688564117 V~ + 315.892 lambda 620.6132893133256 (v_1 = 119 h; cached from logs/gold_2d.jsonl, computed in 28.5 s)
+GOLD-2D lambda 0.9394259423912158 V~ 321.63477498274193 V~ + 315.892 lambda 618.3919147765878 (v_1 = 30 h; cached from logs/gold_2d.jsonl, computed in 31.4 s)
+GOLD-2D lambda 0.9407480816182536 V~ 321.5284659408034 V~ + 315.892 lambda 618.7032589393568 (v_1 = -30 h; 16.6 s; numba threads 4; load 2.19/3.07/3.68)
+GOLD-2D lambda 0.9386088154110468 V~ 321.7004778180949 V~ + 315.892 lambda 618.1994937359214 (v_1 = 30 h; 14.4 s; numba threads 4; load 2.59/3.12/3.69)
+GOLD-2D lambda 0.9381038031641779 V~ 321.78972743542596 V~ + 315.892 lambda 618.1292140245644 (v_1 = 119 h; 14.6 s; numba threads 4; load 2.90/3.16/3.69)
+GOLD-2D final bracket [0.9372866761840088, 0.9394259423912158] (width 0.002139266207206947); eps_lambda 0.0025; 21 evaluations; wall of this call 45.6 s; sum of per-lambda DP times 699.4 s (0.194 h)
+A4-2D 离散 MDP 对偶估算值 (acceleration constraint) S~_acc = 1 + min_lambda {V~ + 315.892 lambda} = 619.1292140245644 at lambda* = 0.9381038031641779 (V~ = 321.78972743542596; v_1 = 119 h); eps_lambda = 0.0025; an estimate on the discrete model, not a bound
+C2 eps_lambda 0.0025: S~_acc 619.1292140245644 (lambda* 0.9381038031641779); rho = 0.2589390025194894 (25.8939 %); band = 4684 eps / S_found = 0.023811145372504287 (2.3811 percentage points); [rho - band, rho + band] = [0.23512785714698514, 0.2827501478919937]; boundaries met: none
+C2 BRANCH: 10% <= rho <= 35%: 未定; final eps_lambda (2-D) 0.0025; refinement steps taken 1; final rho 0.2589390025194894, band 0.023811145372504287; grid error not included in the band
+C2 final lambda* (2-D) 0.9381038031641779 vs lambda of the stored policy 0.9394259423912158: changed: True
+C2 regenerating the policy memmap, forward S and E[N], T3 statistics and plots for the final lambda*
+A5 policy at lambda = 0.9381038031641779: V~ 321.78972743542596 (v_1 = 119 h); backward with storage 28.7 s; max mismatches (chosen action vs window max) 0
+A5 memmap policy2d.u8: shape (4999, 247569) uint8 = 1237597431 bytes = 1.1526 GiB; row k - 2 for k = 2..5000; 4 codes per byte (code = Delta j + 1, bits 2u..2u+1 hold state 4b + u, state = c*G + i, c = l_prev + 137); sha256 27126e77307595f0713f25680b3278a1ccf1940b3c7964c97ca7df07f0870d68
+A5 forward of the stored policy (discrete model): S 1163.7802035753966, E[N] 897.4791244885172 (final mass 1.000000000000085); 90.3 s
+A5 E[N] <= B = 316.8921168493721: False (E[N] - B = 580.5870076391451); reported, not a failure; lambda not adjusted
+A5 diagnostic (not a spec check): V~ 321.78972743542596 vs (S - 1) - lambda (E[N] - 1) = 321.78972743542624; relative 8.832385563366822e-16
+T3-2D time average over k = 2..5000 (K - 1 = 4999 steps) of Pr{18 <= |delta|/sigma <= 19} = 0.023654932607886123 (nodes 540 <= |i - 1800| <= 570)
+T3-2D time average over k = 2..5000 of Pr{|v_prev| <= 0.5 sigma} = 0.0 (|l_prev| <= 15; state component v_(k-1), k = 2..K)
+T3-2D mass over k: min 1.0 max 1.000000000000085
+T3-2D at k = 500: Pr{18 <= |delta|/sigma <= 19} = 0.023648375414988917; Pr{|v_prev| <= 0.5 sigma} = 0.0; E|v_prev|/sigma = 4.027460398509804; Pr{v_prev = 0} = 0.0; mu-weighted share of Delta j = -1/0/+1: 0.4512844385959464 / 0.09743010318490028 / 0.45128545821917065
+T3-2D at k = 1250: Pr{18 <= |delta|/sigma <= 19} = 0.02364932303610583; Pr{|v_prev| <= 0.5 sigma} = 0.0; E|v_prev|/sigma = 4.027460517081995; Pr{v_prev = 0} = 0.0; mu-weighted share of Delta j = -1/0/+1: 0.4512854354049851 / 0.09742912919024158 / 0.4512854354048164
+T3-2D at k = 2500: Pr{18 <= |delta|/sigma <= 19} = 0.02364932303595905; Pr{|v_prev| <= 0.5 sigma} = 0.0; E|v_prev|/sigma = 4.027460517082078; Pr{v_prev = 0} = 0.0; mu-weighted share of Delta j = -1/0/+1: 0.45128543540483435 / 0.09742912919039984 / 0.45128543540483423
+T3-2D at k = 4000: Pr{18 <= |delta|/sigma <= 19} = 0.02364932303595905; Pr{|v_prev| <= 0.5 sigma} = 0.0; E|v_prev|/sigma = 4.027460517082078; Pr{v_prev = 0} = 0.0; mu-weighted share of Delta j = -1/0/+1: 0.4512854354048344 / 0.09742912919039984 / 0.45128543540483435
+A5 packed copy results/policy2d_xordelta.npz: 4739077 bytes (4.52 MiB) for lambda 0.9381038031641779; decoded sha256 27126e77307595f0713f25680b3278a1ccf1940b3c7964c97ca7df07f0870d68 equals the memmap's: True (rebuild: python3 mdp2d_estimate.py unpack)
+C3 T5 check: S~_acc - S_found = 127.34270746188463 (prediction [100, 250]: True)
+=== part_c.py finished; wall 178.3 s
+
+=== part_c.py started (a second invocation replays every lambda from logs/gold_2d.jsonl and recomputes nothing when the stored policy already matches the final lambda*) 2026-10-21 00:49:58; numba threads 4; load 3.37/3.71/3.84
+C0 inputs: S~_1D = 1210.8148788369642 (lambda* 1.9185615985194624, eps 0.01; results/mdp1d_result.json); S~_acc = 619.3919147765878 (lambda* 0.9394259423912158, eps 0.01; results/mdp2d_outer_eps0.01.json); S_found = 491.78650656267973 (nm:R01:145; search_maxS/S_found.json); policy memmap built at lambda 0.9381038031641779
+C1 same discrete model: S~_1D - S~_acc = 591.4229640603764 (48.84503604947948 % of S~_1D); 加入加速度限制后数值下降 591.423（两个对偶估算值之差，均为估算值）
+C2 eps_lambda 0.01: S~_acc 619.3919147765878 (lambda* 0.9394259423912158); rho = 0.2594731789324609 (25.9473 %); band = 4684 eps / S_found = 0.09524458149001715 (9.5245 percentage points); [rho - band, rho + band] = [0.16422859744244378, 0.35471776042247805]; boundaries met: [0.35]
+C2 refinement 1: eps_lambda -> 0.0025 (÷4); re-running the 2-D outer minimisation (golden section from [0, 20], cached lambdas replay)
+GOLD-2D lambda 7.639320225002102 V~ 23.98742853000983 V~ + 315.892 lambda 2437.187573046374 (v_1 = 29 h; cached from logs/gold_2d.jsonl, computed in 51.4 s)
+GOLD-2D lambda 12.360679774997898 V~ 2.0349254482986905 V~ + 315.892 lambda 3906.6747809319345 (v_1 = -28 h; cached from logs/gold_2d.jsonl, computed in 51.4 s)
+GOLD-2D lambda 4.721359549995793 V~ 93.21720724605399 V~ + 315.892 lambda 1584.656918213325 (v_1 = -29 h; cached from logs/gold_2d.jsonl, computed in 51.5 s)
+GOLD-2D lambda 2.9179606750063085 V~ 182.12592608549647 V~ + 315.892 lambda 1103.8863596345893 (v_1 = -30 h; cached from logs/gold_2d.jsonl, computed in 52.7 s)
+GOLD-2D lambda 1.8033988749894845 V~ 255.75306880108985 V~ + 315.892 lambda 825.4323462192681 (v_1 = -30 h; cached from logs/gold_2d.jsonl, computed in 52.4 s)
+GOLD-2D lambda 1.1145618000168238 V~ 307.6606886869979 V~ + 315.892 lambda 659.7418448179124 (v_1 = 30 h; cached from logs/gold_2d.jsonl, computed in 39.3 s)
+GOLD-2D lambda 0.6888370749726602 V~ 545.8938340699715 V~ + 315.892 lambda 763.491955357235 (v_1 = 120 h; cached from logs/gold_2d.jsonl, computed in 31.1 s)
+GOLD-2D lambda 1.377674149945321 V~ 287.2264351586497 V~ + 315.892 lambda 722.4226777331769 (v_1 = -30 h; cached from logs/gold_2d.jsonl, computed in 28.0 s)
+GOLD-2D lambda 0.9519494249011571 V~ 320.62795493644444 V~ + 315.892 lambda 621.3411626673208 (v_1 = 30 h; cached from logs/gold_2d.jsonl, computed in 29.7 s)
+GOLD-2D lambda 0.8514494500883272 V~ 399.5232411691983 V~ + 315.892 lambda 668.4893108565002 (v_1 = 119 h; cached from logs/gold_2d.jsonl, computed in 28.7 s)
+GOLD-2D lambda 1.0140618252039941 V~ 315.6428902218381 V~ + 315.892 lambda 635.9769083091783 (v_1 = 30 h; cached from logs/gold_2d.jsonl, computed in 30.8 s)
+GOLD-2D lambda 0.9135618503911643 V~ 343.79396565411844 V~ + 315.892 lambda 632.3808456978841 (v_1 = 119 h; cached from logs/gold_2d.jsonl, computed in 28.4 s)
+GOLD-2D lambda 0.9756742506940015 V~ 318.7216268189415 V~ + 315.892 lambda 626.929317219171 (v_1 = -30 h; cached from logs/gold_2d.jsonl, computed in 29.9 s)
+GOLD-2D lambda 0.9372866761840088 V~ 322.52226546805383 V~ + 315.892 lambda 618.6036281811728 (v_1 = 119 h; cached from logs/gold_2d.jsonl, computed in 30.3 s)
+GOLD-2D lambda 0.9282245991083125 V~ 330.6464882731407 V~ + 315.892 lambda 623.8652133346637 (v_1 = 119 h; cached from logs/gold_2d.jsonl, computed in 28.4 s)
+GOLD-2D lambda 0.9428873478254606 V~ 321.3564575888239 V~ + 315.892 lambda 619.2070276681043 (v_1 = 30 h; cached from logs/gold_2d.jsonl, computed in 29.9 s)
+GOLD-2D lambda 0.9338252707497641 V~ 325.62535688564117 V~ + 315.892 lambda 620.6132893133256 (v_1 = 119 h; cached from logs/gold_2d.jsonl, computed in 28.5 s)
+GOLD-2D lambda 0.9394259423912158 V~ 321.63477498274193 V~ + 315.892 lambda 618.3919147765878 (v_1 = 30 h; cached from logs/gold_2d.jsonl, computed in 31.4 s)
+GOLD-2D lambda 0.9407480816182536 V~ 321.5284659408034 V~ + 315.892 lambda 618.7032589393568 (v_1 = -30 h; cached from logs/gold_2d.jsonl, computed in 16.6 s)
+GOLD-2D lambda 0.9386088154110468 V~ 321.7004778180949 V~ + 315.892 lambda 618.1994937359214 (v_1 = 30 h; cached from logs/gold_2d.jsonl, computed in 14.4 s)
+GOLD-2D lambda 0.9381038031641779 V~ 321.78972743542596 V~ + 315.892 lambda 618.1292140245644 (v_1 = 119 h; cached from logs/gold_2d.jsonl, computed in 14.6 s)
+GOLD-2D final bracket [0.9372866761840088, 0.9394259423912158] (width 0.002139266207206947); eps_lambda 0.0025; 21 evaluations; wall of this call 0.0 s; sum of per-lambda DP times 699.4 s (0.194 h)
+A4-2D 离散 MDP 对偶估算值 (acceleration constraint) S~_acc = 1 + min_lambda {V~ + 315.892 lambda} = 619.1292140245644 at lambda* = 0.9381038031641779 (V~ = 321.78972743542596; v_1 = 119 h); eps_lambda = 0.0025; an estimate on the discrete model, not a bound
+C2 eps_lambda 0.0025: S~_acc 619.1292140245644 (lambda* 0.9381038031641779); rho = 0.2589390025194894 (25.8939 %); band = 4684 eps / S_found = 0.023811145372504287 (2.3811 percentage points); [rho - band, rho + band] = [0.23512785714698514, 0.2827501478919937]; boundaries met: none
+C2 BRANCH: 10% <= rho <= 35%: 未定; final eps_lambda (2-D) 0.0025; refinement steps taken 1; final rho 0.2589390025194894, band 0.023811145372504287; grid error not included in the band
+C2 final lambda* (2-D) 0.9381038031641779 vs lambda of the stored policy 0.9381038031641779: changed: False
+C1 final (after the refinement of C2): S~_1D (eps 0.01) - S~_acc (eps 0.0025) = 1210.8148788369642 - 619.1292140245644 = 591.6856648123999 (48.866732244051825 % of S~_1D); 加入加速度限制后数值下降 591.686（两个对偶估算值之差，均为估算值）
+C3 T5 check: S~_acc - S_found = 127.34270746188463 (prediction [100, 250]: True)
+=== part_c.py finished; wall 0.0 s

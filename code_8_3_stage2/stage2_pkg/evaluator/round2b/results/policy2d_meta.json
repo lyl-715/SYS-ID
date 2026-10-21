@@ -1,6 +1,6 @@
 {
- "lam": 0.9394259423912158,
- "lam_repr": "0.9394259423912158",
+ "lam": 0.9381038031641779,
+ "lam_repr": "0.9381038031641779",
  "file": "policy2d.u8",
  "shape": [
   4999,
@@ -8,12 +8,12 @@
  ],
  "dtype": "uint8",
  "bytes": 1237597431,
- "sha256": "860f1113c128e41be997169582eb41e30ec9e575fcaead5d8bbae7d09bf613fe",
+ "sha256": "27126e77307595f0713f25680b3278a1ccf1940b3c7964c97ca7df07f0870d68",
  "layout": "row k-2 (k = 2..K); state s = c*G + i (c = l_prev + 137, i = delta index); byte s>>2, bits 2(s&3); code = Delta j + 1",
- "regenerate": "python3 mdp2d_estimate.py policy --lam 0.9394259423912158",
- "V": 321.63477498274193,
- "l1": 30,
+ "regenerate": "python3 mdp2d_estimate.py policy --lam 0.9381038031641779",
+ "V": 321.78972743542596,
+ "l1": 119,
  "packed": "results/policy2d_xordelta.npz",
- "packed_bytes": 5057433,
+ "packed_bytes": 4739077,
  "packed_roundtrip_sha256_ok": true
 }

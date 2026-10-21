@@ -49,6 +49,9 @@ rule, or labels anything certified.
   overlaid.
 - DECISION A-11 (concurrency). Part A ran while Part B's four evaluator workers were busy (4 cores). Per-λ times (T6)
   are therefore under load; every timing line carries the load average and the numba thread count.
+- DECISION A-13 (plot range). The δ range of the figures is [−24σ, 24σ] or, if wider, the support of the plotted μ_k
+  (mass above 1e-6 of the maximum) plus 1σ; the final-λ* policy's mass reaches about −27σ. Figures only; no number
+  depends on it. The `plot` stage re-runs the forward pass from the stored memmap and logs S and E[N] again (identical).
 - DECISION A-12 (extra diagnostic, not a spec check). For the stored λ* policy the forward result is compared with the
   dual value: Ṽ_λ vs (S − 1) − λ(E[N] − 1). It tests the memmap round trip; no pass line is attached to it.
 
@@ -78,9 +81,25 @@ rule, or labels anything certified.
   `search_maxS/eval_dense.jsonl` (the checkpoints), merged into `search_maxS/archive_all.json`; the dense-scan log is the
   `DENSE` lines of `search_maxS/search_maxS.log`, copied to `search_maxS/dense_scan.log`.
 
+- DECISION B-10 (F-champion not selected). The largest F in the archive is a dense-scan point in the grey zone
+  (dense:chi2:+2deg, S 491.8453, E[N] − B = −0.0141, 边界未定); by the spec it is not S_found. S_found is the largest S
+  among "按数值判据可行" only.
+
 ## Part C (reading)
 
 - DECISION C-1 (crossing test). "ρ ± band crosses a branch boundary" is tested on the closed interval
   [ρ − band, ρ + band] against the boundaries 0, 0.10, 0.35; touching a boundary counts as crossing.
 - DECISION C-2 (what is refined). Only the 2-D outer minimisation is refined (spec: "re-run the 2-D outer minimisation");
   the band uses the 2-D model's current ε_λ; the 1-D model stays at ε_λ = 1e-2. Both final ε_λ are reported.
+- DECISION C-3 (C1 after a refinement). C1 is reported with the final values (1-D at ε_λ = 1e-2, 2-D at its final
+  ε_λ = 2.5e-3: logs/part_c.log, "C1 final"); the pre-refinement difference (both at 1e-2) is logged too and quoted only as
+  such. The C1 line was added to part_c.py after the first invocation; the second invocation replays every λ from the
+  cache, recomputes nothing and appends to logs/part_c.log.
+- DECISION C-4 (superseded policy numbers). The refinement changed λ* (0.9394259423912158 → 0.9381038031641779); as the
+  spec requires, the memmap, forward S and E[N], the T3 statistics, the plots and the packed copy were regenerated for the
+  final λ*. The numbers of the ε_λ = 1e-2 policy remain in logs/mdp2d_estimate.log and are quoted in the report only as
+  superseded, to show that the deterministic policy at λ* changes side at a kink of the dual function.
+
+## STOPPED
+
+None. No hard limit was reached; no part was stopped.

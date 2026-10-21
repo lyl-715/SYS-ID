@@ -33,7 +33,8 @@ if __name__ == '__main__':
     sys.stdout = dr.Tee(os.path.join(LOGS, 'part_c.log'), 'a')
     def log(m): print(m, flush=True)
     T0 = time.time()
-    log(f"\n=== part_c.py started {time.strftime('%Y-%m-%d %H:%M:%S')}; numba threads {get_num_threads()}; load {g.loadavg()}")
+    log(f"\n=== part_c.py started (a second invocation replays every lambda from logs/gold_2d.jsonl and recomputes nothing when the "
+        f"stored policy already matches the final lambda*) {time.strftime('%Y-%m-%d %H:%M:%S')}; numba threads {get_num_threads()}; load {g.loadavg()}")
     r1 = json.load(open(os.path.join(RES, 'mdp1d_result.json')))
     r2 = json.load(open(os.path.join(RES, f'mdp2d_outer_eps{EPS0:.6g}.json')))
     pol = json.load(open(os.path.join(RES, 'mdp2d_policy.json')))
@@ -67,10 +68,13 @@ if __name__ == '__main__':
         if model is None: model = g.mdp.model()
         log("C2 regenerating the policy memmap, forward S and E[N], T3 statistics and plots for the final lambda*")
         pol = m2.stage_policy(model, res2['lam_star'], log)
+    dF = S1-res2['S_acc']
+    log(f"C1 final (after the refinement of C2): S~_1D (eps {r1['eps_lambda']}) - S~_acc (eps {final['eps']!r}) = {S1!r} - {res2['S_acc']!r} = {dF!r} "
+        f"({dF/S1*100!r} % of S~_1D); 加入加速度限制后数值下降 {dF:.3f}（两个对偶估算值之差，均为估算值）")
     t5 = res2['S_acc']-Sfound
     log(f"C3 T5 check: S~_acc - S_found = {t5!r} (prediction [100, 250]: {100 <= t5 <= 250})")
     out = dict(S_1D=S1, eps_1D=r1['eps_lambda'], lam_1D=r1['lam_star'], S_acc=res2['S_acc'], eps_2D=final['eps'], lam_2D=res2['lam_star'],
-               S_found=Sfound, S_found_tag=sf['tag'], C1_diff=d, steps=steps, branch=label, policy_regenerated=bool(regen),
+               S_found=Sfound, S_found_tag=sf['tag'], C1_diff_eps0=d, C1_diff_final=dF, steps=steps, branch=label, policy_regenerated=bool(regen),
                policy=dict(lam=pol['lam'], S=pol['S'], EN=pol['EN'], EN_le_B=pol['EN_le_B'], T3=pol['T3']), T5_diff=t5)
     json.dump(out, open(os.path.join(RES, 'part_c.json'), 'w'), indent=1, ensure_ascii=False)
     log(f"=== part_c.py finished; wall {time.time()-T0:.1f} s")

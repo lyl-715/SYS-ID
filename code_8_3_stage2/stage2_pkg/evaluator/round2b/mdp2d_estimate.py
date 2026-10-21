@@ -18,6 +18,7 @@ Stages (python3 mdp2d_estimate.py <stage>; every stage appends to logs/mdp2d_est
   outer [--eps E]  A4: golden section on [0, 20] to bracket width E (default 1e-2); cache logs/gold_2d.jsonl (resumable)
   policy --lam X   A5/A6 at lambda = X: actions of all steps 2-bit packed into the disk memmap policy2d.u8 (k = 2..K, row k - 2,
                    state index c*G + i, code = Delta j + 1), forward S, E[N], budget, T3 statistics, plots fig_policy2d.png; then pack
+  plot             figures again from the stored memmap (forward S, E[N] logged for comparison)
   pack / unpack    lossless git-sized copy results/policy2d_xordelta.npz (row XOR previous row, zlib) <-> policy2d.u8, sha256-checked
 Usage (from this directory): nohup python3 mdp2d_estimate.py checks > logs/mdp2d_checks.stdout 2>&1 &"""
 import os, sys, json, time, argparse, hashlib
@@ -277,6 +278,16 @@ def stage_outer(model, eps, log):
     json.dump(res, open(os.path.join(RES, f'mdp2d_outer_eps{eps:.6g}.json'), 'w'), indent=1)
     return res
 
+def stage_plot(model, log):
+    """figures only, from the stored memmap: forward again (S, E[N] logged for comparison with the policy stage) and plot."""
+    meta = json.load(open(MEMMETA)); lam = meta['lam']; l1 = meta['l1']
+    mm = np.memmap(MEMMAP, dtype=np.uint8, mode='r', shape=(K-1, NB)); cf = np.empty(NL*G, np.int8)
+    def at(k):
+        _unpack(np.asarray(mm[k-2]), cf); return cf.reshape(NL, G)
+    Sp, ENp, _, _, _, _, kept = forward2d(at, l1, model, keep_ks=PLOT_KS)
+    log(f"PLOT from the stored memmap (lambda {meta['lam_repr']}, sha256 {meta['sha256']}): forward S {Sp!r}, E[N] {ENp!r}; figures fig_policy2d.png, fig_occupancy2d.png")
+    plot_policy(at, kept, lam, Sp, ENp)
+
 def stage_policy(model, lam, log):
     t, c, q, P, phat, Ninv, N = model
     tb = time.time()
@@ -363,7 +374,9 @@ def plot_policy(at, kept, lam, Sp, ENp):
     ink, ink2 = '#0b0b0b', '#52514e'
     cmap = ListedColormap(['#3987e5', '#e4e3df', '#e34948']); norm = BoundaryNorm([-0.5, 0.5, 1.5, 2.5], 3)
     dgrid = -g.HALF+np.arange(G)/g.N_SIG; vgrid = (np.arange(NL)-LH)/g.N_SIG
-    xs = (dgrid >= -24) & (dgrid <= 24)
+    md = sum(kept[kk].sum(0) for kk in PLOT_KS); sup = dgrid[md > 1e-6*md.max()]
+    xr = max(24.0, float(np.ceil(np.abs(sup).max()))+1.0)          # shown range: [-24, 24] or the forward mass support + 1 sigma
+    xs = (dgrid >= -xr) & (dgrid <= xr)
     fig, axs = plt.subplots(2, 2, figsize=(12, 8.5), sharex=True, sharey=True, constrained_layout=True)
     for ax, kk in zip(axs.ravel(), PLOT_KS):
         cd = at(kk)
@@ -389,7 +402,7 @@ def plot_policy(at, kept, lam, Sp, ENp):
         mu = kept[kk]
         axs[0].plot(dgrid, mu.sum(0)*g.N_SIG, color=col, lw=1.5, label=f'k = {kk}')
         axs[1].plot(vgrid, mu.sum(1)*g.N_SIG, color=col, lw=1.5, label=f'k = {kk}')
-    axs[0].set_xlim(-24, 24); axs[0].set_xlabel('δ / σ', fontsize=9, color=ink2); axs[0].set_ylabel('density per σ', fontsize=9, color=ink2)
+    axs[0].set_xlim(-xr, xr); axs[0].set_xlabel('δ / σ', fontsize=9, color=ink2); axs[0].set_ylabel('density per σ', fontsize=9, color=ink2)
     axs[1].set_xlabel('v_prev / σ', fontsize=9, color=ink2)
     for ax in axs:
         ax.tick_params(labelsize=8, colors=ink2); ax.grid(alpha=0.25, lw=0.5)
@@ -403,7 +416,7 @@ def plot_policy(at, kept, lam, Sp, ENp):
 
 
 if __name__ == '__main__':
-    ap = argparse.ArgumentParser(); ap.add_argument('stage', choices=['checks', 'outer', 'policy', 'all', 'pack', 'unpack'])
+    ap = argparse.ArgumentParser(); ap.add_argument('stage', choices=['checks', 'outer', 'policy', 'all', 'pack', 'unpack', 'plot'])
     ap.add_argument('--eps', type=float, default=1e-2); ap.add_argument('--lam', type=float, default=None); ap.add_argument('--threads', type=int, default=None)
     args = ap.parse_args()
     if args.threads: set_num_threads(args.threads)
@@ -425,4 +438,5 @@ if __name__ == '__main__':
         if args.stage == 'all': args.lam = res['lam_star']
     if args.stage in ('policy', 'all'):
         stage_policy(model, args.lam, log)
+    if args.stage == 'plot': stage_plot(model, log)
     log(f"=== mdp2d_estimate.py {args.stage} finished {time.strftime('%Y-%m-%d %H:%M:%S')}; wall {time.time()-T0:.1f} s")
