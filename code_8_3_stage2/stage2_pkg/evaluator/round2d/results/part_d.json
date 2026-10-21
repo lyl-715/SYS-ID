@@ -1,0 +1,32 @@
+{
+ "rows": [
+  {
+   "label": "真实已评估最优（P5514，evaluator_fast B，n = 24；Δm_D 相对评价器的 log det J(u_unif)）",
+   "value": 0.7012655152921639,
+   "kind": "评估值",
+   "source": "round2a/results/recheck7.json"
+  },
+  {
+   "label": "本轮 min D − 197.197（二维，A 优化）",
+   "value": 3.339266431341514,
+   "kind": "估算",
+   "source": "logs/final.log"
+  },
+  {
+   "label": "S 路线 U(619.129) − 197.197（2c）",
+   "value": 3.7756005385593596,
+   "kind": "估算",
+   "source": "round2c/results/part_c2.json"
+  },
+  {
+   "label": "固定 A = A_1（二维，2c）",
+   "value": 4.385285228783914,
+   "kind": "估算",
+   "source": "round2c/results/outer_2d_A1.json"
+  }
+ ],
+ "diff_S": -0.4363341072178457,
+ "diff_fixedA": -1.0460187974424002,
+ "diff_real": 2.63800091604935,
+ "P5514_on_LDJC_scale": 0.7052421975329253
+}

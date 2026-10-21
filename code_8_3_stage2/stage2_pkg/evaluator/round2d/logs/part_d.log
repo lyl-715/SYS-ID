@@ -1,0 +1,10 @@
+
+=== logdet_outer.py table started 2026-10-21 11:48:10 (round 2d; 估算 on the discrete model); numba threads 4; load 4.78/5.94/5.66
+D | 量 | 值（nat） | 性质 | 来源 |
+D | 真实已评估最优（P5514，evaluator_fast B，n = 24；Δm_D 相对评价器的 log det J(u_unif)） | 0.7012655152921639 | 评估值 | round2a/results/recheck7.json |
+D | 本轮 min D − 197.197（二维，A 优化） | 3.339266431341514 | 估算 | logs/final.log |
+D | S 路线 U(619.129) − 197.197（2c） | 3.7756005385593596 | 估算 | round2c/results/part_c2.json |
+D | 固定 A = A_1（二维，2c） | 4.385285228783914 | 估算 | round2c/results/outer_2d_A1.json |
+D P5514 on the - 197.197 scale: log det J(P5514) - 197.197 = 197.90224219753293 - 197.197 = 0.7052421975329253 (the +0.701 is relative to the evaluator's log det J(u_unif) = 197.20097668224076; offset 0.0044, round 2c DECISION A-5)
+D differences: this round - S route = -0.4363341072178457; this round - fixed A = -1.0460187974424002; this round - (+0.701) = 2.63800091604935; S route - this round = 0.4363341072178457 (M3: >= 0.3)
+=== logdet_outer.py table finished 2026-10-21 11:48:10; wall 0.0 s
