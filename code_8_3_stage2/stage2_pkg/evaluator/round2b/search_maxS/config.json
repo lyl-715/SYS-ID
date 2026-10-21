@@ -1,0 +1,43 @@
+{
+ "spec": "reports_CN/plan_round2b_CN.md v3.2 §4",
+ "evaluator": "evaluator_fast.py, version B, n = 24, margin 8 Delta",
+ "B": 316.8921168493721,
+ "tau_N": 0.04,
+ "source_B_tau": "round2a/config_recheck.json",
+ "feasibility": "round2a/recheck7.feasibility (reused)",
+ "guidance_objective": "F(u) = S(u) - 20.0 max(E[N](u) - B, 0) (search only; selection by the feasibility rule)",
+ "grid": "6^4 phases chi_m in {0,60,...,300} deg at a_m = 0.5 (p_m = 1/4), itertools.product order of mc85_scan.py",
+ "nm": {
+  "protocol": "stage2_pkg/stage2_local.py",
+  "parametrisation": "x = (z1,z2,z3,chi1..chi4), p = softmax(z1,z2,z3,0), a = sqrt(p), chi mod 2 pi at evaluation",
+  "h_z": 0.25,
+  "h_chi": 0.25,
+  "maxfev": 150,
+  "xatol": 0.0001,
+  "fatol": 1e-05,
+  "method": "Nelder-Mead",
+  "simplex": "sim = np.vstack([x0]+[x0+h*e for h, e in zip([H_Z]*3+[H_CHI]*4, np.eye(7))])",
+  "call": "res = minimize(f, x0, method='Nelder-Mead', options=dict(maxfev=MAXFEV, initial_simplex=sim, xatol=1e-4, fatol=1e-5))",
+  "starts": "20 grid points with highest S among 按数值判据可行 (top up by F) + 7 round-2a candidates + 20 random (seed 20261022: rng.dirichlet(ones(4), 20) then rng.uniform(0, 2 pi, (20, 4)))"
+ },
+ "dense": {
+  "phase_deg": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ],
+  "power_t": [
+   0.002,
+   0.004,
+   0.006,
+   0.008,
+   0.01
+  ],
+  "rule": "coordinate-wise around S_found, centre fixed, no re-centring; power: others rescaled proportionally; skip p_m = 1 and negative powers"
+ },
+ "cap": 8434,
+ "duplicates": "not removed (不去重)"
+}

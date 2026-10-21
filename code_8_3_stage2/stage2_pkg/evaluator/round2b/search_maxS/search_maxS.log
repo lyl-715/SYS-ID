@@ -1,0 +1,215 @@
+
+=== search_maxS.py all started 2026-10-20 23:32:48; spec reports_CN/plan_round2b_CN.md v3.2 §4; evaluator_fast.py (B, n = 24, margin 8 Delta); B = 316.8921168493721, tau_N = 0.04 (round2a/config_recheck.json); mu = 20.0; cap 8434
+REF U E[N] 316.8921168493721 equals frozen B bitwise: True; S 466.15774934465276
+GRID 6^4 phase grid at uniform power (a_m = 0.5), chi_m in {0, 60, ..., 300} deg
+  1296 tasks, 0 already in search_maxS/eval_grid.jsonl, 1296 to evaluate
+  progress 100/1296 evaluations, wall 43 s
+  progress 200/1296 evaluations, wall 86 s
+  progress 300/1296 evaluations, wall 129 s
+  progress 400/1296 evaluations, wall 172 s
+  progress 500/1296 evaluations, wall 215 s
+  progress 600/1296 evaluations, wall 258 s
+  progress 700/1296 evaluations, wall 300 s
+  progress 800/1296 evaluations, wall 343 s
+  progress 900/1296 evaluations, wall 390 s
+  progress 1000/1296 evaluations, wall 436 s
+  progress 1100/1296 evaluations, wall 525 s
+  progress 1200/1296 evaluations, wall 635 s
+  progress 1296/1296 evaluations, wall 742 s
+GRID evaluations 1296; 按数值判据可行 864; 边界未定 2; 不可行 430
+GRID largest S (any feasibility) grid1265 deg [300, 300, 0, 300]: S 512.9465457464912 E[N] 347.30334519065747 (E[N] - B +30.411228; 按数值判据不可行) F -95.27802107921639 dmD 1.1075374847694661 mE 0.16565381893239978 p (0.250000, 0.250000, 0.250000, 0.250000) chi (5.235988, 5.235988, 0.000000, 5.235988)
+GRID largest S among 按数值判据可行 grid1090 deg [300, 0, 60, 240]: S 482.99230324870194 E[N] 313.38713731093117 (E[N] - B -3.504980; 按数值判据可行) F 482.99230324870194 dmD 0.5706881284472161 mE 0.04506549758607324 p (0.250000, 0.250000, 0.250000, 0.250000) chi (5.235988, 0.000000, 1.047198, 4.188790)
+START G01 (grid; grid1090; top S among 按数值判据可行) p (0.250000, 0.250000, 0.250000, 0.250000) chi (5.235988, 0.000000, 1.047198, 4.188790) grid S 482.99230324870194 E[N] 313.38713731093117
+START G02 (grid; grid0565; top S among 按数值判据可行) p (0.250000, 0.250000, 0.250000, 0.250000) chi (2.094395, 3.141593, 4.188790, 1.047198) grid S 482.9923032486679 E[N] 313.3871373109096
+START G03 (grid; grid0858; top S among 按数值判据可行) p (0.250000, 0.250000, 0.250000, 0.250000) chi (3.141593, 5.235988, 5.235988, 0.000000) grid S 482.81097479022816 E[N] 315.44821697915455
+START G04 (grid; grid0087; top S among 按数值判据可行) p (0.250000, 0.250000, 0.250000, 0.250000) chi (0.000000, 2.094395, 2.094395, 3.141593) grid S 482.8109747902273 E[N] 315.44821697915455
+START G05 (grid; grid0044; top S among 按数值判据可行) p (0.250000, 0.250000, 0.250000, 0.250000) chi (0.000000, 1.047198, 1.047198, 2.094395) grid S 482.06893153891554 E[N] 316.12020446233925
+START G06 (grid; grid0821; top S among 按数值判据可行) p (0.250000, 0.250000, 0.250000, 0.250000) chi (3.141593, 4.188790, 4.188790, 5.235988) grid S 482.0689315388835 E[N] 316.12020446231753
+START G07 (grid; grid1270; top S among 按数值判据可行) p (0.250000, 0.250000, 0.250000, 0.250000) chi (5.235988, 5.235988, 1.047198, 4.188790) grid S 482.06491956003356 E[N] 314.2478592984629
+START G08 (grid; grid0529; top S among 按数值判据可行) p (0.250000, 0.250000, 0.250000, 0.250000) chi (2.094395, 2.094395, 4.188790, 1.047198) grid S 482.06491956000866 E[N] 314.247859298449
+START G09 (grid; grid0068; top S among 按数值判据可行) p (0.250000, 0.250000, 0.250000, 0.250000) chi (0.000000, 1.047198, 5.235988, 2.094395) grid S 481.5418207388521 E[N] 311.76857629745876
+START G10 (grid; grid0809; top S among 按数值判据可行) p (0.250000, 0.250000, 0.250000, 0.250000) chi (3.141593, 4.188790, 2.094395, 5.235988) grid S 481.5418207387942 E[N] 311.768576297421
+START G11 (grid; grid0483; top S among 按数值判据可行) p (0.250000, 0.250000, 0.250000, 0.250000) chi (2.094395, 1.047198, 2.094395, 3.141593) grid S 481.4539548986614 E[N] 313.48364701670494
+START G12 (grid; grid1254; top S among 按数值判据可行) p (0.250000, 0.250000, 0.250000, 0.250000) chi (5.235988, 4.188790, 5.235988, 0.000000) grid S 481.45395489864904 E[N] 313.48364701669385
+START G13 (grid; grid0152; top S among 按数值判据可行) p (0.250000, 0.250000, 0.250000, 0.250000) chi (0.000000, 4.188790, 1.047198, 2.094395) grid S 480.80954121566765 E[N] 315.8110282187558
+START G14 (grid; grid0713; top S among 按数值判据可行) p (0.250000, 0.250000, 0.250000, 0.250000) chi (3.141593, 1.047198, 4.188790, 5.235988) grid S 480.8095412156657 E[N] 315.81102821875413
+START G15 (grid; grid0997; top S among 按数值判据可行) p (0.250000, 0.250000, 0.250000, 0.250000) chi (4.188790, 3.141593, 4.188790, 1.047198) grid S 480.54920801822016 E[N] 310.86940016624675
+START G16 (grid; grid0226; top S among 按数值判据可行) p (0.250000, 0.250000, 0.250000, 0.250000) chi (1.047198, 0.000000, 1.047198, 4.188790) grid S 480.549208018198 E[N] 310.8694001662332
+START G17 (grid; grid0289; top S among 按数值判据可行) p (0.250000, 0.250000, 0.250000, 0.250000) chi (1.047198, 2.094395, 0.000000, 1.047198) grid S 480.3788302018458 E[N] 316.4211598340761
+START G18 (grid; grid1066; top S among 按数值判据可行) p (0.250000, 0.250000, 0.250000, 0.250000) chi (4.188790, 5.235988, 3.141593, 4.188790) grid S 480.3788302018276 E[N] 316.42115983406245
+START G19 (grid; grid0245; top S among 按数值判据可行) p (0.250000, 0.250000, 0.250000, 0.250000) chi (1.047198, 0.000000, 4.188790, 5.235988) grid S 480.2000763150296 E[N] 316.35575416686027
+START G20 (grid; grid0980; top S among 按数值判据可行) p (0.250000, 0.250000, 0.250000, 0.250000) chi (4.188790, 3.141593, 1.047198, 2.094395) grid S 480.2000763150125 E[N] 316.3557541668495
+START C-NM-none-P5514 (round2a candidate; NM-none-P5514; config_recheck.json) p (0.252354, 0.250934, 0.251590, 0.245122) chi (5.139525, 5.337760, 1.096940, 4.207133)
+START C-NM-0.3-P4312 (round2a candidate; NM-0.3-P4312; config_recheck.json) p (0.211669, 0.262181, 0.260461, 0.265689) chi (4.017994, 3.487487, 1.391003, 1.743121)
+START C-AB-0.5 (round2a candidate; AB-0.5; config_recheck.json) p (0.209009, 0.265200, 0.254019, 0.271772) chi (4.069255, 3.519607, 1.459579, 1.582972)
+START C-NM-0.7-UNIF (round2a candidate; NM-0.7-UNIF; config_recheck.json) p (0.246368, 0.264487, 0.243051, 0.246093) chi (0.284097, 6.220235, 0.000510, 6.282413)
+START C-NM-none-P5450 (round2a candidate; NM-none-P5450; config_recheck.json) p (0.251893, 0.240347, 0.249890, 0.257870) chi (5.272212, 4.471195, 5.216136, 0.045153)
+START C-P5014 (round2a candidate; P5014; config_recheck.json) p (0.250000, 0.250000, 0.250000, 0.250000) chi (5.235988, 0.000000, 1.047198, 4.188790)
+START C-U-L1657 (round2a candidate; U-L1657; config_recheck.json) p (0.434186, 0.182349, 0.184178, 0.199288) chi (0.534311, 5.733406, 4.943466, 4.116769)
+START R01 (random; seed 20261022 draw 0; Dirichlet(1,1,1,1) powers, U[0,2pi) phases) p (0.147590, 0.007171, 0.531445, 0.313794) chi (0.510357, 4.932079, 5.888122, 2.887893)
+START R02 (random; seed 20261022 draw 1; Dirichlet(1,1,1,1) powers, U[0,2pi) phases) p (0.061816, 0.043611, 0.762356, 0.132217) chi (2.219895, 1.112247, 0.277975, 1.979227)
+START R03 (random; seed 20261022 draw 2; Dirichlet(1,1,1,1) powers, U[0,2pi) phases) p (0.050289, 0.194143, 0.738498, 0.017071) chi (4.486671, 2.613419, 1.336042, 3.973555)
+START R04 (random; seed 20261022 draw 3; Dirichlet(1,1,1,1) powers, U[0,2pi) phases) p (0.063479, 0.392667, 0.250821, 0.293032) chi (4.590580, 4.577948, 5.355833, 1.542815)
+START R05 (random; seed 20261022 draw 4; Dirichlet(1,1,1,1) powers, U[0,2pi) phases) p (0.143290, 0.586042, 0.115778, 0.154890) chi (1.121367, 3.802351, 3.607126, 4.835339)
+START R06 (random; seed 20261022 draw 5; Dirichlet(1,1,1,1) powers, U[0,2pi) phases) p (0.002663, 0.423879, 0.321970, 0.251487) chi (5.637577, 5.213442, 0.272321, 5.787675)
+START R07 (random; seed 20261022 draw 6; Dirichlet(1,1,1,1) powers, U[0,2pi) phases) p (0.087426, 0.214222, 0.238048, 0.460304) chi (3.406680, 5.856391, 4.072182, 0.204199)
+START R08 (random; seed 20261022 draw 7; Dirichlet(1,1,1,1) powers, U[0,2pi) phases) p (0.530851, 0.396255, 0.007156, 0.065738) chi (0.574029, 2.661235, 0.246511, 4.758916)
+START R09 (random; seed 20261022 draw 8; Dirichlet(1,1,1,1) powers, U[0,2pi) phases) p (0.542591, 0.037894, 0.176063, 0.243452) chi (5.126195, 0.354074, 2.577519, 1.064978)
+START R10 (random; seed 20261022 draw 9; Dirichlet(1,1,1,1) powers, U[0,2pi) phases) p (0.026446, 0.030954, 0.039759, 0.902841) chi (2.926914, 3.835322, 3.588056, 3.256823)
+START R11 (random; seed 20261022 draw 10; Dirichlet(1,1,1,1) powers, U[0,2pi) phases) p (0.318263, 0.269797, 0.067857, 0.344083) chi (1.880561, 2.762887, 2.210658, 6.196553)
+START R12 (random; seed 20261022 draw 11; Dirichlet(1,1,1,1) powers, U[0,2pi) phases) p (0.368728, 0.451117, 0.045160, 0.134995) chi (4.368959, 3.172844, 4.358242, 1.213736)
+START R13 (random; seed 20261022 draw 12; Dirichlet(1,1,1,1) powers, U[0,2pi) phases) p (0.293725, 0.302125, 0.017823, 0.386328) chi (0.415426, 3.858925, 5.291473, 3.771868)
+START R14 (random; seed 20261022 draw 13; Dirichlet(1,1,1,1) powers, U[0,2pi) phases) p (0.238338, 0.031730, 0.143885, 0.586046) chi (5.205467, 3.128073, 0.164670, 0.195640)
+START R15 (random; seed 20261022 draw 14; Dirichlet(1,1,1,1) powers, U[0,2pi) phases) p (0.034594, 0.661942, 0.078062, 0.225402) chi (5.718836, 4.143603, 5.696796, 0.146462)
+START R16 (random; seed 20261022 draw 15; Dirichlet(1,1,1,1) powers, U[0,2pi) phases) p (0.187428, 0.366611, 0.424919, 0.021042) chi (0.070958, 2.861726, 0.037353, 3.462146)
+START R17 (random; seed 20261022 draw 16; Dirichlet(1,1,1,1) powers, U[0,2pi) phases) p (0.317595, 0.179025, 0.430076, 0.073304) chi (0.513674, 5.356011, 1.356813, 1.091854)
+START R18 (random; seed 20261022 draw 17; Dirichlet(1,1,1,1) powers, U[0,2pi) phases) p (0.273016, 0.026398, 0.050532, 0.650054) chi (6.012199, 1.256081, 0.909682, 4.797680)
+START R19 (random; seed 20261022 draw 18; Dirichlet(1,1,1,1) powers, U[0,2pi) phases) p (0.381400, 0.399021, 0.073100, 0.146479) chi (5.374140, 3.824034, 2.525015, 6.061506)
+START R20 (random; seed 20261022 draw 19; Dirichlet(1,1,1,1) powers, U[0,2pi) phases) p (0.206388, 0.514212, 0.132768, 0.146631) chi (1.986551, 5.736592, 0.012815, 5.208824)
+NM 47 runs; protocol of stage2_local.py: MU_B, MU_E, H_Z, H_CHI, MAXFEV = 1.0, 20.0, 0.25, 0.25, 150; sim = np.vstack([x0]+[x0+h*e for h, e in zip([H_Z]*3+[H_CHI]*4, np.eye(7))]); res = minimize(f, x0, method='Nelder-Mead', options=dict(maxfev=MAXFEV, initial_simplex=sim, xatol=1e-4, fatol=1e-5)); objective -F, F = S - 20.0 max(E[N] - B, 0)
+NM run G02 done: nfev 150 nit 88 (Maximum number of function evaluations has been exceeded.); -F at result -488.92628383355736; replayed 0; wall 569 s; 1/47 runs, stage wall 569 s
+NM run G03 done: nfev 150 nit 83 (Maximum number of function evaluations has been exceeded.); -F at result -488.2844313626922; replayed 0; wall 569 s; 2/47 runs, stage wall 569 s
+NM run G04 done: nfev 150 nit 83 (Maximum number of function evaluations has been exceeded.); -F at result -488.28443136273177; replayed 0; wall 573 s; 3/47 runs, stage wall 573 s
+NM run G01 done: nfev 150 nit 88 (Maximum number of function evaluations has been exceeded.); -F at result -488.92628383358306; replayed 0; wall 573 s; 4/47 runs, stage wall 573 s
+NM run G06 done: nfev 150 nit 85 (Maximum number of function evaluations has been exceeded.); -F at result -487.7541620480227; replayed 0; wall 441 s; 5/47 runs, stage wall 1010 s
+NM run G05 done: nfev 150 nit 85 (Maximum number of function evaluations has been exceeded.); -F at result -487.75416204804725; replayed 0; wall 442 s; 6/47 runs, stage wall 1011 s
+NM run G08 done: nfev 150 nit 75 (Maximum number of function evaluations has been exceeded.); -F at result -487.6128020996552; replayed 0; wall 439 s; 7/47 runs, stage wall 1012 s
+NM run G07 done: nfev 150 nit 75 (Maximum number of function evaluations has been exceeded.); -F at result -487.61280209966446; replayed 0; wall 440 s; 8/47 runs, stage wall 1013 s
+NM run G10 done: nfev 150 nit 86 (Maximum number of function evaluations has been exceeded.); -F at result -487.8555924988609; replayed 0; wall 261 s; 9/47 runs, stage wall 1271 s
+NM run G09 done: nfev 150 nit 86 (Maximum number of function evaluations has been exceeded.); -F at result -487.85559249887217; replayed 0; wall 261 s; 10/47 runs, stage wall 1272 s
+NM run G12 done: nfev 150 nit 84 (Maximum number of function evaluations has been exceeded.); -F at result -487.8634525760203; replayed 0; wall 260 s; 11/47 runs, stage wall 1273 s
+NM run G11 done: nfev 150 nit 84 (Maximum number of function evaluations has been exceeded.); -F at result -487.8634525759843; replayed 0; wall 262 s; 12/47 runs, stage wall 1274 s
+NM run G13 done: nfev 150 nit 86 (Maximum number of function evaluations has been exceeded.); -F at result -487.7568577463005; replayed 0; wall 258 s; 13/47 runs, stage wall 1529 s
+NM run G15 done: nfev 150 nit 79 (Maximum number of function evaluations has been exceeded.); -F at result -488.27116694471613; replayed 0; wall 259 s; 14/47 runs, stage wall 1531 s
+NM run G16 done: nfev 150 nit 79 (Maximum number of function evaluations has been exceeded.); -F at result -488.27116694470607; replayed 0; wall 258 s; 15/47 runs, stage wall 1532 s
+NM run G14 done: nfev 150 nit 86 (Maximum number of function evaluations has been exceeded.); -F at result -487.75685774627766; replayed 0; wall 262 s; 16/47 runs, stage wall 1534 s
+NM run G17 done: nfev 150 nit 76 (Maximum number of function evaluations has been exceeded.); -F at result -483.8800293086588; replayed 0; wall 260 s; 17/47 runs, stage wall 1789 s
+NM run G19 done: nfev 150 nit 78 (Maximum number of function evaluations has been exceeded.); -F at result -487.21407304740893; replayed 0; wall 260 s; 18/47 runs, stage wall 1791 s
+NM run G18 done: nfev 150 nit 76 (Maximum number of function evaluations has been exceeded.); -F at result -483.88002930864513; replayed 0; wall 261 s; 19/47 runs, stage wall 1792 s
+NM run G20 done: nfev 150 nit 78 (Maximum number of function evaluations has been exceeded.); -F at result -487.2140730474275; replayed 0; wall 263 s; 20/47 runs, stage wall 1797 s
+NM run C-NM-none-P5514 done: nfev 150 nit 78 (Maximum number of function evaluations has been exceeded.); -F at result -488.12020846272463; replayed 0; wall 257 s; 21/47 runs, stage wall 2046 s
+NM run C-NM-0.3-P4312 done: nfev 150 nit 82 (Maximum number of function evaluations has been exceeded.); -F at result -480.3788581719415; replayed 0; wall 257 s; 22/47 runs, stage wall 2048 s
+NM run C-AB-0.5 done: nfev 150 nit 77 (Maximum number of function evaluations has been exceeded.); -F at result -479.9530164049801; replayed 0; wall 257 s; 23/47 runs, stage wall 2049 s
+NM run C-NM-0.7-UNIF done: nfev 150 nit 82 (Maximum number of function evaluations has been exceeded.); -F at result -470.63779740381693; replayed 0; wall 262 s; 24/47 runs, stage wall 2059 s
+NM run C-NM-none-P5450 done: nfev 150 nit 75 (Maximum number of function evaluations has been exceeded.); -F at result -487.9349451353714; replayed 0; wall 257 s; 25/47 runs, stage wall 2303 s
+NM run C-U-L1657 done: nfev 150 nit 89 (Maximum number of function evaluations has been exceeded.); -F at result -474.2763579092657; replayed 0; wall 258 s; 26/47 runs, stage wall 2307 s
+NM run C-P5014 done: nfev 150 nit 88 (Maximum number of function evaluations has been exceeded.); -F at result -488.92628383358306; replayed 0; wall 259 s; 27/47 runs, stage wall 2307 s
+NM run R01 done: nfev 150 nit 78 (Maximum number of function evaluations has been exceeded.); -F at result -491.78650656267973; replayed 0; wall 258 s; 28/47 runs, stage wall 2317 s
+NM run R02 done: nfev 150 nit 82 (Maximum number of function evaluations has been exceeded.); -F at result -489.5970207514823; replayed 0; wall 258 s; 29/47 runs, stage wall 2561 s
+NM run R03 done: nfev 150 nit 82 (Maximum number of function evaluations has been exceeded.); -F at result -473.350708938538; replayed 0; wall 256 s; 30/47 runs, stage wall 2563 s
+NM run R04 done: nfev 150 nit 80 (Maximum number of function evaluations has been exceeded.); -F at result -487.98947672817695; replayed 0; wall 260 s; 31/47 runs, stage wall 2566 s
+NM run R05 done: nfev 150 nit 76 (Maximum number of function evaluations has been exceeded.); -F at result -475.76856888208044; replayed 0; wall 258 s; 32/47 runs, stage wall 2574 s
+NM run R07 done: nfev 150 nit 81 (Maximum number of function evaluations has been exceeded.); -F at result -490.1664013227335; replayed 0; wall 256 s; 33/47 runs, stage wall 2819 s
+NM run R06 done: nfev 150 nit 92 (Maximum number of function evaluations has been exceeded.); -F at result -468.85026013709137; replayed 0; wall 260 s; 34/47 runs, stage wall 2821 s
+NM run R08 done: nfev 150 nit 78 (Maximum number of function evaluations has been exceeded.); -F at result -476.62092776515055; replayed 0; wall 258 s; 35/47 runs, stage wall 2825 s
+NM run R09 done: nfev 150 nit 71 (Maximum number of function evaluations has been exceeded.); -F at result -463.11315143616105; replayed 0; wall 257 s; 36/47 runs, stage wall 2831 s
+NM run R10 done: nfev 150 nit 89 (Maximum number of function evaluations has been exceeded.); -F at result -489.76001949968895; replayed 0; wall 256 s; 37/47 runs, stage wall 3075 s
+NM run R11 done: nfev 150 nit 79 (Maximum number of function evaluations has been exceeded.); -F at result -477.3961853348329; replayed 0; wall 257 s; 38/47 runs, stage wall 3078 s
+NM run R12 done: nfev 150 nit 80 (Maximum number of function evaluations has been exceeded.); -F at result -476.25468704206503; replayed 0; wall 258 s; 39/47 runs, stage wall 3082 s
+NM run R13 done: nfev 150 nit 78 (Maximum number of function evaluations has been exceeded.); -F at result -476.9144630384626; replayed 0; wall 259 s; 40/47 runs, stage wall 3091 s
+NM run R14 done: nfev 150 nit 90 (Maximum number of function evaluations has been exceeded.); -F at result -489.1682893784117; replayed 0; wall 255 s; 41/47 runs, stage wall 3331 s
+NM run R15 done: nfev 150 nit 89 (Maximum number of function evaluations has been exceeded.); -F at result -481.1159810182976; replayed 0; wall 258 s; 42/47 runs, stage wall 3335 s
+NM run R16 done: nfev 150 nit 80 (Maximum number of function evaluations has been exceeded.); -F at result -480.6385567035355; replayed 0; wall 258 s; 43/47 runs, stage wall 3340 s
+NM run R17 done: nfev 150 nit 87 (Maximum number of function evaluations has been exceeded.); -F at result -470.35093431100177; replayed 0; wall 258 s; 44/47 runs, stage wall 3349 s
+NM run R18 done: nfev 150 nit 80 (Maximum number of function evaluations has been exceeded.); -F at result -486.54534454442455; replayed 0; wall 257 s; 45/47 runs, stage wall 3587 s
+NM run R19 done: nfev 150 nit 83 (Maximum number of function evaluations has been exceeded.); -F at result -483.51168543324246; replayed 0; wall 256 s; 46/47 runs, stage wall 3591 s
+NM run R20 done: nfev 150 nit 84 (Maximum number of function evaluations has been exceeded.); -F at result -476.7371358821439; replayed 0; wall 260 s; 47/47 runs, stage wall 3600 s
+NM evaluations 7050 (sum of nfev 7050)
+S_found before the dense scan (largest S among 按数值判据可行, 5416 of 8346 archived): nm:R01:145 S 491.78650656267973 E[N] 316.8412894097091 (E[N] - B -0.050827; 按数值判据可行) F 491.78650656267973 dmD -4.426513714934572 mE 0.029722256006985803 p (0.248291, 0.008524, 0.412736, 0.330449) chi (0.521235, 5.043783, 5.799650, 3.047931)
+DENSE centre nm:R01:145: S 491.78650656267973 E[N] 316.8412894097091 (E[N] - B -0.050827; 按数值判据可行) F 491.78650656267973 dmD -4.426513714934572 mE 0.029722256006985803 p (0.248291, 0.008524, 0.412736, 0.330449) chi (0.521235, 5.043783, 5.799650, 3.047931)
+DENSE 87 points (48 phase, 39 power); skipped: ['p2 -0.010: negative power']
+  87 tasks, 0 already in search_maxS/eval_dense.jsonl, 87 to evaluate
+  progress 87/87 evaluations, wall 38 s
+DENSE chi1 +1 deg: S 491.15311297830135 (S - S_centre -0.633394) E[N] 316.4834440124778 (按数值判据可行) F 491.15311297830135
+DENSE chi1 -1 deg: S 491.64886569037355 (S - S_centre -0.137641) E[N] 316.91244183990153 (边界未定) F 491.24236587978464
+DENSE chi1 +2 deg: S 490.61560252437573 (S - S_centre -1.170904) E[N] 316.17068540556966 (按数值判据可行) F 490.61560252437573
+DENSE chi1 -2 deg: S 491.34104012809036 (S - S_centre -0.445466) E[N] 316.8638834311269 (边界未定) F 491.34104012809036
+DENSE chi1 +3 deg: S 490.82134795393983 (S - S_centre -0.965159) E[N] 316.1269962338435 (按数值判据可行) F 490.82134795393983
+DENSE chi1 -3 deg: S 491.20660792935473 (S - S_centre -0.579899) E[N] 316.80377799968153 (按数值判据可行) F 491.20660792935473
+DENSE chi1 +4 deg: S 490.6760465886633 (S - S_centre -1.110460) E[N] 315.871394010512 (按数值判据可行) F 490.6760465886633
+DENSE chi1 -4 deg: S 491.3131183403137 (S - S_centre -0.473388) E[N] 316.843933210358 (按数值判据可行) F 491.3131183403137
+DENSE chi1 +5 deg: S 489.8333301958762 (S - S_centre -1.953176) E[N] 315.3002684071624 (按数值判据可行) F 489.8333301958762
+DENSE chi1 -5 deg: S 491.5078242885587 (S - S_centre -0.278682) E[N] 316.9345192266843 (按数值判据不可行) F 490.6597767423144
+DENSE chi1 +6 deg: S 489.0448019981386 (S - S_centre -2.741705) E[N] 314.81675646149057 (按数值判据可行) F 489.0448019981386
+DENSE chi1 -6 deg: S 491.102521684092 (S - S_centre -0.683985) E[N] 316.76570435542925 (按数值判据可行) F 491.102521684092
+DENSE chi2 +1 deg: S 491.8167252758883 (S - S_centre +0.030219) E[N] 316.86014058594674 (边界未定) F 491.8167252758883
+DENSE chi2 -1 deg: S 491.7545261150319 (S - S_centre -0.031980) E[N] 316.82149896446134 (按数值判据可行) F 491.7545261150319
+DENSE chi2 +2 deg: S 491.8452528533842 (S - S_centre +0.058746) E[N] 316.878066347829 (边界未定) F 491.8452528533842
+DENSE chi2 -2 deg: S 491.7207192720821 (S - S_centre -0.065787) E[N] 316.8007590188783 (按数值判据可行) F 491.7207192720821
+DENSE chi2 +3 deg: S 491.8721642542656 (S - S_centre +0.085658) E[N] 316.8950835530825 (边界未定) F 491.81283018005763
+DENSE chi2 -3 deg: S 491.68502887094525 (S - S_centre -0.101478) E[N] 316.77906357552257 (按数值判据可行) F 491.68502887094525
+DENSE chi2 +4 deg: S 491.8975371789564 (S - S_centre +0.111031) E[N] 316.9112114150764 (边界未定) F 491.51564586486967
+DENSE chi2 -4 deg: S 491.64740699193146 (S - S_centre -0.139100) E[N] 316.7564115456979 (按数值判据可行) F 491.64740699193146
+DENSE chi2 +5 deg: S 491.9214506143839 (S - S_centre +0.134944) E[N] 316.92647089986633 (边界未定) F 491.234369604499
+DENSE chi2 -5 deg: S 491.60781700878 (S - S_centre -0.178690) E[N] 316.73280751721353 (按数值判据可行) F 491.60781700878
+DENSE chi2 +6 deg: S 491.9439837395143 (S - S_centre +0.157477) E[N] 316.9408842442959 (按数值判据不可行) F 490.9686358410383
+DENSE chi2 -6 deg: S 491.56623583080216 (S - S_centre -0.220271) E[N] 316.7082625525544 (按数值判据可行) F 491.56623583080216
+DENSE chi3 +1 deg: S 491.15835623805435 (S - S_centre -0.628150) E[N] 316.2906477932433 (按数值判据可行) F 491.15835623805435
+DENSE chi3 -1 deg: S 492.3754162913799 (S - S_centre +0.588910) E[N] 317.37748186070786 (按数值判据不可行) F 482.66811606466445
+DENSE chi3 +2 deg: S 490.50081258024306 (S - S_centre -1.285694) E[N] 315.7303040801232 (按数值判据可行) F 490.50081258024306
+DENSE chi3 -2 deg: S 492.92004887027866 (S - S_centre +1.133542) E[N] 317.89597156024104 (按数值判据不可行) F 472.84295465289966
+DENSE chi3 +3 deg: S 489.82574370260375 (S - S_centre -1.960763) E[N] 315.16527284874 (按数值判据可行) F 489.82574370260375
+DENSE chi3 -3 deg: S 493.4218317670453 (S - S_centre +1.635325) E[N] 318.39592231997017 (按数值判据不可行) F 463.3457223550837
+DENSE chi3 +4 deg: S 489.14430224271246 (S - S_centre -2.642204) E[N] 314.5997917854077 (按数值判据可行) F 489.14430224271246
+DENSE chi3 -4 deg: S 493.8884747112638 (S - S_centre +2.101968) E[N] 318.87915854713447 (按数值判据不可行) F 454.14764075601624
+DENSE chi3 +5 deg: S 488.46509018454606 (S - S_centre -3.321416) E[N] 314.0367411284439 (按数值判据可行) F 488.46509018454606
+DENSE chi3 -5 deg: S 494.33204908935295 (S - S_centre +2.545543) E[N] 319.3496778498306 (按数值判据不可行) F 445.180829080183
+DENSE chi3 +6 deg: S 487.79331320861456 (S - S_centre -3.993193) E[N] 313.47750192703427 (按数值判据可行) F 487.79331320861456
+DENSE chi3 -6 deg: S 494.7659001913921 (S - S_centre +2.979394) E[N] 319.81259042642404 (按数值判据不可行) F 436.3564286503531
+DENSE chi4 +1 deg: S 492.33061903519257 (S - S_centre +0.544112) E[N] 317.3592315925314 (按数值判据不可行) F 482.98832417200657
+DENSE chi4 -1 deg: S 491.2201464031576 (S - S_centre -0.566360) E[N] 316.31478138077307 (按数值判据可行) F 491.2201464031576
+DENSE chi4 +2 deg: S 492.8514383467761 (S - S_centre +1.064932) E[N] 317.8678240992645 (按数值判据不可行) F 473.33729334892763
+DENSE chi4 -2 deg: S 490.63367659927724 (S - S_centre -1.152830) E[N] 315.7808398382589 (按数值判据可行) F 490.63367659927724
+DENSE chi4 +3 deg: S 493.34908092618707 (S - S_centre +1.562574) E[N] 318.3666771660359 (按数值判据不可行) F 463.85787459291055
+DENSE chi4 -3 deg: S 490.03005623083766 (S - S_centre -1.756450) E[N] 315.24083038967416 (按数值判据可行) F 490.03005623083766
+DENSE chi4 +4 deg: S 493.8246692274877 (S - S_centre +2.038163) E[N] 318.8557711420038 (按数值判据不可行) F 454.55158337485364
+DENSE chi4 -4 deg: S 489.4126511548589 (S - S_centre -2.373855) E[N] 314.6961829199983 (按数值判据可行) F 489.4126511548589
+DENSE chi4 +5 deg: S 494.2799644531372 (S - S_centre +2.493458) E[N] 319.33538214620984 (按数值判据不可行) F 445.4146585163822
+DENSE chi4 -5 deg: S 488.78478740626804 (S - S_centre -3.001719) E[N] 314.1482111179827 (按数值判据可行) F 488.78478740626804
+DENSE chi4 +6 deg: S 494.7169813357585 (S - S_centre +2.930475) E[N] 319.8059855017916 (按数值判据不可行) F 436.439608287368
+DENSE chi4 -6 deg: S 488.14935804723444 (S - S_centre -3.637149) E[N] 313.59797540524227 (按数值判据可行) F 488.14935804723444
+DENSE p1 +0.002: S 493.00522899119613 (S - S_centre +1.218722) E[N] 317.91003127226486 (按数值判据不可行) F 472.6469405333407
+DENSE p1 -0.002: S 490.3822456996834 (S - S_centre -1.404261) E[N] 315.70672348954406 (按数值判据可行) F 490.3822456996834
+DENSE p1 +0.004: S 494.0340393354623 (S - S_centre +2.247533) E[N] 318.8980583985311 (按数值判据不可行) F 453.9152083522825
+DENSE p1 -0.004: S 488.89664929658693 (S - S_centre -2.889857) E[N] 314.55623910581375 (按数值判据可行) F 488.89664929658693
+DENSE p1 +0.006: S 494.96315321941324 (S - S_centre +3.176647) E[N] 319.83092246313987 (按数值判据不可行) F 436.18704094405757
+DENSE p1 -0.006: S 487.4801707812376 (S - S_centre -4.306336) E[N] 313.44790875015497 (按数值判据可行) F 487.4801707812376
+DENSE p1 +0.008: S 495.92483535588053 (S - S_centre +4.138329) E[N] 320.75859785368635 (按数值判据不可行) F 418.5952152695952
+DENSE p1 -0.008: S 486.24259480138073 (S - S_centre -5.543912) E[N] 312.4139994611737 (按数值判据可行) F 486.24259480138073
+DENSE p1 +0.010: S 497.0252436020646 (S - S_centre +5.238737) E[N] 321.7289936690268 (按数值判据不可行) F 400.28770720897023
+DENSE p1 -0.010: S 485.1851745233548 (S - S_centre -6.601332) E[N] 311.44078548014176 (按数值判据可行) F 485.1851745233548
+DENSE p2 +0.002: S 491.60490610645485 (S - S_centre -0.181600) E[N] 316.74510575515063 (按数值判据可行) F 491.60490610645485
+DENSE p2 -0.002: S 491.77082287217263 (S - S_centre -0.015684) E[N] 316.85693485651836 (边界未定) F 491.77082287217263
+DENSE p2 +0.004: S 491.2920370707044 (S - S_centre -0.494469) E[N] 316.5891695918945 (按数值判据可行) F 491.2920370707044
+DENSE p2 -0.004: S 491.5553688959501 (S - S_centre -0.231138) E[N] 316.79830442844207 (按数值判据可行) F 491.5553688959501
+DENSE p2 +0.006: S 490.9158846634649 (S - S_centre -0.870622) E[N] 316.39824233163716 (按数值判据可行) F 490.9158846634649
+DENSE p2 -0.006: S 491.34553323964303 (S - S_centre -0.440973) E[N] 316.7409236505861 (按数值判据可行) F 491.34553323964303
+DENSE p2 +0.008: S 490.52750891826435 (S - S_centre -1.258998) E[N] 316.19247201060267 (按数值判据可行) F 490.52750891826435
+DENSE p2 -0.008: S 491.68264945688105 (S - S_centre -0.103857) E[N] 316.78728576200024 (按数值判据可行) F 491.68264945688105
+DENSE p2 +0.010: S 490.15881558415833 (S - S_centre -1.627691) E[N] 315.98550632541117 (按数值判据可行) F 490.15881558415833
+DENSE p3 +0.002: S 491.1851826378178 (S - S_centre -0.601324) E[N] 316.3546356935104 (按数值判据可行) F 491.1851826378178
+DENSE p3 -0.002: S 492.3527964228082 (S - S_centre +0.566290) E[N] 317.31573315758 (按数值判据不可行) F 483.88047025865023
+DENSE p3 +0.004: S 490.5554704950914 (S - S_centre -1.231036) E[N] 315.8592508535582 (按数值判据可行) F 490.5554704950914
+DENSE p3 -0.004: S 492.880659912959 (S - S_centre +1.094153) E[N] 317.7755990059524 (按数值判据不可行) F 475.21101678135244
+DENSE p3 +0.006: S 489.9066160831446 (S - S_centre -1.879890) E[N] 315.35937948501544 (按数值判据可行) F 489.9066160831446
+DENSE p3 -0.006: S 493.37029203855815 (S - S_centre +1.583785) E[N] 318.2198710377411 (按数值判据不可行) F 466.81520827117816
+DENSE p3 +0.008: S 489.24961419617915 (S - S_centre -2.536892) E[N] 314.85963799948627 (按数值判据可行) F 489.24961419617915
+DENSE p3 -0.008: S 493.82541047073744 (S - S_centre +2.038904) E[N] 318.64897547188997 (按数值判据不可行) F 458.6882380203798
+DENSE p3 +0.010: S 488.5962487122757 (S - S_centre -3.190258) E[N] 314.36460634872657 (按数值判据可行) F 488.5962487122757
+DENSE p3 -0.010: S 494.2528020665885 (S - S_centre +2.466296) E[N] 319.06470523600683 (按数值判据不可行) F 450.80103433389365
+DENSE p4 +0.002: S 491.29974757515856 (S - S_centre -0.486759) E[N] 316.4306224102594 (按数值判据可行) F 491.29974757515856
+DENSE p4 -0.002: S 492.2397615429206 (S - S_centre +0.453255) E[N] 317.2401113462283 (按数值判据不可行) F 485.2798716057968
+DENSE p4 +0.004: S 490.78515644663497 (S - S_centre -1.001350) E[N] 316.0111999466167 (按数值判据可行) F 490.78515644663497
+DENSE p4 -0.004: S 492.657213393868 (S - S_centre +0.870707) E[N] 317.62520605160097 (按数值判据不可行) F 477.99542934929036
+DENSE p4 +0.006: S 490.2513720233364 (S - S_centre -1.535135) E[N] 315.5870566513321 (按数值判据可行) F 490.2513720233364
+DENSE p4 -0.006: S 493.03997272926216 (S - S_centre +1.253466) E[N] 317.99601894491127 (按数值判据不可行) F 470.9619308184785
+DENSE p4 +0.008: S 489.7092162724027 (S - S_centre -2.077290) E[N] 315.16277955593114 (按数值判据可行) F 489.7092162724027
+DENSE p4 -0.008: S 493.39228253348654 (S - S_centre +1.605776) E[N] 318.3533095269472 (按数值判据不可行) F 464.168428981984
+DENSE p4 +0.010: S 489.17058715533176 (S - S_centre -2.615919) E[N] 314.74302180067116 (按数值判据可行) F 489.17058715533176
+DENSE p4 -0.010: S 493.7209998896158 (S - S_centre +1.934493) E[N] 318.69902513029297 (按数值判据不可行) F 457.58283427119824
+DENSE feasible points with S above the centre: 0
+S_FOUND 491.78650656267973 at nm:R01:145 (stage nm): S 491.78650656267973 E[N] 316.8412894097091 (E[N] - B -0.050827; 按数值判据可行) F 491.78650656267973 dmD -4.426513714934572 mE 0.029722256006985803 p (0.248291, 0.008524, 0.412736, 0.330449) chi (0.521235, 5.043783, 5.799650, 3.047931); a (0.49828772218426737, 0.09232797911443066, 0.6424450794393897, 0.5748471188909064); chi (0.5212345568888138, 5.04378293394806, 5.799650164833398, 3.0479314505145156)
+F-champion (not used for selection): dense:chi2:+2deg S 491.8452528533842 E[N] 316.878066347829 (E[N] - B -0.014051; 边界未定) F 491.8452528533842 dmD -4.424889071809048 mE 0.029677265677361262 p (0.248291, 0.008524, 0.412736, 0.330449) chi (0.521235, 5.078690, 5.799650, 3.047931)
+COUNT evaluations: grid 1296, nm 7050, dense 87, total 8433 (cap 8434); 按数值判据可行 5466, 边界未定 831, 不可行 2136
+TIME per evaluation (evaluator runtime_s, 4 concurrent workers): mean 2.042 s, median 1.719 s, max 5.356 s; wall per evaluation incl. relative(): mean 2.043 s; sum of evaluation walls 4.785 h
+=== search_maxS.py all finished 2026-10-21 00:45:50; this invocation wall 4383 s
