@@ -1,0 +1,176 @@
+{
+ "spec": "reports_CN/plan_round2c_CN.md (a716952)",
+ "h_U": "mc83.py H (a = 1/2, chi = 0) via density_recursion_v1",
+ "A1": {
+  "NM-none-P5514": {
+   "max_abs_diff": 3.5214886562329184e-15,
+   "passed": true,
+   "det_T": 0.9997360063259253,
+   "prod_4p": 0.9997360063259253,
+   "power_term": -0.00052805705307752
+  },
+  "U-L1657": {
+   "max_abs_diff": 2.831068712794149e-15,
+   "passed": true,
+   "det_T": 0.7439364826808421,
+   "prod_4p": 0.7439364826808421,
+   "power_term": -0.5915992410686176
+  }
+ },
+ "A2": {
+  "UNIF": {
+   "S": 466.15774934465276,
+   "EN": 316.8921168493721,
+   "logdet": 197.20097668224076,
+   "sum_w": 466.15774934465276,
+   "J_bitwise": true,
+   "S_bitwise": true,
+   "EN_bitwise": true,
+   "logdet_bitwise": true,
+   "assertion_failures": 0,
+   "file": "results/w_UNIF.npy",
+   "fast_archive_bitwise": true
+  },
+  "NM-none-P5514": {
+   "S": 486.6943784924982,
+   "EN": 316.4724658173142,
+   "logdet": 197.90224219753293,
+   "sum_w": 486.6943784924982,
+   "J_bitwise": true,
+   "S_bitwise": true,
+   "EN_bitwise": true,
+   "logdet_bitwise": true,
+   "assertion_failures": 0,
+   "file": "results/w_NM-none-P5514.npy"
+  },
+  "NM-0.3-P4312": {
+   "S": 479.2223103068174,
+   "EN": 316.5829735407811,
+   "logdet": 197.6277680050842,
+   "sum_w": 479.2223103068174,
+   "J_bitwise": true,
+   "S_bitwise": true,
+   "EN_bitwise": true,
+   "logdet_bitwise": true,
+   "assertion_failures": 0,
+   "file": "results/w_NM-0.3-P4312.npy"
+  },
+  "AB-0.5": {
+   "S": 478.6598230026651,
+   "EN": 316.4766408668349,
+   "logdet": 197.59343861023189,
+   "sum_w": 478.6598230026651,
+   "J_bitwise": true,
+   "S_bitwise": true,
+   "EN_bitwise": true,
+   "logdet_bitwise": true,
+   "assertion_failures": 0,
+   "file": "results/w_AB-0.5.npy"
+  },
+  "NM-0.7-UNIF": {
+   "S": 469.1396435847976,
+   "EN": 316.53210631095703,
+   "logdet": 197.23011892500915,
+   "sum_w": 469.1396435847976,
+   "J_bitwise": true,
+   "S_bitwise": true,
+   "EN_bitwise": true,
+   "logdet_bitwise": true,
+   "assertion_failures": 0,
+   "file": "results/w_NM-0.7-UNIF.npy"
+  },
+  "NM-none-P5450": {
+   "S": 485.51250376664234,
+   "EN": 315.93868024141,
+   "logdet": 197.84897905484178,
+   "sum_w": 485.51250376664234,
+   "J_bitwise": true,
+   "S_bitwise": true,
+   "EN_bitwise": true,
+   "logdet_bitwise": true,
+   "assertion_failures": 0,
+   "file": "results/w_NM-none-P5450.npy"
+  },
+  "P5014": {
+   "S": 482.99230324870194,
+   "EN": 313.38713731093117,
+   "logdet": 197.77166481068798,
+   "sum_w": 482.99230324870194,
+   "J_bitwise": true,
+   "S_bitwise": true,
+   "EN_bitwise": true,
+   "logdet_bitwise": true,
+   "assertion_failures": 0,
+   "file": "results/w_P5014.npy"
+  },
+  "U-L1657": {
+   "S": 607.8562732475928,
+   "EN": 423.97342665691707,
+   "logdet": 199.31490917342813,
+   "sum_w": 607.8562732475928,
+   "J_bitwise": true,
+   "S_bitwise": true,
+   "EN_bitwise": true,
+   "logdet_bitwise": true,
+   "assertion_failures": 0,
+   "file": "results/w_U-L1657.npy"
+  }
+ },
+ "A3": {
+  "A1": {
+   "source": "NM-none-P5514",
+   "logdet_M": 197.90277025458607,
+   "logdet_M_slogdet": 197.90277025458607,
+   "logdet_A": -197.90277025458607,
+   "cond_M": 97.5363400136182,
+   "cond_A": 97.53634001361831,
+   "eig_M": [
+    352865832.875718,
+    398787456.249783,
+    3042274030.3072133,
+    3594593409.1066985,
+    4165086099.332658,
+    5710962769.197127,
+    8341491570.09228,
+    8443621981.008959,
+    34417241854.55434
+   ],
+   "gamma_bar": 0.01928268107472609,
+   "gamma_min": 0.012772508828425878,
+   "gamma_max": 0.028735224323122484,
+   "k_min": 2177,
+   "k_max": 126,
+   "gamma_1": 0.0287150477723873,
+   "gamma_sum": 96.41340537363045,
+   "lam_hi": 0.38565362149452176
+  },
+  "A2": {
+   "source": "UNIF",
+   "logdet_M": 197.20097668224076,
+   "logdet_M_slogdet": 197.20097668224076,
+   "logdet_A": -197.20097668224076,
+   "cond_M": 94.92214093489962,
+   "cond_A": 94.92214093489982,
+   "eig_M": [
+    350723686.7343161,
+    394648297.64057255,
+    2471940130.641403,
+    2906155618.3138137,
+    3879187944.6854444,
+    4318315976.240296,
+    7811944644.156734,
+    10153524824.520494,
+    33291443221.402367
+   ],
+   "gamma_bar": 0.02158896154489301,
+   "gamma_min": 0.011862706902189721,
+   "gamma_max": 0.03602512458522419,
+   "k_min": 2457,
+   "k_max": 5000,
+   "gamma_1": 0.02987366782571452,
+   "gamma_sum": 107.94480772446505,
+   "lam_hi": 0.4317792308978602,
+   "M_equals_J_UNIF_bitwise": true
+  }
+ }
+}
