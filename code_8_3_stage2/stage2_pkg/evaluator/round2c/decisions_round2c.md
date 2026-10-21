@@ -31,3 +31,25 @@ estimate on the discrete model (估算).
   = 197.19655785394153 rounded: the R = 10000 Monte-Carlo weights of the uniform input; the same constant as
   `round2a/b5_conversion.py` LD_REF). The evaluator's log det J(u_unif) = log det M_2 = 197.20097668224076 differs by
   0.0044; it is not substituted.
+
+## Part B (checks)
+
+- DECISION B-1 (when an inequality "holds" in B2). Slack ≥ −1e-10 nat counts as holding (log det ≈ 197, so float64
+  rounding of a log det is ~1e-13). Needed for P5014 (equal powers p_m = 1/4, power term exactly 0): slack1 = −1.7e-13,
+  the rounding difference of two slogdet calls on matrices related by the rotation T. The P5514/A₁ equality test is
+  |slack2| ≤ 1e-8 as specified. Alternative: slack ≥ 0 strictly (would fail P5014 on rounding alone).
+- DECISION B-2 (how the terms of B2 are computed). tr(A_i M(w(u))) = Σ_k w_k γ_k^(i), the per-step form the DP uses;
+  tr(cho_solve(L_i, M(w(u)))) is logged next to it as a diagnostic. log det J(u) and log det M(w(u)) by `slogdet` (as
+  the evaluator); log det A_i = −log det M_i from the Cholesky factor of Part A. slack1 is also compared with its
+  closed form −2 Σ_m log(4 p_m) (logged).
+- DECISION B-3 (B4 quantity). The compared number is Σ_{k=2..K} γ_k E[c(δ_k)] (the γ₁·1 term of the first, forced sample
+  is a constant and is logged separately), for γ^(1) and γ^(2). Forward: E[c(δ_k)] per step from the round-2b 2-D
+  transport (`m2._fwd`), summed with γ_k; backward: round 2b's fixed-policy backward with the reward γ_k c. The open-loop
+  policy is round 2b's 3.3 policy (`m2.open_loop_codes`).
+- DECISION B-4 (extras, not spec checks). Same tolerance 1e-10, logged as "extra": the 1-D DP with γ ≡ 1 at round 2b's
+  1-D λ* = 1.9185615985194624 against `round2b/logs/gold_1d.jsonl:17`, and the 1-D forward–backward of B4. They cover
+  the 1-D driver used in C1, which B3/B4 as specified test only in 2-D.
+- DECISION B-5 (gate). `logdet_dual.py outer` refuses to run unless `results/checks.json` records all four checks passed.
+- DECISION B-6 (Part B run twice). The first run (logs/part_b.log, first block) printed four B4 numbers as
+  `np.float64(...)`; the cast was fixed and Part B re-run unchanged otherwise. Both blocks stay in the log; the numbers
+  are identical; results/checks.json is from the second run.
