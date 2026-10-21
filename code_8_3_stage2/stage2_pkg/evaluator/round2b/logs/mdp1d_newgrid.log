@@ -1,0 +1,41 @@
+
+=== mdp1d_newgrid.py started 2026-10-20 23:40:10 (round 2b; 1-D model without acceleration constraint; 离散 MDP 对偶估算值, not a bound); grid G = 3601 (delta/sigma in [-60, 60], h = sigma/30), M = 600, actions l = -137..137 (137 h = 4.5667 sigma), K = 5000, Lagrangian term 315.892 lambda; load average 4.50/3.36/1.64
+MODEL min N_i 7.550556085332956e-89 (all > 0: True); t[0] np.float64(-60.0) t[-1] np.float64(60.0); c in [2.2083793448639054e-86, 1.0]
+3.3-1D open-loop policy: uniform input's increments rounded to multiples of h: |l| max 120 (<= L = 137: True); max rounding error 0.49977393188333963 h; v_1 = 39 h
+3.3-1D forward S 466.3091828526577 E[N] 317.0012304417438 (final mass 1.0000000000000593); backward S 466.30918285265875 E[N] 317.0012304417422
+3.3-1D relative difference S 2.194212717912189e-15, E[N] 5.020850316210769e-15; <= 1e-10: True; time 1.1 s
+3.3-1D diagnostic (no pass line): forward vs evaluator uniform input (B, n = 24): S 466.3091828526577 vs 466.15774934465276 (relative 0.00032485464033980567); E[N] 317.0012304417438 vs 316.8921168493721 (relative 0.0003443240982343284)
+GOLD-1D lambda 1.8335414994039494 V~ 630.9107726243301 V~ + 315.892 lambda 1210.1118639540425 (v_1 = 137 h; 29.2 s; load 5.09/3.61/1.78)
+3.2(a) same lambda* = 1.8335414994039494 (archived, round 2a): new grid 1 + V~ + 315.892 lambda* = 1211.1118639540425 vs old grid 1210.9563921988488: difference 0.15547175519373013 (0.01283875754695223 %); 1 % attention line exceeded: False
+GOLD-1D lambda 7.639320225002102 V~ 26.23983535876236 V~ + 315.892 lambda 2439.4399798751265 (v_1 = 137 h; 29.5 s; load 5.45/3.84/1.91)
+GOLD-1D lambda 12.360679774997898 V~ 2.0585484894578006 V~ + 315.892 lambda 3906.6984039730937 (v_1 = -137 h; 29.3 s; load 5.98/4.10/2.05)
+GOLD-1D lambda 4.721359549995793 V~ 131.24684610918595 V~ + 315.892 lambda 1622.6865570764571 (v_1 = -137 h; 29.7 s; load 6.33/4.36/2.20)
+GOLD-1D lambda 2.9179606750063085 V~ 354.90611601347183 V~ + 315.892 lambda 1276.6665495625646 (v_1 = -137 h; 29.5 s; load 6.97/4.70/2.38)
+GOLD-1D lambda 1.8033988749894845 V~ 640.7762321243486 V~ + 315.892 lambda 1210.4555095425267 (v_1 = 137 h; 29.4 s; load 8.05/5.17/2.62)
+GOLD-1D lambda 1.1145618000168238 V~ 903.8236769899402 V~ + 315.892 lambda 1255.9048331208546 (v_1 = 137 h; 29.1 s; load 8.74/5.62/2.85)
+GOLD-1D lambda 2.229123600033648 V~ 513.2932487417002 V~ + 315.892 lambda 1217.4555610035293 (v_1 = 137 h; 29.3 s; load 9.03/5.99/3.06)
+GOLD-1D lambda 1.5402865250609876 V~ 732.4935874813586 V~ + 315.892 lambda 1219.057778455924 (v_1 = -137 h; 29.3 s; load 9.22/6.33/3.27)
+GOLD-1D lambda 1.9660112501051514 V~ 589.2458430294794 V~ + 315.892 lambda 1210.2930688476958 (v_1 = 137 h; 29.3 s; load 9.34/6.63/3.47)
+GOLD-1D lambda 2.0665112249179813 V~ 559.1932725940679 V~ + 315.892 lambda 1211.987636455859 (v_1 = 137 h; 29.3 s; load 8.66/6.70/3.57)
+GOLD-1D lambda 1.9038988498023144 V~ 608.4395644771453 V~ + 315.892 lambda 1209.865979938898 (v_1 = 137 h; 29.3 s; load 8.00/6.73/3.68)
+GOLD-1D lambda 1.8655112752923215 V~ 620.6998072831851 V~ + 315.892 lambda 1209.9998950578272 (v_1 = -137 h; 29.2 s; load 7.61/6.75/3.79)
+GOLD-1D lambda 1.9276236755951588 V~ 600.9551551327905 V~ + 315.892 lambda 1209.8760532638964 (v_1 = 137 h; 29.2 s; load 7.42/6.79/3.90)
+GOLD-1D lambda 1.8892361010851662 V~ 613.1225339066018 V~ + 315.892 lambda 1209.9171043505971 (v_1 = 137 h; 29.1 s; load 7.25/6.81/4.00)
+GOLD-1D lambda 1.9129609268780108 V~ 605.5453352434992 V~ + 315.892 lambda 1209.8343883568477 (v_1 = 137 h; 29.1 s; load 7.10/6.82/4.09)
+GOLD-1D lambda 1.9185615985194624 V~ 603.7566183574543 V~ + 315.892 lambda 1209.8148788369642 (v_1 = 137 h; 29.3 s; load 7.06/6.83/4.17)
+GOLD-1D lambda 1.9220230039537072 V~ 602.6636943501402 V~ + 315.892 lambda 1209.8153851150846 (v_1 = 137 h; 29.4 s; load 7.04/6.85/4.26)
+GOLD-1D lambda 1.9164223323122556 V~ 604.4398470361141 V~ + 315.892 lambda 1209.8223304348971 (v_1 = 137 h; 29.4 s; load 7.02/6.87/4.35)
+GOLD-1D final bracket [1.9129609268780108, 1.9220230039537072] (width 0.009062077075696395); eps_lambda 0.01; 18 evaluations; wall 527.8 s
+A4-1D 离散 MDP 对偶估算值 (no acceleration constraint, new grid) S~_dual = 1 + min_lambda {V~ + 315.892 lambda} = 1210.8148788369642 at lambda* = 1.9185615985194624 (V~ = 603.7566183574543; v_1 = 137 h); eps_lambda = 0.01; an estimate, not a bound
+3.2(b) outer-minimised new grid 1210.8148788369642 vs old grid 1210.9563921988488 (round 2a, eps 1e-3): difference -0.14151336188456298 (-0.011686082405296503 %); 1 % attention line exceeded: False
+POLICY-1D at lambda* = 1.9185615985194624: forward S 1217.4977075187487, E[N] 320.37524947553544 (final mass 0.9999999999999308; mdp.forward gives S 1217.4977075187487, E[N] 320.37524947553544, identical: True); v_1 = 137 h; time 83.4 s
+POLICY-1D E[N] <= B = 316.8921168493721: False (E[N] - B = 3.4831326261633535)
+POLICY-1D diagnostic (not a spec check): V~ 603.7566183574543 vs (S - 1) - lambda* (E[N] - 1) = 603.7566183574133, relative 6.778768188268666e-14
+T3-1D time average over k = 2..5000 (K - 1 = 4999 steps) of Pr{18 <= |delta|/sigma <= 19} = 0.7439428365824391 (nodes 540 <= |i - 1800| <= 570)
+T3-1D time average over k = 2..5000 of Pr{|v_(k-1)| <= 0.5 sigma} = 0.7437846739236829 (|l| <= 15; v_1 = 137 h at k = 2)
+T3-1D mass over k: min 0.9999999999999308 max 1.0000000000000002
+T3-1D at k = 500: Pr{18 <= |delta|/sigma <= 19} = 0.744344572872986; Pr{|v_(k-1)| <= 0.5 sigma} = 0.7443415465176763
+T3-1D at k = 1250: Pr{18 <= |delta|/sigma <= 19} = 0.744344572872986; Pr{|v_(k-1)| <= 0.5 sigma} = 0.7443415465176763
+T3-1D at k = 2500: Pr{18 <= |delta|/sigma <= 19} = 0.744344572872986; Pr{|v_(k-1)| <= 0.5 sigma} = 0.7443415465176763
+T3-1D at k = 4000: Pr{18 <= |delta|/sigma <= 19} = 0.744344572872986; Pr{|v_(k-1)| <= 0.5 sigma} = 0.7443415465176763
+=== mdp1d_newgrid.py finished; total wall 641.6 s

@@ -1,0 +1,51 @@
+
+=== mdp2d_estimate.py all started 2026-10-20 23:40:10 (round 2b Part A; 离散 MDP 对偶估算值, not a bound); numba threads 2; load average 4.50/3.36/1.64
+A0 v_max := dt sqrt(sum_m (w_m |G(j w_m)|)^2) = 0.0005449492893900499 ≈ 4.5704 sigma (4.570390826649806 sigma); evaluator_fast.v_max() = 0.0005449492893900499
+A0 w_m^2 |G(j w_m)| = (1.895, 1.978, 1.986, 1.987) (full: 1.8947368421052635, 1.9777348405582171, 1.986206896551724, 1.9868671613369229); sqrt(sum of squares) ≈ 3.9235
+A0 a_max := dt^2 sqrt(sum_m (w_m^2 |G(j w_m)|)^2) = 3.923534344579837e-06 ≈ 3.92353e-06 ≈ 0.032906 sigma (0.03290597074928595 sigma); displayed values are ≈, not conservative constants
+A0 sigma = Delta/20 = 0.00011923472413178926; dt = 0.001; v_max/a_max ≈ 138.9 steps to stop from v_max; K/316 ≈ 15.8 steps per send
+A1 h = sigma/30 = 3.974490804392975e-06 = 0.03333333333333333 sigma; h > a_max: True (h/a_max = 1.012987387222322); L = floor(v_max/h) = 137 (used 137; endpoint 4.5667 sigma); offset grid G = 3601, delta/sigma in [-60, 60] (= [-Delta - 40 sigma, Delta + 40 sigma]), M = Delta/h = 600; velocity columns 275; states 990275; actions Delta j in {-1, 0, +1}
+A2 model: min N_i 7.550556085332956e-89 (all > 0: True); sum phat 1.0000000000000002; c in [2.2083793448639054e-86, 1.0]; q in [5.507248237212311e-89, 1.0]
+A0 check item: uniform input max |x_(k+2) - 2 x_(k+1) + x_k| = 3.758081575266914e-06 = 0.957830681527871 a_max (<= a_max: True)
+3.1 same-model regression at the archived round-2a lambda* = 1.8335414994039494, same grid (h = sigma/30, L = 137), same kernel: 1-D V~ 630.9107726243301 (v_1 = 137 h; 29.5 s) vs 2-D without the acceleration constraint (window half-width A = 2L = 274) V~ 630.9107726243301 (v_1 = 137 h; 78.1 s)
+3.1 relative difference of V~ 0.0 (absolute 0.0); <= 1e-10: True; bitwise equal: True; max over all states (i, l_prev) of |V_2^2D - V_2^1D| = 0.0
+3.3 open-loop policy: uniform input's increments rounded to multiples of h: |l| max 120 (<= L: True); max rounding error 0.49977393188333963 h; max |l_(k+1) - l_k| = 1 (<= 1: True); max true |inc_(k+1) - inc_k| = 0.9455504516737392 h; v_1 = 39 h
+3.3 2-D forward S 466.3091828526577 E[N] 317.0012304417438 (final mass 1.0000000000000593); 2-D fixed-policy backward S 466.30918285265875 E[N] 317.0012304417422; 226.9 s
+3.3 relative difference S 2.194212717912189e-15, E[N] 5.020850316210769e-15; <= 1e-10: True
+3.3 diagnostic (no pass line): 1-D forward of the same open-loop policy on the same grid S 466.3091828526577 E[N] 317.0012304417438; 2-D - 1-D: S 0.0, E[N] 0.0
+GOLD-2D lambda 7.639320225002102 V~ 23.98742853000983 V~ + 315.892 lambda 2437.187573046374 (v_1 = 29 h; 51.4 s; numba threads 2; load 7.39/6.80/3.92)
+GOLD-2D lambda 12.360679774997898 V~ 2.0349254482986905 V~ + 315.892 lambda 3906.6747809319345 (v_1 = -28 h; 51.4 s; numba threads 2; load 7.11/6.81/4.07)
+GOLD-2D lambda 4.721359549995793 V~ 93.21720724605399 V~ + 315.892 lambda 1584.656918213325 (v_1 = -29 h; 51.5 s; numba threads 2; load 7.05/6.85/4.23)
+GOLD-2D lambda 2.9179606750063085 V~ 182.12592608549647 V~ + 315.892 lambda 1103.8863596345893 (v_1 = -30 h; 52.7 s; numba threads 2; load 7.02/6.87/4.39)
+GOLD-2D lambda 1.8033988749894845 V~ 255.75306880108985 V~ + 315.892 lambda 825.4323462192681 (v_1 = -30 h; 52.4 s; numba threads 2; load 7.01/6.90/4.53)
+GOLD-2D lambda 1.1145618000168238 V~ 307.6606886869979 V~ + 315.892 lambda 659.7418448179124 (v_1 = 30 h; 39.3 s; numba threads 2; load 6.67/6.83/4.61)
+GOLD-2D lambda 0.6888370749726602 V~ 545.8938340699715 V~ + 315.892 lambda 763.491955357235 (v_1 = 120 h; 31.1 s; numba threads 2; load 6.40/6.75/4.66)
+GOLD-2D lambda 1.377674149945321 V~ 287.2264351586497 V~ + 315.892 lambda 722.4226777331769 (v_1 = -30 h; 28.0 s; numba threads 2; load 6.24/6.67/4.70)
+GOLD-2D lambda 0.9519494249011571 V~ 320.62795493644444 V~ + 315.892 lambda 621.3411626673208 (v_1 = 30 h; 29.7 s; numba threads 2; load 6.15/6.61/4.74)
+GOLD-2D lambda 0.8514494500883272 V~ 399.5232411691983 V~ + 315.892 lambda 668.4893108565002 (v_1 = 119 h; 28.7 s; numba threads 2; load 6.09/6.55/4.78)
+GOLD-2D lambda 1.0140618252039941 V~ 315.6428902218381 V~ + 315.892 lambda 635.9769083091783 (v_1 = 30 h; 30.8 s; numba threads 2; load 6.05/6.49/4.83)
+GOLD-2D lambda 0.9135618503911643 V~ 343.79396565411844 V~ + 315.892 lambda 632.3808456978841 (v_1 = 119 h; 28.4 s; numba threads 2; load 6.03/6.45/4.86)
+GOLD-2D lambda 0.9756742506940015 V~ 318.7216268189415 V~ + 315.892 lambda 626.929317219171 (v_1 = -30 h; 29.9 s; numba threads 2; load 6.02/6.41/4.90)
+GOLD-2D lambda 0.9372866761840088 V~ 322.52226546805383 V~ + 315.892 lambda 618.6036281811728 (v_1 = 119 h; 30.3 s; numba threads 2; load 6.01/6.37/4.93)
+GOLD-2D lambda 0.9282245991083125 V~ 330.6464882731407 V~ + 315.892 lambda 623.8652133346637 (v_1 = 119 h; 28.4 s; numba threads 2; load 6.00/6.33/4.97)
+GOLD-2D lambda 0.9428873478254606 V~ 321.3564575888239 V~ + 315.892 lambda 619.2070276681043 (v_1 = 30 h; 29.9 s; numba threads 2; load 5.95/6.28/5.00)
+GOLD-2D lambda 0.9338252707497641 V~ 325.62535688564117 V~ + 315.892 lambda 620.6132893133256 (v_1 = 119 h; 28.5 s; numba threads 2; load 5.97/6.26/5.03)
+GOLD-2D lambda 0.9394259423912158 V~ 321.63477498274193 V~ + 315.892 lambda 618.3919147765878 (v_1 = 30 h; 31.4 s; numba threads 2; load 6.04/6.25/5.07)
+GOLD-2D final bracket [0.9338252707497641, 0.9428873478254606] (width 0.009062077075696506); eps_lambda 0.01; 18 evaluations; wall of this call 653.9 s; sum of per-lambda DP times 653.8 s (0.182 h)
+A4-2D 离散 MDP 对偶估算值 (acceleration constraint) S~_acc = 1 + min_lambda {V~ + 315.892 lambda} = 619.3919147765878 at lambda* = 0.9394259423912158 (V~ = 321.63477498274193; v_1 = 30 h); eps_lambda = 0.01; an estimate on the discrete model, not a bound
+A5 policy at lambda = 0.9394259423912158: V~ 321.63477498274193 (v_1 = 30 h); backward with storage 57.4 s; max mismatches (chosen action vs window max) 0
+A5 memmap policy2d.u8: shape (4999, 247569) uint8 = 1237597431 bytes = 1.1526 GiB; row k - 2 for k = 2..5000; 4 codes per byte (code = Delta j + 1, bits 2u..2u+1 hold state 4b + u, state = c*G + i, c = l_prev + 137); sha256 860f1113c128e41be997169582eb41e30ec9e575fcaead5d8bbae7d09bf613fe
+A5 forward of the stored policy (discrete model): S 398.17122402120606, E[N] 81.40702904813507 (final mass 1.0000000000000295); 173.9 s
+A5 E[N] <= B = 316.8921168493721: True (E[N] - B = -235.485087801237); reported, not a failure; lambda not adjusted
+A5 diagnostic (not a spec check): V~ 321.63477498274193 vs (S - 1) - lambda (E[N] - 1) = 321.63477498278394; relative 1.306055495410629e-13
+T3-2D time average over k = 2..5000 (K - 1 = 4999 steps) of Pr{18 <= |delta|/sigma <= 19} = 0.372208095580796 (nodes 540 <= |i - 1800| <= 570)
+T3-2D time average over k = 2..5000 of Pr{|v_prev| <= 0.5 sigma} = 0.7764766577596433 (|l_prev| <= 15; state component v_(k-1), k = 2..K)
+T3-2D mass over k: min 1.0 max 1.0000000000000298
+T3-2D at k = 500: Pr{18 <= |delta|/sigma <= 19} = 0.3738355981094018; Pr{|v_prev| <= 0.5 sigma} = 0.7785974744183561; E|v_prev|/sigma = 0.2716972712630793; Pr{v_prev = 0} = 0.2573648351874743; mu-weighted share of Delta j = -1/0/+1: 0.3763998526290897 / 0.24653319596971146 / 0.377066951401202
+T3-2D at k = 1250: Pr{18 <= |delta|/sigma <= 19} = 0.3738385907147737; Pr{|v_prev| <= 0.5 sigma} = 0.7786282226262513; E|v_prev|/sigma = 0.27169533062726414; Pr{v_prev = 0} = 0.2573653891342349; mu-weighted share of Delta j = -1/0/+1: 0.37673850853753227 / 0.24653322880049994 / 0.37672826266197573
+T3-2D at k = 2500: Pr{18 <= |delta|/sigma <= 19} = 0.37383859071475073; Pr{|v_prev| <= 0.5 sigma} = 0.7785934064754778; E|v_prev|/sigma = 0.271702253195814; Pr{v_prev = 0} = 0.2573653849778589; mu-weighted share of Delta j = -1/0/+1: 0.3769075679373737 / 0.24653378359966868 / 0.37655864846297316
+T3-2D at k = 4000: Pr{18 <= |delta|/sigma <= 19} = 0.37383859071475406; Pr{|v_prev| <= 0.5 sigma} = 0.7786288821552938; E|v_prev|/sigma = 0.27169170620963257; Pr{v_prev = 0} = 0.25736602546803533; mu-weighted share of Delta j = -1/0/+1: 0.37709101148739405 / 0.2465500603632667 / 0.37635892814936356
+=== mdp2d_estimate.py all finished 2026-10-21 00:01:02; wall 1251.5 s
+
+=== mdp2d_estimate.py pack started 2026-10-21 00:02:14 (round 2b Part A; 离散 MDP 对偶估算值, not a bound); numba threads 4; load average 5.65/6.68/5.64
+A5 packed copy results/policy2d_xordelta.npz: 5057433 bytes (4.82 MiB) for lambda 0.9394259423912158; decoded sha256 860f1113c128e41be997169582eb41e30ec9e575fcaead5d8bbae7d09bf613fe equals the memmap's: True (rebuild: python3 mdp2d_estimate.py unpack)

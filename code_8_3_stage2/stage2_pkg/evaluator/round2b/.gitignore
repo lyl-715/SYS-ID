@@ -1,0 +1,5 @@
+*.stdout
+__pycache__/
+*.tmp
+policy2d.u8
+policy2d.u8.tmp
