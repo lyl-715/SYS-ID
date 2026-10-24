@@ -91,3 +91,22 @@ and where it acts. Overnight mode: none of these stopped the run. Nothing was tu
   if in some, 错 if in none. The 80 pointwise comparisons are logged as a supplement.
 - DECISION S-8 (R6): wall time of the Part A sweep (400 forwards) + scheme A's 241 forwards + scheme D's lambda scan, as
   logged; 对 iff <= 1.5 h. The theta_0 checks and figures are logged separately and not counted.
+
+## Part B (two_stage.py)
+
+- DECISION B-1: scheme A evaluates every integer M = 240..480 with round-4 `evaluate_table('U', ConstTable(M, M))` at theta_0:
+  the general window path (R = 88 sigma) for M < 480 and, by round 4's frozen dispatch rule, the accepted operator
+  (evaluator_fast) at M = 480. M_A = argmax{E[N_M] : E[N_M] <= 2B}, ties -> larger M. If the slack 2B - E[N_M_A] exceeds 5
+  sends it is reported as it is and the range is not widened (spec §1.3).
+- DECISION B-2: A' and B at theta_0 use the round-4 J's (round4/results/J_U_SoD.npy, J_U_W.npy; bit for bit equal to the Part A
+  theta_0 check) and E[N]'s (c1.json). log det of a sum of information matrices is taken as given (two independent
+  experiments at the same theta); the sends of the two stages are added. For the single-stage schemes A and D the
+  "each stage <= B" constraint does not apply (logged as n/a); their total is judged against 2B.
+- DECISION B-3: scheme D reuses `round4/trigger_dp.py` unchanged (Design, gamma('W') from the same J_SoD, Scan with the Part 0a
+  doubling rule). Its module-level budget and output paths are pointed at round 5 for this run only (td.B = 2B; tables, runs and
+  the scan record under round5/results/; case_paths -> scan_U_W_2B), so no round-4 file is written. The DP's every lambda is
+  in the scan record and the log; the uint16 memmaps stay uncommitted (as round 4), the final table is packed losslessly into
+  results/table_U_W_2B.npz.
+- DECISION B-4: the P4 rows of Part B (eps in {0.2, 0.5}, ten directions) take the U/SoD and U/W evaluations of the Part A
+  archive at the same theta (same J's, from results/J_partA.npz); nothing is re-evaluated. A' total = 2 E[N_SoD(theta)],
+  B total = E[N_SoD(theta)] + E[N_UW(theta)], each against 2B; "each stage <= B" logged separately.

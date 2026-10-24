@@ -1,0 +1,22 @@
+{
+ "status": "done",
+ "runs": 14,
+ "final_run": 14,
+ "wall_s": 379.84696054999995,
+ "gbar": 0.021587304272182303,
+ "gbar_round4": 0.021587304272182303,
+ "lam": 0.04258743386816126,
+ "lam_over_gbar": 1.9728000000000006,
+ "EN": 633.5354472080885,
+ "S": 1807.6167688525434,
+ "F": 40.307645296329845,
+ "logdet": 209.95184335174855,
+ "slack": 0.24878649065567515,
+ "feasible": true,
+ "packed": "results/table_U_W_2B.npz",
+ "packed_roundtrip_equal": true,
+ "mass_dev_max": 5.764277943853813e-13,
+ "min_m": 0.0,
+ "assert_fail": 0,
+ "mono_worst": 0.0
+}
