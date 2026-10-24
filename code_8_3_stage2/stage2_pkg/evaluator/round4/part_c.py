@@ -285,6 +285,17 @@ def c3(out):
     rho = spearmanr(fw['Q'][1:], trA[1:]).statistic
     out(f"C3 U/W Spearman rank correlation of E[q_k] with tr(h_k h_k^T A) over k = 2..K: {float(rho)!r}")
     out(f"C3 figures fig_window_heatmap.png, fig_sendprob_trA.png; table c3_table.md")
+    # context for the report (DECISION C-6): how much information a non-sending step carries under the constant threshold
+    xk, Hk, z, dz, a, b = ew.design_grid('U')
+    fs = ew.forward(z, dz, s, xk, a, b, ew.ConstTable(ew.SOD_M, ew.SOD_M), record_window=True)
+    vals, wts = [], []
+    for p in range(1, K):
+        A, Bb = int(a[p]), int(b[p]); m = fs['m_window'][p].astype(float); sel = m > 0; zz = z[A:Bb+1][sel]
+        cev, cno = dr.cfun((zz-ew.SOD_M*dz-xk[p])/s, (zz+ew.SOD_M*dz-xk[p])/s); vals.append(cev+cno); wts.append(m[sel])
+    v = np.concatenate(vals); w = np.concatenate(wts)
+    out(f"C3 U/SoD mass-weighted share of (k, node) with c < 0.01: {float(w[v < 0.01].sum()/w.sum())!r}; with c < 0.05: {float(w[v < 0.05].sum()/w.sum())!r}")
+    cev, cno = dr.cfun(np.array([-2.0]), np.array([30.0]))
+    out(f"C3 single step, near edge 2 sigma beyond x_k (alpha = -2, beta = 30): c {float(cev[0]+cno[0])!r}, q {float(1-(dr.ndtr(30.0)-dr.ndtr(-2.0)))!r}")
     for case in CASES:
         if case == 'U/W': continue
         d2, t2, f2 = table_fields(case); sh2 = shape(out, d2, t2, f2, case)

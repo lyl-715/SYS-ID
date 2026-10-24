@@ -1,11 +1,11 @@
-=== part_c.py c3 started 2026-10-24 12:54:08; B = 316.8921168493721
+=== part_c.py c3 started 2026-10-24 13:00:20; B = 316.8921168493721
 C3 U/SoD EN 316.8921168493721 S 466.15774934465276 logdet 197.20097668224076 dmD 0.0 mE 0.9999999999999968
 C3 U/S EN 316.7014792439585 S 1064.0993888525304 logdet 205.0609076009012 dmD 7.859930918660439 mE 1.581637740628417
 C3 U/W EN 316.6035659260541 S 1037.2604257322414 logdet 205.03141309913676 dmD 7.830436416895992 mE 1.3093002132137557
 C3 P5514/SoD EN 316.4724658173142 S 486.6943784924982 logdet 197.90224219753293 dmD 0.0 mE 0.04501722402006874
 C3 P5514/S EN 316.66625940413746 S 1087.7563427868415 logdet 205.28318206409222 dmD 7.380939866559288 mE 0.0998217121183116
 C3 P5514/W EN 316.86639310005427 S 1069.182922491094 logdet 205.32021269820052 dmD 7.417970500667593 mE 0.10867716846829327
-DESIGN U G = 35146, support window nodes 4224-4224, cache built in 1.7 s
+DESIGN U G = 35146, support window nodes 4224-4224, cache built in 6.3 s
 SHAPE U/W Spearman rank correlation over k = 2..K of the mass-weighted mean full width (Delta^- + Delta^+) with gamma_k = sigma^-2 h_k^T A h_k: -0.8759488337523449
 SHAPE U/W mean full width (sigma) over steps with gamma_k in the lowest quarter 22.54966051561789, highest quarter 10.376535620846564
 SHAPE U/W distance from x_k to the near window edge (near-side half-width - |r - x_k|), mass-weighted over all (k, i): mean 1.9181154115484345 sigma; quantiles 10/25/50/75/90 % [1.070864902357691, 1.4395100817654196, 1.9201224570513808, 2.4845778978192783, 2.867403970412038] sigma
@@ -17,7 +17,9 @@ SHAPE U/W |r - x_k|/sigma in [20, 40): mass share 0.2450196930896028, mass-weigh
 SHAPE U/W |r - x_k|/sigma in [40, 88): mass share 0.013525327734621995, mass-weighted near-side half-width 39.99999758871676 sigma, far-side 2.0 sigma, near edge beyond x_k by -1.5642595089699207 sigma
 C3 U/W Spearman rank correlation of E[q_k] with tr(h_k h_k^T A) over k = 2..K: -0.18495777916687783
 C3 figures fig_window_heatmap.png, fig_sendprob_trA.png; table c3_table.md
-DESIGN U G = 35146, support window nodes 4224-4224, cache built in 5.7 s
+C3 U/SoD mass-weighted share of (k, node) with c < 0.01: 0.8187275028307242; with c < 0.05: 0.8453498628323792
+C3 single step, near edge 2 sigma beyond x_k (alpha = -2, beta = 30): c 0.1337149504783819, q 0.02275013194817921
+DESIGN U G = 35146, support window nodes 4224-4224, cache built in 6.3 s
 SHAPE U/S Spearman rank correlation over k = 2..K of the mass-weighted mean full width (Delta^- + Delta^+) with gamma_k = sigma^-2 h_k^T A h_k: -0.7362653650538032
 SHAPE U/S mean full width (sigma) over steps with gamma_k in the lowest quarter 20.38497713369509, highest quarter 12.915788359891089
 SHAPE U/S distance from x_k to the near window edge (near-side half-width - |r - x_k|), mass-weighted over all (k, i): mean 1.877286035032533 sigma; quantiles 10/25/50/75/90 % [1.0918040818769796, 1.4065984478140425, 1.8809862338717047, 2.4282970117974507, 2.7909608672293533] sigma
@@ -27,7 +29,7 @@ SHAPE U/S |r - x_k|/sigma in [5, 10): mass share 0.17622256164768577, mass-weigh
 SHAPE U/S |r - x_k|/sigma in [10, 20): mass share 0.2385950243308558, mass-weighted near-side half-width 16.54544050903223 sigma, far-side 2.0 sigma, near edge beyond x_k by 1.9324997932467836 sigma
 SHAPE U/S |r - x_k|/sigma in [20, 40): mass share 0.23459144564273732, mass-weighted near-side half-width 29.57862856068292 sigma, far-side 2.0 sigma, near edge beyond x_k by 1.5487411938575042 sigma
 SHAPE U/S |r - x_k|/sigma in [40, 88): mass share 0.010517555993871493, mass-weighted near-side half-width 39.999996687948304 sigma, far-side 2.0 sigma, near edge beyond x_k by -1.540111519856482 sigma
-DESIGN P5514 G = 34951, support window nodes 4223-4224, cache built in 5.6 s
+DESIGN P5514 G = 34951, support window nodes 4223-4224, cache built in 6.0 s
 SHAPE P5514/S Spearman rank correlation over k = 2..K of the mass-weighted mean full width (Delta^- + Delta^+) with gamma_k = sigma^-2 h_k^T A h_k: -0.5051229676427483
 SHAPE P5514/S mean full width (sigma) over steps with gamma_k in the lowest quarter 19.255905226690334, highest quarter 14.740502640307861
 SHAPE P5514/S distance from x_k to the near window edge (near-side half-width - |r - x_k|), mass-weighted over all (k, i): mean 1.8549096731525625 sigma; quantiles 10/25/50/75/90 % [1.074347768142161, 1.3764075881576714, 1.8497414770623726, 2.3895487354773084, 2.7504043928160975] sigma
@@ -47,4 +49,4 @@ SHAPE P5514/W |r - x_k|/sigma in [5, 10): mass share 0.17384688405854198, mass-w
 SHAPE P5514/W |r - x_k|/sigma in [10, 20): mass share 0.25188484515250725, mass-weighted near-side half-width 16.657091461711996 sigma, far-side 2.0 sigma, near edge beyond x_k by 1.9914112945374705 sigma
 SHAPE P5514/W |r - x_k|/sigma in [20, 40): mass share 0.2601916695140068, mass-weighted near-side half-width 29.694847915191446 sigma, far-side 2.0 sigma, near edge beyond x_k by 1.6154146254806347 sigma
 SHAPE P5514/W |r - x_k|/sigma in [40, 88): mass share 0.010058217239636194, mass-weighted near-side half-width 39.9999999970581 sigma, far-side 2.0 sigma, near edge beyond x_k by -1.2308938568817689 sigma
-=== part_c.py c3 done in 37.9 s
+=== part_c.py c3 done in 48.0 s

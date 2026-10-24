@@ -87,4 +87,6 @@ acts. Overnight mode: none of these stopped the run.
 - DECISION C-6 (diagnostic for V4, not required): per final table, the Spearman rank correlation over k = 2..K of the
   mass-weighted mean full width (Delta^- + Delta^+) with gamma_k = sigma^-2 h_k^T A h_k (A = J_SoD^-1 of the same input),
   and, binned by |r - x_k|/sigma, the mass-weighted near-side half-width (the side of x_k as seen from r), the far-side
-  half-width and the distance from x_k to the near edge.
+  half-width and the distance from x_k to the near edge. For context the C3 log also records the mass-weighted share of
+  (k, node) with c < 0.01 under the constant threshold (uniform input) and c, q of a single step with the near edge
+  2 sigma beyond x_k.
