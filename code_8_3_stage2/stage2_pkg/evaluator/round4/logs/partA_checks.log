@@ -1,0 +1,127 @@
+=== evaluator_window.py --check (round 4 Part A); spec reports_CN/plan_round4_CN.md v3.1; python 3.13.17, numpy 2.5.3, scipy 1.18.1, numba 0.68.0; B = 316.8921168493721
+A0 P5514 a, chi from round2a/config_recheck.json candidates[0] (NM-none-P5514); identical to evaluator config.json input D: True
+A0 support half-width R = 88 sigma = 0.010492655723597455; X = 960 grid units = 40 sigma; SoD window (480, 480); action code of (480, 480) = 189
+A0 U G = 35146, support window nodes min 4224 max 4224, min a_k - X 769, max b_k + X 34376 (G - 1 = 35145); max |x_(k+1) - x_k| = 3.9878407530954423 sigma
+A0 P5514 G = 34951, support window nodes min 4223 max 4224, min a_k - X 769, max b_k + X 34181 (G - 1 = 34950); max |x_(k+1) - x_k| = 3.175876812737922 sigma
+A0 warm-up (JIT) 1.1 s
+A4-1 U reference evaluator_fast EN 316.8921168493721 S 466.15774934465276 logdet 197.20097668224076
+A4-1 U (i) dispatch EN 0.0
+A4-1 U (i) dispatch S 0.0
+A4-1 U (i) dispatch J_maxabs 0.0
+A4-1 U (i) dispatch path 'accepted operator (evaluator_fast.evaluate_fast)'
+A4-1 U (i) bitwise (difference 0 for E[N], S, 81 J elements) PASS
+A4-1 U (ii) general(480,480) EN_rel 6.152659417061097e-14
+A4-1 U (ii) general(480,480) S_rel 6.133597420011315e-14
+A4-1 U (ii) general(480,480) J_ratio_max 3.28081529211204e-14
+A4-1 U (ii) general(480,480) logdet_diff 5.684341886080801e-13
+A4-1 U (ii) general(480,480) EN_P_rel 5.919566255388016e-14
+A4-1 U (ii) general(480,480) w_maxabs 2.861599845971341e-14
+A4-1 U (ii) general(480,480) path 'general window path (R = 88 sigma)'
+A4-1 U (ii) general(480,480) mass_dev_max 3.852473895449293e-14
+A4-1 U (ii) general(480,480) min_m 0.0
+A4-1 U (ii) general(480,480) assert_fail 0
+A4-1 U (ii) general(480,480) runtime_ref_s 1.6599910060001548
+A4-1 U (ii) general(480,480) runtime_general_s 1.5586399970000002
+A4-1 U (ii) tolerance (E[N], S rel <= 1e-12; |dJ| <= 1e-12 (|ref| + max|J|)) PASS
+A4-1 P5514 reference evaluator_fast EN 316.4724658173142 S 486.6943784924982 logdet 197.90224219753293
+A4-1 P5514 (i) dispatch EN 0.0
+A4-1 P5514 (i) dispatch S 0.0
+A4-1 P5514 (i) dispatch J_maxabs 0.0
+A4-1 P5514 (i) dispatch path 'accepted operator (evaluator_fast.evaluate_fast)'
+A4-1 P5514 (i) bitwise (difference 0 for E[N], S, 81 J elements) PASS
+A4-1 P5514 (ii) general(480,480) EN_rel 9.178361524392603e-14
+A4-1 P5514 (ii) general(480,480) S_rel 9.331912115045246e-14
+A4-1 P5514 (ii) general(480,480) J_ratio_max 4.50184580438268e-14
+A4-1 P5514 (ii) general(480,480) logdet_diff 7.958078640513122e-13
+A4-1 P5514 (ii) general(480,480) EN_P_rel 8.837262838202898e-14
+A4-1 P5514 (ii) general(480,480) w_maxabs 3.425038030968608e-14
+A4-1 P5514 (ii) general(480,480) path 'general window path (R = 88 sigma)'
+A4-1 P5514 (ii) general(480,480) mass_dev_max 9.947598300641403e-14
+A4-1 P5514 (ii) general(480,480) min_m 0.0
+A4-1 P5514 (ii) general(480,480) assert_fail 0
+A4-1 P5514 (ii) general(480,480) runtime_ref_s 1.6342779329997938
+A4-1 P5514 (ii) general(480,480) runtime_general_s 1.5533933749998141
+A4-1 P5514 (ii) tolerance (E[N], S rel <= 1e-12; |dJ| <= 1e-12 (|ref| + max|J|)) PASS
+A4-2 table=a gamma=1 err_m_steps 2.3014901515618778e-15
+A4-2 table=a gamma=1 err_EN_fwd 4.70416102592525e-16
+A4-2 table=a gamma=1 err_F_fwd 8.517993360096557e-16
+A4-2 table=a gamma=1 err_Vc_steps 1.6368170138095886e-15
+A4-2 table=a gamma=1 err_Vq_steps 1.7179025649245077e-15
+A4-2 table=a gamma=1 err_EN_bwd 9.408322051850498e-16
+A4-2 table=a gamma=1 err_F_bwd 9.937658920112649e-16
+A4-2 table=a gamma=1 EN 15.104558110239115
+A4-2 table=a gamma=1 F 25.025004331021638
+A4-2 table=a gamma=1 mass_dev_max 2.6645352591003757e-15
+A4-2 table=a gamma=1 min_m 4.6139629609514614e-11
+A4-2 table=a gamma=1 send_prob_min 0.46080864068063815
+A4-2 table=a gamma=1 pass True
+A4-2 table=a gamma=rand err_m_steps 2.3014901515618778e-15
+A4-2 table=a gamma=rand err_EN_fwd 4.70416102592525e-16
+A4-2 table=a gamma=rand err_F_fwd 8.521783488863067e-16
+A4-2 table=a gamma=rand err_Vc_steps 1.82541613790721e-15
+A4-2 table=a gamma=rand err_Vq_steps 1.7179025649245077e-15
+A4-2 table=a gamma=rand err_EN_bwd 9.408322051850498e-16
+A4-2 table=a gamma=rand err_F_bwd 8.521783488863065e-16
+A4-2 table=a gamma=rand EN 15.104558110239115
+A4-2 table=a gamma=rand F 33.351832357097194
+A4-2 table=a gamma=rand mass_dev_max 2.6645352591003757e-15
+A4-2 table=a gamma=rand min_m 4.6139629609514614e-11
+A4-2 table=a gamma=rand send_prob_min 0.46080864068063815
+A4-2 table=a gamma=rand pass True
+A4-2 table=b gamma=1 err_m_steps 3.0982173357332898e-15
+A4-2 table=b gamma=1 err_EN_fwd 1.200322063745788e-15
+A4-2 table=b gamma=1 err_F_fwd 7.729682598926228e-16
+A4-2 table=b gamma=1 err_Vc_steps 2.3038746309454475e-15
+A4-2 table=b gamma=1 err_Vq_steps 1.7935563384703677e-15
+A4-2 table=b gamma=1 err_EN_bwd 8.002147091638589e-16
+A4-2 table=b gamma=1 err_F_bwd 1.236749215828196e-15
+A4-2 table=b gamma=1 EN 13.319101629034215
+A4-2 table=b gamma=1 F 22.980980352893308
+A4-2 table=b gamma=1 mass_dev_max 2.886579864025407e-15
+A4-2 table=b gamma=1 min_m 4.6139571753555334e-11
+A4-2 table=b gamma=1 send_prob_min 0.2815929686199443
+A4-2 table=b gamma=1 pass True
+A4-2 table=b gamma=rand err_m_steps 3.0982173357332898e-15
+A4-2 table=b gamma=rand err_EN_fwd 1.200322063745788e-15
+A4-2 table=b gamma=rand err_F_fwd 1.5110061143182445e-15
+A4-2 table=b gamma=rand err_Vc_steps 2.08925641602509e-15
+A4-2 table=b gamma=rand err_Vq_steps 1.7935563384703677e-15
+A4-2 table=b gamma=rand err_EN_bwd 8.002147091638589e-16
+A4-2 table=b gamma=rand err_F_bwd 1.162312395629419e-15
+A4-2 table=b gamma=rand EN 13.319101629034215
+A4-2 table=b gamma=rand F 30.565910611979834
+A4-2 table=b gamma=rand mass_dev_max 2.886579864025407e-15
+A4-2 table=b gamma=rand min_m 4.6139571753555334e-11
+A4-2 table=b gamma=rand send_prob_min 0.2815929686199443
+A4-2 table=b gamma=rand pass True
+A4-2 table=c gamma=1 err_m_steps 2.659216256212498e-15
+A4-2 table=c gamma=1 err_EN_fwd 8.684825331635835e-16
+A4-2 table=c gamma=1 err_F_fwd 1.1955776499825108e-15
+A4-2 table=c gamma=1 err_Vc_steps 2.015995561692301e-15
+A4-2 table=c gamma=1 err_Vq_steps 2.1421882690153952e-15
+A4-2 table=c gamma=1 err_EN_bwd 1.0132296220241806e-15
+A4-2 table=c gamma=1 err_F_bwd 1.5371712642632282e-15
+A4-2 table=c gamma=1 EN 12.272142074726071
+A4-2 table=c gamma=1 F 20.800820216041398
+A4-2 table=c gamma=1 mass_dev_max 2.4424906541753444e-15
+A4-2 table=c gamma=1 min_m 4.613929342030727e-11
+A4-2 table=c gamma=1 send_prob_min 0.32666872431164395
+A4-2 table=c gamma=1 pass True
+A4-2 table=c gamma=rand err_m_steps 2.659216256212498e-15
+A4-2 table=c gamma=rand err_EN_fwd 8.684825331635835e-16
+A4-2 table=c gamma=rand err_F_fwd 7.684188467701516e-16
+A4-2 table=c gamma=rand err_Vc_steps 1.988181564414838e-15
+A4-2 table=c gamma=rand err_Vq_steps 2.1421882690153952e-15
+A4-2 table=c gamma=rand err_EN_bwd 1.0132296220241806e-15
+A4-2 table=c gamma=rand err_F_bwd 1.2806980779502525e-15
+A4-2 table=c gamma=rand EN 12.272142074726071
+A4-2 table=c gamma=rand F 27.740446713924868
+A4-2 table=c gamma=rand mass_dev_max 2.4424906541753444e-15
+A4-2 table=c gamma=rand min_m 4.613929342030727e-11
+A4-2 table=c gamma=rand send_prob_min 0.32666872431164395
+A4-2 table=c gamma=rand pass True
+A4-2 table=a windows_crossing_grid_boundary (node-steps) 1392
+A4-2 table=b windows_crossing_grid_boundary (node-steps) 1650
+A4-2 table=c windows_crossing_grid_boundary (node-steps) 1924
+A4-2 small-grid explicit-matrix check (3 tables x 2 gamma, all errors <= 1e-12): PASS; 0.1 s
+A4 check 1 (SoD regression, both paths): PASS; check 2 (explicit matrices): PASS
