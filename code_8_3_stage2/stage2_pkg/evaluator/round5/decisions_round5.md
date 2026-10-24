@@ -26,3 +26,68 @@ and where it acts. Overnight mode: none of these stopped the run. Nothing was tu
   w_1 = 1, so the two branches add up to S (the reading under which the task's 353.153 + 113.005 = 466.158).
 - DECISION 0-6: mean send probability = (E[N] - 1)/(K - 1) (forced first sample excluded); full-trajectory ratio
   (S - 1)/(E[N] - 1); the single-step c/q is computed for alpha = -2, beta = 30 only and labelled as an illustration.
+
+## Part A (robustness.py)
+
+- DECISION A-1: theta_0 = [G(0), Re G(j w_1), Im G(j w_1), ..., Re G(j w_4), Im G(j w_4)] with G(s) = 2/(1+s)^2 (mc83.py), the
+  layout of the regressor h_k = [a0, a_m cos psi_m, -a_m sin psi_m]. The nominal output stays the round-4 array xbar
+  (dr.input_arrays); x(theta) = xbar + H (theta - theta_0) with theta - theta_0 taken from the archived theta vector. H theta_0
+  is computed only as a logged diagnostic of the layout (max |H theta_0 - xbar| / sigma), never used.
+- DECISION A-2: support windows under mismatch: the round-4 formula (windows88 for the tables, R = 88 sigma;
+  evaluator_fast.windows for the SoD, R = Delta + 48 sigma) centred at x_k(theta) on the frozen nominal grid. They are a
+  computational device that must hold the mass, whose support moves with x_k(theta); the table's stored ranges (start, width)
+  stay frozen and a node outside its step's stored range takes the boundary node's action (the frozen lookup rule). Each table
+  evaluation logs how many steps actually used a boundary lookup with non-zero mass. The grid must contain every window plus
+  the largest half-width (asserted).
+- DECISION A-3: the constant-Delta SoD control at theta is evaluator_fast.evaluate_fast with dr.input_arrays returning
+  (x(theta), H) and dr.make_grid pinned to the nominal xbar for that call (so the SoD and the tables share the frozen grid);
+  the table evaluations use dr.evaluate with dr.input_arrays and dr.run_ab replaced for the call (as round 4 replaced
+  run_ab). All replacements are restored after each call; workers run one evaluation at a time.
+- DECISION A-4: P1 uses the per-input normalisation max_k |h_k^T e_1| = a0 = 1, i.e. theta_1 += sign eps sigma exactly as the
+  spec writes it. P2: eta = sign eps sigma / max_k |h_k^T (0, theta_0[2..9])| (the AC part of the nominal output). P3 includes
+  theta_1 (i = 1..9, 18 points; its +-0.5 points coincide with P1 at eps = 0.5 and are evaluated again as P3 points). P4: one
+  sign (theta_0 + eps sigma d / max_k |h_k^T d|, as the spec writes it); d_j = row j of
+  default_rng(20261025).standard_normal((10, 9)) normalised to unit Euclidean length.
+- DECISION A-5: an assertion of the accepted evaluator (mass, min m, support edge, initial support) stops that evaluation (no
+  fallback, as round-4 DECISION A-4); it is archived with status 'assert_stop' and the sweep goes on with the other
+  evaluations. Counted in the report.
+- DECISION A-6: the theta_0 regression evaluates all four tables (P5514/S included) and both SoDs through the mismatch code path
+  with theta = theta_0, and compares: tables with round4/results/c1.json (E[N], E[N]_P, S, log det, Delta m_D: exact equality)
+  and with round4/results/J_<case>.npy (81 elements, exact), and w_k, E[q_k] with the round-4 path (evaluator_window
+  .evaluate_table with CodeTable) run in the same process; SoDs with evaluator_fast.evaluate_fast run unchanged (E[N],
+  E[N]_P, S, log det, 81 J elements, 5000 w_k: exact).
+- DECISION A-7: the sweep evaluates the three tables of spec §1.2 (U/S, U/W, P5514/W) and the two SoDs at every point
+  (400 evaluations); P5514/S only at theta_0. Delta m_D of a table = log det J_table(theta) - log det J_SoD(theta) of the same
+  input at the same theta; retention = Delta m_D(theta) / Delta m_D(theta_0) of the same table. The budget verdict is
+  E[N] <= B with the discrete evaluator's E[N], labelled 离散方案下; for the SoD rows it is recorded too.
+
+## Scoring readings (written before the Part A sweep and the Part B runs; the most conservative reading available)
+
+- DECISION S-1 (g_med, eps_50): g_med(eps) = median over the ten P4 directions of the U/W table's Delta m_D at the sampled
+  eps in {0.2, 0.5, 1, 2}; the nominal value is Delta m_D(theta_0) = g_med(0). "Below half" = g_med(eps) < g_med(0)/2.
+  eps_50 = the first sampled eps below half, reported with its two neighbouring sampled points (the previous one may be 0).
+  A crossing is a change of the predicate between consecutive sampled points (0 included). 非单调 is flagged when g_med is not
+  non-increasing over 0, 0.2, 0.5, 1, 2 or crosses more than once; then every crossing is reported. The same quantities are
+  logged for U/S and P5514/W as supplementary lines.
+- DECISION S-2 (eps_B): per table, for each P1 sign the sampled eps in {0.1, 0.2, 0.5, 1, 2, 4} at which E[N] first exceeds B
+  (eps = 0 is within budget for all tables). Worst sign = the sign with the smaller first-crossing eps; equal or both without
+  crossing -> the sign with the larger E[N] at the largest sampled eps at which they differ (both reported anyway). Same
+  neighbour / crossing / 非单调 rules as S-1 (non-monotone = E[N] not monotone in eps along that sign). Headline: U/W; U/S and
+  P5514/W reported with it.
+- DECISION S-3 (R1): 对 iff g_med(0.5) < g_med(0)/2 and g_med(2) <= 0; one of the two -> 部分对; none -> 错.
+- DECISION S-4 (R2): the spec does not name the table, so all three swept tables are scored; for a table R2 holds iff at some
+  sampled eps <= 1 one P1 sign has E[N] > B and the opposite sign at the same eps has E[N] < 200. 对 iff it holds for all three
+  tables; 部分对 if for some; 错 if for none.
+- DECISION S-5 (R3): per table, holds iff at P4 eps = 0.2 at least 8 of the 10 directions have Delta m_D >= 0.7 Delta m_D(theta_0)
+  and E[N] <= B (both on the same direction). U/W decides the reading of spec §4 (it is the table of the two-stage scheme B);
+  the verdict line also gives U/S and P5514/W, and R3 is 对 only if it holds for all three, 部分对 if for U/W but not all, 错 if
+  not for U/W.
+- DECISION S-6 (R4): four sub-claims: (i) log det B - log det A >= 3 at theta_0; (ii) log det D - log det B <= 1 at theta_0;
+  (iii) median over the ten P4 eps = 0.2 directions of [log det(J_SoD + J_UW) - log det(2 J_SoD)] >= 3; (iv) at least 8 of those
+  directions with E[N_SoD] + E[N_UW] <= 2B. 对 iff all four; 部分对 if some; 错 if none. The B - A' = 4.852 check is not scored.
+- DECISION S-7 (R5): retention = Delta m_D(theta)/Delta m_D(theta_0). Compared at the same eps level, P5514/W against U/W (the
+  only P5514 table swept; both weighted): P1 and P2 at each signed eps (12 + 10 points), P3 by the median over its 18 points,
+  P4 by the median over the ten directions at each eps (4). 27 comparisons; 对 iff P5514/W's retention is lower in all, 部分对
+  if in some, 错 if in none. The 80 pointwise comparisons are logged as a supplement.
+- DECISION S-8 (R6): wall time of the Part A sweep (400 forwards) + scheme A's 241 forwards + scheme D's lambda scan, as
+  logged; 对 iff <= 1.5 h. The theta_0 checks and figures are logged separately and not counted.

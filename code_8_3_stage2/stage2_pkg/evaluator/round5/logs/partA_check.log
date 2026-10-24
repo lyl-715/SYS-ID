@@ -1,0 +1,27 @@
+=== robustness.py check started 2026-10-24 16:59:41; spec reports_CN/plan_round5_CN.md v3.2; python 3.13.17, numpy 2.5.3, scipy 1.18.1, numba 0.68.0; B = 316.8921168493721; theta_0 = [2.0, -0.09418282548476453, -0.04700986910935495, -0.021769422116815165, -0.00467221421468943, -0.013602853745541023, -0.0022829964328180737, -0.01296036721172661, -0.002121398851610051]
+A-CHK U x(theta_0) bitwise equal to the nominal array: True; max |H theta_0 - xbar| / sigma (diagnostic, not used) 7.448991274709775e-12
+A-CHK U/SoD EN 316.8921168493721 S 466.15774934465276 logdet 197.20097668224076; bitwise vs evaluator_fast (E[N], E[N]_P, S, log det, 81 J, 5000 w_k): True; equal to round-4 c1.json: True
+A-CHK U/S EN 316.7014792439585 (round 4 c1.json 316.7014792439585) equal True
+A-CHK U/S S 1064.0993888525304 (round 4 c1.json 1064.0993888525304) equal True
+A-CHK U/S logdet 205.0609076009012 (round 4 c1.json 205.0609076009012) equal True
+A-CHK U/S dmD 7.859930918660439 (round 4 c1.json 7.859930918660439) equal True
+A-CHK U/S J (81 elements) bitwise equal to round4/results/J_U_S.npy: True; w_k and E[q_k] bitwise equal to the round-4 path (evaluator_window.evaluate_table, CodeTable) run now: True; boundary lookups with mass 0; mass dev 5.118128143521972e-13, min m 0.0, assertion failures 0
+A-CHK U/W EN 316.6035659260541 (round 4 c1.json 316.6035659260541) equal True
+A-CHK U/W S 1037.2604257322414 (round 4 c1.json 1037.2604257322414) equal True
+A-CHK U/W logdet 205.03141309913676 (round 4 c1.json 205.03141309913676) equal True
+A-CHK U/W dmD 7.830436416895992 (round 4 c1.json 7.830436416895992) equal True
+A-CHK U/W J (81 elements) bitwise equal to round4/results/J_U_W.npy: True; w_k and E[q_k] bitwise equal to the round-4 path (evaluator_window.evaluate_table, CodeTable) run now: True; boundary lookups with mass 0; mass dev 5.182521078950231e-13, min m 0.0, assertion failures 0
+A-CHK P5514 x(theta_0) bitwise equal to the nominal array: True; max |H theta_0 - xbar| / sigma (diagnostic, not used) 7.448991274709775e-12
+A-CHK P5514/SoD EN 316.4724658173142 S 486.6943784924982 logdet 197.90224219753293; bitwise vs evaluator_fast (E[N], E[N]_P, S, log det, 81 J, 5000 w_k): True; equal to round-4 c1.json: True
+A-CHK P5514/S EN 316.66625940413746 (round 4 c1.json 316.66625940413746) equal True
+A-CHK P5514/S S 1087.7563427868415 (round 4 c1.json 1087.7563427868415) equal True
+A-CHK P5514/S logdet 205.28318206409222 (round 4 c1.json 205.28318206409222) equal True
+A-CHK P5514/S dmD 7.380939866559288 (round 4 c1.json 7.380939866559288) equal True
+A-CHK P5514/S J (81 elements) bitwise equal to round4/results/J_P5514_S.npy: True; w_k and E[q_k] bitwise equal to the round-4 path (evaluator_window.evaluate_table, CodeTable) run now: True; boundary lookups with mass 0; mass dev 5.164757510556228e-13, min m 0.0, assertion failures 0
+A-CHK P5514/W EN 316.86639310005427 (round 4 c1.json 316.86639310005427) equal True
+A-CHK P5514/W S 1069.182922491094 (round 4 c1.json 1069.182922491094) equal True
+A-CHK P5514/W logdet 205.32021269820052 (round 4 c1.json 205.32021269820052) equal True
+A-CHK P5514/W dmD 7.417970500667593 (round 4 c1.json 7.417970500667593) equal True
+A-CHK P5514/W J (81 elements) bitwise equal to round4/results/J_P5514_W.npy: True; w_k and E[q_k] bitwise equal to the round-4 path (evaluator_window.evaluate_table, CodeTable) run now: True; boundary lookups with mass 0; mass dev 5.209166431541234e-13, min m 0.0, assertion failures 0
+A-CHK spec §2 items 1-2 (theta_0 regression, four tables and two SoDs, bit for bit): PASS
+=== robustness.py check done in 34.2 s

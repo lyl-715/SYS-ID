@@ -1,0 +1,4 @@
+=== robustness.py figs started 2026-10-24 17:05:31; spec reports_CN/plan_round5_CN.md v3.2; python 3.13.17, numpy 2.5.3, scipy 1.18.1, numba 0.68.0; B = 316.8921168493721; theta_0 = [2.0, -0.09418282548476453, -0.04700986910935495, -0.021769422116815165, -0.00467221421468943, -0.013602853745541023, -0.0022829964328180737, -0.01296036721172661, -0.002121398851610051]
+A-FIG fig_mismatch_dmD.png written
+A-FIG fig_mismatch_EN.png written
+=== robustness.py figs done in 2.1 s
