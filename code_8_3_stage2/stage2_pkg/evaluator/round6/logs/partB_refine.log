@@ -1,0 +1,158 @@
+=== refine_check.py started 2026-10-24 21:00:02; spec reports_CN/plan_round6_CN.md v3.2 §2; B = 316.8921168493721; tolerance 0.05
+B0 selected table m020 (m*); fine grid G = 70291, h = sigma/48 = 2.4840567527456095e-06; coarse G = 35146
+B0 nested grids: fine node 2i == coarse node i bitwise True; odd fine nodes equidistant to within 8.881784197001252e-16 (ties -> smaller index, j // 2)
+B0 12 sigma/48 evaluations in 12.8 s with 4 workers; max |sum m - 1| 1.1166623181679824e-12; min m 0.0; assertion failures 0
+B-REG theta_0 through the mismatch sigma/48 path vs round4/results/c2.json (exact): {'SoD_EN': True, 'SoD_logdet': True, 'SoD_S': True, 'm000_EN': True, 'm000_logdet': True, 'm000_S': True}; SoD E[N]_48 316.89136242955567 (c2 316.89136242955567), m000 E[N]_48 316.147295638973 (c2 316.147295638973), m000 log det_48 205.0192752105268 (c2 205.0192752105268)
+B2 theta0|theta_0|+|0.0 point 'theta0|theta_0|+|0.0'
+B2 theta0|theta_0|+|0.0 roles ['theta_0']
+B2 theta0|theta_0|+|0.0 main True
+B2 theta0|theta_0|+|0.0 eps_attained 0.0
+B2 theta0|theta_0|+|0.0 EN24 253.47685274907272
+B2 theta0|theta_0|+|0.0 EN48 253.201903128722
+B2 theta0|theta_0|+|0.0 dEN -0.2749496203507249
+B2 theta0|theta_0|+|0.0 dmD24 5.7106166799623
+B2 theta0|theta_0|+|0.0 dmD48 5.699123620623396
+B2 theta0|theta_0|+|0.0 ddmD -0.011493059338903322
+B2 theta0|theta_0|+|0.0 logdet24 202.91159336220306
+B2 theta0|theta_0|+|0.0 logdet48 202.90024237154904
+B2 theta0|theta_0|+|0.0 logdet_SoD24 197.20097668224076
+B2 theta0|theta_0|+|0.0 logdet_SoD48 197.20111875092564
+B2 theta0|theta_0|+|0.0 EN_SoD24 316.8921168493721
+B2 theta0|theta_0|+|0.0 EN_SoD48 316.89136242955567
+B2 theta0|theta_0|+|0.0 verdict24 'E[N] <= B'
+B2 theta0|theta_0|+|0.0 verdict48 'E[N] <= B'
+B2 theta0|theta_0|+|0.0 slack24 63.41526410029937
+B2 theta0|theta_0|+|0.0 slack48 63.69021372065009
+B2 theta0|theta_0|+|0.0 flip False
+B2 theta0|theta_0|+|0.0 undetermined True
+B2 theta0|theta_0|+|0.0 reasons ['|N_48 - N_24| = 0.2749 > 0.05']
+B2 theta0|theta_0|+|0.0 label '精度未定'
+B2 theta0|theta_0|+|0.0 assert_fail 0
+B2 theta0|theta_0|+|0.0 mass_dev_max 1.056044141023449e-12
+B2 theta0|theta_0|+|0.0 min_m 0.0
+B2 theta0|theta_0|+|0.0 boundary_steps48 None
+B2 theta0|theta_0|+|0.0 wall_s 7.867692605999991
+B2 P1|theta1|+|0.5 point 'P1|theta1|+|0.5'
+B2 P1|theta1|+|0.5 roles ['max E[N] in the 26']
+B2 P1|theta1|+|0.5 main True
+B2 P1|theta1|+|0.5 eps_attained 0.49999999999855677
+B2 P1|theta1|+|0.5 EN24 287.4150474836405
+B2 P1|theta1|+|0.5 EN48 286.1589816132073
+B2 P1|theta1|+|0.5 dEN -1.25606587043319
+B2 P1|theta1|+|0.5 dmD24 6.253716968920941
+B2 P1|theta1|+|0.5 dmD48 6.24001562246292
+B2 P1|theta1|+|0.5 ddmD -0.01370134645802068
+B2 P1|theta1|+|0.5 logdet24 203.4546936511618
+B2 P1|theta1|+|0.5 logdet48 203.44113437338848
+B2 P1|theta1|+|0.5 logdet_SoD24 197.20097668224085
+B2 P1|theta1|+|0.5 logdet_SoD48 197.20111875092556
+B2 P1|theta1|+|0.5 EN_SoD24 316.8921168493737
+B2 P1|theta1|+|0.5 EN_SoD48 316.8913624295517
+B2 P1|theta1|+|0.5 verdict24 'E[N] <= B'
+B2 P1|theta1|+|0.5 verdict48 'E[N] <= B'
+B2 P1|theta1|+|0.5 slack24 29.47706936573161
+B2 P1|theta1|+|0.5 slack48 30.7331352361648
+B2 P1|theta1|+|0.5 flip False
+B2 P1|theta1|+|0.5 undetermined True
+B2 P1|theta1|+|0.5 reasons ['|N_48 - N_24| = 1.2561 > 0.05']
+B2 P1|theta1|+|0.5 label '精度未定'
+B2 P1|theta1|+|0.5 assert_fail 0
+B2 P1|theta1|+|0.5 mass_dev_max 9.197087535994797e-13
+B2 P1|theta1|+|0.5 min_m 0.0
+B2 P1|theta1|+|0.5 boundary_steps48 None
+B2 P1|theta1|+|0.5 wall_s 7.705926206000186
+B2 P4|d1|+|0.5 point 'P4|d1|+|0.5'
+B2 P4|d1|+|0.5 roles ['min Delta m_D in the 26']
+B2 P4|d1|+|0.5 main True
+B2 P4|d1|+|0.5 eps_attained 0.5000000000022813
+B2 P4|d1|+|0.5 EN24 239.19651318489124
+B2 P4|d1|+|0.5 EN48 239.1313585351777
+B2 P4|d1|+|0.5 dEN -0.06515464971354845
+B2 P4|d1|+|0.5 dmD24 4.885555201854459
+B2 P4|d1|+|0.5 dmD48 4.875732806639178
+B2 P4|d1|+|0.5 ddmD -0.009822395215280721
+B2 P4|d1|+|0.5 logdet24 202.0814336341961
+B2 P4|d1|+|0.5 logdet48 202.07175322503923
+B2 P4|d1|+|0.5 logdet_SoD24 197.19587843234163
+B2 P4|d1|+|0.5 logdet_SoD48 197.19602041840005
+B2 P4|d1|+|0.5 EN_SoD24 316.70469872511
+B2 P4|d1|+|0.5 EN_SoD48 316.7039412853236
+B2 P4|d1|+|0.5 verdict24 'E[N] <= B'
+B2 P4|d1|+|0.5 verdict48 'E[N] <= B'
+B2 P4|d1|+|0.5 slack24 77.69560366448084
+B2 P4|d1|+|0.5 slack48 77.76075831419439
+B2 P4|d1|+|0.5 flip False
+B2 P4|d1|+|0.5 undetermined True
+B2 P4|d1|+|0.5 reasons ['|N_48 - N_24| = 0.0652 > 0.05']
+B2 P4|d1|+|0.5 label '精度未定'
+B2 P4|d1|+|0.5 assert_fail 0
+B2 P4|d1|+|0.5 mass_dev_max 1.0758061108617767e-12
+B2 P4|d1|+|0.5 min_m 0.0
+B2 P4|d1|+|0.5 boundary_steps48 None
+B2 P4|d1|+|0.5 wall_s 7.32723651099991
+B2 P1|theta1|+|4.0 point 'P1|theta1|+|4.0'
+B2 P1|theta1|+|4.0 roles ['max E[N] in the 80 (supplementary)']
+B2 P1|theta1|+|4.0 main False
+B2 P1|theta1|+|4.0 eps_attained 4.0000000000014895
+B2 P1|theta1|+|4.0 EN24 1168.4623240776816
+B2 P1|theta1|+|4.0 EN48 1167.6663645263045
+B2 P1|theta1|+|4.0 dEN -0.7959595513771092
+B2 P1|theta1|+|4.0 dmD24 11.243053140981118
+B2 P1|theta1|+|4.0 dmD48 11.24181624746555
+B2 P1|theta1|+|4.0 ddmD -0.0012368935155677718
+B2 P1|theta1|+|4.0 logdet24 208.444029823222
+B2 P1|theta1|+|4.0 logdet48 208.44293499839125
+B2 P1|theta1|+|4.0 logdet_SoD24 197.20097668224088
+B2 P1|theta1|+|4.0 logdet_SoD48 197.2011187509257
+B2 P1|theta1|+|4.0 EN_SoD24 316.8921168493738
+B2 P1|theta1|+|4.0 EN_SoD48 316.89136242955817
+B2 P1|theta1|+|4.0 verdict24 'E[N] > B'
+B2 P1|theta1|+|4.0 verdict48 'E[N] > B'
+B2 P1|theta1|+|4.0 slack24 -851.5702072283095
+B2 P1|theta1|+|4.0 slack48 -850.7742476769324
+B2 P1|theta1|+|4.0 flip False
+B2 P1|theta1|+|4.0 undetermined True
+B2 P1|theta1|+|4.0 reasons ['|N_48 - N_24| = 0.7960 > 0.05']
+B2 P1|theta1|+|4.0 label '（补充，不参与判定）精度未定'
+B2 P1|theta1|+|4.0 assert_fail 0
+B2 P1|theta1|+|4.0 mass_dev_max 8.479883462086946e-13
+B2 P1|theta1|+|4.0 min_m 0.0
+B2 P1|theta1|+|4.0 boundary_steps48 None
+B2 P1|theta1|+|4.0 wall_s 7.399536088999639
+B2 P4|d1|+|2.0 point 'P4|d1|+|2.0'
+B2 P4|d1|+|2.0 roles ['min Delta m_D in the 80 (supplementary)']
+B2 P4|d1|+|2.0 main False
+B2 P4|d1|+|2.0 eps_attained 2.000000000001676
+B2 P4|d1|+|2.0 EN24 227.90164985181448
+B2 P4|d1|+|2.0 EN48 228.15009995341444
+B2 P4|d1|+|2.0 dEN 0.24845010159995695
+B2 P4|d1|+|2.0 dmD24 2.949052904528372
+B2 P4|d1|+|2.0 dmD48 2.9506742142085045
+B2 P4|d1|+|2.0 ddmD 0.001621309680132299
+B2 P4|d1|+|2.0 logdet24 200.12929041751516
+B2 P4|d1|+|2.0 logdet48 200.13105355006635
+B2 P4|d1|+|2.0 logdet_SoD24 197.1802375129868
+B2 P4|d1|+|2.0 logdet_SoD48 197.18037933585785
+B2 P4|d1|+|2.0 EN_SoD24 316.1386787884671
+B2 P4|d1|+|2.0 EN_SoD48 316.137914180232
+B2 P4|d1|+|2.0 verdict24 'E[N] <= B'
+B2 P4|d1|+|2.0 verdict48 'E[N] <= B'
+B2 P4|d1|+|2.0 slack24 88.9904669975576
+B2 P4|d1|+|2.0 slack48 88.74201689595765
+B2 P4|d1|+|2.0 flip False
+B2 P4|d1|+|2.0 undetermined True
+B2 P4|d1|+|2.0 reasons ['|N_48 - N_24| = 0.2485 > 0.05']
+B2 P4|d1|+|2.0 label '（补充，不参与判定）精度未定'
+B2 P4|d1|+|2.0 assert_fail 0
+B2 P4|d1|+|2.0 mass_dev_max 1.0085265955694922e-12
+B2 P4|d1|+|2.0 min_m 0.0
+B2 P4|d1|+|2.0 boundary_steps48 None
+B2 P4|d1|+|2.0 wall_s 7.332913440999846
+B2-TAB point                        role                                      E[N]_24    E[N]_48    dE[N]   dmD_24   dmD_48     ddmD       v24       v48  label
+B2-TAB theta0|theta_0|+|0.0         theta_0                                  253.4769   253.2019  -0.2749   5.7106   5.6991  -0.0115 E[N] <= B E[N] <= B  精度未定 ['|N_48 - N_24| = 0.2749 > 0.05']
+B2-TAB P1|theta1|+|0.5              max E[N] in the 26                       287.4150   286.1590  -1.2561   6.2537   6.2400  -0.0137 E[N] <= B E[N] <= B  精度未定 ['|N_48 - N_24| = 1.2561 > 0.05']
+B2-TAB P4|d1|+|0.5                  min Delta m_D in the 26                  239.1965   239.1314  -0.0652   4.8856   4.8757  -0.0098 E[N] <= B E[N] <= B  精度未定 ['|N_48 - N_24| = 0.0652 > 0.05']
+B2-TAB P1|theta1|+|4.0              max E[N] in the 80 (supplementary)      1168.4623  1167.6664  -0.7960  11.2431  11.2418  -0.0012  E[N] > B  E[N] > B  （补充，不参与判定）精度未定 ['|N_48 - N_24| = 0.7960 > 0.05']
+B2-TAB P4|d1|+|2.0                  min Delta m_D in the 80 (supplementary   227.9016   228.1501  +0.2485   2.9491   2.9507  +0.0016 E[N] <= B E[N] <= B  （补充，不参与判定）精度未定 ['|N_48 - N_24| = 0.2485 > 0.05']
+B3 main check points 精度未定: ['theta0|theta_0|+|0.0', 'P1|theta1|+|0.5', 'P4|d1|+|0.5'] (3 of 3); verdict item (b) not met (离散方案下)
+=== refine_check.py done in 13.4 s
