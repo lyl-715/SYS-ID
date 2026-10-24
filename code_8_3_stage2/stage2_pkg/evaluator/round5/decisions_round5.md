@@ -110,3 +110,26 @@ and where it acts. Overnight mode: none of these stopped the run. Nothing was tu
 - DECISION B-4: the P4 rows of Part B (eps in {0.2, 0.5}, ten directions) take the U/SoD and U/W evaluations of the Part A
   archive at the same theta (same J's, from results/J_partA.npz); nothing is re-evaluated. A' total = 2 E[N_SoD(theta)],
   B total = E[N_SoD(theta)] + E[N_UW(theta)], each against 2B; "each stage <= B" logged separately.
+
+## Part C (headline.py, report)
+
+- DECISION C-1: the 非单调 flag of S-1 fires for all three g_med curves because they are not non-increasing: they rise
+  monotonically with eps (U/W 7.830, 7.855, 7.885, 7.942, 8.179) and never cross half the nominal value. The flag is reported
+  as the pre-written reading gives it, together with this explanation; in the ordinary sense the curves are monotone
+  (increasing) and have no crossing.
+- DECISION C-2: B is by definition the uniform input's constant-Delta SoD E[N] at theta_0, so U/SoD sits exactly on B; under P1
+  its E[N] moves by at most 1.2e-11 (shift invariance of the constant threshold), and its budget verdicts flip at that
+  rounding level (8/12 "> B"). They are recorded as the discrete evaluator gives them but are not a budget signal; no
+  prediction is scored on the SoD rows. The same definition puts A' exactly on 2B at theta_0 (slack 0.0), so at the P4 points
+  A' exceeds 2B in 6/10 directions by at most 0.37 sends (real discrete changes of E[N_SoD(theta)], recorded as given).
+- DECISION C-3: under mismatch the table and the paired SoD no longer send the same expected number of samples (the table's
+  E[N] leaves B, the SoD's stays within 316.9 +- 1.1); Delta m_D is reported as the spec defines it (same theta, different
+  send counts) and the report says so. No equal-send-count comparison under mismatch is computed (not in the spec). For scale
+  the report quotes scheme A's curve at theta_0 (log det of the constant-Delta SoD against its own E[N]); that is context,
+  not a correction.
+- DECISION C-4: headline.py gained one log line (C-SOD-P1: the SoD controls' largest E[N] deviation over the P1 points)
+  after its first run, to make C-2 traceable; nothing else changed and no scored line moved.
+- DECISION C-5 (record): the first run of part0_verify.py built the non-send mask from the already replaced dr.cfun, so the
+  non-send branch came out as 0 (the send branch and every 0b comparison were already right). The masking function now
+  receives the original cfun; the script was re-run and only the second run's log is committed. Reported in the report's
+  run-time paragraph.
