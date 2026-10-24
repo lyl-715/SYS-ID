@@ -1,0 +1,5 @@
+*.stdout
+__pycache__/
+*.tmp
+results/tables/
+results/runs/
