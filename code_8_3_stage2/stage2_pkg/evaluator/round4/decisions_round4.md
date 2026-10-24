@@ -26,3 +26,38 @@ acts. Overnight mode: none of these stopped the run.
   written in the step outside the next window (the window moves by at most 4 sigma = 96 nodes per step).
 - DECISION A-8: the small-grid kernel is `dr._kernel` normalised over all 200 nodes (the small grid is the whole support
   window at every step), in both the fast operator and the dense matrices, so the check isolates the transition operator.
+
+## Part B (trigger_dp.py)
+
+- DECISION B-1: objective (ii): J_SoD(u) is Part A's evaluation of the SoD table, which dispatches to the accepted operator
+  (bitwise `evaluator_fast`); gamma_k = sigma^-2 ||L^-1 h_k||^2 with J_SoD = L L^T (Cholesky, triangular solve, no inverse
+  formed). Check logged: sum_{k>=1} gamma_k w_k(SoD) = tr(J_SoD^-1 J_SoD) = 9.
+- DECISION B-2: action code c = i_- * 20 + i_+, (M^-, M^+) = (48 (i_- + 1), 48 (i_+ + 1)) grid units; the SoD action
+  (480, 480) is code 189; pad value 65535 beyond each step's support width.
+- DECISION B-3: in the DP, c is the formula of `mc83.cfun` evaluated from per-step node lookups u_j = (r_j - x_k)/sigma,
+  ndtr(u_j), ndtr(-u_j), phi(u_j) (the scipy/numpy functions cfun uses), with alpha = u_{i-M^-}, beta = u_{i+M^+}; the
+  evaluator forms alpha = (r_i - M^- h - x_k)/sigma. The two differ only by rounding of the node position (about 1e-12 in
+  alpha). qhat and Phat in the DP are formed by the same code and arrays as in the evaluator (bitwise identical). Logged per
+  lambda as a diagnostic: the DP's own value sum_i ghat_1 V_2 against F - lambda N of the forward pass of its stored table.
+- DECISION B-4: argmax ties -> the first action in code order (strict ">" over i_- outer, i_+ inner, ascending).
+- DECISION B-5: doubling from lambda_0 = 5 gbar runs 5, 10, 20, 40, 80 gbar; a doubled value above the cap 100 gbar is not
+  run (the cap is read as a limit on the values run, not as a value to be run).
+- DECISION B-6: in the downward scan the first lambda < 1e-3 gbar is run; if it is feasible the scan ends there with the
+  frozen message (not reached in any case).
+- DECISION B-7: bisection uses the arithmetic midpoint of the last feasible and first infeasible lambda.
+- DECISION B-8: feasibility is E[N] <= B with E[N] the Part A forward value (discrete qhat), B = 316.8921168493721; the
+  round 2a grey zone B +- tau_N is not used (spec §1.3 item 6).
+- DECISION B-9: N in the monotonicity check is N = E[N] - 1 = sum_{k>=2} E[q_k] from the forward pass; all pairs of evaluated
+  lambdas are compared after every run; a violation beyond relative 1e-9 would stop that case without a final policy (the
+  other cases continue). Not triggered.
+- DECISION B-10: each lambda's forward pass is a full Part A evaluation (`evaluate_table`: record and J), so log det and
+  Delta m_D are logged per lambda for information; the selection uses only F and feasibility.
+- DECISION B-11: checkpointing: after every run the table (uint16 .npy memmap in `results/tables/`, not committed), w_k,
+  E[q_k], J (`results/runs/`, not committed) and the scan record `results/scan_<case>.json` (committed) are written; a re-run
+  resumes by reusing a run whose lambda matches exactly.
+- DECISION B-12: the DP loop over nodes uses numba `prange` (4 threads). Each node is computed independently (no reduction),
+  so the tables do not depend on the thread count; the evaluator keeps the accepted flags (no parallel).
+- DECISION B-13: the uint16 memmaps of all evaluated tables stay in `results/tables/` (42 MB each, 1.8 GB in all, not
+  committed). For each final table the committed copy is `results/table_<case>.npz` (np.savez_compressed: codes, support
+  start indices, widths, lambda, run; about 0.3 MB). It is lossless (round trip checked in `logs/final_checks.log`), and
+  `np.save('x.npy', np.load('results/table_U_S.npz')['codes'])` rebuilds the memmap.
