@@ -1,0 +1,582 @@
+=== equal_send.py run started 2026-10-24 21:00:27; spec reports_CN/plan_round6_CN.md v3.2 §3; B = 316.8921168493721
+C0 selected table m020 (m*); 21 points (theta_0 + 20 P4); M in [120, 960]; window +-20; tolerance 1.0 send
+C0 archive results/archive_partC.jsonl: 0 evaluations resumed
+C-RUN nominal curve M = 120..960 at theta_0: 841 evaluations requested, 841 new, 0 memoised; 372.1 s
+C1 curve: E[N_M] at M = 120 1084.2395019443957, 480 316.8921168493721, 960 159.06585659002133; increasing steps (E[N_(M+1)] > E[N_M]) 0
+C1-REG curve at theta_0 vs round5/results/schemeA.json for M = 240..480 (E[N], S, log det, exact): 241/241 equal; mismatches []
+C1-REG M = 480 at theta_0 equals the Part A SoD at theta_0 (E[N], log det): True
+C-RUN local windows (41 per point): 861 evaluations requested, 820 new, 41 memoised; 351.2 s
+C2 points needing a full rescan of [120, 960]: 0 []
+C2 theta0|theta_0|+|0.0 point 'theta0|theta_0|+|0.0'
+C2 theta0|theta_0|+|0.0 cls 'theta0'
+C2 theta0|theta_0|+|0.0 dir 'theta_0'
+C2 theta0|theta_0|+|0.0 eps_target 0.0
+C2 theta0|theta_0|+|0.0 eps_attained 0.0
+C2 theta0|theta_0|+|0.0 E_table 253.47685274907272
+C2 theta0|theta_0|+|0.0 M0 602
+C2 theta0|theta_0|+|0.0 window [582, 622]
+C2 theta0|theta_0|+|0.0 M_local 602
+C2 theta0|theta_0|+|0.0 resid_local 0.09613326030068947
+C2 theta0|theta_0|+|0.0 at_endpoint False
+C2 theta0|theta_0|+|0.0 rescan False
+C2 theta0|theta_0|+|0.0 how 'local window'
+C2 theta0|theta_0|+|0.0 M_eq 602
+C2 theta0|theta_0|+|0.0 Delta_eq_over_sigma 25.083333333333332
+C2 theta0|theta_0|+|0.0 EN_eq 253.5729860093734
+C2 theta0|theta_0|+|0.0 resid 0.09613326030068947
+C2 theta0|theta_0|+|0.0 matched True
+C2 theta0|theta_0|+|0.0 reason None
+C2 theta0|theta_0|+|0.0 logdet_table 202.91159336220306
+C2 theta0|theta_0|+|0.0 logdet_SoD480 197.20097668224076
+C2 theta0|theta_0|+|0.0 EN_SoD480 316.8921168493721
+C2 theta0|theta_0|+|0.0 logdet_SoDeq 195.10511045900006
+C2 theta0|theta_0|+|0.0 dmD 5.7106166799623
+C2 theta0|theta_0|+|0.0 dmD_eq 7.806482903203005
+C2 theta0|theta_0|+|0.0 diff -2.095866223240705
+C2 P4|d1|+|0.2 point 'P4|d1|+|0.2'
+C2 P4|d1|+|0.2 cls 'P4'
+C2 P4|d1|+|0.2 dir 'd1'
+C2 P4|d1|+|0.2 eps_target 0.2
+C2 P4|d1|+|0.2 eps_attained 0.2000000000001676
+C2 P4|d1|+|0.2 E_table 246.7725543020093
+C2 P4|d1|+|0.2 M0 619
+C2 P4|d1|+|0.2 window [599, 639]
+C2 P4|d1|+|0.2 M_local 619
+C2 P4|d1|+|0.2 resid_local -0.2117185708049476
+C2 P4|d1|+|0.2 at_endpoint False
+C2 P4|d1|+|0.2 rescan False
+C2 P4|d1|+|0.2 how 'local window'
+C2 P4|d1|+|0.2 M_eq 619
+C2 P4|d1|+|0.2 Delta_eq_over_sigma 25.791666666666668
+C2 P4|d1|+|0.2 EN_eq 246.56083573120435
+C2 P4|d1|+|0.2 resid -0.2117185708049476
+C2 P4|d1|+|0.2 matched True
+C2 P4|d1|+|0.2 reason None
+C2 P4|d1|+|0.2 logdet_table 202.57493677713447
+C2 P4|d1|+|0.2 logdet_SoD480 197.19894519061597
+C2 P4|d1|+|0.2 EN_SoD480 316.8172370368826
+C2 P4|d1|+|0.2 logdet_SoDeq 194.84193383407404
+C2 P4|d1|+|0.2 dmD 5.375991586518495
+C2 P4|d1|+|0.2 dmD_eq 7.733002943060427
+C2 P4|d1|+|0.2 diff -2.357011356541932
+C2 P4|d2|+|0.2 point 'P4|d2|+|0.2'
+C2 P4|d2|+|0.2 cls 'P4'
+C2 P4|d2|+|0.2 dir 'd2'
+C2 P4|d2|+|0.2 eps_target 0.2
+C2 P4|d2|+|0.2 eps_attained 0.19999999999830537
+C2 P4|d2|+|0.2 E_table 248.11740369064688
+C2 P4|d2|+|0.2 M0 616
+C2 P4|d2|+|0.2 window [596, 636]
+C2 P4|d2|+|0.2 M_local 616
+C2 P4|d2|+|0.2 resid_local -0.02563618675154089
+C2 P4|d2|+|0.2 at_endpoint False
+C2 P4|d2|+|0.2 rescan False
+C2 P4|d2|+|0.2 how 'local window'
+C2 P4|d2|+|0.2 M_eq 616
+C2 P4|d2|+|0.2 Delta_eq_over_sigma 25.666666666666668
+C2 P4|d2|+|0.2 EN_eq 248.09176750389534
+C2 P4|d2|+|0.2 resid -0.02563618675154089
+C2 P4|d2|+|0.2 matched True
+C2 P4|d2|+|0.2 reason None
+C2 P4|d2|+|0.2 logdet_table 202.628344844832
+C2 P4|d2|+|0.2 logdet_SoD480 197.20150868346423
+C2 P4|d2|+|0.2 EN_SoD480 316.91697613538736
+C2 P4|d2|+|0.2 logdet_SoDeq 194.9066583375415
+C2 P4|d2|+|0.2 dmD 5.42683616136776
+C2 P4|d2|+|0.2 dmD_eq 7.721686507290485
+C2 P4|d2|+|0.2 diff -2.2948503459227254
+C2 P4|d3|+|0.2 point 'P4|d3|+|0.2'
+C2 P4|d3|+|0.2 cls 'P4'
+C2 P4|d3|+|0.2 dir 'd3'
+C2 P4|d3|+|0.2 eps_target 0.2
+C2 P4|d3|+|0.2 eps_attained 0.2000000000001676
+C2 P4|d3|+|0.2 E_table 254.40852798899886
+C2 P4|d3|+|0.2 M0 600
+C2 P4|d3|+|0.2 window [580, 620]
+C2 P4|d3|+|0.2 M_local 600
+C2 P4|d3|+|0.2 resid_local 0.07560511105771184
+C2 P4|d3|+|0.2 at_endpoint False
+C2 P4|d3|+|0.2 rescan False
+C2 P4|d3|+|0.2 how 'local window'
+C2 P4|d3|+|0.2 M_eq 600
+C2 P4|d3|+|0.2 Delta_eq_over_sigma 25.0
+C2 P4|d3|+|0.2 EN_eq 254.48413310005657
+C2 P4|d3|+|0.2 resid 0.07560511105771184
+C2 P4|d3|+|0.2 matched True
+C2 P4|d3|+|0.2 reason None
+C2 P4|d3|+|0.2 logdet_table 202.96212846534215
+C2 P4|d3|+|0.2 logdet_SoD480 197.20217054717017
+C2 P4|d3|+|0.2 EN_SoD480 316.9345243952766
+C2 P4|d3|+|0.2 logdet_SoDeq 195.139387138649
+C2 P4|d3|+|0.2 dmD 5.7599579181719776
+C2 P4|d3|+|0.2 dmD_eq 7.822741326693148
+C2 P4|d3|+|0.2 diff -2.0627834085211703
+C2 P4|d4|+|0.2 point 'P4|d4|+|0.2'
+C2 P4|d4|+|0.2 cls 'P4'
+C2 P4|d4|+|0.2 dir 'd4'
+C2 P4|d4|+|0.2 eps_target 0.2
+C2 P4|d4|+|0.2 eps_attained 0.2000000000001676
+C2 P4|d4|+|0.2 E_table 254.5650609571409
+C2 P4|d4|+|0.2 M0 600
+C2 P4|d4|+|0.2 window [580, 620]
+C2 P4|d4|+|0.2 M_local 600
+C2 P4|d4|+|0.2 resid_local -0.05225663472384667
+C2 P4|d4|+|0.2 at_endpoint False
+C2 P4|d4|+|0.2 rescan False
+C2 P4|d4|+|0.2 how 'local window'
+C2 P4|d4|+|0.2 M_eq 600
+C2 P4|d4|+|0.2 Delta_eq_over_sigma 25.0
+C2 P4|d4|+|0.2 EN_eq 254.51280432241705
+C2 P4|d4|+|0.2 resid -0.05225663472384667
+C2 P4|d4|+|0.2 matched True
+C2 P4|d4|+|0.2 reason None
+C2 P4|d4|+|0.2 logdet_table 202.9380740947196
+C2 P4|d4|+|0.2 logdet_SoD480 197.20258525164118
+C2 P4|d4|+|0.2 EN_SoD480 316.9663209087851
+C2 P4|d4|+|0.2 logdet_SoDeq 195.1400499306665
+C2 P4|d4|+|0.2 dmD 5.7354888430784285
+C2 P4|d4|+|0.2 dmD_eq 7.798024164053118
+C2 P4|d4|+|0.2 diff -2.062535320974689
+C2 P4|d5|+|0.2 point 'P4|d5|+|0.2'
+C2 P4|d5|+|0.2 cls 'P4'
+C2 P4|d5|+|0.2 dir 'd5'
+C2 P4|d5|+|0.2 eps_target 0.2
+C2 P4|d5|+|0.2 eps_attained 0.2000000000001676
+C2 P4|d5|+|0.2 E_table 252.42098137546893
+C2 P4|d5|+|0.2 M0 605
+C2 P4|d5|+|0.2 window [585, 625]
+C2 P4|d5|+|0.2 M_local 605
+C2 P4|d5|+|0.2 resid_local -0.12755316674900996
+C2 P4|d5|+|0.2 at_endpoint False
+C2 P4|d5|+|0.2 rescan False
+C2 P4|d5|+|0.2 how 'local window'
+C2 P4|d5|+|0.2 M_eq 605
+C2 P4|d5|+|0.2 Delta_eq_over_sigma 25.208333333333332
+C2 P4|d5|+|0.2 EN_eq 252.29342820871992
+C2 P4|d5|+|0.2 resid -0.12755316674900996
+C2 P4|d5|+|0.2 matched True
+C2 P4|d5|+|0.2 reason None
+C2 P4|d5|+|0.2 logdet_table 202.83240007817906
+C2 P4|d5|+|0.2 logdet_SoD480 197.19993586240975
+C2 P4|d5|+|0.2 EN_SoD480 316.8396016776876
+C2 P4|d5|+|0.2 logdet_SoDeq 195.0582995000148
+C2 P4|d5|+|0.2 dmD 5.632464215769318
+C2 P4|d5|+|0.2 dmD_eq 7.774100578164251
+C2 P4|d5|+|0.2 diff -2.1416363623949337
+C2 P4|d6|+|0.2 point 'P4|d6|+|0.2'
+C2 P4|d6|+|0.2 cls 'P4'
+C2 P4|d6|+|0.2 dir 'd6'
+C2 P4|d6|+|0.2 eps_target 0.2
+C2 P4|d6|+|0.2 eps_attained 0.2000000000001676
+C2 P4|d6|+|0.2 E_table 252.5593951666471
+C2 P4|d6|+|0.2 M0 604
+C2 P4|d6|+|0.2 window [584, 624]
+C2 P4|d6|+|0.2 M_local 604
+C2 P4|d6|+|0.2 resid_local 0.1756031352914249
+C2 P4|d6|+|0.2 at_endpoint False
+C2 P4|d6|+|0.2 rescan False
+C2 P4|d6|+|0.2 how 'local window'
+C2 P4|d6|+|0.2 M_eq 604
+C2 P4|d6|+|0.2 Delta_eq_over_sigma 25.166666666666668
+C2 P4|d6|+|0.2 EN_eq 252.73499830193853
+C2 P4|d6|+|0.2 resid 0.1756031352914249
+C2 P4|d6|+|0.2 matched True
+C2 P4|d6|+|0.2 reason None
+C2 P4|d6|+|0.2 logdet_table 202.8016115542039
+C2 P4|d6|+|0.2 logdet_SoD480 197.20091950202232
+C2 P4|d6|+|0.2 EN_SoD480 316.8929227311563
+C2 P4|d6|+|0.2 logdet_SoDeq 195.07385515423286
+C2 P4|d6|+|0.2 dmD 5.600692052181586
+C2 P4|d6|+|0.2 dmD_eq 7.727756399971042
+C2 P4|d6|+|0.2 diff -2.1270643477894566
+C2 P4|d7|+|0.2 point 'P4|d7|+|0.2'
+C2 P4|d7|+|0.2 cls 'P4'
+C2 P4|d7|+|0.2 dir 'd7'
+C2 P4|d7|+|0.2 eps_target 0.2
+C2 P4|d7|+|0.2 eps_attained 0.19999999999830537
+C2 P4|d7|+|0.2 E_table 255.81064588857643
+C2 P4|d7|+|0.2 M0 597
+C2 P4|d7|+|0.2 window [577, 617]
+C2 P4|d7|+|0.2 M_local 597
+C2 P4|d7|+|0.2 resid_local -0.05451792334383754
+C2 P4|d7|+|0.2 at_endpoint False
+C2 P4|d7|+|0.2 rescan False
+C2 P4|d7|+|0.2 how 'local window'
+C2 P4|d7|+|0.2 M_eq 597
+C2 P4|d7|+|0.2 Delta_eq_over_sigma 24.875
+C2 P4|d7|+|0.2 EN_eq 255.7561279652326
+C2 P4|d7|+|0.2 resid -0.05451792334383754
+C2 P4|d7|+|0.2 matched True
+C2 P4|d7|+|0.2 reason None
+C2 P4|d7|+|0.2 logdet_table 202.99228433457003
+C2 P4|d7|+|0.2 logdet_SoD480 197.20129007388863
+C2 P4|d7|+|0.2 EN_SoD480 316.89377405637697
+C2 P4|d7|+|0.2 logdet_SoDeq 195.1864334906436
+C2 P4|d7|+|0.2 dmD 5.790994260681401
+C2 P4|d7|+|0.2 dmD_eq 7.805850843926436
+C2 P4|d7|+|0.2 diff -2.0148565832450345
+C2 P4|d8|+|0.2 point 'P4|d8|+|0.2'
+C2 P4|d8|+|0.2 cls 'P4'
+C2 P4|d8|+|0.2 dir 'd8'
+C2 P4|d8|+|0.2 eps_target 0.2
+C2 P4|d8|+|0.2 eps_attained 0.20000000000202986
+C2 P4|d8|+|0.2 E_table 256.9990298734232
+C2 P4|d8|+|0.2 M0 594
+C2 P4|d8|+|0.2 window [574, 614]
+C2 P4|d8|+|0.2 M_local 594
+C2 P4|d8|+|0.2 resid_local -0.01696510803100182
+C2 P4|d8|+|0.2 at_endpoint False
+C2 P4|d8|+|0.2 rescan False
+C2 P4|d8|+|0.2 how 'local window'
+C2 P4|d8|+|0.2 M_eq 594
+C2 P4|d8|+|0.2 Delta_eq_over_sigma 24.75
+C2 P4|d8|+|0.2 EN_eq 256.9820647653922
+C2 P4|d8|+|0.2 resid -0.01696510803100182
+C2 P4|d8|+|0.2 matched True
+C2 P4|d8|+|0.2 reason None
+C2 P4|d8|+|0.2 logdet_table 203.04170925428934
+C2 P4|d8|+|0.2 logdet_SoD480 197.1991310655608
+C2 P4|d8|+|0.2 EN_SoD480 316.82159418509036
+C2 P4|d8|+|0.2 logdet_SoDeq 195.23154406596586
+C2 P4|d8|+|0.2 dmD 5.842578188728538
+C2 P4|d8|+|0.2 dmD_eq 7.810165188323481
+C2 P4|d8|+|0.2 diff -1.9675869995949427
+C2 P4|d9|+|0.2 point 'P4|d9|+|0.2'
+C2 P4|d9|+|0.2 cls 'P4'
+C2 P4|d9|+|0.2 dir 'd9'
+C2 P4|d9|+|0.2 eps_target 0.2
+C2 P4|d9|+|0.2 eps_attained 0.2000000000001676
+C2 P4|d9|+|0.2 E_table 258.87065591350415
+C2 P4|d9|+|0.2 M0 590
+C2 P4|d9|+|0.2 window [570, 610]
+C2 P4|d9|+|0.2 M_local 590
+C2 P4|d9|+|0.2 resid_local -0.021895933002554102
+C2 P4|d9|+|0.2 at_endpoint False
+C2 P4|d9|+|0.2 rescan False
+C2 P4|d9|+|0.2 how 'local window'
+C2 P4|d9|+|0.2 M_eq 590
+C2 P4|d9|+|0.2 Delta_eq_over_sigma 24.583333333333332
+C2 P4|d9|+|0.2 EN_eq 258.8487599805016
+C2 P4|d9|+|0.2 resid -0.021895933002554102
+C2 P4|d9|+|0.2 matched True
+C2 P4|d9|+|0.2 reason None
+C2 P4|d9|+|0.2 logdet_table 203.1133438510287
+C2 P4|d9|+|0.2 logdet_SoD480 197.20257200957514
+C2 P4|d9|+|0.2 EN_SoD480 316.9589120237237
+C2 P4|d9|+|0.2 logdet_SoDeq 195.3026964658725
+C2 P4|d9|+|0.2 dmD 5.910771841453567
+C2 P4|d9|+|0.2 dmD_eq 7.810647385156216
+C2 P4|d9|+|0.2 diff -1.8998755437026489
+C2 P4|d10|+|0.2 point 'P4|d10|+|0.2'
+C2 P4|d10|+|0.2 cls 'P4'
+C2 P4|d10|+|0.2 dir 'd10'
+C2 P4|d10|+|0.2 eps_target 0.2
+C2 P4|d10|+|0.2 eps_attained 0.2000000000001676
+C2 P4|d10|+|0.2 E_table 260.6870309376389
+C2 P4|d10|+|0.2 M0 586
+C2 P4|d10|+|0.2 window [566, 606]
+C2 P4|d10|+|0.2 M_local 586
+C2 P4|d10|+|0.2 resid_local -0.1208675521937721
+C2 P4|d10|+|0.2 at_endpoint False
+C2 P4|d10|+|0.2 rescan False
+C2 P4|d10|+|0.2 how 'local window'
+C2 P4|d10|+|0.2 M_eq 586
+C2 P4|d10|+|0.2 Delta_eq_over_sigma 24.416666666666668
+C2 P4|d10|+|0.2 EN_eq 260.5661633854451
+C2 P4|d10|+|0.2 resid -0.1208675521937721
+C2 P4|d10|+|0.2 matched True
+C2 P4|d10|+|0.2 reason None
+C2 P4|d10|+|0.2 logdet_table 203.21257224946217
+C2 P4|d10|+|0.2 logdet_SoD480 197.20000819840143
+C2 P4|d10|+|0.2 EN_SoD480 316.85593283676207
+C2 P4|d10|+|0.2 logdet_SoDeq 195.3679936305896
+C2 P4|d10|+|0.2 dmD 6.012564051060735
+C2 P4|d10|+|0.2 dmD_eq 7.844578618872561
+C2 P4|d10|+|0.2 diff -1.8320145678118251
+C2 P4|d1|+|0.5 point 'P4|d1|+|0.5'
+C2 P4|d1|+|0.5 cls 'P4'
+C2 P4|d1|+|0.5 dir 'd1'
+C2 P4|d1|+|0.5 eps_target 0.5
+C2 P4|d1|+|0.5 eps_attained 0.5000000000022813
+C2 P4|d1|+|0.5 E_table 239.19651318489124
+C2 P4|d1|+|0.5 M0 638
+C2 P4|d1|+|0.5 window [618, 658]
+C2 P4|d1|+|0.5 M_local 638
+C2 P4|d1|+|0.5 resid_local 0.005797217743491956
+C2 P4|d1|+|0.5 at_endpoint False
+C2 P4|d1|+|0.5 rescan False
+C2 P4|d1|+|0.5 how 'local window'
+C2 P4|d1|+|0.5 M_eq 638
+C2 P4|d1|+|0.5 Delta_eq_over_sigma 26.583333333333332
+C2 P4|d1|+|0.5 EN_eq 239.20231040263474
+C2 P4|d1|+|0.5 resid 0.005797217743491956
+C2 P4|d1|+|0.5 matched True
+C2 P4|d1|+|0.5 reason None
+C2 P4|d1|+|0.5 logdet_table 202.0814336341961
+C2 P4|d1|+|0.5 logdet_SoD480 197.19587843234163
+C2 P4|d1|+|0.5 EN_SoD480 316.70469872511
+C2 P4|d1|+|0.5 logdet_SoDeq 194.5639402339489
+C2 P4|d1|+|0.5 dmD 4.885555201854459
+C2 P4|d1|+|0.5 dmD_eq 7.51749340024719
+C2 P4|d1|+|0.5 diff -2.6319381983927315
+C2 P4|d2|+|0.5 point 'P4|d2|+|0.5'
+C2 P4|d2|+|0.5 cls 'P4'
+C2 P4|d2|+|0.5 dir 'd2'
+C2 P4|d2|+|0.5 eps_target 0.5
+C2 P4|d2|+|0.5 eps_attained 0.500000000000419
+C2 P4|d2|+|0.5 E_table 242.16429040145258
+C2 P4|d2|+|0.5 M0 632
+C2 P4|d2|+|0.5 window [612, 652]
+C2 P4|d2|+|0.5 M_local 632
+C2 P4|d2|+|0.5 resid_local 0.05948557078696126
+C2 P4|d2|+|0.5 at_endpoint False
+C2 P4|d2|+|0.5 rescan False
+C2 P4|d2|+|0.5 how 'local window'
+C2 P4|d2|+|0.5 M_eq 632
+C2 P4|d2|+|0.5 Delta_eq_over_sigma 26.333333333333332
+C2 P4|d2|+|0.5 EN_eq 242.22377597223954
+C2 P4|d2|+|0.5 resid 0.05948557078696126
+C2 P4|d2|+|0.5 matched True
+C2 P4|d2|+|0.5 reason None
+C2 P4|d2|+|0.5 logdet_table 202.1977528084268
+C2 P4|d2|+|0.5 logdet_SoD480 197.20232858346935
+C2 P4|d2|+|0.5 EN_SoD480 316.9545885783892
+C2 P4|d2|+|0.5 logdet_SoDeq 194.69860879953242
+C2 P4|d2|+|0.5 dmD 4.995424224957446
+C2 P4|d2|+|0.5 dmD_eq 7.499144008894376
+C2 P4|d2|+|0.5 diff -2.50371978393693
+C2 P4|d3|+|0.5 point 'P4|d3|+|0.5'
+C2 P4|d3|+|0.5 cls 'P4'
+C2 P4|d3|+|0.5 dir 'd3'
+C2 P4|d3|+|0.5 eps_target 0.5
+C2 P4|d3|+|0.5 eps_attained 0.500000000000419
+C2 P4|d3|+|0.5 E_table 258.28943797909966
+C2 P4|d3|+|0.5 M0 591
+C2 P4|d3|+|0.5 window [571, 611]
+C2 P4|d3|+|0.5 M_local 591
+C2 P4|d3|+|0.5 resid_local 0.13986690459722695
+C2 P4|d3|+|0.5 at_endpoint False
+C2 P4|d3|+|0.5 rescan False
+C2 P4|d3|+|0.5 how 'local window'
+C2 P4|d3|+|0.5 M_eq 591
+C2 P4|d3|+|0.5 Delta_eq_over_sigma 24.625
+C2 P4|d3|+|0.5 EN_eq 258.4293048836969
+C2 P4|d3|+|0.5 resid 0.13986690459722695
+C2 P4|d3|+|0.5 matched True
+C2 P4|d3|+|0.5 reason None
+C2 P4|d3|+|0.5 logdet_table 203.0491997582667
+C2 P4|d3|+|0.5 logdet_SoD480 197.20396151840785
+C2 P4|d3|+|0.5 EN_SoD480 316.9981592681589
+C2 P4|d3|+|0.5 logdet_SoDeq 195.28638678857408
+C2 P4|d3|+|0.5 dmD 5.845238239858844
+C2 P4|d3|+|0.5 dmD_eq 7.762812969692618
+C2 P4|d3|+|0.5 diff -1.917574729833774
+C2 P4|d4|+|0.5 point 'P4|d4|+|0.5'
+C2 P4|d4|+|0.5 cls 'P4'
+C2 P4|d4|+|0.5 dir 'd4'
+C2 P4|d4|+|0.5 eps_target 0.5
+C2 P4|d4|+|0.5 eps_attained 0.5000000000022813
+C2 P4|d4|+|0.5 E_table 258.7325629614288
+C2 P4|d4|+|0.5 M0 590
+C2 P4|d4|+|0.5 window [570, 610]
+C2 P4|d4|+|0.5 M_local 590
+C2 P4|d4|+|0.5 resid_local 0.21793536544788594
+C2 P4|d4|+|0.5 at_endpoint False
+C2 P4|d4|+|0.5 rescan False
+C2 P4|d4|+|0.5 how 'local window'
+C2 P4|d4|+|0.5 M_eq 590
+C2 P4|d4|+|0.5 Delta_eq_over_sigma 24.583333333333332
+C2 P4|d4|+|0.5 EN_eq 258.9504983268767
+C2 P4|d4|+|0.5 resid 0.21793536544788594
+C2 P4|d4|+|0.5 matched True
+C2 P4|d4|+|0.5 reason None
+C2 P4|d4|+|0.5 logdet_table 202.97656855034552
+C2 P4|d4|+|0.5 logdet_SoD480 197.2049894702536
+C2 P4|d4|+|0.5 EN_SoD480 317.0773803775765
+C2 P4|d4|+|0.5 logdet_SoDeq 195.3055976084567
+C2 P4|d4|+|0.5 dmD 5.771579080091925
+C2 P4|d4|+|0.5 dmD_eq 7.670970941888811
+C2 P4|d4|+|0.5 diff -1.899391861796886
+C2 P4|d5|+|0.5 point 'P4|d5|+|0.5'
+C2 P4|d5|+|0.5 cls 'P4'
+C2 P4|d5|+|0.5 dir 'd5'
+C2 P4|d5|+|0.5 eps_target 0.5
+C2 P4|d5|+|0.5 eps_attained 0.49999999999855677
+C2 P4|d5|+|0.5 E_table 251.93002039054244
+C2 P4|d5|+|0.5 M0 606
+C2 P4|d5|+|0.5 window [586, 626]
+C2 P4|d5|+|0.5 M_local 606
+C2 P4|d5|+|0.5 resid_local -0.07688001985829374
+C2 P4|d5|+|0.5 at_endpoint False
+C2 P4|d5|+|0.5 rescan False
+C2 P4|d5|+|0.5 how 'local window'
+C2 P4|d5|+|0.5 M_eq 606
+C2 P4|d5|+|0.5 Delta_eq_over_sigma 25.25
+C2 P4|d5|+|0.5 EN_eq 251.85314037068414
+C2 P4|d5|+|0.5 resid -0.07688001985829374
+C2 P4|d5|+|0.5 matched True
+C2 P4|d5|+|0.5 reason None
+C2 P4|d5|+|0.5 logdet_table 202.694183304343
+C2 P4|d5|+|0.5 logdet_SoD480 197.1983657949847
+C2 P4|d5|+|0.5 EN_SoD480 316.7607147385634
+C2 P4|d5|+|0.5 logdet_SoDeq 195.04343302421617
+C2 P4|d5|+|0.5 dmD 5.4958175093582895
+C2 P4|d5|+|0.5 dmD_eq 7.650750280126829
+C2 P4|d5|+|0.5 diff -2.1549327707685393
+C2 P4|d6|+|0.5 point 'P4|d6|+|0.5'
+C2 P4|d6|+|0.5 cls 'P4'
+C2 P4|d6|+|0.5 dir 'd6'
+C2 P4|d6|+|0.5 eps_target 0.5
+C2 P4|d6|+|0.5 eps_attained 0.500000000000419
+C2 P4|d6|+|0.5 E_table 253.59062440258174
+C2 P4|d6|+|0.5 M0 602
+C2 P4|d6|+|0.5 window [582, 622]
+C2 P4|d6|+|0.5 M_local 602
+C2 P4|d6|+|0.5 resid_local -0.013371236630291605
+C2 P4|d6|+|0.5 at_endpoint False
+C2 P4|d6|+|0.5 rescan False
+C2 P4|d6|+|0.5 how 'local window'
+C2 P4|d6|+|0.5 M_eq 602
+C2 P4|d6|+|0.5 Delta_eq_over_sigma 25.083333333333332
+C2 P4|d6|+|0.5 EN_eq 253.57725316595145
+C2 P4|d6|+|0.5 resid -0.013371236630291605
+C2 P4|d6|+|0.5 matched True
+C2 P4|d6|+|0.5 reason None
+C2 P4|d6|+|0.5 logdet_table 202.64011854450115
+C2 P4|d6|+|0.5 logdet_SoD480 197.20083217239306
+C2 P4|d6|+|0.5 EN_SoD480 316.8941202836778
+C2 P4|d6|+|0.5 logdet_SoDeq 195.10490634448587
+C2 P4|d6|+|0.5 dmD 5.439286372108086
+C2 P4|d6|+|0.5 dmD_eq 7.53521220001528
+C2 P4|d6|+|0.5 diff -2.0959258279071946
+C2 P4|d7|+|0.5 point 'P4|d7|+|0.5'
+C2 P4|d7|+|0.5 cls 'P4'
+C2 P4|d7|+|0.5 dir 'd7'
+C2 P4|d7|+|0.5 eps_target 0.5
+C2 P4|d7|+|0.5 eps_attained 0.49999999999855677
+C2 P4|d7|+|0.5 E_table 262.9896606317478
+C2 P4|d7|+|0.5 M0 580
+C2 P4|d7|+|0.5 window [560, 600]
+C2 P4|d7|+|0.5 M_local 580
+C2 P4|d7|+|0.5 resid_local 0.12241199958407378
+C2 P4|d7|+|0.5 at_endpoint False
+C2 P4|d7|+|0.5 rescan False
+C2 P4|d7|+|0.5 how 'local window'
+C2 P4|d7|+|0.5 M_eq 580
+C2 P4|d7|+|0.5 Delta_eq_over_sigma 24.166666666666668
+C2 P4|d7|+|0.5 EN_eq 263.1120726313319
+C2 P4|d7|+|0.5 resid 0.12241199958407378
+C2 P4|d7|+|0.5 matched True
+C2 P4|d7|+|0.5 reason None
+C2 P4|d7|+|0.5 logdet_table 203.12966180963173
+C2 P4|d7|+|0.5 logdet_SoD480 197.2017573491648
+C2 P4|d7|+|0.5 EN_SoD480 316.89626318419465
+C2 P4|d7|+|0.5 logdet_SoDeq 195.45544801396906
+C2 P4|d7|+|0.5 dmD 5.9279044604669195
+C2 P4|d7|+|0.5 dmD_eq 7.674213795662666
+C2 P4|d7|+|0.5 diff -1.7463093351957468
+C2 P4|d8|+|0.5 point 'P4|d8|+|0.5'
+C2 P4|d8|+|0.5 cls 'P4'
+C2 P4|d8|+|0.5 dir 'd8'
+C2 P4|d8|+|0.5 eps_target 0.5
+C2 P4|d8|+|0.5 eps_attained 0.5000000000022813
+C2 P4|d8|+|0.5 E_table 265.695243322764
+C2 P4|d8|+|0.5 M0 574
+C2 P4|d8|+|0.5 window [554, 594]
+C2 P4|d8|+|0.5 M_local 574
+C2 P4|d8|+|0.5 resid_local 0.004003817031787094
+C2 P4|d8|+|0.5 at_endpoint False
+C2 P4|d8|+|0.5 rescan False
+C2 P4|d8|+|0.5 how 'local window'
+C2 P4|d8|+|0.5 M_eq 574
+C2 P4|d8|+|0.5 Delta_eq_over_sigma 23.916666666666668
+C2 P4|d8|+|0.5 EN_eq 265.6992471397958
+C2 P4|d8|+|0.5 resid 0.004003817031787094
+C2 P4|d8|+|0.5 matched True
+C2 P4|d8|+|0.5 reason None
+C2 P4|d8|+|0.5 logdet_table 203.2279992919444
+C2 P4|d8|+|0.5 logdet_SoD480 197.1963441265714
+C2 P4|d8|+|0.5 EN_SoD480 316.7155899560255
+C2 P4|d8|+|0.5 logdet_SoDeq 195.54988837556698
+C2 P4|d8|+|0.5 dmD 6.031655165372996
+C2 P4|d8|+|0.5 dmD_eq 7.67811091637742
+C2 P4|d8|+|0.5 diff -1.6464557510044244
+C2 P4|d9|+|0.5 point 'P4|d9|+|0.5'
+C2 P4|d9|+|0.5 cls 'P4'
+C2 P4|d9|+|0.5 dir 'd9'
+C2 P4|d9|+|0.5 eps_target 0.5
+C2 P4|d9|+|0.5 eps_attained 0.5000000000022813
+C2 P4|d9|+|0.5 E_table 271.2069094303558
+C2 P4|d9|+|0.5 M0 562
+C2 P4|d9|+|0.5 window [542, 582]
+C2 P4|d9|+|0.5 M_local 563
+C2 P4|d9|+|0.5 resid_local -0.11825064003551233
+C2 P4|d9|+|0.5 at_endpoint False
+C2 P4|d9|+|0.5 rescan False
+C2 P4|d9|+|0.5 how 'local window'
+C2 P4|d9|+|0.5 M_eq 563
+C2 P4|d9|+|0.5 Delta_eq_over_sigma 23.458333333333332
+C2 P4|d9|+|0.5 EN_eq 271.08865879032027
+C2 P4|d9|+|0.5 resid -0.11825064003551233
+C2 P4|d9|+|0.5 matched True
+C2 P4|d9|+|0.5 reason None
+C2 P4|d9|+|0.5 logdet_table 203.42042721474803
+C2 P4|d9|+|0.5 logdet_SoD480 197.20495990953626
+C2 P4|d9|+|0.5 EN_SoD480 317.0590018473059
+C2 P4|d9|+|0.5 logdet_SoDeq 195.7399371238036
+C2 P4|d9|+|0.5 dmD 6.215467305211774
+C2 P4|d9|+|0.5 dmD_eq 7.680490090944431
+C2 P4|d9|+|0.5 diff -1.465022785732657
+C2 P4|d10|+|0.5 point 'P4|d10|+|0.5'
+C2 P4|d10|+|0.5 cls 'P4'
+C2 P4|d10|+|0.5 dir 'd10'
+C2 P4|d10|+|0.5 eps_target 0.5
+C2 P4|d10|+|0.5 eps_attained 0.49999999999855677
+C2 P4|d10|+|0.5 E_table 274.7844863569368
+C2 P4|d10|+|0.5 M0 555
+C2 P4|d10|+|0.5 window [535, 575]
+C2 P4|d10|+|0.5 M_local 555
+C2 P4|d10|+|0.5 resid_local 0.13998622064212896
+C2 P4|d10|+|0.5 at_endpoint False
+C2 P4|d10|+|0.5 rescan False
+C2 P4|d10|+|0.5 how 'local window'
+C2 P4|d10|+|0.5 M_eq 555
+C2 P4|d10|+|0.5 Delta_eq_over_sigma 23.125
+C2 P4|d10|+|0.5 EN_eq 274.9244725775789
+C2 P4|d10|+|0.5 resid 0.13998622064212896
+C2 P4|d10|+|0.5 matched True
+C2 P4|d10|+|0.5 reason None
+C2 P4|d10|+|0.5 logdet_table 203.66985221017197
+C2 P4|d10|+|0.5 logdet_SoD480 197.1985533953582
+C2 P4|d10|+|0.5 EN_SoD480 316.80166583627704
+C2 P4|d10|+|0.5 logdet_SoDeq 195.87731054826378
+C2 P4|d10|+|0.5 dmD 6.471298814813764
+C2 P4|d10|+|0.5 dmD_eq 7.792541661908189
+C2 P4|d10|+|0.5 diff -1.3212428470944246
+C2-TAB point                   E[N]_table   M0 M_eq Delta/sigma   E[N_Meq]    resid          how matched      dmD   dmD_eq dmD-dmD_eq
+C2-TAB theta0|theta_0|+|0.0      253.4769  602  602     25.0833   253.5730  +0.0961 local window     yes   5.7106   7.8065    -2.0959
+C2-TAB P4|d1|+|0.2               246.7726  619  619     25.7917   246.5608  -0.2117 local window     yes   5.3760   7.7330    -2.3570
+C2-TAB P4|d2|+|0.2               248.1174  616  616     25.6667   248.0918  -0.0256 local window     yes   5.4268   7.7217    -2.2949
+C2-TAB P4|d3|+|0.2               254.4085  600  600     25.0000   254.4841  +0.0756 local window     yes   5.7600   7.8227    -2.0628
+C2-TAB P4|d4|+|0.2               254.5651  600  600     25.0000   254.5128  -0.0523 local window     yes   5.7355   7.7980    -2.0625
+C2-TAB P4|d5|+|0.2               252.4210  605  605     25.2083   252.2934  -0.1276 local window     yes   5.6325   7.7741    -2.1416
+C2-TAB P4|d6|+|0.2               252.5594  604  604     25.1667   252.7350  +0.1756 local window     yes   5.6007   7.7278    -2.1271
+C2-TAB P4|d7|+|0.2               255.8106  597  597     24.8750   255.7561  -0.0545 local window     yes   5.7910   7.8059    -2.0149
+C2-TAB P4|d8|+|0.2               256.9990  594  594     24.7500   256.9821  -0.0170 local window     yes   5.8426   7.8102    -1.9676
+C2-TAB P4|d9|+|0.2               258.8707  590  590     24.5833   258.8488  -0.0219 local window     yes   5.9108   7.8106    -1.8999
+C2-TAB P4|d10|+|0.2              260.6870  586  586     24.4167   260.5662  -0.1209 local window     yes   6.0126   7.8446    -1.8320
+C2-TAB P4|d1|+|0.5               239.1965  638  638     26.5833   239.2023  +0.0058 local window     yes   4.8856   7.5175    -2.6319
+C2-TAB P4|d2|+|0.5               242.1643  632  632     26.3333   242.2238  +0.0595 local window     yes   4.9954   7.4991    -2.5037
+C2-TAB P4|d3|+|0.5               258.2894  591  591     24.6250   258.4293  +0.1399 local window     yes   5.8452   7.7628    -1.9176
+C2-TAB P4|d4|+|0.5               258.7326  590  590     24.5833   258.9505  +0.2179 local window     yes   5.7716   7.6710    -1.8994
+C2-TAB P4|d5|+|0.5               251.9300  606  606     25.2500   251.8531  -0.0769 local window     yes   5.4958   7.6508    -2.1549
+C2-TAB P4|d6|+|0.5               253.5906  602  602     25.0833   253.5773  -0.0134 local window     yes   5.4393   7.5352    -2.0959
+C2-TAB P4|d7|+|0.5               262.9897  580  580     24.1667   263.1121  +0.1224 local window     yes   5.9279   7.6742    -1.7463
+C2-TAB P4|d8|+|0.5               265.6952  574  574     23.9167   265.6992  +0.0040 local window     yes   6.0317   7.6781    -1.6465
+C2-TAB P4|d9|+|0.5               271.2069  562  563     23.4583   271.0887  -0.1183 local window     yes   6.2155   7.6805    -1.4650
+C2-TAB P4|d10|+|0.5              274.7845  555  555     23.1250   274.9245  +0.1400 local window     yes   6.4713   7.7925    -1.3212
+C3 matched 21/21 (P4 20/20, theta_0 True); full rescans 0; signed residual range [-0.2117185708049476, 0.21793536544788594]
+C3 theta_0: E[N]_table 253.47685274907272, M_eq 602 (Delta_eq = 25.083333333333332 sigma), residual 0.09613326030068947; Delta m_D 5.7106166799623, Delta m_D^eq 7.806482903203005, difference -2.095866223240705
+C3 all 20 P4 points matched: median Delta m_D^eq 7.730379671515735 (verdict item (d) >= 5 nat: True); median Delta m_D - Delta m_D^eq -2.0386959521098618; median Delta m_D 5.765768499131951
+C3 Delta m_D^eq over the 21 points: min 7.499144008894376, max 7.844578618872561; evaluations 1661 in the archive; Part C wall 723.3 s
+=== equal_send.py run done in 723.4 s
