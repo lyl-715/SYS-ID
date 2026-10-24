@@ -1,0 +1,96 @@
+=== test_trigger_dp.py (synthetic oracle, no DP) against trigger_dp.py; B = 316.8921168493721; cap 100.0
+TEST gbar=1.0 case (a) feasible from lambda/gbar = 90: runs 14, status 'done', doubling/start lambda/gbar [5.0, 10.0, 20.0, 40.0, 80.0, 100.0], final lambda/gbar 90.0 -> PASS
+TEST gbar=1.0 case (a)   no lambda above the cap: True
+TEST gbar=1.0 case (a)   doubling values 5, 10, 20, 40, 80, 100 gbar: True
+TEST gbar=1.0 case (a)   cap evaluated: True
+TEST gbar=1.0 case (a)   status 'done': True
+TEST gbar=1.0 case (a)   final lambda/gbar in [90, 100]: True
+TEST gbar=1.0 case (a)   downward scan from the cap ran (80 gbar again, memoised): True
+TEST gbar=1.0 case (b) feasible from lambda/gbar = 150 (beyond the cap): runs 6, status 'no feasible policy in the lambda range', doubling/start lambda/gbar [5.0, 10.0, 20.0, 40.0, 80.0, 100.0], final lambda/gbar None -> PASS
+TEST gbar=1.0 case (b)   no lambda above the cap: True
+TEST gbar=1.0 case (b)   doubling values 5, 10, 20, 40, 80, 100 gbar: True
+TEST gbar=1.0 case (b)   cap evaluated: True
+TEST gbar=1.0 case (b)   status 'no feasible policy in the lambda range': True
+TEST gbar=1.0 case (b)   six runs: True
+TEST gbar=1.0 case (c) feasible from lambda/gbar = 100 (step at the cap; (100 gbar)/gbar may round below 100): runs 14, status 'done', doubling/start lambda/gbar [5.0, 10.0, 20.0, 40.0, 80.0, 100.0], final lambda/gbar 100.0 -> PASS
+TEST gbar=1.0 case (c)   no lambda above the cap: True
+TEST gbar=1.0 case (c)   doubling values 5, 10, 20, 40, 80, 100 gbar: True
+TEST gbar=1.0 case (c)   cap evaluated: True
+TEST gbar=1.0 case (c)   status 'done': True
+TEST gbar=1.0 case (c)   final lambda = the cap: True
+TEST gbar=1.0 case (d) feasible at lambda_0 = 5 gbar: runs 11, status 'done', doubling/start lambda/gbar [5.0], final lambda/gbar 3.4000000000000004 -> PASS
+TEST gbar=1.0 case (d)   no lambda above the cap: True
+TEST gbar=1.0 case (d)   no doubling: True
+TEST gbar=1.0 case (d)   status 'done': True
+TEST gbar=0.0215873 case (a) feasible from lambda/gbar = 90: runs 15, status 'done', doubling/start lambda/gbar [5.0, 10.0, 20.0, 40.0, 80.0, 100.0], final lambda/gbar 90.078125 -> PASS
+TEST gbar=0.0215873 case (a)   no lambda above the cap: True
+TEST gbar=0.0215873 case (a)   doubling values 5, 10, 20, 40, 80, 100 gbar: True
+TEST gbar=0.0215873 case (a)   cap evaluated: True
+TEST gbar=0.0215873 case (a)   status 'done': True
+TEST gbar=0.0215873 case (a)   final lambda/gbar in [90, 100]: True
+TEST gbar=0.0215873 case (a)   downward scan from the cap ran (80 gbar again, memoised): True
+TEST gbar=0.0215873 case (b) feasible from lambda/gbar = 150 (beyond the cap): runs 6, status 'no feasible policy in the lambda range', doubling/start lambda/gbar [5.0, 10.0, 20.0, 40.0, 80.0, 100.0], final lambda/gbar None -> PASS
+TEST gbar=0.0215873 case (b)   no lambda above the cap: True
+TEST gbar=0.0215873 case (b)   doubling values 5, 10, 20, 40, 80, 100 gbar: True
+TEST gbar=0.0215873 case (b)   cap evaluated: True
+TEST gbar=0.0215873 case (b)   status 'no feasible policy in the lambda range': True
+TEST gbar=0.0215873 case (b)   six runs: True
+TEST gbar=0.0215873 case (c) feasible from lambda/gbar = 100 (step at the cap; (100 gbar)/gbar may round below 100): runs 15, status 'done', doubling/start lambda/gbar [5.0, 10.0, 20.0, 40.0, 80.0, 100.0], final lambda/gbar 99.99999999999999 -> PASS
+TEST gbar=0.0215873 case (c)   no lambda above the cap: True
+TEST gbar=0.0215873 case (c)   doubling values 5, 10, 20, 40, 80, 100 gbar: True
+TEST gbar=0.0215873 case (c)   cap evaluated: True
+TEST gbar=0.0215873 case (c)   status 'done': True
+TEST gbar=0.0215873 case (c)   final lambda = the cap: True
+TEST gbar=0.0215873 case (d) feasible at lambda_0 = 5 gbar: runs 11, status 'done', doubling/start lambda/gbar [5.0], final lambda/gbar 3.4000000000000012 -> PASS
+TEST gbar=0.0215873 case (d)   no lambda above the cap: True
+TEST gbar=0.0215873 case (d)   no doubling: True
+TEST gbar=0.0215873 case (d)   status 'done': True
+TEST ALL PASS
+=== test_trigger_dp.py (synthetic oracle, no DP) against trigger_dp.py at 7a837bd (pre-fix revision, git show 7a837bd:.../round4/trigger_dp.py); B = 316.8921168493721; cap not defined (pre-fix revision: 100 gbar hard-coded)
+TEST gbar=1.0 case (a) feasible from lambda/gbar = 90: runs 5, status 'no feasible policy in the lambda range', doubling/start lambda/gbar [5.0, 10.0, 20.0, 40.0, 80.0], final lambda/gbar None -> FAIL
+TEST gbar=1.0 case (a)   no lambda above the cap: True
+TEST gbar=1.0 case (a)   doubling values 5, 10, 20, 40, 80, 100 gbar: False
+TEST gbar=1.0 case (a)   cap evaluated: False
+TEST gbar=1.0 case (a)   status 'done': False
+TEST gbar=1.0 case (a)   final lambda/gbar in [90, 100]: False
+TEST gbar=1.0 case (a)   downward scan from the cap ran (80 gbar again, memoised): True
+TEST gbar=1.0 case (b) feasible from lambda/gbar = 150 (beyond the cap): runs 5, status 'no feasible policy in the lambda range', doubling/start lambda/gbar [5.0, 10.0, 20.0, 40.0, 80.0], final lambda/gbar None -> FAIL
+TEST gbar=1.0 case (b)   no lambda above the cap: True
+TEST gbar=1.0 case (b)   doubling values 5, 10, 20, 40, 80, 100 gbar: False
+TEST gbar=1.0 case (b)   cap evaluated: False
+TEST gbar=1.0 case (b)   status 'no feasible policy in the lambda range': True
+TEST gbar=1.0 case (b)   six runs: False
+TEST gbar=1.0 case (c) feasible from lambda/gbar = 100 (step at the cap; (100 gbar)/gbar may round below 100): runs 5, status 'no feasible policy in the lambda range', doubling/start lambda/gbar [5.0, 10.0, 20.0, 40.0, 80.0], final lambda/gbar None -> FAIL
+TEST gbar=1.0 case (c)   no lambda above the cap: True
+TEST gbar=1.0 case (c)   doubling values 5, 10, 20, 40, 80, 100 gbar: False
+TEST gbar=1.0 case (c)   cap evaluated: False
+TEST gbar=1.0 case (c)   status 'done': False
+TEST gbar=1.0 case (c)   final lambda = the cap: False
+TEST gbar=1.0 case (d) feasible at lambda_0 = 5 gbar: runs 11, status 'done', doubling/start lambda/gbar [5.0], final lambda/gbar 3.4000000000000004 -> PASS
+TEST gbar=1.0 case (d)   no lambda above the cap: True
+TEST gbar=1.0 case (d)   no doubling: True
+TEST gbar=1.0 case (d)   status 'done': True
+TEST gbar=0.0215873 case (a) feasible from lambda/gbar = 90: runs 5, status 'no feasible policy in the lambda range', doubling/start lambda/gbar [5.0, 10.0, 20.0, 40.0, 80.0], final lambda/gbar None -> FAIL
+TEST gbar=0.0215873 case (a)   no lambda above the cap: True
+TEST gbar=0.0215873 case (a)   doubling values 5, 10, 20, 40, 80, 100 gbar: False
+TEST gbar=0.0215873 case (a)   cap evaluated: False
+TEST gbar=0.0215873 case (a)   status 'done': False
+TEST gbar=0.0215873 case (a)   final lambda/gbar in [90, 100]: False
+TEST gbar=0.0215873 case (a)   downward scan from the cap ran (80 gbar again, memoised): False
+TEST gbar=0.0215873 case (b) feasible from lambda/gbar = 150 (beyond the cap): runs 5, status 'no feasible policy in the lambda range', doubling/start lambda/gbar [5.0, 10.0, 20.0, 40.0, 80.0], final lambda/gbar None -> FAIL
+TEST gbar=0.0215873 case (b)   no lambda above the cap: True
+TEST gbar=0.0215873 case (b)   doubling values 5, 10, 20, 40, 80, 100 gbar: False
+TEST gbar=0.0215873 case (b)   cap evaluated: False
+TEST gbar=0.0215873 case (b)   status 'no feasible policy in the lambda range': True
+TEST gbar=0.0215873 case (b)   six runs: False
+TEST gbar=0.0215873 case (c) feasible from lambda/gbar = 100 (step at the cap; (100 gbar)/gbar may round below 100): runs 5, status 'no feasible policy in the lambda range', doubling/start lambda/gbar [5.0, 10.0, 20.0, 40.0, 80.0], final lambda/gbar None -> FAIL
+TEST gbar=0.0215873 case (c)   no lambda above the cap: True
+TEST gbar=0.0215873 case (c)   doubling values 5, 10, 20, 40, 80, 100 gbar: False
+TEST gbar=0.0215873 case (c)   cap evaluated: False
+TEST gbar=0.0215873 case (c)   status 'done': False
+TEST gbar=0.0215873 case (c)   final lambda = the cap: False
+TEST gbar=0.0215873 case (d) feasible at lambda_0 = 5 gbar: runs 11, status 'done', doubling/start lambda/gbar [5.0], final lambda/gbar 3.4000000000000012 -> PASS
+TEST gbar=0.0215873 case (d)   no lambda above the cap: True
+TEST gbar=0.0215873 case (d)   no doubling: True
+TEST gbar=0.0215873 case (d)   status 'done': True
+TEST FAILURES

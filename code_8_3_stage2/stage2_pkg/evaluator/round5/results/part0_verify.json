@@ -1,0 +1,107 @@
+{
+ "part0b": {
+  "c1_json_fields_equal_except_eval_s": true,
+  "bytes_equal:results/J_U_SoD.npy": true,
+  "bytes_equal:results/J_U_S.npy": true,
+  "bytes_equal:results/J_U_W.npy": true,
+  "bytes_equal:results/J_P5514_SoD.npy": true,
+  "bytes_equal:results/J_P5514_S.npy": true,
+  "bytes_equal:results/J_P5514_W.npy": true,
+  "bytes_equal:c3_table.md": true,
+  "bytes_equal:results/shape_U_S.json": true,
+  "bytes_equal:results/shape_U_W.json": true,
+  "bytes_equal:results/shape_P5514_S.json": true,
+  "bytes_equal:results/shape_P5514_W.json": true,
+  "c3_table_bitwise": true,
+  "pass": true
+ },
+ "part0c": {
+  "U/SoD": {
+   "S_send": 353.1529221789335,
+   "S_nosend": 113.00482716571926,
+   "S_sum": 466.15774934465276,
+   "S_c1": 466.15774934465276,
+   "sum_rel_dev": 0.0,
+   "EN": 316.8921168493721,
+   "EN_c1": 316.8921168493721,
+   "EN_equal_c1": true,
+   "ratio_S1_EN1": 1.4725209162672948,
+   "mean_send_prob": 0.06319106158219086,
+   "send_info_per_send": 1.1147885730458156
+  },
+  "U/S": {
+   "S_send": 957.0238287650816,
+   "S_nosend": 107.07556008744879,
+   "S_sum": 1064.0993888525304,
+   "S_c1": 1064.0993888525304,
+   "sum_rel_dev": 0.0,
+   "EN": 316.7014792439585,
+   "EN_c1": 316.7014792439585,
+   "EN_equal_c1": true,
+   "ratio_S1_EN1": 3.367419726377081,
+   "mean_send_prob": 0.06315292643407851,
+   "send_info_per_send": 3.0282526108352936
+  },
+  "U/W": {
+   "S_send": 932.4342288112562,
+   "S_nosend": 104.82619692098521,
+   "S_sum": 1037.2604257322414,
+   "S_c1": 1037.2604257322414,
+   "sum_rel_dev": 0.0,
+   "EN": 316.6035659260541,
+   "EN_c1": 316.6035659260541,
+   "EN_equal_c1": true,
+   "ratio_S1_EN1": 3.283424325994584,
+   "mean_send_prob": 0.06313333985318145,
+   "send_info_per_send": 2.951279165931513
+  },
+  "P5514/SoD": {
+   "S_send": 358.8219118148952,
+   "S_nosend": 127.87246667760297,
+   "S_sum": 486.6943784924982,
+   "S_c1": 486.6943784924982,
+   "sum_rel_dev": 0.0,
+   "EN": 316.4724658173142,
+   "EN_c1": 316.4724658173142,
+   "EN_equal_c1": true,
+   "ratio_S1_EN1": 1.5395777163442124,
+   "mean_send_prob": 0.06310711458638012,
+   "send_info_per_send": 1.1342413382666017
+  },
+  "P5514/S": {
+   "S_send": 977.6381458814028,
+   "S_nosend": 110.11819690543858,
+   "S_sum": 1087.7563427868413,
+   "S_c1": 1087.7563427868415,
+   "sum_rel_dev": 2.0902996976390749e-16,
+   "EN": 316.66625940413746,
+   "EN_c1": 316.66625940413746,
+   "EN_equal_c1": true,
+   "ratio_S1_EN1": 3.4427383681684582,
+   "mean_send_prob": 0.0631458810570389,
+   "send_info_per_send": 3.0938946332906747
+  },
+  "P5514/W": {
+   "S_send": 958.5517060540012,
+   "S_nosend": 110.63121643709255,
+   "S_sum": 1069.1829224910937,
+   "S_c1": 1069.182922491094,
+   "sum_rel_dev": 2.12661155224471e-16,
+   "EN": 316.86639310005427,
+   "EN_c1": 316.86639310005427,
+   "EN_equal_c1": true,
+   "ratio_S1_EN1": 3.381755532798118,
+   "mean_send_prob": 0.06318591580317148,
+   "send_info_per_send": 3.0315086598993957
+  },
+  "single_step": {
+   "alpha": -2.0,
+   "beta": 30.0,
+   "c": 0.1337149504783819,
+   "q": 0.02275013194817921,
+   "c_over_q": 5.877546151510725,
+   "c_ev": 0.13073206497455533,
+   "c_no": 0.00298288550382656
+  }
+ }
+}

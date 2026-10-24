@@ -35,9 +35,20 @@ def final_record(case):
     st = json.load(open(jpath)); fr = st['final_run']
     return st, [x for x in st['runs'] if x['run'] == fr][0]
 
+def table_npz(case):
+    """the committed lossless copy of a final table (trigger_dp.final_checks): results/table_<case>.npz."""
+    return os.path.join(ew.RES, f"table_{case.replace('/', '_')}.npz")
+
 def load_table(case, des):
+    """the final table of a case from the committed results/table_<case>.npz (round 5 Part 0b: no dependence on the local
+    uint16 memmap in results/tables/, which is not committed). The npz must belong to the scan's final run (run number and
+    lambda) and to the design grid (support start indices and widths of every step)."""
     st, r = final_record(case)
-    return des.table(np.load(r['table'], mmap_mode='r')), r, st
+    with np.load(table_npz(case)) as f:
+        codes, start, width, lam, run = f['codes'], f['start'], f['width'], float(f['lam']), int(f['run'])
+    assert run == r['run'] and lam == r['lam'], (case, run, r['run'], lam, r['lam'])
+    assert np.array_equal(start, des.a[1:]) and np.array_equal(width, des.w[1:]), case
+    return des.table(codes), r, st
 
 def log_rec(out, pre, rec, keys=('EN', 'EN_P', 'S', 'logdet', 'dmD', 'mE', 'mass_dev_max', 'min_m', 'inv_S', 'inv_J', 'inv_w', 'path')):
     for k in keys:
@@ -128,7 +139,7 @@ def _mc_batch(args):
     name, kind, tpath, start, width, R, seed = args
     xk, Hk = dr.input_arrays(name); z, dz = dr.make_grid(xk, ew.N_GRID, 8*ew.D, 'B'); z0 = z[0]
     rng = np.random.default_rng(seed)
-    codes = np.load(tpath, mmap_mode='r') if tpath else None
+    codes = np.load(tpath)['codes'] if tpath else None                   # committed results/table_<case>.npz (round 5 Part 0b)
     r = xk[0]+s*rng.standard_normal(R); N = np.ones(R); Wk = np.zeros(K); Wk[0] = float(R); S = np.ones(R)   # Wk = sum over runs of c_k (c_1 = 1)
     for p in range(1, K):
         if codes is None:
@@ -153,7 +164,7 @@ def mc(out):
     for case in CASES:
         name, obj = case.split('/'); st, r = final_record(case)
         xk, Hk, z, dz, a, b = ew.design_grid(name)
-        labels.append((case, name, r['table'], a[1:], (b-a+1)[1:]))
+        labels.append((case, name, table_npz(case), a[1:], (b-a+1)[1:]))
     for li, (lab, name, tp, st_, wd) in enumerate(labels):
         for bi in range(MC_BATCH):
             jobs.append((name, lab, tp, st_, wd, MC_R//MC_BATCH, MC_SEED+1000*li+bi))

@@ -1,0 +1,361 @@
+=== round5/part0_verify.py started 2026-10-24 16:50:39; python 3.13.17, numpy 2.5.3, scipy 1.18.1, numba 0.68.0, matplotlib 3.11.2; B = 316.8921168493721
+0b round4/results/tables/ (uncommitted memmaps) holds 0 files; the tables can only come from results/table_<case>.npz
+C1 U/SoD EN 316.8921168493721
+C1 U/SoD EN_P np.float64(316.88686999647535)
+C1 U/SoD S 466.15774934465276
+C1 U/SoD logdet 197.20097668224076
+C1 U/SoD dmD 0.0
+C1 U/SoD mE 0.9999999999999968
+C1 U/SoD mass_dev_max 1.5287771049088406e-13
+C1 U/SoD min_m 0.0
+C1 U/SoD inv_S True
+C1 U/SoD inv_J True
+C1 U/SoD inv_w True
+C1 U/SoD path 'accepted operator (evaluator_fast.evaluate_fast)'
+C1 U/SoD lam1 0.9999999999999968
+C1 U/SoD lam2 0.9999999999999971
+C1 U/SoD lam3 0.9999999999999998
+C1 U/SoD lam4 1.0
+C1 U/SoD lam5 1.0
+C1 U/SoD lam6 1.0000000000000002
+C1 U/SoD lam7 1.0000000000000002
+C1 U/SoD lam8 1.0000000000000007
+C1 U/SoD lam9 1.0000000000000009
+C1 U/SoD dmD_vs_uniform_SoD 0.0
+C1 P5514/SoD EN 316.4724658173142
+C1 P5514/SoD EN_P np.float64(316.4663379549857)
+C1 P5514/SoD S 486.6943784924982
+C1 P5514/SoD logdet 197.90224219753293
+C1 P5514/SoD dmD 0.0
+C1 P5514/SoD mE 0.04501722402006874
+C1 P5514/SoD mass_dev_max 1.340039190722564e-13
+C1 P5514/SoD min_m 0.0
+C1 P5514/SoD inv_S True
+C1 P5514/SoD inv_J True
+C1 P5514/SoD inv_w True
+C1 P5514/SoD path 'accepted operator (evaluator_fast.evaluate_fast)'
+C1 P5514/SoD lam1 0.04501722402006874
+C1 P5514/SoD lam2 0.05280329568980305
+C1 P5514/SoD lam3 0.8586961802182289
+C1 P5514/SoD lam4 1.0407369397222896
+C1 P5514/SoD lam5 1.1005184422184258
+C1 P5514/SoD lam6 1.2529388924944602
+C1 P5514/SoD lam7 1.4740425810541358
+C1 P5514/SoD lam8 20.84782711636939
+C1 P5514/SoD lam9 22.39945549398955
+C1 P5514/SoD dmD_vs_uniform_SoD 0.7012655152921639
+DESIGN U G = 35146, support window nodes 4224-4224, cache built in 4.5 s
+C1 U/S EN 316.7014792439585
+C1 U/S EN_P np.float64(316.6088260399919)
+C1 U/S S 1064.0993888525304
+C1 U/S logdet 205.0609076009012
+C1 U/S dmD 7.859930918660439
+C1 U/S mE 1.581637740628417
+C1 U/S mass_dev_max 5.118128143521972e-13
+C1 U/S min_m 0.0
+C1 U/S inv_S True
+C1 U/S inv_J True
+C1 U/S inv_w True
+C1 U/S path 'general window path (R = 88 sigma)'
+C1 U/S lam1 1.581637740628417
+C1 U/S lam2 2.01677913335617
+C1 U/S lam3 2.0664350836424967
+C1 U/S lam4 2.193698562446366
+C1 U/S lam5 2.281482831720374
+C1 U/S lam6 2.4266442530095196
+C1 U/S lam7 2.5280535310507077
+C1 U/S lam8 3.390996312690445
+C1 U/S lam9 3.775927513088987
+C1 U/S run 11
+C1 U/S lam_dp 3.203125
+C1 U/S lam_over_gbar 3.203125
+C1 U/S F 1063.0993888525306
+C1 U/S slack 0.19063760541359898
+C1 U/S feasible True
+C1 U/S assert_fail 0
+C1 U/S dmD_vs_U 7.859930918660439
+C1 U/S EN_equals_scan True
+C1 U/S eval_s 2.6664954799999805
+C1 U/S notes []
+DESIGN U G = 35146, support window nodes 4224-4224, cache built in 11.6 s
+C1 U/W EN 316.6035659260541
+C1 U/W EN_P np.float64(316.5144567564176)
+C1 U/W S 1037.2604257322414
+C1 U/W logdet 205.03141309913676
+C1 U/W dmD 7.830436416895992
+C1 U/W mE 1.3093002132137557
+C1 U/W mass_dev_max 5.182521078950231e-13
+C1 U/W min_m 0.0
+C1 U/W inv_S True
+C1 U/W inv_J True
+C1 U/W inv_w True
+C1 U/W path 'general window path (R = 88 sigma)'
+C1 U/W lam1 1.3093002132137557
+C1 U/W lam2 1.9416019532280488
+C1 U/W lam3 1.97379653445811
+C1 U/W lam4 2.032702506738174
+C1 U/W lam5 2.251738941104363
+C1 U/W lam6 2.4378045811644355
+C1 U/W lam7 2.636580502761731
+C1 U/W lam8 3.8397096829681567
+C1 U/W lam9 4.43898145413195
+C1 U/W run 5
+C1 U/W lam_dp 0.07339683452541984
+C1 U/W lam_over_gbar 3.4000000000000004
+C1 U/W F 22.832342701943073
+C1 U/W slack 0.2885509233179846
+C1 U/W feasible True
+C1 U/W assert_fail 0
+C1 U/W dmD_vs_U 7.830436416895992
+C1 U/W EN_equals_scan True
+C1 U/W eval_s 2.93417561199999
+C1 U/W notes []
+DESIGN P5514 G = 34951, support window nodes 4223-4224, cache built in 1.8 s
+C1 P5514/S EN 316.66625940413746
+C1 P5514/S EN_P np.float64(316.5706180411635)
+C1 P5514/S S 1087.7563427868415
+C1 P5514/S logdet 205.28318206409222
+C1 P5514/S dmD 7.380939866559288
+C1 P5514/S mE 0.0998217121183116
+C1 P5514/S mass_dev_max 5.164757510556228e-13
+C1 P5514/S min_m 0.0
+C1 P5514/S inv_S True
+C1 P5514/S inv_J True
+C1 P5514/S inv_w True
+C1 P5514/S path 'general window path (R = 88 sigma)'
+C1 P5514/S lam1 0.0998217121183116
+C1 P5514/S lam2 0.11627992914397674
+C1 P5514/S lam3 2.000261277612833
+C1 P5514/S lam4 2.215160021999522
+C1 P5514/S lam5 2.4500887817479766
+C1 P5514/S lam6 2.964625054166518
+C1 P5514/S lam7 3.711364970625109
+C1 P5514/S lam8 45.605176307494965
+C1 P5514/S lam9 51.184232285127166
+C1 P5514/S run 10
+C1 P5514/S lam_dp 3.1500000000000004
+C1 P5514/S lam_over_gbar 3.1500000000000004
+C1 P5514/S F 1086.756342786841
+C1 P5514/S slack 0.2258574452346238
+C1 P5514/S feasible True
+C1 P5514/S assert_fail 0
+C1 P5514/S dmD_vs_U 8.082205381851452
+C1 P5514/S EN_equals_scan True
+C1 P5514/S eval_s 2.5051650350000045
+C1 P5514/S notes []
+DESIGN P5514 G = 34951, support window nodes 4223-4224, cache built in 1.2 s
+C1 P5514/W EN 316.86639310005427
+C1 P5514/W EN_P np.float64(316.7735425603528)
+C1 P5514/W S 1069.182922491094
+C1 P5514/W logdet 205.32021269820052
+C1 P5514/W dmD 7.417970500667593
+C1 P5514/W mE 0.10867716846829327
+C1 P5514/W mass_dev_max 5.209166431541234e-13
+C1 P5514/W min_m 0.0
+C1 P5514/W inv_S True
+C1 P5514/W inv_J True
+C1 P5514/W inv_w True
+C1 P5514/W path 'general window path (R = 88 sigma)'
+C1 P5514/W lam1 0.10867716846829327
+C1 P5514/W lam2 0.12854557582422135
+C1 P5514/W lam3 1.812843057078503
+C1 P5514/W lam4 2.177161936799623
+C1 P5514/W lam5 2.362025021433907
+C1 P5514/W lam6 2.9645921154555968
+C1 P5514/W lam7 3.9192489027852764
+C1 P5514/W lam8 44.278237944216094
+C1 P5514/W lam9 50.12453901037856
+C1 P5514/W run 10
+C1 P5514/W lam_dp 0.06302409611975382
+C1 P5514/W lam_over_gbar 3.2687500000000003
+C1 P5514/W F 21.07047423741116
+C1 P5514/W slack 0.02572374931781951
+C1 P5514/W feasible True
+C1 P5514/W assert_fail 0
+C1 P5514/W dmD_vs_U 8.119236015959757
+C1 P5514/W EN_equals_scan True
+C1 P5514/W eval_s 2.467658664999931
+C1 P5514/W notes []
+C3 U/SoD EN 316.8921168493721 S 466.15774934465276 logdet 197.20097668224076 dmD 0.0 mE 0.9999999999999968
+C3 U/S EN 316.7014792439585 S 1064.0993888525304 logdet 205.0609076009012 dmD 7.859930918660439 mE 1.581637740628417
+C3 U/W EN 316.6035659260541 S 1037.2604257322414 logdet 205.03141309913676 dmD 7.830436416895992 mE 1.3093002132137557
+C3 P5514/SoD EN 316.4724658173142 S 486.6943784924982 logdet 197.90224219753293 dmD 0.0 mE 0.04501722402006874
+C3 P5514/S EN 316.66625940413746 S 1087.7563427868415 logdet 205.28318206409222 dmD 7.380939866559288 mE 0.0998217121183116
+C3 P5514/W EN 316.86639310005427 S 1069.182922491094 logdet 205.32021269820052 dmD 7.417970500667593 mE 0.10867716846829327
+DESIGN U G = 35146, support window nodes 4224-4224, cache built in 1.8 s
+SHAPE U/W Spearman rank correlation over k = 2..K of the mass-weighted mean full width (Delta^- + Delta^+) with gamma_k = sigma^-2 h_k^T A h_k: -0.8759488337523449
+SHAPE U/W mean full width (sigma) over steps with gamma_k in the lowest quarter 22.54966051561789, highest quarter 10.376535620846564
+SHAPE U/W distance from x_k to the near window edge (near-side half-width - |r - x_k|), mass-weighted over all (k, i): mean 1.9181154115484345 sigma; quantiles 10/25/50/75/90 % [1.070864902357691, 1.4395100817654196, 1.9201224570513808, 2.4845778978192783, 2.867403970412038] sigma
+SHAPE U/W |r - x_k|/sigma in [0, 2): mass share 0.19742953552084855, mass-weighted near-side half-width 2.993914321793361 sigma, far-side 2.000053762175929 sigma, near edge beyond x_k by 2.059860684582273 sigma
+SHAPE U/W |r - x_k|/sigma in [2, 5): mass share 0.1570482613716072, mass-weighted near-side half-width 5.294173540663324 sigma, far-side 2.0 sigma, near edge beyond x_k by 1.955671351933379 sigma
+SHAPE U/W |r - x_k|/sigma in [5, 10): mass share 0.16406572648615644, mass-weighted near-side half-width 9.506763857706984 sigma, far-side 2.0047513960139307 sigma, near edge beyond x_k by 2.1610495384186654 sigma
+SHAPE U/W |r - x_k|/sigma in [10, 20): mass share 0.2229114557833369, mass-weighted near-side half-width 16.721178300627873 sigma, far-side 2.0 sigma, near edge beyond x_k by 2.0731072675098483 sigma
+SHAPE U/W |r - x_k|/sigma in [20, 40): mass share 0.2450196930896028, mass-weighted near-side half-width 30.048157190477877 sigma, far-side 2.0 sigma, near edge beyond x_k by 1.668383808538399 sigma
+SHAPE U/W |r - x_k|/sigma in [40, 88): mass share 0.013525327734621995, mass-weighted near-side half-width 39.99999758871676 sigma, far-side 2.0 sigma, near edge beyond x_k by -1.5642595089699207 sigma
+C3 U/W Spearman rank correlation of E[q_k] with tr(h_k h_k^T A) over k = 2..K: -0.18495777916687783
+C3 figures fig_window_heatmap.png, fig_sendprob_trA.png; table c3_table.md
+C3 U/SoD mass-weighted share of (k, node) with c < 0.01: 0.8187275028307242; with c < 0.05: 0.8453498628323792
+C3 single step, near edge 2 sigma beyond x_k (alpha = -2, beta = 30): c 0.1337149504783819, q 0.02275013194817921
+DESIGN U G = 35146, support window nodes 4224-4224, cache built in 6.7 s
+SHAPE U/S Spearman rank correlation over k = 2..K of the mass-weighted mean full width (Delta^- + Delta^+) with gamma_k = sigma^-2 h_k^T A h_k: -0.7362653650538032
+SHAPE U/S mean full width (sigma) over steps with gamma_k in the lowest quarter 20.38497713369509, highest quarter 12.915788359891089
+SHAPE U/S distance from x_k to the near window edge (near-side half-width - |r - x_k|), mass-weighted over all (k, i): mean 1.877286035032533 sigma; quantiles 10/25/50/75/90 % [1.0918040818769796, 1.4065984478140425, 1.8809862338717047, 2.4282970117974507, 2.7909608672293533] sigma
+SHAPE U/S |r - x_k|/sigma in [0, 2): mass share 0.18282587558841568, mass-weighted near-side half-width 3.1013292353432997 sigma, far-side 2.0 sigma, near edge beyond x_k by 2.1505651249538267 sigma
+SHAPE U/S |r - x_k|/sigma in [2, 5): mass share 0.15724753678247758, mass-weighted near-side half-width 5.282088515121391 sigma, far-side 2.0 sigma, near edge beyond x_k by 1.9168315781841767 sigma
+SHAPE U/S |r - x_k|/sigma in [5, 10): mass share 0.17622256164768577, mass-weighted near-side half-width 9.482374651714245 sigma, far-side 2.00136015720372 sigma, near edge beyond x_k by 2.125051263546086 sigma
+SHAPE U/S |r - x_k|/sigma in [10, 20): mass share 0.2385950243308558, mass-weighted near-side half-width 16.54544050903223 sigma, far-side 2.0 sigma, near edge beyond x_k by 1.9324997932467836 sigma
+SHAPE U/S |r - x_k|/sigma in [20, 40): mass share 0.23459144564273732, mass-weighted near-side half-width 29.57862856068292 sigma, far-side 2.0 sigma, near edge beyond x_k by 1.5487411938575042 sigma
+SHAPE U/S |r - x_k|/sigma in [40, 88): mass share 0.010517555993871493, mass-weighted near-side half-width 39.999996687948304 sigma, far-side 2.0 sigma, near edge beyond x_k by -1.540111519856482 sigma
+DESIGN P5514 G = 34951, support window nodes 4223-4224, cache built in 9.2 s
+SHAPE P5514/S Spearman rank correlation over k = 2..K of the mass-weighted mean full width (Delta^- + Delta^+) with gamma_k = sigma^-2 h_k^T A h_k: -0.5051229676427483
+SHAPE P5514/S mean full width (sigma) over steps with gamma_k in the lowest quarter 19.255905226690334, highest quarter 14.740502640307861
+SHAPE P5514/S distance from x_k to the near window edge (near-side half-width - |r - x_k|), mass-weighted over all (k, i): mean 1.8549096731525625 sigma; quantiles 10/25/50/75/90 % [1.074347768142161, 1.3764075881576714, 1.8497414770623726, 2.3895487354773084, 2.7504043928160975] sigma
+SHAPE P5514/S |r - x_k|/sigma in [0, 2): mass share 0.1556796877974581, mass-weighted near-side half-width 2.984057995732154 sigma, far-side 2.0 sigma, near edge beyond x_k by 2.0789403153501937 sigma
+SHAPE P5514/S |r - x_k|/sigma in [2, 5): mass share 0.14095401625550424, mass-weighted near-side half-width 5.321682302689473 sigma, far-side 2.0 sigma, near edge beyond x_k by 1.8974558055429958 sigma
+SHAPE P5514/S |r - x_k|/sigma in [5, 10): mass share 0.18131901809277867, mass-weighted near-side half-width 9.50007691015203 sigma, far-side 2.002877989377583 sigma, near edge beyond x_k by 2.107160766108635 sigma
+SHAPE P5514/S |r - x_k|/sigma in [10, 20): mass share 0.2614553569171322, mass-weighted near-side half-width 16.55029607456944 sigma, far-side 2.0 sigma, near edge beyond x_k by 1.9131868404926582 sigma
+SHAPE P5514/S |r - x_k|/sigma in [20, 40): mass share 0.2521533003269128, mass-weighted near-side half-width 29.414611034435325 sigma, far-side 2.0 sigma, near edge beyond x_k by 1.5540321970387894 sigma
+SHAPE P5514/S |r - x_k|/sigma in [40, 88): mass share 0.008438620612738014, mass-weighted near-side half-width 39.99999999573916 sigma, far-side 2.0 sigma, near edge beyond x_k by -1.2239843003786042 sigma
+DESIGN P5514 G = 34951, support window nodes 4223-4224, cache built in 1.5 s
+SHAPE P5514/W Spearman rank correlation over k = 2..K of the mass-weighted mean full width (Delta^- + Delta^+) with gamma_k = sigma^-2 h_k^T A h_k: -0.7977521854430912
+SHAPE P5514/W mean full width (sigma) over steps with gamma_k in the lowest quarter 21.2087671060702, highest quarter 12.572979811973507
+SHAPE P5514/W distance from x_k to the near window edge (near-side half-width - |r - x_k|), mass-weighted over all (k, i): mean 1.8841469616622544 sigma; quantiles 10/25/50/75/90 % [1.0491433854752046, 1.401892818411325, 1.8792400362605997, 2.4274677723299813, 2.804500912300675] sigma
+SHAPE P5514/W |r - x_k|/sigma in [0, 2): mass share 0.1634894203566946, mass-weighted near-side half-width 2.9409328337240646 sigma, far-side 2.0 sigma, near edge beyond x_k by 2.040380008303001 sigma
+SHAPE P5514/W |r - x_k|/sigma in [2, 5): mass share 0.14052896366670917, mass-weighted near-side half-width 5.346387710060568 sigma, far-side 2.0 sigma, near edge beyond x_k by 1.9393614406594777 sigma
+SHAPE P5514/W |r - x_k|/sigma in [5, 10): mass share 0.17384688405854198, mass-weighted near-side half-width 9.508271009967062 sigma, far-side 2.001025020689334 sigma, near edge beyond x_k by 2.1196054748420066 sigma
+SHAPE P5514/W |r - x_k|/sigma in [10, 20): mass share 0.25188484515250725, mass-weighted near-side half-width 16.657091461711996 sigma, far-side 2.0 sigma, near edge beyond x_k by 1.9914112945374705 sigma
+SHAPE P5514/W |r - x_k|/sigma in [20, 40): mass share 0.2601916695140068, mass-weighted near-side half-width 29.694847915191446 sigma, far-side 2.0 sigma, near edge beyond x_k by 1.6154146254806347 sigma
+SHAPE P5514/W |r - x_k|/sigma in [40, 88): mass share 0.010058217239636194, mass-weighted near-side half-width 39.9999999970581 sigma, far-side 2.0 sigma, near edge beyond x_k by -1.2308938568817689 sigma
+0b re-run of round-4 C1 (43.0 s) and C3 (59.7 s) from the npz done
+0b results/c1.json: every field of every case equal except eval_s (wall clock): True
+0b C1 U/SoD EN committed 316.8921168493721 re-run 316.8921168493721 equal True
+0b C1 U/SoD S committed 466.15774934465276 re-run 466.15774934465276 equal True
+0b C1 U/SoD logdet committed 197.20097668224076 re-run 197.20097668224076 equal True
+0b C1 U/SoD dmD committed 0.0 re-run 0.0 equal True
+0b C1 U/SoD mE committed 0.9999999999999968 re-run 0.9999999999999968 equal True
+0b C1 P5514/SoD EN committed 316.4724658173142 re-run 316.4724658173142 equal True
+0b C1 P5514/SoD S committed 486.6943784924982 re-run 486.6943784924982 equal True
+0b C1 P5514/SoD logdet committed 197.90224219753293 re-run 197.90224219753293 equal True
+0b C1 P5514/SoD dmD committed 0.0 re-run 0.0 equal True
+0b C1 P5514/SoD mE committed 0.04501722402006874 re-run 0.04501722402006874 equal True
+0b C1 U/S EN committed 316.7014792439585 re-run 316.7014792439585 equal True
+0b C1 U/S S committed 1064.0993888525304 re-run 1064.0993888525304 equal True
+0b C1 U/S logdet committed 205.0609076009012 re-run 205.0609076009012 equal True
+0b C1 U/S dmD committed 7.859930918660439 re-run 7.859930918660439 equal True
+0b C1 U/S mE committed 1.581637740628417 re-run 1.581637740628417 equal True
+0b C1 U/W EN committed 316.6035659260541 re-run 316.6035659260541 equal True
+0b C1 U/W S committed 1037.2604257322414 re-run 1037.2604257322414 equal True
+0b C1 U/W logdet committed 205.03141309913676 re-run 205.03141309913676 equal True
+0b C1 U/W dmD committed 7.830436416895992 re-run 7.830436416895992 equal True
+0b C1 U/W mE committed 1.3093002132137557 re-run 1.3093002132137557 equal True
+0b C1 P5514/S EN committed 316.66625940413746 re-run 316.66625940413746 equal True
+0b C1 P5514/S S committed 1087.7563427868415 re-run 1087.7563427868415 equal True
+0b C1 P5514/S logdet committed 205.28318206409222 re-run 205.28318206409222 equal True
+0b C1 P5514/S dmD committed 7.380939866559288 re-run 7.380939866559288 equal True
+0b C1 P5514/S mE committed 0.0998217121183116 re-run 0.0998217121183116 equal True
+0b C1 P5514/W EN committed 316.86639310005427 re-run 316.86639310005427 equal True
+0b C1 P5514/W S committed 1069.182922491094 re-run 1069.182922491094 equal True
+0b C1 P5514/W logdet committed 205.32021269820052 re-run 205.32021269820052 equal True
+0b C1 P5514/W dmD committed 7.417970500667593 re-run 7.417970500667593 equal True
+0b C1 P5514/W mE committed 0.10867716846829327 re-run 0.10867716846829327 equal True
+0b results/J_U_SoD.npy: re-run bytes identical to the committed file: True
+0b results/J_U_S.npy: re-run bytes identical to the committed file: True
+0b results/J_U_W.npy: re-run bytes identical to the committed file: True
+0b results/J_P5514_SoD.npy: re-run bytes identical to the committed file: True
+0b results/J_P5514_S.npy: re-run bytes identical to the committed file: True
+0b results/J_P5514_W.npy: re-run bytes identical to the committed file: True
+0b c3_table.md: re-run bytes identical to the committed file: True
+0b results/shape_U_S.json: re-run bytes identical to the committed file: True
+0b results/shape_U_W.json: re-run bytes identical to the committed file: True
+0b results/shape_P5514_S.json: re-run bytes identical to the committed file: True
+0b results/shape_P5514_W.json: re-run bytes identical to the committed file: True
+0b fig_window_heatmap.png (information only): bytes identical True
+0b fig_sendprob_trA.png (information only): bytes identical True
+0b C3 table reproduced bit for bit: True; Part 0b verification PASS
+0b c3_table.md as re-run:
+0b   | 输入 | 触发 | $\mathbb E[N]$ | $S$ | $\log\det J$ | $\Delta m_D$（相对同输入常数 $\Delta$） | $m_E$（相对均匀输入常数 $\Delta$） |
+0b   |---|---|---|---|---|---|---|
+0b   | U | 常数 $\Delta$ | 316.8921 | 466.158 | 197.20098 | +0.00000 | 1.00000 |
+0b   | U | $S$ 表 | 316.7015 | 1064.099 | 205.06091 | +7.85993 | 1.58164 |
+0b   | U | 加权表 | 316.6036 | 1037.260 | 205.03141 | +7.83044 | 1.30930 |
+0b   | P5514 | 常数 $\Delta$ | 316.4725 | 486.694 | 197.90224 | +0.00000 | 0.04502 |
+0b   | P5514 | $S$ 表 | 316.6663 | 1087.756 | 205.28318 | +7.38094 | 0.09982 |
+0b   | P5514 | 加权表 | 316.8664 | 1069.183 | 205.32021 | +7.41797 | 0.10868 |
+0c U/SoD S_send 353.1529221789335
+0c U/SoD S_nosend 113.00482716571926
+0c U/SoD S_sum 466.15774934465276
+0c U/SoD S_c1 466.15774934465276
+0c U/SoD sum_rel_dev 0.0
+0c U/SoD EN 316.8921168493721
+0c U/SoD EN_c1 316.8921168493721
+0c U/SoD EN_equal_c1 True
+0c U/SoD ratio_S1_EN1 1.4725209162672948
+0c U/SoD mean_send_prob 0.06319106158219086
+0c U/SoD send_info_per_send 1.1147885730458156
+0c U/S S_send 957.0238287650816
+0c U/S S_nosend 107.07556008744879
+0c U/S S_sum 1064.0993888525304
+0c U/S S_c1 1064.0993888525304
+0c U/S sum_rel_dev 0.0
+0c U/S EN 316.7014792439585
+0c U/S EN_c1 316.7014792439585
+0c U/S EN_equal_c1 True
+0c U/S ratio_S1_EN1 3.367419726377081
+0c U/S mean_send_prob 0.06315292643407851
+0c U/S send_info_per_send 3.0282526108352936
+0c U/W S_send 932.4342288112562
+0c U/W S_nosend 104.82619692098521
+0c U/W S_sum 1037.2604257322414
+0c U/W S_c1 1037.2604257322414
+0c U/W sum_rel_dev 0.0
+0c U/W EN 316.6035659260541
+0c U/W EN_c1 316.6035659260541
+0c U/W EN_equal_c1 True
+0c U/W ratio_S1_EN1 3.283424325994584
+0c U/W mean_send_prob 0.06313333985318145
+0c U/W send_info_per_send 2.951279165931513
+0c P5514/SoD S_send 358.8219118148952
+0c P5514/SoD S_nosend 127.87246667760297
+0c P5514/SoD S_sum 486.6943784924982
+0c P5514/SoD S_c1 486.6943784924982
+0c P5514/SoD sum_rel_dev 0.0
+0c P5514/SoD EN 316.4724658173142
+0c P5514/SoD EN_c1 316.4724658173142
+0c P5514/SoD EN_equal_c1 True
+0c P5514/SoD ratio_S1_EN1 1.5395777163442124
+0c P5514/SoD mean_send_prob 0.06310711458638012
+0c P5514/SoD send_info_per_send 1.1342413382666017
+0c P5514/S S_send 977.6381458814028
+0c P5514/S S_nosend 110.11819690543858
+0c P5514/S S_sum 1087.7563427868413
+0c P5514/S S_c1 1087.7563427868415
+0c P5514/S sum_rel_dev 2.0902996976390749e-16
+0c P5514/S EN 316.66625940413746
+0c P5514/S EN_c1 316.66625940413746
+0c P5514/S EN_equal_c1 True
+0c P5514/S ratio_S1_EN1 3.4427383681684582
+0c P5514/S mean_send_prob 0.0631458810570389
+0c P5514/S send_info_per_send 3.0938946332906747
+0c P5514/W S_send 958.5517060540012
+0c P5514/W S_nosend 110.63121643709255
+0c P5514/W S_sum 1069.1829224910937
+0c P5514/W S_c1 1069.182922491094
+0c P5514/W sum_rel_dev 2.12661155224471e-16
+0c P5514/W EN 316.86639310005427
+0c P5514/W EN_c1 316.86639310005427
+0c P5514/W EN_equal_c1 True
+0c P5514/W ratio_S1_EN1 3.381755532798118
+0c P5514/W mean_send_prob 0.06318591580317148
+0c P5514/W send_info_per_send 3.0315086598993957
+0c U/S vs U/SoD: send branch 353.1529221789335 -> 957.0238287650816 (change 603.8709065861481); non-send branch 113.00482716571926 -> 107.07556008744879 (change -5.92926707827047)
+0c U/W vs U/SoD: send branch 353.1529221789335 -> 932.4342288112562 (change 579.2813066323226); non-send branch 113.00482716571926 -> 104.82619692098521 (change -8.178630244734052)
+0c P5514/S vs P5514/SoD: send branch 358.8219118148952 -> 977.6381458814028 (change 618.8162340665076); non-send branch 127.87246667760297 -> 110.11819690543858 (change -17.754269772164392)
+0c P5514/W vs P5514/SoD: send branch 358.8219118148952 -> 958.5517060540012 (change 599.729794239106); non-send branch 127.87246667760297 -> 110.63121643709255 (change -17.241250240510425)
+0c single step (illustration only) alpha -2.0
+0c single step (illustration only) beta 30.0
+0c single step (illustration only) c 0.1337149504783819
+0c single step (illustration only) q 0.02275013194817921
+0c single step (illustration only) c_over_q 5.877546151510725
+0c single step (illustration only) c_ev 0.13073206497455533
+0c single step (illustration only) c_no 0.00298288550382656
+=== round5/part0_verify.py done in 136.7 s

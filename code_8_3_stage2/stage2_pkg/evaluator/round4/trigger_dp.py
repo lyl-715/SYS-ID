@@ -16,7 +16,9 @@ which dispatches to the accepted operator; Cholesky solve, no explicit inverse),
 forward pass of the stored table (Part A general path).
 
 Lambda selection (spec §1.3, frozen; lambda in units of gbar = mean_{k>=2} gamma_k, gbar = 1 for 'S'): lambda_0 = 5 gbar;
-infeasible -> double (values above 100 gbar are not run, DECISION B-5); from the feasible lambda multiply by 0.8 until the
+infeasible -> double, a doubled value above the cap is replaced by the cap 100 gbar itself, which is evaluated before the
+scan stops (5, 10, 20, 40, 80, 100 gbar; round 5 Part 0a, superseding the round-4 reading of DECISION B-5, under which the
+last value run was 80 gbar; no round-4 case used the doubling branch); from the feasible lambda multiply by 0.8 until the
 first infeasible lambda (a lambda < 1e-3 gbar is run and, if feasible, ends the scan, DECISION B-6); 8 bisections
 (arithmetic midpoint, DECISION B-7) keeping the feasible side; FINAL = largest F among all evaluated feasible policies
 (E[N] <= B), ties -> smaller lambda; monotonicity of N = E[N] - 1 in lambda checked after every run (relative 1e-9, a violation
@@ -44,7 +46,7 @@ X = ew.X24; STEP = ew.STEP_M; NA1 = ew.N_ACT1
 TABLES = os.path.join(ew.RES, 'tables'); RUNS = os.path.join(ew.RES, 'runs')
 os.makedirs(TABLES, exist_ok=True); os.makedirs(RUNS, exist_ok=True)
 CASES = ('U/S', 'U/W', 'P5514/S', 'P5514/W')
-MAX_RUNS = 40; N_BISECT = 8; MONO_TOL = 1e-9
+MAX_RUNS = 40; N_BISECT = 8; MONO_TOL = 1e-9; LAM_CAP = 100.0                  # cap of the doubling branch, in units of gbar
 PAD = np.uint16(0xFFFF)
 
 
@@ -241,15 +243,14 @@ class Scan:
     def scan(self):
         g = self.gbar; note = []
         try:
-            lam = 5.0*g; r = self.run(lam, 'start')
-            if not r['feasible']:
-                while not r['feasible']:
-                    lam = 2.0*lam
-                    if lam > 100.0*g:
-                        self.state['status'] = 'no feasible policy in the lambda range'
-                        self.state['message'] = '在规定的 λ 扫描范围内未找到预算可行策略，停止本次设计'
-                        self.log(f"STOP {self.case} {self.state['message']}"); _atomic_json(self.state, self.jpath); return self.state
-                    r = self.run(lam, 'double')
+            lam = 5.0*g; r = self.run(lam, 'start'); cap = LAM_CAP*g
+            while not r['feasible']:
+                if lam >= cap:                       # the cap itself has been evaluated and is infeasible
+                    self.state['status'] = 'no feasible policy in the lambda range'
+                    self.state['message'] = '在规定的 λ 扫描范围内未找到预算可行策略，停止本次设计'
+                    self.log(f"STOP {self.case} {self.state['message']}"); _atomic_json(self.state, self.jpath); return self.state
+                lam = min(2.0*lam, cap)              # 5, 10, 20, 40, 80, then the cap 100 gbar (round 5 Part 0a)
+                r = self.run(lam, 'double')
             lam_f = lam; lam_i = None
             while True:
                 lam = 0.8*lam

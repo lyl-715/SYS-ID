@@ -42,6 +42,9 @@ acts. Overnight mode: none of these stopped the run.
 - DECISION B-4: argmax ties -> the first action in code order (strict ">" over i_- outer, i_+ inner, ascending).
 - DECISION B-5: doubling from lambda_0 = 5 gbar runs 5, 10, 20, 40, 80 gbar; a doubled value above the cap 100 gbar is not
   run (the cap is read as a limit on the values run, not as a value to be run).
+  Superseded in round 5 Part 0a (`round5/decisions_round5.md`, DECISION 0-1): the doubling now runs 5, 10, 20, 40, 80 and the
+  cap 100 gbar itself before it stops. No round-4 case used the doubling branch (all four were feasible at lambda_0), so no
+  round-4 number changes.
 - DECISION B-6: in the downward scan the first lambda < 1e-3 gbar is run; if it is feasible the scan ends there with the
   frozen message (not reached in any case).
 - DECISION B-7: bisection uses the arithmetic midpoint of the last feasible and first infeasible lambda.
@@ -84,6 +87,8 @@ acts. Overnight mode: none of these stopped the run.
   simulated r (the conditional information, as the stage-2 MC). Reported: E[N], S with sample se; log det of the pooled J
   with a batch-means se (approximate). A first MC run had a bug (the forced first sample's weight w_1 entered as 1/R instead
   of 1); it shifted every log det by about -0.026 and is fixed; E[N] and S were unaffected.
+  Round 5 Part 0b: the MC code now reads the tables from the committed `results/table_<case>.npz` (lossless copy of the
+  memmap it used, round trip checked in `logs/final_checks.log`); the MC was not re-run.
 - DECISION C-6 (diagnostic for V4, not required): per final table, the Spearman rank correlation over k = 2..K of the
   mass-weighted mean full width (Delta^- + Delta^+) with gamma_k = sigma^-2 h_k^T A h_k (A = J_SoD^-1 of the same input),
   and, binned by |r - x_k|/sigma, the mass-weighted near-side half-width (the side of x_k as seen from r), the far-side
