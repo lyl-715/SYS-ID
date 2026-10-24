@@ -1,0 +1,31 @@
+{
+ "verdict": {
+  "case": "受测档位未找到低代价方案",
+  "failed": [],
+  "a": true,
+  "b": false,
+  "c": true,
+  "d": true,
+  "cost": 2.1198197369336924,
+  "supplementary": "所有 20 个 P4 点匹配成功；Delta m_D - Delta m_D^eq 的中位数 -2.0387 nat（不超过 2 nat，补充句不适用）"
+ },
+ "M1": "对",
+ "M2": "部分对",
+ "M3": "错",
+ "M4": "对",
+ "M5": "部分对",
+ "M6": "对",
+ "M7": "对",
+ "wall_total_s": 1578.3999999999999,
+ "walls": {
+  "partA1_final.log": 23.5,
+  "partA1_scan.log": 591.0,
+  "partA_figs.log": 0.9,
+  "partA_summary.log": 0.0,
+  "partA_sweep.log": 212.1,
+  "partB_refine.log": 13.4,
+  "partC_equal_send.log": 723.4,
+  "partC_figs.log": 0.5,
+  "round5/partB_schemeD-load.log": 13.6
+ }
+}

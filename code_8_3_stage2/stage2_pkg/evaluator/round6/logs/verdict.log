@@ -1,0 +1,41 @@
+=== verdict_round6.py started 2026-10-24 21:13:15; spec reports_CN/plan_round6_CN.md v3.2 §5, §6; B = 316.8921168493721
+V-CHK1 m = 0 table at theta_0 equals round 5 bit for bit: True; 80-point regression of m000 and SoD vs round 5: True
+V-CHK2 m005 E[N](theta_0) 300.9096381748455 <= B_m 301.04751100690345: True; B_m - E[N] 0.1378728320579512 (<= 0.5 utilisation target: True, not a pass condition)
+V-CHK2 m010 E[N](theta_0) 285.03784430818547 <= B_m 285.20290516443487: True; B_m - E[N] 0.16506085624939715 (<= 0.5 utilisation target: True, not a pass condition)
+V-CHK2 m020 E[N](theta_0) 253.47685274907272 <= B_m 253.51369347949768: True; B_m - E[N] 0.036840730424955836 (<= 0.5 utilisation target: True, not a pass condition)
+V-CHK3 Part A evaluations: 405/405 ok, assertion stops 0; Part B assertion failures 0; Part C evaluations in the archive 1661
+V-CHK4 round-5 fixes: scheme D reproduced from the committed npz bit for bit: True
+V-6 case 1 test: m* = m020; nominal cost Delta m_D(0; theta_0) - Delta m_D(m*; theta_0) = 2.1198197369336924 (> 2 nat: True)
+V-6 (a) rho_26(m020) = 0.8555214744139878 >= 0.8: True
+V-6 (b) main grid-check points 精度未定: ['theta0|theta_0|+|0.0', 'P1|theta1|+|0.5', 'P4|d1|+|0.5'] -> none: False
+V-6 (c) P4 points matched 20/20: True
+V-6 (d) median Delta m_D^eq over the 20 P4 points >= 5 nat: True (median 7.730379671515735)
+V-6 VERDICT 受测档位未找到低代价方案
+V-6 supplementary 所有 20 个 P4 点匹配成功；Delta m_D - Delta m_D^eq 的中位数 -2.0387 nat（不超过 2 nat，补充句不适用）
+V-M1 B_m - E[N](theta_0) <= 0.5: {'m005': 0.137873, 'm010': 0.165061, 'm020': 0.036841} -> {'m005': True, 'm010': True, 'm020': True} -> 对
+V-M2 (i) m* = 0.10: False (m* = 0.2); (ii) m = 0.05 26-point crossings 4 ['P1 theta1 +0.5', 'P4 d8 +0.5', 'P4 d9 +0.5', 'P4 d10 +0.5'], all at P4 eps = 0.5 or P1 +0.5: True -> True; (iii) m = 0.10 holds 26: False (25/26); (iv) m = 0.20 holds 26 (26/26) and P4 eps = 1 + P1 +-1 (11/12, over ['P1 theta1 +1.0']): False -> 部分对
+V-M3 m005 Delta m_D(theta_0) 7.384333774925437 >= 7.530436416895992 (printed 7.5304): False; cost 0.4461026419705547 nat = 8.922052839411094 m
+V-M3 m010 Delta m_D(theta_0) 6.886861838789287 >= 7.2304364168959925 (printed 7.2304): False; cost 0.9435745781067055 nat = 9.435745781067055 m
+V-M3 m020 Delta m_D(theta_0) 5.7106166799623 >= 6.630436416895992 (printed 6.6304): False; cost 2.1198197369336924 nat = 10.599098684668462 m
+V-M3 -> 错
+V-M4 m000 rho_26 0.9003264419894004 >= 0.8: True; g_med(0.2, 0.5, 1, 2) [7.8552, 7.8846, 7.9422, 8.1786] non-decreasing: True (with eps = 0: 单调上升)
+V-M4 m005 rho_26 0.892832811949312 >= 0.8: True; g_med(0.2, 0.5, 1, 2) [7.411, 7.446, 7.5216, 7.8157] non-decreasing: True (with eps = 0: 单调上升)
+V-M4 m010 rho_26 0.8833965407738535 >= 0.8: True; g_med(0.2, 0.5, 1, 2) [6.916, 6.9575, 7.0533, 7.4128] non-decreasing: True (with eps = 0: 单调上升)
+V-M4 m020 rho_26 0.8555214744139878 >= 0.8: True; g_med(0.2, 0.5, 1, 2) [5.7477, 5.8084, 5.9583, 6.4786] non-decreasing: True (with eps = 0: 单调上升)
+V-M4 8/8 table-claims hold -> 对
+V-M5 theta0|theta_0|+|0.0 (theta_0) |dE[N]| 0.2749496203507249 <= 0.5 and no flip (E[N] <= B / E[N] <= B): True
+V-M5 P1|theta1|+|0.5 (max E[N] in the 26) |dE[N]| 1.25606587043319 <= 0.5 and no flip (E[N] <= B / E[N] <= B): False
+V-M5 P4|d1|+|0.5 (min Delta m_D in the 26) |dE[N]| 0.06515464971354845 <= 0.5 and no flip (E[N] <= B / E[N] <= B): True
+V-M5 -> 部分对 (table m020)
+V-M6 (i) all 21 matched: True (21/21); (ii) median Delta m_D^eq over P4 >= 6.0: True (7.730379671515735); (iii) median Delta m_D - Delta m_D^eq <= 1.5: True (-2.0386959521098618) -> 对
+V-M7 wall partA1_final.log 23.5 s
+V-M7 wall partA1_scan.log 591.0 s
+V-M7 wall partA_figs.log 0.9 s
+V-M7 wall partA_summary.log 0.0 s
+V-M7 wall partA_sweep.log 212.1 s
+V-M7 wall partB_refine.log 13.4 s
+V-M7 wall partC_equal_send.log 723.4 s
+V-M7 wall partC_figs.log 0.5 s
+V-M7 wall round5/partB_schemeD-load.log 13.6 s
+V-M7 total logged wall 1578.4 s = 0.438 h <= 2.5 h -> 对
+=== verdict_round6.py finished (reads results only)

@@ -118,3 +118,16 @@ nothing here is a bound.
   reported as one of the 21 points; verdict items (c) and (d) use the 20 P4 points only (spec §6).
 - DECISION C-5: regressions: the theta_0 curve at M = 240..480 against round 5's scheme A rows (E[N], S, log det; exact), and
   M = 480 at theta_0 against Part A's SoD at theta_0.
+
+## Report (verdict_round6.py, report_round6_CN.md)
+
+- DECISION R-1 (record): `robustness_margin.py figs` was run twice: the first render had Chinese text in one axis title, which
+  the figure font cannot draw (glyph warnings); the title was changed to English and the figures re-rendered. Only the
+  second run's log is kept (`logs/partA_figs.log`); no number changed. The Part C figure title was made English before its
+  first render.
+- DECISION R-2: M6 sub-claim (iii) is scored by its literal threshold (median of Delta m_D - Delta m_D^eq <= 1.5): -2.039
+  satisfies it, so M6 is 对; the report states that the sign is the opposite of the direction the prediction implies
+  (the advantage grows after matching, it does not shrink).
+- DECISION R-3: the report's §0 item 4 places Delta m_D^eq(theta_0) of the m = 0.20 table (7.806, equal-send baseline) next to
+  the m = 0 table's nominal Delta m_D (7.830, whose SoD sends almost the same number) as a note on the dependence of the
+  "nominal cost" on the Delta* baseline; it is not used to override the frozen §6 rule, and the verdict stands as case 1.
