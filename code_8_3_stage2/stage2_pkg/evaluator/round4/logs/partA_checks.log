@@ -3,7 +3,7 @@ A0 P5514 a, chi from round2a/config_recheck.json candidates[0] (NM-none-P5514); 
 A0 support half-width R = 88 sigma = 0.010492655723597455; X = 960 grid units = 40 sigma; SoD window (480, 480); action code of (480, 480) = 189
 A0 U G = 35146, support window nodes min 4224 max 4224, min a_k - X 769, max b_k + X 34376 (G - 1 = 35145); max |x_(k+1) - x_k| = 3.9878407530954423 sigma
 A0 P5514 G = 34951, support window nodes min 4223 max 4224, min a_k - X 769, max b_k + X 34181 (G - 1 = 34950); max |x_(k+1) - x_k| = 3.175876812737922 sigma
-A0 warm-up (JIT) 1.1 s
+A0 warm-up (JIT) 0.1 s
 A4-1 U reference evaluator_fast EN 316.8921168493721 S 466.15774934465276 logdet 197.20097668224076
 A4-1 U (i) dispatch EN 0.0
 A4-1 U (i) dispatch S 0.0
@@ -20,8 +20,8 @@ A4-1 U (ii) general(480,480) path 'general window path (R = 88 sigma)'
 A4-1 U (ii) general(480,480) mass_dev_max 3.852473895449293e-14
 A4-1 U (ii) general(480,480) min_m 0.0
 A4-1 U (ii) general(480,480) assert_fail 0
-A4-1 U (ii) general(480,480) runtime_ref_s 1.6599910060001548
-A4-1 U (ii) general(480,480) runtime_general_s 1.5586399970000002
+A4-1 U (ii) general(480,480) runtime_ref_s 1.708352621999893
+A4-1 U (ii) general(480,480) runtime_general_s 1.609242746000291
 A4-1 U (ii) tolerance (E[N], S rel <= 1e-12; |dJ| <= 1e-12 (|ref| + max|J|)) PASS
 A4-1 P5514 reference evaluator_fast EN 316.4724658173142 S 486.6943784924982 logdet 197.90224219753293
 A4-1 P5514 (i) dispatch EN 0.0
@@ -39,8 +39,8 @@ A4-1 P5514 (ii) general(480,480) path 'general window path (R = 88 sigma)'
 A4-1 P5514 (ii) general(480,480) mass_dev_max 9.947598300641403e-14
 A4-1 P5514 (ii) general(480,480) min_m 0.0
 A4-1 P5514 (ii) general(480,480) assert_fail 0
-A4-1 P5514 (ii) general(480,480) runtime_ref_s 1.6342779329997938
-A4-1 P5514 (ii) general(480,480) runtime_general_s 1.5533933749998141
+A4-1 P5514 (ii) general(480,480) runtime_ref_s 1.663882027999989
+A4-1 P5514 (ii) general(480,480) runtime_general_s 1.7023274420002963
 A4-1 P5514 (ii) tolerance (E[N], S rel <= 1e-12; |dJ| <= 1e-12 (|ref| + max|J|)) PASS
 A4-2 table=a gamma=1 err_m_steps 2.3014901515618778e-15
 A4-2 table=a gamma=1 err_EN_fwd 4.70416102592525e-16

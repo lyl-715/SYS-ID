@@ -216,17 +216,18 @@ def _buffers(nw_max, X):
     L = nw_max+2*X
     return [np.empty(L) for _ in range(3)], [np.empty(nw_max+3) for _ in range(4)], np.empty(nw_max)
 
-def forward(z, dz, sg, xk, a, b, table, gam=None, record=False):
+def forward(z, dz, sg, xk, a, b, table, gam=None, record=False, record_window=False):
     """general forward on nodes z (z_i = z_0 + i dz), measurement sd sg, outputs xk (len Kn), support windows [a_p, b_p].
     Returns E[N] (discrete qhat), E[N] with exact P (diagnostic, as the accepted record), w_k, E[q_k], per-step mass, min m,
-    kernel mass, support, assertion flags; with record=True also every m_k (k = 2..Kn+1) on the full grid."""
+    kernel mass, support, assertion flags; with record=True also every m_k (k = 2..Kn+1) on the full grid; with
+    record_window=True m_k on [a_p, b_p] as float32 for p = 1..Kn-1 (plots only; the arithmetic is unchanged)."""
     ng = z.size; Kn = xk.size; X = table.X
     nw_max = int((b-a+1).max()); gbuf, bbuf, Ph = _buffers(nw_max, X)
     m = np.zeros(ng); mn = np.zeros(ng); gh = np.zeros(ng)
     EN = 1.0; ENP = 1.0; W = np.zeros(Kn); W[0] = 1.0; Q = np.zeros(Kn); Q[0] = 1.0
     mass = np.empty(Kn); minm = np.empty(Kn); kmass = np.empty(Kn)
     nnz = np.zeros(Kn, np.int64); slo = np.zeros(Kn, np.int64); shi = np.zeros(Kn, np.int64); ok = np.ones(Kn, np.bool_)
-    ms = [] if record else None
+    ms = [] if record else None; mw = [None]
     g1 = np.empty(ng); kmass[0] = dr._kernel(z, xk[0], sg, dz, g1)
     nz = np.flatnonzero(g1)
     if not (nz[0] >= a[1] and nz[-1] <= b[1]):
@@ -240,6 +241,7 @@ def forward(z, dz, sg, xk, a, b, table, gam=None, record=False):
         if lo < A or hi > Bb:
             raise AssertionStop(f"step {p+1}: support of m_k [{lo}, {hi}] not inside the support window [{A}, {Bb}]")
         Mm, Mp = table.rows(p, A, Bb)
+        if record_window: mw.append(m[A:Bb+1].astype(np.float32))
         zz = z[lo:hi+1]; mm = m[lo:hi+1]; o0, o1 = lo-A, hi-A+1
         al = (zz-Mm[o0:o1]*dz-xk[p])/sg; be = (zz+Mp[o0:o1]*dz-xk[p])/sg
         cev, cno = dr.cfun(al, be)
@@ -262,6 +264,7 @@ def forward(z, dz, sg, xk, a, b, table, gam=None, record=False):
                win_a=a, win_b=b, nnz=nnz, sup_lo=slo, sup_hi=shi, assert_ok=ok)
     if gam is not None: out['Fgam'] = float(np.asarray(gam)[1:]@W[1:])
     if record: out['m_steps'] = ms
+    if record_window: out['m_window'] = mw
     return out
 
 def backward(z, dz, sg, xk, a, b, table, gam, record=False):

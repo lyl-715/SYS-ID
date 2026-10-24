@@ -19,8 +19,8 @@
     "mass_dev_max": 3.852473895449293e-14,
     "min_m": 0.0,
     "assert_fail": 0,
-    "runtime_ref_s": 1.6599910060001548,
-    "runtime_general_s": 1.5586399970000002
+    "runtime_ref_s": 1.708352621999893,
+    "runtime_general_s": 1.609242746000291
    },
    "general_pass": true,
    "EN": 316.8921168493721,
@@ -46,8 +46,8 @@
     "mass_dev_max": 9.947598300641403e-14,
     "min_m": 0.0,
     "assert_fail": 0,
-    "runtime_ref_s": 1.6342779329997938,
-    "runtime_general_s": 1.5533933749998141
+    "runtime_ref_s": 1.663882027999989,
+    "runtime_general_s": 1.7023274420002963
    },
    "general_pass": true,
    "EN": 316.4724658173142,

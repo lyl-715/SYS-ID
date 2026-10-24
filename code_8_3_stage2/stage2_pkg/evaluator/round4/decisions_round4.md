@@ -61,3 +61,30 @@ acts. Overnight mode: none of these stopped the run.
   committed). For each final table the committed copy is `results/table_<case>.npz` (np.savez_compressed: codes, support
   start indices, widths, lambda, run; about 0.3 MB). It is lossless (round trip checked in `logs/final_checks.log`), and
   `np.save('x.npy', np.load('results/table_U_S.npz')['codes'])` rebuilds the memmap.
+
+## Part C (part_c.py)
+
+- DECISION C-1: C1 evaluates each final table with `evaluate_table` (general path; record, J and invariants from the
+  accepted `dr.evaluate`). Delta m_D is against the same input's SoD on the same grid. m_E and the nine lambda_i are against
+  J_C = uniform-input SoD at sigma/24. Delta m_D against the uniform SoD is logged in addition (`dmD_vs_U`).
+- DECISION C-2: sigma/48 reference SoD = `evaluator_fast.evaluate_fast(name, 48)` (accepted operator, R = 68 sigma);
+  Delta m_D(48) is relative to it. The sigma/48 budget verdict uses the frozen B = 316.8921168493721 (the uniform SoD's
+  E[N] at sigma/24), not the uniform SoD's E[N] at sigma/48 (316.89136, logged). As a diagnostic the general path with the
+  constant table (960, 960) at sigma/48 is compared with the accepted operator there (E[N] rel 1.4e-13 / 1.5e-13).
+- DECISION C-3: nearest coarse node for fine node j = j // 2. The grids are nested exactly (fine node 2i equals coarse node i
+  bitwise, both inputs), so fine node 2i + 1 is an exact-arithmetic tie, which goes to the smaller index. On the
+  floating-point positions the two distances of a tie differ by up to 2 ulp (8.9e-16), and a position-based rule would send
+  1132 of the 35145 ties (U) to the larger index. The check in `logs/part_c2.log` verifies both facts.
+- DECISION C-4: heat maps on (k, (r - x_k)/sigma), every 5th step and every 4th node; nodes with zero forward mass under the
+  table are grey (they are never visited, so their stored action is immaterial). E[q_k] and tr(h_k h_k^T A) = h_k^T A h_k are
+  drawn on separate axes plus one overlay indexed to each series' mean over k >= 2 (no dual y-axis).
+- DECISION C-5 (diagnostic, not required by the spec): Monte Carlo of each final table and of the two SoD tables at the
+  runtime lookup rule of spec §1.4 (continuous r; nearest node, ties -> smaller; outside the stored range -> boundary node;
+  window centred at the actual r). R = 10000 per row in 20 batches, seeds 20261025 + 1000 row + batch, c = cfun at the
+  simulated r (the conditional information, as the stage-2 MC). Reported: E[N], S with sample se; log det of the pooled J
+  with a batch-means se (approximate). A first MC run had a bug (the forced first sample's weight w_1 entered as 1/R instead
+  of 1); it shifted every log det by about -0.026 and is fixed; E[N] and S were unaffected.
+- DECISION C-6 (diagnostic for V4, not required): per final table, the Spearman rank correlation over k = 2..K of the
+  mass-weighted mean full width (Delta^- + Delta^+) with gamma_k = sigma^-2 h_k^T A h_k (A = J_SoD^-1 of the same input),
+  and, binned by |r - x_k|/sigma, the mass-weighted near-side half-width (the side of x_k as seen from r), the far-side
+  half-width and the distance from x_k to the near edge.
