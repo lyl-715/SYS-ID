@@ -1,0 +1,4 @@
+=== robustness_margin.py figs started 2026-10-24 20:59:21; spec reports_CN/plan_round6_CN.md v3.2; python 3.13.17, numpy 2.5.3, scipy 1.18.1, numba 0.68.0; B = 316.8921168493721
+A-FIG fig_margin_EN_dmD.png written
+A-FIG fig_margin_cost_slack.png written
+=== robustness_margin.py figs done in 0.9 s

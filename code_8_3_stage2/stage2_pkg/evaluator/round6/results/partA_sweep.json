@@ -1,0 +1,28 @@
+{
+ "wall_s": 211.38307685100017,
+ "workers": 4,
+ "n": 405,
+ "n_ok": 405,
+ "n_stop": 0,
+ "regression": {
+  "theta0:m000": {
+   "EN": true,
+   "S": true,
+   "logdet": true,
+   "dmD": true,
+   "J_round4": true
+  },
+  "theta0:SoD": {
+   "EN": true,
+   "S": true,
+   "logdet": true,
+   "J_round4": true
+  },
+  "round5_80": {
+   "n": 160,
+   "mismatches": []
+  },
+  "pass": true,
+  "pass_80": true
+ }
+}

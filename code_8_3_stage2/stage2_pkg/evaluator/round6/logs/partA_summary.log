@@ -1,0 +1,142 @@
+=== robustness_margin.py summary started 2026-10-24 20:58:51; spec reports_CN/plan_round6_CN.md v3.2; python 3.13.17, numpy 2.5.3, scipy 1.18.1, numba 0.68.0; B = 316.8921168493721
+A5 m000 m 0.0
+A5 m000 B_m 316.8921168493721
+A5 m000 EN0 316.6035659260541
+A5 m000 slack_Bm0 0.2885509233179846
+A5 m000 dmD0 7.830436416895992
+A5 m000 logdet0 205.03141309913676
+A5 m000 n26_within_B 10
+A5 m000 budget_pass26 False
+A5 m000 worst_gain26 7.049948958448198
+A5 m000 worst_gain26_at 'P4 d1 +0.5'
+A5 m000 rho26 0.9003264419894004
+A5 m000 info_label '信息保持'
+A5 m000 worst_gain80 4.9648949937897555
+A5 m000 worst_gain80_at 'P4 d1 +2.0'
+A5 m000 rho80 0.6340508663191284
+A5 m000 maxEN26 361.7720178961507
+A5 m000 maxEN26_at 'P1 theta1 +0.5'
+A5 m000 min_slack26 -44.87990104677863
+A5 m000 maxEN80 1184.5181687097966
+A5 m000 maxEN80_at 'P1 theta1 +4.0'
+A5 m000 min_slack80 -867.6260518604245
+A5 m000 n80_within_B 23
+A5 m000 over26 ['P1 theta1 +0.1', 'P1 theta1 +0.2', 'P1 theta1 +0.5', 'P1 theta1 -0.5', 'P4 d3 +0.2', 'P4 d4 +0.2', 'P4 d7 +0.2', 'P4 d8 +0.2', 'P4 d9 +0.2', 'P4 d10 +0.2', 'P4 d3 +0.5', 'P4 d4 +0.5', 'P4 d7 +0.5', 'P4 d8 +0.5', 'P4 d9 +0.5', 'P4 d10 +0.5']
+A5 m000 gmed [7.830436416895992, 7.855152552234301, 7.88457069589974, 7.942159113630211, 8.178583461047495]
+A5 m000 gmed_shape_4 '单调上升'
+A5 m000 gmed_shape_with0 '单调上升'
+A5 m000 n_P1_within_B '2/12'
+A5 m000 n_P2_within_B '3/10'
+A5 m000 n_P3_within_B '5/18'
+A5 m000 n_P4_within_B '13/40'
+A5 m000 n_P4eps1_P1pm1_within_B '3/12'
+A5 m000 P4eps1_P1pm1_over ['P1 theta1 +1.0', 'P1 theta1 -1.0', 'P4 d3 +1.0', 'P4 d4 +1.0', 'P4 d6 +1.0', 'P4 d7 +1.0', 'P4 d8 +1.0', 'P4 d9 +1.0', 'P4 d10 +1.0']
+A5 m005 m 0.05
+A5 m005 B_m 301.04751100690345
+A5 m005 EN0 300.9096381748455
+A5 m005 slack_Bm0 0.1378728320579512
+A5 m005 dmD0 7.384333774925437
+A5 m005 logdet0 204.5853104571662
+A5 m005 n26_within_B 22
+A5 m005 budget_pass26 False
+A5 m005 worst_gain26 6.592975488638956
+A5 m005 worst_gain26_at 'P4 d1 +0.5'
+A5 m005 rho26 0.892832811949312
+A5 m005 info_label '信息保持'
+A5 m005 worst_gain80 4.527984822810595
+A5 m005 worst_gain80_at 'P4 d1 +2.0'
+A5 m005 rho80 0.6131879951290955
+A5 m005 maxEN26 343.5372995040366
+A5 m005 maxEN26_at 'P1 theta1 +0.5'
+A5 m005 min_slack26 -26.645182654664495
+A5 m005 maxEN80 1181.5917581354308
+A5 m005 maxEN80_at 'P1 theta1 +4.0'
+A5 m005 min_slack80 -864.6996412860587
+A5 m005 n80_within_B 46
+A5 m005 over26 ['P1 theta1 +0.5', 'P4 d8 +0.5', 'P4 d9 +0.5', 'P4 d10 +0.5']
+A5 m005 gmed [7.384333774925437, 7.411006212091678, 7.446027714759353, 7.521561120550331, 7.815686282371203]
+A5 m005 gmed_shape_4 '单调上升'
+A5 m005 gmed_shape_with0 '单调上升'
+A5 m005 n_P1_within_B '5/12'
+A5 m005 n_P2_within_B '6/10'
+A5 m005 n_P3_within_B '11/18'
+A5 m005 n_P4_within_B '24/40'
+A5 m005 n_P4eps1_P1pm1_within_B '4/12'
+A5 m005 P4eps1_P1pm1_over ['P1 theta1 +1.0', 'P1 theta1 -1.0', 'P4 d3 +1.0', 'P4 d4 +1.0', 'P4 d7 +1.0', 'P4 d8 +1.0', 'P4 d9 +1.0', 'P4 d10 +1.0']
+A5 m010 m 0.1
+A5 m010 B_m 285.20290516443487
+A5 m010 EN0 285.03784430818547
+A5 m010 slack_Bm0 0.16506085624939715
+A5 m010 dmD0 6.886861838789287
+A5 m010 logdet0 204.08783852103005
+A5 m010 n26_within_B 25
+A5 m010 budget_pass26 False
+A5 m010 worst_gain26 6.083829925173916
+A5 m010 worst_gain26_at 'P4 d1 +0.5'
+A5 m010 rho26 0.8833965407738535
+A5 m010 info_label '信息保持'
+A5 m010 worst_gain80 4.045681143667508
+A5 m010 worst_gain80_at 'P4 d1 +2.0'
+A5 m010 rho80 0.5874491514960812
+A5 m010 maxEN26 324.90950815238887
+A5 m010 maxEN26_at 'P1 theta1 +0.5'
+A5 m010 min_slack26 -8.01739130301678
+A5 m010 maxEN80 1177.8928064062286
+A5 m010 maxEN80_at 'P1 theta1 +4.0'
+A5 m010 min_slack80 -861.0006895568565
+A5 m010 n80_within_B 54
+A5 m010 over26 ['P1 theta1 +0.5']
+A5 m010 gmed [6.886861838789287, 6.916027153099407, 6.957526968258648, 7.05328500380503, 7.412755487405462]
+A5 m010 gmed_shape_4 '单调上升'
+A5 m010 gmed_shape_with0 '单调上升'
+A5 m010 n_P1_within_B '5/12'
+A5 m010 n_P2_within_B '7/10'
+A5 m010 n_P3_within_B '13/18'
+A5 m010 n_P4_within_B '29/40'
+A5 m010 n_P4eps1_P1pm1_within_B '6/12'
+A5 m010 P4eps1_P1pm1_over ['P1 theta1 +1.0', 'P1 theta1 -1.0', 'P4 d7 +1.0', 'P4 d8 +1.0', 'P4 d9 +1.0', 'P4 d10 +1.0']
+A5 m020 m 0.2
+A5 m020 B_m 253.51369347949768
+A5 m020 EN0 253.47685274907272
+A5 m020 slack_Bm0 0.036840730424955836
+A5 m020 dmD0 5.7106166799623
+A5 m020 logdet0 202.91159336220306
+A5 m020 n26_within_B 26
+A5 m020 budget_pass26 True
+A5 m020 worst_gain26 4.885555201854459
+A5 m020 worst_gain26_at 'P4 d1 +0.5'
+A5 m020 rho26 0.8555214744139878
+A5 m020 info_label '信息保持'
+A5 m020 worst_gain80 2.949052904528372
+A5 m020 worst_gain80_at 'P4 d1 +2.0'
+A5 m020 rho80 0.5164158390942537
+A5 m020 maxEN26 287.4150474836405
+A5 m020 maxEN26_at 'P1 theta1 +0.5'
+A5 m020 min_slack26 29.47706936573161
+A5 m020 maxEN80 1168.4623240776816
+A5 m020 maxEN80_at 'P1 theta1 +4.0'
+A5 m020 min_slack80 -851.5702072283095
+A5 m020 n80_within_B 67
+A5 m020 over26 []
+A5 m020 gmed [5.7106166799623, 5.747723380625203, 5.808408659975385, 5.9582828260978005, 6.478604272819837]
+A5 m020 gmed_shape_4 '单调上升'
+A5 m020 gmed_shape_with0 '单调上升'
+A5 m020 n_P1_within_B '7/12'
+A5 m020 n_P2_within_B '8/10'
+A5 m020 n_P3_within_B '18/18'
+A5 m020 n_P4_within_B '34/40'
+A5 m020 n_P4eps1_P1pm1_within_B '11/12'
+A5 m020 P4eps1_P1pm1_over ['P1 theta1 +1.0']
+A5-TAB table     m  E[N](th0)  dmD(th0) 26 ok  worst26  rho26  worst80   maxEN26  slack26   maxEN80   slack80  g_med(0, 0.2, 0.5, 1, 2)
+A5-TAB m000   0.00   316.6036   7.83044 10/26   7.0499 0.9003   4.9649  361.7720 -44.8799  1184.518  -867.626  7.8304, 7.8552, 7.8846, 7.9422, 8.1786 (单调上升 over 0.2-2; 单调上升 with 0)
+A5-TAB m005   0.05   300.9096   7.38433 22/26   6.5930 0.8928   4.5280  343.5373 -26.6452  1181.592  -864.700  7.3843, 7.4110, 7.4460, 7.5216, 7.8157 (单调上升 over 0.2-2; 单调上升 with 0)
+A5-TAB m010   0.10   285.0378   6.88686 25/26   6.0838 0.8834   4.0457  324.9095  -8.0174  1177.893  -861.001  6.8869, 6.9160, 6.9575, 7.0533, 7.4128 (单调上升 over 0.2-2; 单调上升 with 0)
+A5-TAB m020   0.20   253.4769   5.71062 26/26   4.8856 0.8555   2.9491  287.4150 +29.4771  1168.462  -851.570  5.7106, 5.7477, 5.8084, 5.9583, 6.4786 (单调上升 over 0.2-2; 单调上升 with 0)
+A3 m = 0 table (not a candidate) 26-point budget pass: False (10/26)
+A3 margins passing the 26-point budget condition (离散方案下): ['m020']
+A3 m* = 0.2 (m020); rho_26 = 0.8555214744139878 -> 信息保持; nominal cost Delta m_D(0; theta_0) - Delta m_D(m*; theta_0) = 2.1198197369336924 nat
+A4 m000 rho_26 0.9003264419894004 (信息保持); worst at P4 d1 +0.5
+A4 m005 rho_26 0.892832811949312 (信息保持); worst at P4 d1 +0.5
+A4 m010 rho_26 0.8833965407738535 (信息保持); worst at P4 d1 +0.5
+A4 m020 rho_26 0.8555214744139878 (信息保持); worst at P4 d1 +0.5
+=== robustness_margin.py summary done in 0.0 s
