@@ -24,8 +24,8 @@ date: "2026-10-24"
 1. **检查全部通过。** $\varepsilon=0$ 时四张表与第 4 轮逐位一致，两个常数 SoD 与 `evaluator_fast` 逐位一致；400 次失配评价没有一次断言触发；Part 0 的两处修补都已验证（第 2 节）。
 2. **$\varepsilon_{50}$（U/加权表，头条）：测试至 $\varepsilon=2$ 未观察到跨越。**
    - $g_{\rm med}$ 在 $\varepsilon=0,0.2,0.5,1,2$ 依次为 7.830、7.855、7.885、7.942、8.179 nat。它没有下降，而是缓慢上升，从未接近名义值的一半（3.915）。
-   - 按事先写定的口径 S-1，曲线"不是非增"即标"非单调"，所以标了**非单调**。按通常意义它是单调（上升）的，没有跨越点（DECISION C-1）。
-   - U/$S$ 表与 P5514/加权表相同：都未跨越，都按 S-1 标"非单调"。
+   - **单调上升，未观察到减半跨越**（`logs/partC_headline.log:12`）。（第 6 轮 Part 0a 更正：原文按口径 S-1 把"不是非增"的曲线标为"非单调"；S-1 的定义有误，单调不降的曲线是单调的。见 `decisions_round5.md` 的更正记录。）
+   - U/$S$ 表与 P5514/加权表相同：**单调上升，未观察到减半跨越**（`logs/partC_headline.log:7, 17`）。
 3. **$\varepsilon_B$（U/加权表，头条）：P1 最坏符号为"+"，$\varepsilon_B=0.1$（相邻采样点 0 与 0.1；离散方案下）。**
    - $\theta_1$ 只加 $0.1\sigma$，$\mathbb E[N]$ 就由 316.60 升到 321.54，超过 $B=316.892$。
    - "−"号先降后升（313.63、312.52，然后在 $\varepsilon=0.5$ 处升到 319.37），首次超出预算在 $\varepsilon=0.5$，非单调。
@@ -78,7 +78,7 @@ date: "2026-10-24"
 
 | 表 | $\varepsilon=0$（名义） | 0.2 | 0.5 | 1 | 2 | $\varepsilon_{50}$（按 §4 规则） |
 |---|---|---|---|---|---|---|
-| U/加权（头条） | 7.830 | 7.855（7.519–8.131） | 7.885（7.050–8.574） | 7.942（6.281–9.284） | 8.179（4.965–10.581） | **测试至 $\varepsilon=2$ 未观察到跨越**；按 S-1 标"非单调"（曲线上升，见 DECISION C-1） |
+| U/加权（头条） | 7.830 | 7.855（7.519–8.131） | 7.885（7.050–8.574） | 7.942（6.281–9.284） | 8.179（4.965–10.581） | **单调上升，未观察到减半跨越**（测试至 $\varepsilon=2$；第 6 轮 Part 0a 更正，原按 S-1 误标"非单调"） |
 | U/$S$ | 7.860 | 7.905（7.517–8.180） | 7.972（6.999–8.654） | 8.109（6.156–9.425） | 8.451（4.782–10.825） | 同上 |
 | P5514/加权 | 7.418 | 7.454（7.163–7.656） | 7.520（6.795–8.029） | 7.653（6.210–8.649） | 7.987（5.336–9.648） | 同上 |
 
@@ -254,7 +254,8 @@ python3 robustness.py check             # θ0 回归 -> logs/partA_check.log
 python3 robustness.py sweep             # 400 次评价，4 进程 -> results/archive_partA.jsonl, results/J_partA.npz
 python3 robustness.py figs              # fig_mismatch_dmD.png, fig_mismatch_EN.png
 python3 two_stage.py schemeA            # 241 次前向 -> results/schemeA.json
-python3 two_stage.py schemeD            # 2B 预算的 λ 重扫 -> results/scan_U_W_2B.json, results/table_U_W_2B.npz
+python3 two_stage.py schemeD-redesign   # 2B 预算的 λ 重扫，须从空检查点开始 -> results/scan_U_W_2B.json, results/table_U_W_2B.npz
+python3 two_stage.py schemeD-load       # 只读已提交的 table_U_W_2B.npz，前向复算最终数并逐位比对（第 6 轮 Part 0b 拆分，原单一入口 schemeD）
 python3 two_stage.py combine            # 名义点四方案表与 P4 表 -> results/partB.json
 python3 headline.py                     # ε_50、ε_B、R1–R6 -> logs/partC_headline.log
 ```

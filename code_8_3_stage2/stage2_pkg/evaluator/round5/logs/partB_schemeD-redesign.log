@@ -1,0 +1,3 @@
+=== two_stage.py schemeD-redesign started 2026-10-24 20:34:14; spec reports_CN/plan_round5_CN.md v3.2; B = 316.8921168493721; 2B = 633.7842336987442
+D-REDESIGN checkpoint not empty, stopping before any DP (move these aside to redesign): ['results/scan_U_W_2B.json']
+=== two_stage.py schemeD-redesign done in 0.0 s

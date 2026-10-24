@@ -1,7 +1,8 @@
 """Round 5, Part C: headline numbers by the rules of spec §4 and the predictions R1-R6 against the outcomes (spec
 reports_CN/plan_round5_CN.md v3.2, frozen; readings in decisions_round5.md, DECISION S-1 .. S-8). Reads only the archives of
-Parts A and B; no evaluation. Every number of report_round5_CN.md that is not in the Part A/B logs is on one line of
-logs/partC_headline.log.
+Parts A and B; no evaluation. Round 6 Part 0a: 非单调 now means mathematically non-monotone (neither non-decreasing nor
+non-increasing over the sampled points); a non-decreasing curve is monotone (correction of S-1, decisions_round5.md).
+Every number of report_round5_CN.md that is not in the Part A/B logs is on one line of logs/partC_headline.log.
 
 Usage (from this directory): python3 headline.py   -> logs/partC_headline.log, results/headline.json
 """
@@ -13,18 +14,24 @@ EPS_P1 = (0.1, 0.2, 0.5, 1.0, 2.0, 4.0); EPS_P2 = (0.1, 0.2, 0.5, 1.0, 2.0); EPS
 TABLES = (('U', 'S'), ('U', 'W'), ('P5514', 'W'))
 
 
-def crossing_report(eps, vals, pred, mono):
+def crossing_report(eps, vals, pred):
     """eps[0] = 0. Returns the first sampled eps where pred holds (with its neighbours), every crossing (a change of pred between
-    consecutive sampled points) and the 非单调 flag (mono(vals) False, or more than one crossing)."""
+    consecutive sampled points), the direction of the sampled curve ('上升' non-decreasing, '下降' non-increasing, '常数' both,
+    None neither) and the 非单调 flag in the mathematical sense: the sampled values are neither non-decreasing nor
+    non-increasing (round 6 Part 0a; the round-5 rule S-1 flagged every curve that was not non-increasing, so a rising curve
+    was called 非单调). More than one crossing of a threshold predicate implies 非单调."""
     f = [bool(pred(v)) for v in vals]
     cross = [(eps[i-1], eps[i]) for i in range(1, len(eps)) if f[i] != f[i-1]]
     first = next((i for i in range(len(eps)) if f[i]), None)
-    nonmono = (not mono(vals)) or len(cross) > 1
+    up, down = nondecreasing(vals), nonincreasing(vals)
+    direction = '常数' if (up and down) else ('上升' if up else ('下降' if down else None))
+    nonmono = direction is None
+    assert nonmono or len(cross) <= 1
     return dict(flags=f, crossings=cross, first=(eps[first] if first is not None else None),
-                neighbours=((eps[first-1], eps[first]) if first not in (None, 0) else None), nonmono=nonmono)
+                neighbours=((eps[first-1], eps[first]) if first not in (None, 0) else None), nonmono=nonmono, direction=direction)
 
 def nonincreasing(v): return all(v[i] <= v[i-1] for i in range(1, len(v)))
-def monotone(v): return nonincreasing(v) or all(v[i] >= v[i-1] for i in range(1, len(v)))
+def nondecreasing(v): return all(v[i] >= v[i-1] for i in range(1, len(v)))
 
 def verdict(n_ok, n): return '对' if n_ok == n else ('部分对' if n_ok > 0 else '错')
 
@@ -46,16 +53,17 @@ def main(out):
         for e in EPS_P4:
             v = [r['dmD'] for r in get(name, tb, 'P4', eps_target=e)]
             meds.append(float(np.median(v))); rngs.append((min(v), max(v), len(v)))
-        rep = crossing_report((0.0,)+EPS_P4, meds, lambda g: g < g0/2, nonincreasing)
+        rep = crossing_report((0.0,)+EPS_P4, meds, lambda g: g < g0/2)
         H[f'gmed:{name}/{tb}'] = dict(g0=g0, half=g0/2, gmed=meds, report=rep)
         for e, m, (lo, hi, n) in zip(EPS_P4, meds[1:], rngs):
             out(f"C-GMED {name}/{tb} eps={e} g_med {m!r} (min {lo!r}, max {hi!r}, n = {n}); ratio to nominal {m/g0!r}")
         tag = 'headline' if (name, tb) == ('U', 'W') else 'supplementary'
+        shape_ = '非单调' if rep['nonmono'] else f"单调{rep['direction']}"
         if rep['first'] is None:
-            txt = '测试至 ε=2 未观察到跨越'
+            txt = f"{shape_}，未观察到减半跨越（测试至 ε=2）"
         else:
-            txt = f"eps_50 = {rep['first']} (neighbouring sampled points {rep['neighbours'][0]} and {rep['neighbours'][1]})"
-        if rep['nonmono']: txt += f"; 非单调: crossings {rep['crossings']}"
+            txt = f"{shape_}; eps_50 = {rep['first']} (neighbouring sampled points {rep['neighbours'][0]} and {rep['neighbours'][1]})"
+        if rep['nonmono']: txt += f"; crossings {rep['crossings']}"
         out(f"C-EPS50 {name}/{tb} ({tag}) nominal {g0!r}, half {g0/2!r}; {txt}")
 
     # --- eps_B on the worst P1 sign (S-2) ---
@@ -63,7 +71,7 @@ def main(out):
         e0 = chk[f'{name}/{tb}']['EN']; per = {}
         for sg in (1, -1):
             vals = [e0]+[get(name, tb, 'P1', eps_target=e, sign=sg)[0]['EN'] for e in EPS_P1]
-            rep = crossing_report((0.0,)+EPS_P1, vals, lambda v: v > B, monotone)
+            rep = crossing_report((0.0,)+EPS_P1, vals, lambda v: v > B)
             per[sg] = dict(EN=vals, report=rep)
             out(f"C-EPSB-SIGN {name}/{tb} sign {'+' if sg > 0 else '-'}: E[N] at eps 0, {', '.join(str(e) for e in EPS_P1)} = "
                 f"{[round(v, 4) for v in vals]}; first eps with E[N] > B {rep['first']}; crossings {rep['crossings']}; 非单调 {rep['nonmono']}")

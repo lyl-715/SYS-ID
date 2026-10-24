@@ -1,0 +1,18 @@
+=== two_stage.py schemeD-load started 2026-10-24 20:34:00; spec reports_CN/plan_round5_CN.md v3.2; B = 316.8921168493721; 2B = 633.7842336987442
+D-LOAD reads results/scan_U_W_2B.json; tracked by git: True
+D-LOAD reads results/table_U_W_2B.npz; tracked by git: True
+D-LOAD reads results/schemeD.json; tracked by git: True
+D-LOAD reads results/J_schemeD.npy; tracked by git: True
+DESIGN U G = 35146, support window nodes 4224-4224, cache built in 7.4 s
+D-LOAD EN recomputed 633.5354472080885 committed 633.5354472080885 bitwise equal True
+D-LOAD S recomputed 1807.6167688525434 committed 1807.6167688525434 bitwise equal True
+D-LOAD F recomputed 40.307645296329845 committed 40.307645296329845 bitwise equal True
+D-LOAD logdet recomputed 209.95184335174855 committed 209.95184335174855 bitwise equal True
+D-LOAD slack recomputed 0.24878649065567515 committed 0.24878649065567515 bitwise equal True
+D-LOAD feasible recomputed True committed True bitwise equal True
+D-LOAD gbar recomputed 0.021587304272182303 committed 0.021587304272182303 bitwise equal True
+D-LOAD logdet_record_vs_scan recomputed 209.95184335174855 committed 209.95184335174855 bitwise equal True
+D-LOAD EN_vs_scan recomputed 633.5354472080885 committed 633.5354472080885 bitwise equal True
+D-LOAD J (81 elements) bitwise equal to results/J_schemeD.npy: True
+D-LOAD scheme D final numbers reproduced from the committed npz bit for bit (E[N], S, F, log det, 81 J): PASS; 13.4 s
+=== two_stage.py schemeD-load done in 13.6 s

@@ -14,9 +14,15 @@ Evaluated at theta_0 (A, A', B, D) and at the P4 points with eps in {0.2, 0.5} (
 the Part A archive: the same SoD and U/W evaluations, J's from results/J_partA.npz).
 
 Usage (from this directory):
-  python3 two_stage.py schemeA     # 241 forwards, 4 workers -> results/schemeA.json, logs/partB_schemeA.log
-  python3 two_stage.py schemeD     # lambda scan with budget 2B (numba, 4 threads) -> results/scan_U_W_2B.json, logs/scan_U_W_2B.log
-  python3 two_stage.py combine     # theta_0 table and P4 table -> results/partB.json, logs/partB_combine.log
+  python3 two_stage.py schemeA            # 241 forwards, 4 workers -> results/schemeA.json, logs/partB_schemeA.log
+  python3 two_stage.py schemeD-redesign   # lambda scan with budget 2B from an EMPTY checkpoint (numba, 4 threads) ->
+                                          # results/scan_U_W_2B.json, results/table_U_W_2B.npz, results/schemeD.json
+  python3 two_stage.py schemeD-load       # load the committed results/table_U_W_2B.npz, recompute the final numbers by one
+                                          # forward evaluation, compare with results/schemeD.json -> results/schemeD_load.json
+  python3 two_stage.py combine            # theta_0 table and P4 table -> results/partB.json, logs/partB_combine.log
+Round 6 Part 0b: the former single stage 'schemeD' resumed from whatever checkpoint was present, including uint16 tables
+under results/tables/ that are not committed; it is split into the two explicit entry points above. schemeD-redesign refuses
+to start when a scan record or a table of this case exists; schemeD-load reads only committed files (checked with git).
 """
 import os
 for _v in ('OMP_NUM_THREADS', 'OPENBLAS_NUM_THREADS', 'MKL_NUM_THREADS'): os.environ.setdefault(_v, '1')
@@ -78,11 +84,26 @@ def schemeA(out, workers=4):
 
 
 # --- scheme D: lambda re-scan with budget 2B ------------------------------------------------------------------------------
-def schemeD(out, threads=4):
+TAG_D = 'U_W_2B'
+SCAN_D = os.path.join(RES, f'scan_{TAG_D}.json'); PACKED_D = os.path.join(RES, f'table_{TAG_D}.npz')
+JSON_D = os.path.join(RES, 'schemeD.json'); J_D = os.path.join(RES, 'J_schemeD.npy')
+
+def schemeD_redesign(out, threads=4):
+    """entry point 1: the lambda scan from an empty checkpoint. Stops before any DP if a scan record or a run/table file of
+    this case exists (move them aside to redesign); never resumes."""
+    import glob
+    present = [p for p in [SCAN_D]+glob.glob(os.path.join(RES, 'tables', f'{TAG_D}_r*'))+glob.glob(os.path.join(RES, 'runs', f'{TAG_D}_r*'))
+               if os.path.exists(p)]
+    if present:
+        out(f"D-REDESIGN checkpoint not empty, stopping before any DP (move these aside to redesign): {[os.path.relpath(p, HERE) for p in present]}")
+        return None
+    return _schemeD_scan(out, threads)
+
+def _schemeD_scan(out, threads):
     import numba
     import trigger_dp as td
     numba.set_num_threads(threads)
-    tag = 'U_W_2B'; jpath = os.path.join(RES, f'scan_{tag}.json')
+    tag = TAG_D; jpath = SCAN_D
     # trigger_dp is reused unchanged; its module-level budget and output paths are pointed at round 5 for this run only
     # (DECISION B-3): B -> 2B, tables/runs -> round5/results/{tables,runs}, scan record -> round5/results/scan_U_W_2B.json
     td.B = B2
@@ -115,6 +136,55 @@ def schemeD(out, threads=4):
                    mass_dev_max=r['mass_dev_max'], min_m=r['min_m'], assert_fail=r['assert_fail'], mono_worst=st.get('mono_worst'))
         for k, v in res.items(): out(f"D-FINAL {k} {v!r}")
     json.dump(res, open(os.path.join(RES, 'schemeD.json'), 'w'), indent=1)
+
+
+def _git_tracked(path):
+    """True / False if git answers, None without git (logged, not asserted then)."""
+    import subprocess
+    try:
+        r = subprocess.run(['git', 'ls-files', '--error-unmatch', os.path.basename(path)], cwd=os.path.dirname(path),
+                           capture_output=True, text=True)
+        return r.returncode == 0
+    except OSError:
+        return None
+
+def schemeD_load(out):
+    """entry point 2: load the committed results/table_U_W_2B.npz (and the committed scan record for its run number and lambda),
+    recompute the final numbers by one forward evaluation (round-4 evaluator_window.evaluate_table on a CodeTable built from
+    the npz; gamma from trigger_dp.Design, which evaluates the SoD in memory), compare with results/schemeD.json and
+    results/J_schemeD.npy. Reads no path under results/tables/ or results/runs/."""
+    import trigger_dp as td
+    reads = (SCAN_D, PACKED_D, JSON_D, J_D)
+    for p in reads:
+        tr = _git_tracked(p); out(f"D-LOAD reads {os.path.relpath(p, HERE)}; tracked by git: {tr}")
+        assert tr is not False, f"{p} is not a committed file"
+    st = json.load(open(SCAN_D)); fr = st['final_run']; r = [x for x in st['runs'] if x['run'] == fr][0]
+    ref = json.load(open(JSON_D)); Jref = np.load(J_D)
+    with np.load(PACKED_D) as f:
+        codes, start, width, lam, run = f['codes'], f['start'], f['width'], float(f['lam']), int(f['run'])
+    assert run == fr and lam == r['lam'] and run == ref['final_run'] and lam == ref['lam'], (run, fr, lam, r['lam'])
+    t0 = time.perf_counter(); ew._warmup()
+    des = td.Design('U', out)
+    assert np.array_equal(start, des.a[1:]) and np.array_equal(width, des.w[1:]), "npz support ranges differ from the design grid"
+    gam, gbar, g1 = des.gamma('W')
+    tab = ew.CodeTable(codes, start, width)
+    rec, J, rr = ew.evaluate_table('U', tab)
+    W = rr['W']; F = float(gam[1:]@W[1:]); ld = logdet(J)
+    res = dict(run=run, lam=lam, EN=float(rec['EN']), S=float(rec['S']), F=F, logdet=ld, logdet_record=float(rec['logdet']),
+               slack=B2-float(rec['EN']), feasible=bool(rec['EN'] <= B2), mass_dev_max=float(rec['mass_dev_max']), min_m=float(rec['min_m']),
+               assert_fail=int((~rr['assert_ok']).sum()), path=rec['path'], gbar=gbar, wall_s=time.perf_counter()-t0)
+    cmp = {k: (res[k], ref[k], res[k] == ref[k]) for k in ('EN', 'S', 'F', 'logdet', 'slack', 'feasible', 'gbar')}
+    cmp['logdet_record_vs_scan'] = (res['logdet_record'], r['logdet'], res['logdet_record'] == r['logdet'])
+    cmp['EN_vs_scan'] = (res['EN'], r['EN'], res['EN'] == r['EN'])
+    jeq = bool(np.array_equal(J, Jref)); res['J_bitwise_vs_J_schemeD'] = jeq
+    for k, (a, b, e) in cmp.items(): out(f"D-LOAD {k} recomputed {a!r} committed {b!r} bitwise equal {e}")
+    out(f"D-LOAD J (81 elements) bitwise equal to results/J_schemeD.npy: {jeq}")
+    ok = all(e for a, b, e in cmp.values()) and jeq
+    res['bitwise_all'] = ok; res['compare'] = {k: dict(recomputed=a, committed=b, equal=e) for k, (a, b, e) in cmp.items()}
+    out(f"D-LOAD scheme D final numbers reproduced from the committed npz bit for bit (E[N], S, F, log det, 81 J): {'PASS' if ok else 'FAIL'}; "
+        f"{res['wall_s']:.1f} s")
+    json.dump(res, open(os.path.join(RES, 'schemeD_load.json'), 'w'), indent=1, ensure_ascii=False)
+    return ok
 
 
 # --- combine: theta_0 table and P4 table ---------------------------------------------------------------------------------------
@@ -178,12 +248,13 @@ def combine(out):
 
 
 if __name__ == '__main__':
-    ap = argparse.ArgumentParser(); ap.add_argument('stage', choices=['schemeA', 'schemeD', 'combine'])
+    ap = argparse.ArgumentParser(); ap.add_argument('stage', choices=['schemeA', 'schemeD-redesign', 'schemeD-load', 'combine'])
     ap.add_argument('--workers', type=int, default=4)
     A_ = ap.parse_args()
     sys.stdout = dr.Tee(os.path.join(LOGS, f'partB_{A_.stage}.log'))
     print(f"=== two_stage.py {A_.stage} started {time.strftime('%Y-%m-%d %H:%M:%S')}; spec reports_CN/plan_round5_CN.md v3.2; "
           f"B = {B!r}; 2B = {B2!r}")
     t0 = time.perf_counter()
-    {'schemeA': lambda: schemeA(print, A_.workers), 'schemeD': lambda: schemeD(print, A_.workers), 'combine': lambda: combine(print)}[A_.stage]()
+    {'schemeA': lambda: schemeA(print, A_.workers), 'schemeD-redesign': lambda: schemeD_redesign(print, A_.workers),
+     'schemeD-load': lambda: schemeD_load(print), 'combine': lambda: combine(print)}[A_.stage]()
     print(f"=== two_stage.py {A_.stage} done in {time.perf_counter()-t0:.1f} s")

@@ -68,7 +68,8 @@ and where it acts. Overnight mode: none of these stopped the run. Nothing was tu
   eps_50 = the first sampled eps below half, reported with its two neighbouring sampled points (the previous one may be 0).
   A crossing is a change of the predicate between consecutive sampled points (0 included). 非单调 is flagged when g_med is not
   non-increasing over 0, 0.2, 0.5, 1, 2 or crosses more than once; then every crossing is reported. The same quantities are
-  logged for U/S and P5514/W as supplementary lines.
+  logged for U/S and P5514/W as supplementary lines. [Mis-specified; corrected in round 6 Part 0a, see the correction at the
+  end of this file.]
 - DECISION S-2 (eps_B): per table, for each P1 sign the sampled eps in {0.1, 0.2, 0.5, 1, 2, 4} at which E[N] first exceeds B
   (eps = 0 is within budget for all tables). Worst sign = the sign with the smaller first-crossing eps; equal or both without
   crossing -> the sign with the larger E[N] at the largest sampled eps at which they differ (both reported anyway). Same
@@ -116,7 +117,7 @@ and where it acts. Overnight mode: none of these stopped the run. Nothing was tu
 - DECISION C-1: the 非单调 flag of S-1 fires for all three g_med curves because they are not non-increasing: they rise
   monotonically with eps (U/W 7.830, 7.855, 7.885, 7.942, 8.179) and never cross half the nominal value. The flag is reported
   as the pre-written reading gives it, together with this explanation; in the ordinary sense the curves are monotone
-  (increasing) and have no crossing.
+  (increasing) and have no crossing. [Superseded by the round 6 Part 0a correction at the end of this file.]
 - DECISION C-2: B is by definition the uniform input's constant-Delta SoD E[N] at theta_0, so U/SoD sits exactly on B; under P1
   its E[N] moves by at most 1.2e-11 (shift invariance of the constant threshold), and its budget verdicts flip at that
   rounding level (8/12 "> B"). They are recorded as the discrete evaluator gives them but are not a budget signal; no
@@ -133,3 +134,21 @@ and where it acts. Overnight mode: none of these stopped the run. Nothing was tu
   non-send branch came out as 0 (the send branch and every 0b comparison were already right). The masking function now
   receives the original cfun; the script was re-run and only the second run's log is committed. Reported in the report's
   run-time paragraph.
+
+## Correction (round 6 Part 0, spec `reports_CN/plan_round6_CN.md` v3.2 §4 item 4; no redesign, no MC)
+
+- CORRECTION S-1 / C-1 (round 6 Part 0a): the S-1 rule was mis-specified. It flagged 非单调 whenever g_med was "not
+  non-increasing", so a curve that rises monotonically was called 非单调. 非单调 now means mathematically non-monotone: the
+  sampled values over eps = 0, 0.2, 0.5, 1, 2 are neither non-decreasing nor non-increasing (`headline.py::crossing_report`;
+  more than one crossing of the half-nominal threshold implies it). Re-running `headline.py` on the unchanged archives
+  re-emits the three g_med statements (U/S, U/W, P5514/W; `logs/partC_headline.log:7, 12, 17`) as "单调上升，未观察到减半跨越"
+  and changes no other line of the log; the g_med values, eps_50 (none), every eps_B line (which already used the
+  two-sided monotonicity test) and the R1-R6 verdicts are unchanged. The three statements in `report_round5_CN.md` (§0 item 2
+  and the g_med table) are corrected accordingly and marked.
+- CORRECTION B-3 (round 6 Part 0b): `two_stage.py` has two explicit entry points for scheme D instead of one resuming stage:
+  `schemeD-redesign` (the lambda scan from an empty checkpoint; it refuses to start when a scan record or a table of this case
+  is already present, so it never resumes from, or depends on, a local uncommitted table) and `schemeD-load` (loads only the
+  committed `results/table_U_W_2B.npz` and the committed scan record, recomputes the final numbers by one forward
+  evaluation and compares them with `results/schemeD.json` and `results/J_schemeD.npy`; it reads no path under
+  `results/tables/` or `results/runs/`). `schemeD-load` reproduced scheme D's E[N], S, F, log det and the 81 J elements bit
+  for bit (`logs/partB_schemeD-load.log`). `schemeD-redesign` was not run (no redesign in round 6 Part 0).

@@ -20,7 +20,8 @@
    "crossings": [],
    "first": null,
    "neighbours": null,
-   "nonmono": true
+   "nonmono": false,
+   "direction": "上升"
   }
  },
  "gmed:U/W": {
@@ -44,7 +45,8 @@
    "crossings": [],
    "first": null,
    "neighbours": null,
-   "nonmono": true
+   "nonmono": false,
+   "direction": "上升"
   }
  },
  "gmed:P5514/W": {
@@ -68,7 +70,8 @@
    "crossings": [],
    "first": null,
    "neighbours": null,
-   "nonmono": true
+   "nonmono": false,
+   "direction": "上升"
   }
  },
  "epsB:U/S": {
@@ -105,7 +108,8 @@
       0.0,
       0.1
      ],
-     "nonmono": false
+     "nonmono": false,
+     "direction": "上升"
     }
    },
    "-1": {
@@ -139,7 +143,8 @@
       0.2,
       0.5
      ],
-     "nonmono": true
+     "nonmono": true,
+     "direction": null
     }
    }
   },
@@ -179,7 +184,8 @@
       0.0,
       0.1
      ],
-     "nonmono": false
+     "nonmono": false,
+     "direction": "上升"
     }
    },
    "-1": {
@@ -213,7 +219,8 @@
       0.2,
       0.5
      ],
-     "nonmono": true
+     "nonmono": true,
+     "direction": null
     }
    }
   },
@@ -253,7 +260,8 @@
       0.0,
       0.1
      ],
-     "nonmono": false
+     "nonmono": false,
+     "direction": "上升"
     }
    },
    "-1": {
@@ -287,7 +295,8 @@
       0.1,
       0.2
      ],
-     "nonmono": true
+     "nonmono": true,
+     "direction": null
     }
    }
   },
@@ -343,7 +352,8 @@
       0.0,
       0.1
      ],
-     "nonmono": true
+     "nonmono": true,
+     "direction": null
     }
    },
    "-1": {
@@ -393,7 +403,8 @@
       0.0,
       0.1
      ],
-     "nonmono": true
+     "nonmono": true,
+     "direction": null
     }
    }
   },
@@ -425,7 +436,8 @@
      "crossings": [],
      "first": null,
      "neighbours": null,
-     "nonmono": true
+     "nonmono": true,
+     "direction": null
     }
    },
    "-1": {
@@ -451,7 +463,8 @@
      "crossings": [],
      "first": null,
      "neighbours": null,
-     "nonmono": true
+     "nonmono": true,
+     "direction": null
     }
    }
   },

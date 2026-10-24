@@ -1,20 +1,20 @@
-=== headline.py started 2026-10-24 17:16:50; spec reports_CN/plan_round5_CN.md v3.2 §4; B = 316.8921168493721
+=== headline.py started 2026-10-24 20:32:42; spec reports_CN/plan_round5_CN.md v3.2 §4; B = 316.8921168493721
 C-ARCH archive lines 400, ok 400, assertion stops 0
 C-GMED U/S eps=0.2 g_med 7.904610687853491 (min 7.51731992920412, max 8.17965579225654, n = 10); ratio to nominal 1.005684498967666
 C-GMED U/S eps=0.5 g_med 7.972300368841914 (min 6.999311116485956, max 8.654031371612405, n = 10); ratio to nominal 1.0142964933590823
 C-GMED U/S eps=1.0 g_med 8.108598927097106 (min 6.156140913266853, max 9.425298512361223, n = 10); ratio to nominal 1.0316374292611528
 C-GMED U/S eps=2.0 g_med 8.450770133501251 (min 4.782189453552519, max 10.824793983169968, n = 10); ratio to nominal 1.0751710442439244
-C-EPS50 U/S (supplementary) nominal 7.859930918660439, half 3.9299654593302193; 测试至 ε=2 未观察到跨越; 非单调: crossings []
+C-EPS50 U/S (supplementary) nominal 7.859930918660439, half 3.9299654593302193; 单调上升，未观察到减半跨越（测试至 ε=2）
 C-GMED U/W eps=0.2 g_med 7.855152552234301 (min 7.519436492536528, max 8.131369427098576, n = 10); ratio to nominal 1.003156418623741
 C-GMED U/W eps=0.5 g_med 7.88457069589974 (min 7.049948958448198, max 8.573907400178513, n = 10); ratio to nominal 1.0069133156980805
 C-GMED U/W eps=1.0 g_med 7.942159113630211 (min 6.281318813667809, max 9.284190595603718, n = 10); ratio to nominal 1.0142677484096738
 C-GMED U/W eps=2.0 g_med 8.178583461047495 (min 4.9648949937897555, max 10.580669251586954, n = 10); ratio to nominal 1.0444607459426265
-C-EPS50 U/W (headline) nominal 7.830436416895992, half 3.915218208447996; 测试至 ε=2 未观察到跨越; 非单调: crossings []
+C-EPS50 U/W (headline) nominal 7.830436416895992, half 3.915218208447996; 单调上升，未观察到减半跨越（测试至 ε=2）
 C-GMED P5514/W eps=0.2 g_med 7.453778828167486 (min 7.162913885404237, max 7.655923530711561, n = 10); ratio to nominal 1.0048272404826455
 C-GMED P5514/W eps=0.5 g_med 7.519650554202869 (min 6.794545022204261, max 8.02884667096356, n = 10); ratio to nominal 1.0137072604327726
 C-GMED P5514/W eps=1.0 g_med 7.653136937998184 (min 6.209796610509386, max 8.649369087471513, n = 10); ratio to nominal 1.0317022610577147
 C-GMED P5514/W eps=2.0 g_med 7.986536092757831 (min 5.336472970339088, max 9.647956740411956, n = 10); ratio to nominal 1.0766470548836866
-C-EPS50 P5514/W (supplementary) nominal 7.417970500667593, half 3.7089852503337966; 测试至 ε=2 未观察到跨越; 非单调: crossings []
+C-EPS50 P5514/W (supplementary) nominal 7.417970500667593, half 3.7089852503337966; 单调上升，未观察到减半跨越（测试至 ε=2）
 C-EPSB-SIGN U/S sign +: E[N] at eps 0, 0.1, 0.2, 0.5, 1.0, 2.0, 4.0 = [316.7015, 321.5645, 329.2697, 369.9053, 496.0495, 871.7468, 1196.0817]; first eps with E[N] > B 0.1; crossings [(0.0, 0.1)]; 非单调 False
 C-EPSB-SIGN U/S sign -: E[N] at eps 0, 0.1, 0.2, 0.5, 1.0, 2.0, 4.0 = [316.7015, 314.6166, 315.229, 332.2956, 407.4102, 663.5989, 898.5959]; first eps with E[N] > B 0.5; crossings [(0.2, 0.5)]; 非单调 True
 C-EPSB U/S (supplementary) worst P1 sign +; eps_B = 0.1 (neighbouring sampled points 0.0 and 0.1) (离散方案下)
