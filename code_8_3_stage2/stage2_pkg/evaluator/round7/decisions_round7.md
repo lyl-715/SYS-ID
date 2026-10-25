@@ -146,3 +146,12 @@ nothing here is a bound. Round 6's verdict (case 1) stands and is not revisited.
   kept). No number changed.
 - DECISION C-7 (record): beyond the spec's 162 + 162 forwards and T4's 27 at n = 24, Part C ran 135 regression forwards at
   f = 1 (four old tables + SoD at the 27 points) and 27 SoD forwards each at f = 3, 5 are among the 162 (6 × 27 counts the SoD).
+
+## Records (Part D runs)
+
+- DECISION D-4: the spec's optional shortcut for m = 0.20 (re-check round 6's M_eq residuals on the reference grid first) would
+  apply only if m = 0.20 were the selected candidate; the selection rule picked T4, so the standard D3 rule ran for every P4
+  point and the shortcut was not used.
+- DECISION D-5 (record): `match.py run` ran once (1661 forwards: 841 for the nominal curve, 820 for the 20 local windows, no full
+  rescan; 6481.0 s; no assertion stop); `figs` once. The per-phase sums of single-forward wall times (serial equivalent) are
+  logged in `results/partD_match.json` (`per_forward_sum_s`) for the G6 scoring.
