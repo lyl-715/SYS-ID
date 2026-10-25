@@ -15,7 +15,9 @@ using the true error. Wording: 本场景、固定设计规则下的序贯仿真�
 
 ## E — the estimator
 
-- DECISION E-1 (the frozen convergence threshold cannot be reached in double precision). Spec §1.2 accepts convergence only
+- DECISION E-1 (the frozen convergence threshold was not met in any of the 3000 calls of the frozen implementation; wording
+  corrected in round 8b Part 0, which replaced "cannot be reached in double precision" -- see report_round8_CN.md §0 item 1
+  for the reviewer's extra Newton-step diagnostic, outside the frozen algorithm). Spec §1.2 accepts convergence only
   when ‖∇_ϑ ℓ‖∞ ≤ 1e-8 for the SUMMED negative log-likelihood. Here the Hessian in ϑ has eigenvalues from 3.5e8 to 1.35e11
   (`logs/partA_checks.log`, A3-1e; σ = Δ*/20 = 1.19e-4, so each transmitted sample contributes 1/σ² = 7e7). Changing θ_1 by
   one unit in the last place changes the raw gradient by 1.4e-5, which is 1400 times the threshold (A3-1e). L-BFGS-B with
