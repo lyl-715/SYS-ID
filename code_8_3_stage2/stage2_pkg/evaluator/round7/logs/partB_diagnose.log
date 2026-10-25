@@ -1,0 +1,11 @@
+=== diagnose.py started 2026-10-25 09:43:13; spec reports_CN/plan_round7_CN.md v3.1 §1.2; B = 316.8921168493721
+B0 frozen point P1|theta1|+|0.5 (theta_1 + 0.5 sigma), table m020; archive results/partB_diagnose.jsonl: 0 resumed, 3 to evaluate
+B1 i_sigma48 (original sigma/48 (round 6 Part B path, FineTable, ties -> smaller index)): E[N] 286.1589816132073; S 877.324979541881; log det 203.44113437338848; G 70291; route general; mass dev 9.197087535994797e-13; min m 0.0; assertion failures 0; wall 6.9 s
+B1 ii_sigma48_shift (sigma/48 shifted by h_48/2 (new cell lookup)): E[N] 287.37120521758766; S 879.0428986637951; log det 203.45457346467006; G 70291; route general; mass dev 8.337774914934926e-13; min m 0.0; assertion failures 0; wall 7.6 s
+B1 iii_sigma72 (sigma/72 (f = 3, new cell lookup)): E[N] 287.36308703867985; S 879.0407342309561; log det 203.45455120189914; G 105435; route general; mass dev 2.036815160977312e-12; min m 0.0; assertion failures 0; wall 10.6 s
+B1-REG (i) vs round6/results/partB_refine.json P1|theta1|+|0.5 (exact): {'EN': True, 'logdet': True}; round 6 E[N]_48 286.1589816132073
+B1 context (not used in the reading): sigma/24 E[N] 287.4150474836405 (round 6 archive)
+B1 (i) - (iii) = -1.2041054254725623 send
+B1 (ii) - (iii) = 0.008118178907807305 send
+B2 reading (diagnostic, not a pass/fail gate): |(i) - (iii)| > 1: True; |(ii) - (iii)| < 0.1: True -> 支持分界取值影响的解释; one diagnosis excludes no other error source
+=== diagnose.py done in 11.2 s
