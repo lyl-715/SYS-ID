@@ -1,0 +1,288 @@
+=== checks.py (round 7 Part A); spec reports_CN/plan_round7_CN.md v3.1; python 3.13.17, numpy 2.5.3, scipy 1.18.1, numba 0.68.0; B = 316.8921168493721; frozen z_0 = 1.9098150805683891, h_24 = 4.968113505491219e-06, G_24 = 35146
+A0 warm-up (JIT) 0.2 s
+A-CELL f=1 G 35146 h = sigma/24; min distance to a cell boundary 0.4999999999490683 cell widths (expected 1/2 - (f-1)/(2f) = 0.5); physical lookup equals the integer rule (j + (f-1)/2) // f for all nodes: True
+A-CELL f=3 G 105435 h = sigma/72; min distance to a cell boundary 0.16666666661694762 cell widths (expected 1/2 - (f-1)/(2f) = 0.16666666666666669); physical lookup equals the integer rule (j + (f-1)/2) // f for all nodes: True
+A-CELL f=5 G 175724 h = sigma/120; min distance to a cell boundary 0.0999999999476131 cell widths (expected 1/2 - (f-1)/(2f) = 0.09999999999999998); physical lookup equals the integer rule (j + (f-1)/2) // f for all nodes: True
+A-CELL sigma/48 shifted by h_48/2: G 70291; min distance to a cell boundary 0.2499999999490683 cell widths (expected 0.25)
+A-CELL sigma/48 unshifted (odd nodes on the cell boundaries): boundary assertion fires: True (node 1951 at u = np.float64(975.5) cell widths is np.float64(0.0) from a cell boundary (tolerance 1e-09))
+A-CELL cell lookup on the production grids: PASS
+A2a f=1 (480 f, 480 f) = (480, 480) route reuse; E[N] 316.8921168493721 S 466.15774934465276 log det 197.20097668224076 G 35146
+A2a f=1 bitwise vs evaluator_fast.evaluate_fast('U', 24) direct: {'EN': True, 'S': True, 'J81': True, 'EN_P': np.True_, 'logdet': True, 'w5000': True}
+A2a f=1 bitwise vs density_recursion_v1.evaluate('B', 'U', 24) full grid (12.1 s): {'EN': True, 'S': True, 'J81': True, 'EN_P': np.True_, 'logdet': True, 'w5000': True}
+A2a f=1 reuse path bitwise identity: PASS
+A2c f=1 general (480 f, 480 f) vs reuse EN_rel 6.152659417061097e-14
+A2c f=1 general (480 f, 480 f) vs reuse S_rel 6.133597420011315e-14
+A2c f=1 general (480 f, 480 f) vs reuse J_ratio_max 3.28081529211204e-14
+A2c f=1 general (480 f, 480 f) vs reuse logdet_diff 5.684341886080801e-13
+A2c f=1 general (480 f, 480 f) vs reuse EN_P_rel np.float64(5.919566255388016e-14)
+A2c f=1 general (480 f, 480 f) vs reuse w_maxabs 2.861599845971341e-14
+A2c f=1 general (480 f, 480 f) vs reuse route 'general'
+A2c f=1 general (480 f, 480 f) vs reuse t_general_s 3.261387404000061
+A2c f=1 general (480 f, 480 f) vs reuse pass_ True
+A2c f=1 tolerance (E[N], S rel <= 1e-12; |dJ| <= 1e-12 (|ref| + max|J|)): PASS
+A2a f=3 (480 f, 480 f) = (1440, 1440) route reuse; E[N] 316.891222711603 S 466.16490241651456 log det 197.20114505986308 G 105435
+A2a f=3 bitwise vs evaluator_fast.evaluate_fast('U', 72) direct: {'EN': True, 'S': True, 'J81': True, 'EN_P': np.True_, 'logdet': True, 'w5000': True}
+A2a f=3 bitwise vs density_recursion_v1.evaluate('B', 'U', 72) full grid (37.0 s): {'EN': True, 'S': True, 'J81': True, 'EN_P': np.True_, 'logdet': True, 'w5000': True}
+A2a f=3 reuse path bitwise identity: PASS
+A2c f=3 general (480 f, 480 f) vs reuse EN_rel 3.415363435593687e-13
+A2c f=3 general (480 f, 480 f) vs reuse S_rel 3.4045211176703456e-13
+A2c f=3 general (480 f, 480 f) vs reuse J_ratio_max 1.682846276457743e-13
+A2c f=3 general (480 f, 480 f) vs reuse logdet_diff 3.0127011996228248e-12
+A2c f=3 general (480 f, 480 f) vs reuse EN_P_rel np.float64(3.422544865320099e-13)
+A2c f=3 general (480 f, 480 f) vs reuse w_maxabs 1.361133428190442e-13
+A2c f=3 general (480 f, 480 f) vs reuse route 'general'
+A2c f=3 general (480 f, 480 f) vs reuse t_general_s 8.895764425999914
+A2c f=3 general (480 f, 480 f) vs reuse pass_ True
+A2c f=3 tolerance (E[N], S rel <= 1e-12; |dJ| <= 1e-12 (|ref| + max|J|)): PASS
+A2a f=5 (480 f, 480 f) = (2400, 2400) route reuse; E[N] 316.8911511745014 S 466.1654746653685 log det 197.2011585300231 G 175724
+A2a f=5 bitwise vs evaluator_fast.evaluate_fast('U', 120) direct: {'EN': True, 'S': True, 'J81': True, 'EN_P': np.True_, 'logdet': True, 'w5000': True}
+A2a f=5 bitwise vs density_recursion_v1.evaluate('B', 'U', 120) full grid (63.4 s): {'EN': True, 'S': True, 'J81': True, 'EN_P': np.True_, 'logdet': True, 'w5000': True}
+A2a f=5 reuse path bitwise identity: PASS
+A2c f=5 general (480 f, 480 f) vs reuse EN_rel 3.5283725810834896e-13
+A2c f=5 general (480 f, 480 f) vs reuse S_rel 7.232159728376778e-13
+A2c f=5 general (480 f, 480 f) vs reuse J_ratio_max 3.6204709184598204e-13
+A2c f=5 general (480 f, 480 f) vs reuse logdet_diff 6.73594513500575e-12
+A2c f=5 general (480 f, 480 f) vs reuse EN_P_rel np.float64(8.054094245740049e-13)
+A2c f=5 general (480 f, 480 f) vs reuse w_maxabs 2.2720714198953829e-13
+A2c f=5 general (480 f, 480 f) vs reuse route 'general'
+A2c f=5 general (480 f, 480 f) vs reuse t_general_s 14.706876345999945
+A2c f=5 general (480 f, 480 f) vs reuse pass_ True
+A2c f=5 tolerance (E[N], S rel <= 1e-12; |dJ| <= 1e-12 (|ref| + max|J|)): PASS
+A2b f=1 M=120: dispatch general; refined windows (120, 120) at steps 2, 2501, 5000: True
+A2b f=1 M=479: dispatch general; refined windows (479, 479) at steps 2, 2501, 5000: True
+A2b f=1 M=481: dispatch general; refined windows (481, 481) at steps 2, 2501, 5000: True
+A2b f=1 M=602: dispatch general; refined windows (602, 602) at steps 2, 2501, 5000: True
+A2b f=1 M=960: dispatch general; refined windows (960, 960) at steps 2, 2501, 5000: True
+A2b f=3 M=120: dispatch general; refined windows (360, 360) at steps 2, 2501, 5000: True
+A2b f=3 M=479: dispatch general; refined windows (1437, 1437) at steps 2, 2501, 5000: True
+A2b f=3 M=481: dispatch general; refined windows (1443, 1443) at steps 2, 2501, 5000: True
+A2b f=3 M=602: dispatch general; refined windows (1806, 1806) at steps 2, 2501, 5000: True
+A2b f=3 M=960: dispatch general; refined windows (2880, 2880) at steps 2, 2501, 5000: True
+A2b f=5 M=120: dispatch general; refined windows (600, 600) at steps 2, 2501, 5000: True
+A2b f=5 M=479: dispatch general; refined windows (2395, 2395) at steps 2, 2501, 5000: True
+A2b f=5 M=481: dispatch general; refined windows (2405, 2405) at steps 2, 2501, 5000: True
+A2b f=5 M=602: dispatch general; refined windows (3010, 3010) at steps 2, 2501, 5000: True
+A2b f=5 M=960: dispatch general; refined windows (4800, 4800) at steps 2, 2501, 5000: True
+A2b f=1 M=602 at theta_0, general path vs round6/results/archive_partC.jsonl (exact): {'EN': True, 'EN_P': np.True_, 'S': True, 'logdet': True, 'route': True}; E[N] 253.5729860093734
+A2b constant windows other than (480 f, 480 f) go to the general path: PASS
+A4-1 U reference evaluator_fast EN 316.8921168493721 S 466.15774934465276 logdet 197.20097668224076
+A4-1 U (i) dispatch EN 0.0
+A4-1 U (i) dispatch S 0.0
+A4-1 U (i) dispatch J_maxabs 0.0
+A4-1 U (i) dispatch path 'accepted operator (evaluator_fast.evaluate_fast)'
+A4-1 U (i) bitwise (difference 0 for E[N], S, 81 J elements) PASS
+A4-1 U (ii) general(480,480) EN_rel 6.152659417061097e-14
+A4-1 U (ii) general(480,480) S_rel 6.133597420011315e-14
+A4-1 U (ii) general(480,480) J_ratio_max 3.28081529211204e-14
+A4-1 U (ii) general(480,480) logdet_diff 5.684341886080801e-13
+A4-1 U (ii) general(480,480) EN_P_rel 5.919566255388016e-14
+A4-1 U (ii) general(480,480) w_maxabs 2.861599845971341e-14
+A4-1 U (ii) general(480,480) path 'general window path (R = 88 sigma)'
+A4-1 U (ii) general(480,480) mass_dev_max 3.852473895449293e-14
+A4-1 U (ii) general(480,480) min_m 0.0
+A4-1 U (ii) general(480,480) assert_fail 0
+A4-1 U (ii) general(480,480) runtime_ref_s 3.787010438999914
+A4-1 U (ii) general(480,480) runtime_general_s 3.456407155000079
+A4-1 U (ii) tolerance (E[N], S rel <= 1e-12; |dJ| <= 1e-12 (|ref| + max|J|)) PASS
+A4-1 P5514 reference evaluator_fast EN 316.4724658173142 S 486.6943784924982 logdet 197.90224219753293
+A4-1 P5514 (i) dispatch EN 0.0
+A4-1 P5514 (i) dispatch S 0.0
+A4-1 P5514 (i) dispatch J_maxabs 0.0
+A4-1 P5514 (i) dispatch path 'accepted operator (evaluator_fast.evaluate_fast)'
+A4-1 P5514 (i) bitwise (difference 0 for E[N], S, 81 J elements) PASS
+A4-1 P5514 (ii) general(480,480) EN_rel 9.178361524392603e-14
+A4-1 P5514 (ii) general(480,480) S_rel 9.331912115045246e-14
+A4-1 P5514 (ii) general(480,480) J_ratio_max 4.50184580438268e-14
+A4-1 P5514 (ii) general(480,480) logdet_diff 7.958078640513122e-13
+A4-1 P5514 (ii) general(480,480) EN_P_rel 8.837262838202898e-14
+A4-1 P5514 (ii) general(480,480) w_maxabs 3.425038030968608e-14
+A4-1 P5514 (ii) general(480,480) path 'general window path (R = 88 sigma)'
+A4-1 P5514 (ii) general(480,480) mass_dev_max 9.947598300641403e-14
+A4-1 P5514 (ii) general(480,480) min_m 0.0
+A4-1 P5514 (ii) general(480,480) assert_fail 0
+A4-1 P5514 (ii) general(480,480) runtime_ref_s 3.639192555999898
+A4-1 P5514 (ii) general(480,480) runtime_general_s 3.277637481000056
+A4-1 P5514 (ii) tolerance (E[N], S rel <= 1e-12; |dJ| <= 1e-12 (|ref| + max|J|)) PASS
+A2-old24 round 4 regression_check (U, P5514; dispatch bitwise, general within tolerance): PASS
+A2-old48 sigma/48 vs round4/results/c2.json (exact): {'SoD_EN': True, 'SoD_S': True, 'SoD_logdet': True, 'm000_EN': True, 'm000_S': True, 'm000_logdet': True}; general (960, 960) vs reuse E[N] rel 1.3865938926995008e-13 (c2 1.3865938926995008e-13)
+A2-old48 regression: PASS
+A2-f1 SoD at theta_0 (route reuse) vs round6/results/archive_partA.jsonl + J_partA.npz (exact): {'EN': True, 'EN_P': np.True_, 'S': True, 'logdet': True, 'J81': True}
+A2-f1 m000 at theta_0 (route general) vs round6/results/archive_partA.jsonl + J_partA.npz (exact): {'EN': True, 'EN_P': np.True_, 'S': True, 'logdet': True, 'J81': True}
+A2-f1 m005 at theta_0 (route general) vs round6/results/archive_partA.jsonl + J_partA.npz (exact): {'EN': True, 'EN_P': np.True_, 'S': True, 'logdet': True, 'J81': True}
+A2-f1 m010 at theta_0 (route general) vs round6/results/archive_partA.jsonl + J_partA.npz (exact): {'EN': True, 'EN_P': np.True_, 'S': True, 'logdet': True, 'J81': True}
+A2-f1 m020 at theta_0 (route general) vs round6/results/archive_partA.jsonl + J_partA.npz (exact): {'EN': True, 'EN_P': np.True_, 'S': True, 'logdet': True, 'J81': True}
+A2-f1 the refined evaluator at f = 1 reproduces round 6 at theta_0: PASS
+A3 f=3: fine G 600, h = sigma/72, z_0 = np.float64(-4.0) sigma; min distance to a coarse cell boundary 0.16666666666662877 cell widths; nodes beyond the last coarse cell (clipped to node 199): 1
+A3 f=3 table=a gamma=1 lookup_vs_dense_nearest_mismatch 0
+A3 f=3 table=a gamma=1 dense_tie_margin 0.3333333333332732
+A3 f=3 table=a gamma=1 err_m_steps 2.9807893788397365e-15
+A3 f=3 table=a gamma=1 err_EN_fwd 4.704977763349696e-16
+A3 f=3 table=a gamma=1 err_F_fwd 9.93776801691154e-16
+A3 f=3 table=a gamma=1 err_Vc_steps 3.071301702264303e-15
+A3 f=3 table=a gamma=1 err_Vq_steps 2.3723232828507434e-15
+A3 f=3 table=a gamma=1 err_EN_bwd 7.057466645024545e-16
+A3 f=3 table=a gamma=1 err_F_bwd 1.2777130307457692e-15
+A3 f=3 table=a gamma=1 EN 15.101936108922892
+A3 f=3 table=a gamma=1 F 25.024729606570467
+A3 f=3 table=a gamma=1 mass_dev_max 6.661338147750939e-15
+A3 f=3 table=a gamma=1 min_m 1.2922185583502205e-11
+A3 f=3 table=a gamma=1 pass_ True
+A3 f=3 table=a gamma=rand lookup_vs_dense_nearest_mismatch 0
+A3 f=3 table=a gamma=rand dense_tie_margin 0.3333333333332732
+A3 f=3 table=a gamma=rand err_m_steps 2.9807893788397365e-15
+A3 f=3 table=a gamma=rand err_EN_fwd 4.704977763349696e-16
+A3 f=3 table=a gamma=rand err_F_fwd 4.260940724320574e-16
+A3 f=3 table=a gamma=rand err_Vc_steps 2.4951759962077665e-15
+A3 f=3 table=a gamma=rand err_Vq_steps 2.3723232828507434e-15
+A3 f=3 table=a gamma=rand err_EN_bwd 7.057466645024545e-16
+A3 f=3 table=a gamma=rand err_F_bwd 1.2782822172961725e-15
+A3 f=3 table=a gamma=rand EN 15.101936108922892
+A3 f=3 table=a gamma=rand F 33.351448974845795
+A3 f=3 table=a gamma=rand mass_dev_max 6.661338147750939e-15
+A3 f=3 table=a gamma=rand min_m 1.2922185583502205e-11
+A3 f=3 table=a gamma=rand pass_ True
+A3 f=3 table=b gamma=1 lookup_vs_dense_nearest_mismatch 0
+A3 f=3 table=b gamma=1 dense_tie_margin 0.3333333333332732
+A3 f=3 table=b gamma=1 err_m_steps 4.347420992133733e-15
+A3 f=3 table=b gamma=1 err_EN_fwd 1.6007576401930341e-15
+A3 f=3 table=b gamma=1 err_F_fwd 2.0097517446550466e-15
+A3 f=3 table=b gamma=1 err_Vc_steps 2.851582202421077e-15
+A3 f=3 table=b gamma=1 err_Vq_steps 2.770943480000905e-15
+A3 f=3 table=b gamma=1 err_EN_bwd 1.6007576401930345e-15
+A3 f=3 table=b gamma=1 err_F_bwd 1.2367703044031054e-15
+A3 f=3 table=b gamma=1 EN 13.3163706594788
+A3 f=3 table=b gamma=1 F 22.98058849668213
+A3 f=3 table=b gamma=1 mass_dev_max 6.106226635438361e-15
+A3 f=3 table=b gamma=1 min_m 1.292217145704134e-11
+A3 f=3 table=b gamma=1 pass_ True
+A3 f=3 table=b gamma=rand lookup_vs_dense_nearest_mismatch 0
+A3 f=3 table=b gamma=rand dense_tie_margin 0.3333333333332732
+A3 f=3 table=b gamma=rand err_m_steps 4.347420992133733e-15
+A3 f=3 table=b gamma=rand err_EN_fwd 1.6007576401930341e-15
+A3 f=3 table=b gamma=rand err_F_fwd 1.394801134491051e-15
+A3 f=3 table=b gamma=rand err_Vc_steps 2.732450503723345e-15
+A3 f=3 table=b gamma=rand err_Vq_steps 2.770943480000905e-15
+A3 f=3 table=b gamma=rand err_EN_bwd 1.6007576401930345e-15
+A3 f=3 table=b gamma=rand err_F_bwd 1.1623342787425424e-15
+A3 f=3 table=b gamma=rand EN 13.3163706594788
+A3 f=3 table=b gamma=rand F 30.56533515163957
+A3 f=3 table=b gamma=rand mass_dev_max 6.106226635438361e-15
+A3 f=3 table=b gamma=rand min_m 1.292217145704134e-11
+A3 f=3 table=b gamma=rand pass_ True
+A3 f=3 table=c gamma=1 lookup_vs_dense_nearest_mismatch 0
+A3 f=3 table=c gamma=1 dense_tie_margin 0.3333333333332732
+A3 f=3 table=c gamma=1 err_m_steps 4.369154401858418e-15
+A3 f=3 table=c gamma=1 err_EN_fwd 1.1582134504119663e-15
+A3 f=3 table=c gamma=1 err_F_fwd 1.3664109006452696e-15
+A3 f=3 table=c gamma=1 err_Vc_steps 3.1879454304009935e-15
+A3 f=3 table=c gamma=1 err_Vq_steps 3.26752102426259e-15
+A3 f=3 table=c gamma=1 err_EN_bwd 1.3029901317134626e-15
+A3 f=3 table=c gamma=1 err_F_bwd 1.3664109006452696e-15
+A3 f=3 table=c gamma=1 EN 12.26963364149099
+A3 f=3 table=c gamma=1 F 20.800265437711502
+A3 f=3 table=c gamma=1 mass_dev_max 5.218048215738236e-15
+A3 f=3 table=c gamma=1 min_m 1.2922102840777975e-11
+A3 f=3 table=c gamma=1 pass_ True
+A3 f=3 table=c gamma=rand lookup_vs_dense_nearest_mismatch 0
+A3 f=3 table=c gamma=rand dense_tie_margin 0.3333333333332732
+A3 f=3 table=c gamma=rand err_m_steps 4.369154401858418e-15
+A3 f=3 table=c gamma=rand err_EN_fwd 1.1582134504119663e-15
+A3 f=3 table=c gamma=rand err_F_fwd 7.684414823938362e-16
+A3 f=3 table=c gamma=rand err_Vc_steps 2.712145017856337e-15
+A3 f=3 table=c gamma=rand err_Vq_steps 3.26752102426259e-15
+A3 f=3 table=c gamma=rand err_EN_bwd 1.3029901317134626e-15
+A3 f=3 table=c gamma=rand err_F_bwd 1.4088093843887003e-15
+A3 f=3 table=c gamma=rand EN 12.26963364149099
+A3 f=3 table=c gamma=rand F 27.73962957647587
+A3 f=3 table=c gamma=rand mass_dev_max 5.218048215738236e-15
+A3 f=3 table=c gamma=rand min_m 1.2922102840777975e-11
+A3 f=3 table=c gamma=rand pass_ True
+A3 f=5: fine G 1000, h = sigma/120, z_0 = np.float64(-4.0) sigma; min distance to a coarse cell boundary 0.0999999999999659 cell widths; nodes beyond the last coarse cell (clipped to node 199): 2
+A3 f=5 table=a gamma=1 lookup_vs_dense_nearest_mismatch 0
+A3 f=5 table=a gamma=1 dense_tie_margin 0.1999999999999421
+A3 f=5 table=a gamma=1 err_m_steps 2.6415189618996108e-15
+A3 f=5 table=a gamma=1 err_EN_fwd 2.3525571995507613e-16
+A3 f=5 table=a gamma=1 err_F_fwd 2.8393685142022367e-16
+A3 f=5 table=a gamma=1 err_Vc_steps 2.8339796894246033e-15
+A3 f=5 table=a gamma=1 err_Vq_steps 3.6349230439518434e-15
+A3 f=5 table=a gamma=1 err_EN_bwd 4.705114399101523e-16
+A3 f=5 table=a gamma=1 err_F_bwd 7.098421285505594e-16
+A3 f=5 table=a gamma=1 EN 15.101497551170777
+A3 f=5 table=a gamma=1 F 25.024674754475736
+A3 f=5 table=a gamma=1 mass_dev_max 9.992007221626409e-15
+A3 f=5 table=a gamma=1 min_m 7.487285485372506e-12
+A3 f=5 table=a gamma=1 pass_ True
+A3 f=5 table=a gamma=rand lookup_vs_dense_nearest_mismatch 0
+A3 f=5 table=a gamma=rand dense_tie_margin 0.1999999999999421
+A3 f=5 table=a gamma=rand err_m_steps 2.6415189618996108e-15
+A3 f=5 table=a gamma=rand err_EN_fwd 2.3525571995507613e-16
+A3 f=5 table=a gamma=rand err_F_fwd 2.1304752603515352e-16
+A3 f=5 table=a gamma=rand err_Vc_steps 2.2746189997425644e-15
+A3 f=5 table=a gamma=rand err_Vq_steps 3.6349230439518434e-15
+A3 f=5 table=a gamma=rand err_EN_bwd 4.705114399101523e-16
+A3 f=5 table=a gamma=rand err_F_bwd 2.1304752603515352e-16
+A3 f=5 table=a gamma=rand EN 15.101497551170777
+A3 f=5 table=a gamma=rand F 33.3513722962856
+A3 f=5 table=a gamma=rand mass_dev_max 9.992007221626409e-15
+A3 f=5 table=a gamma=rand min_m 7.487285485372506e-12
+A3 f=5 table=a gamma=rand pass_ True
+A3 f=5 table=b gamma=1 lookup_vs_dense_nearest_mismatch 0
+A3 f=5 table=b gamma=1 dense_tie_margin 0.1999999999999421
+A3 f=5 table=b gamma=1 err_m_steps 2.7509072738901974e-15
+A3 f=5 table=b gamma=1 err_EN_fwd 5.336042716717115e-16
+A3 f=5 table=b gamma=1 err_F_fwd 6.183872521032006e-16
+A3 f=5 table=b gamma=1 err_Vc_steps 2.711742379200935e-15
+A3 f=5 table=b gamma=1 err_Vq_steps 2.2978250831904014e-15
+A3 f=5 table=b gamma=1 err_EN_bwd 0.0
+A3 f=5 table=b gamma=1 err_F_bwd 9.275808781548007e-16
+A3 f=5 table=b gamma=1 EN 13.315911687402057
+A3 f=5 table=b gamma=1 F 22.980510459860533
+A3 f=5 table=b gamma=1 mass_dev_max 1.021405182655144e-14
+A3 f=5 table=b gamma=1 min_m 7.487277519836168e-12
+A3 f=5 table=b gamma=1 pass_ True
+A3 f=5 table=b gamma=rand lookup_vs_dense_nearest_mismatch 0
+A3 f=5 table=b gamma=rand dense_tie_margin 0.1999999999999421
+A3 f=5 table=b gamma=rand err_m_steps 2.7509072738901974e-15
+A3 f=5 table=b gamma=rand err_EN_fwd 5.336042716717115e-16
+A3 f=5 table=b gamma=rand err_F_fwd 5.811693218171967e-16
+A3 f=5 table=b gamma=rand err_Vc_steps 3.78761296540812e-15
+A3 f=5 table=b gamma=rand err_Vq_steps 2.2978250831904014e-15
+A3 f=5 table=b gamma=rand err_EN_bwd 0.0
+A3 f=5 table=b gamma=rand err_F_bwd 1.2785725079978333e-15
+A3 f=5 table=b gamma=rand EN 13.315911687402057
+A3 f=5 table=b gamma=rand F 30.565220370647747
+A3 f=5 table=b gamma=rand mass_dev_max 1.021405182655144e-14
+A3 f=5 table=b gamma=rand min_m 7.487277519836168e-12
+A3 f=5 table=b gamma=rand pass_ True
+A3 f=5 table=c gamma=1 lookup_vs_dense_nearest_mismatch 0
+A3 f=5 table=c gamma=1 dense_tie_margin 0.1999999999999421
+A3 f=5 table=c gamma=1 err_m_steps 3.6287705175759084e-15
+A3 f=5 table=c gamma=1 err_EN_fwd 1.0134725221639522e-15
+A3 f=5 table=c gamma=1 err_F_fwd 5.124069034597716e-16
+A3 f=5 table=c gamma=1 err_Vc_steps 3.0600198205637815e-15
+A3 f=5 table=c gamma=1 err_Vq_steps 3.0955832963715115e-15
+A3 f=5 table=c gamma=1 err_EN_bwd 0.0
+A3 f=5 table=c gamma=1 err_F_bwd 1.1956161080728004e-15
+A3 f=5 table=c gamma=1 EN 12.269200796141767
+A3 f=5 table=c gamma=1 F 20.80015113855363
+A3 f=5 table=c gamma=1 mass_dev_max 9.992007221626409e-15
+A3 f=5 table=c gamma=1 min_m 7.487237512240022e-12
+A3 f=5 table=c gamma=1 pass_ True
+A3 f=5 table=c gamma=rand lookup_vs_dense_nearest_mismatch 0
+A3 f=5 table=c gamma=rand dense_tie_margin 0.1999999999999421
+A3 f=5 table=c gamma=rand err_m_steps 3.6287705175759084e-15
+A3 f=5 table=c gamma=rand err_EN_fwd 1.0134725221639522e-15
+A3 f=5 table=c gamma=rand err_F_fwd 3.842230643149338e-16
+A3 f=5 table=c gamma=rand err_Vc_steps 3.1516041258200827e-15
+A3 f=5 table=c gamma=rand err_Vq_steps 3.0955832963715115e-15
+A3 f=5 table=c gamma=rand err_EN_bwd 0.0
+A3 f=5 table=c gamma=rand err_F_bwd 6.403717738582231e-16
+A3 f=5 table=c gamma=rand EN 12.269200796141767
+A3 f=5 table=c gamma=rand F 27.73946185506816
+A3 f=5 table=c gamma=rand mass_dev_max 9.992007221626409e-15
+A3 f=5 table=c gamma=rand min_m 7.487237512240022e-12
+A3 f=5 table=c gamma=rand pass_ True
+A3 small-grid explicit-matrix check at f = 3, 5 (3 tables x 2 gamma each, all errors <= 1e-12, lookup = dense nearest node): PASS
+A4 conservation / non-negativity / support over 15 evaluator calls + the A3 runs: max |sum m - 1| 1.1178835634950701e-12 (<= 1e-10), min m 0.0 (>= 0), assertion failures 0, invariants S, J, w all true True: PASS
+A-SUM cell lookup PASS; A2 split-path regressions PASS; A3 explicit matrices PASS; A4 PASS; wall 0.0 + 258.2 + 8.5 s
+=== checks.py done in 267.0 s; ALL PASS

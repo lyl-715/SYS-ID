@@ -1,0 +1,101 @@
+{
+ "grid": {
+  "z0": 1.9098150805683891,
+  "h24": 4.968113505491219e-06,
+  "G24": 35146,
+  "definition": "dr.make_grid(xbar_nominal, 24, 8 Delta, B): z_i = z_0 + i h_24, z_0 = min xbar - 8 Delta; quadrature grid of factor f: dr.make_grid(xbar_nominal, 24 f, 8 Delta, B)"
+ },
+ "B": 316.8921168493721,
+ "tables": {
+  "m000": {
+   "policy_id": "U_W_r05 (round 4 U/W final, lambda/gbar = 3.4)",
+   "file": "../round4/results/table_U_W.npz",
+   "sha256": "d0b69328b1a1361602bb5c9afbd211b7b2eb3f3c40b5e0f3d9e65a893af49766",
+   "run": 5,
+   "lam": 0.07339683452541984,
+   "lam_over_gbar": 3.4000000000000004,
+   "start_first": 1760,
+   "start_last": 29023,
+   "width_min": 4224,
+   "width_max": 4224,
+   "steps": 4999
+  },
+  "m005": {
+   "policy_id": "U_W_m005_r11 (round 6, lambda/gbar = 3.546875)",
+   "file": "../round6/results/table_U_W_m005.npz",
+   "sha256": "5fb0e564d5234bad43830bbc6037e1d9f1a3461ecdc97c819a2db726b687e2f6",
+   "run": 11,
+   "lam": 0.07656746984039661,
+   "lam_over_gbar": 3.5468750000000004,
+   "start_first": 1760,
+   "start_last": 29023,
+   "width_min": 4224,
+   "width_max": 4224,
+   "steps": 4999
+  },
+  "m010": {
+   "policy_id": "U_W_m010_r11 (round 6, lambda/gbar = 3.715625)",
+   "file": "../round6/results/table_U_W_m010.npz",
+   "sha256": "c05653717503cc7375cf512cb6c3795c1e2f467015338dea2619e5b14e7690db",
+   "run": 11,
+   "lam": 0.08021032743632739,
+   "lam_over_gbar": 3.715625000000001,
+   "start_first": 1760,
+   "start_last": 29023,
+   "width_min": 4224,
+   "width_max": 4224,
+   "steps": 4999
+  },
+  "m020": {
+   "policy_id": "U_W_m020_r08 (round 6, lambda/gbar = 4.140625)",
+   "file": "../round6/results/table_U_W_m020.npz",
+   "sha256": "bc7f322b2b54d2fda400f05d80e09698461c617be39545bab110f305e386bf6b",
+   "run": 8,
+   "lam": 0.08938493175200488,
+   "lam_over_gbar": 4.140625000000002,
+   "start_first": 1760,
+   "start_last": 29023,
+   "width_min": 4224,
+   "width_max": 4224,
+   "steps": 4999
+  },
+  "T4": {
+   "policy_id": "U_W_m020_r02 (round 6 m = 0.20 scan run 2, lambda/gbar = 4)",
+   "file": "results/table_T4.npz",
+   "sha256": "c1b718ac371f9fa326a1ac57d20ef3b4742ac6567c3c97400da4078ede290a58",
+   "run": 2,
+   "lam": 0.08634921708872922,
+   "lam_over_gbar": 4.000000000000001,
+   "start_first": 1760,
+   "start_last": 29023,
+   "width_min": 4224,
+   "width_max": 4224,
+   "steps": 4999
+  }
+ },
+ "T4_restore": {
+  "how": "DP re-run at the exact lambda",
+  "regression": {
+   "EN": true,
+   "S": true,
+   "F": true,
+   "logdet": true,
+   "dmD": true,
+   "mass_dev_max": true,
+   "min_m": true,
+   "dual": true,
+   "dp_minus_policy": true
+  },
+  "fb": {
+   "F_rel": 1.9138788740841347e-16,
+   "N_rel": 4.3425299636154105e-16
+  },
+  "EN": 262.7986258567231,
+  "S": 854.5948000440887,
+  "F": 18.562897197455154,
+  "logdet": 203.29000089955792,
+  "dmD": 6.08902421731716,
+  "cost_vs_m000_sigma24": 1.741412199578832,
+  "pass_": true
+ }
+}

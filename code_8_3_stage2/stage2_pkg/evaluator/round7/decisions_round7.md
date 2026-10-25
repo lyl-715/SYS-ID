@@ -128,3 +128,12 @@ nothing here is a bound. Round 6's verdict (case 1) stands and is not revisited.
 - DECISION D-3: D3's local window is [max(120, M_0 - 20), min(960, M_0 + 20)]; its two ends are the endpoints (a clipped end
   counts); the table's E[N] and log det at a P4 point are C2's σ/120 values; every forward is memoised by (point, M) in the
   append-only archive (checkpoint), θ_0's values are the curve's.
+
+## Records (Part A runs)
+
+- DECISION A-9 (record): `checks.py` was run twice. The first run stopped with a KeyError after A-CELL, A2(a), A2(c) and the
+  A2(b) dispatch lines had passed: it looked up round 6's equal-send archive with the point id `theta_0`, while round 6 writes
+  θ_0 as `theta0|theta_0|+|0.0`. The key was corrected and the whole script re-run; only the second run's log is kept
+  (`logs/partA_checks.log`); no number changed between the runs for the lines both produced.
+- DECISION A-10 (record): `tables.py` found no T4 checkpoint table and re-ran one DP (24.6 s); every regressed field of the scan
+  record and of round 4's run at the same λ is equal bit for bit (`logs/partA0_tables.log`).
