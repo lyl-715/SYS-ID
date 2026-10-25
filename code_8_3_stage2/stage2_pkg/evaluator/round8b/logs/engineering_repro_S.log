@@ -1,0 +1,13 @@
+=== seq_pipeline_r8b.py repro started 2026-10-25 21:22:38; seed family round8 (20261028, 20271028, 30261028, 40261028); replications 1..134 (4), workers 4; done 0, to do 4
+B0 b_1 = E_theta0[N_SoD] (sigma/120, reuse path) = 316.8911511745014; log det J_1 = 197.2011585300231; mass dev 1.1178835634950701e-12, min m 0.0; 11.5 s
+REP r=134 N1 316 N2c 317 | eps1 0.397 conv1 1 design ok Ehat 262.76 EN2 277.04 N2 278 joint 0/1 | t 96 s [1/4, wall 97 s]
+REP r=098 N1 318 N2c 315 | eps1 0.332 conv1 1 design ok Ehat 262.78 EN2 270.16 N2 283 joint 1/0 | t 96 s [2/4, wall 98 s]
+REP r=001 N1 318 N2c 314 | eps1 0.387 conv1 1 design ok Ehat 262.81 EN2 272.69 N2 285 joint 1/1 | t 97 s [3/4, wall 98 s]
+REP r=002 N1 317 N2c 320 | eps1 0.360 conv1 1 design ok Ehat 262.81 EN2 271.76 N2 271 joint 1/1 | t 97 s [4/4, wall 98 s]
+=== seq_pipeline_r8b.py repro finished 2026-10-25 21:24:16; 4 replications in 98.2 s wall
+E2 r=001 differences from round 8 analysis S: 0 []; table codes sha256 equal True; joint seq converged True (first), control converged True (first)
+E2 r=002 differences from round 8 analysis S: 0 []; table codes sha256 equal True; joint seq converged True (first), control converged True (first)
+E2 r=098 differences from round 8 analysis S: 0 []; table codes sha256 equal True; joint seq converged True (first), control converged False (none)
+E2 r=134 differences from round 8 analysis S: 0 []; table codes sha256 equal True; joint seq converged False (none), control converged True (first)
+E2 b_1, J_1 equal to round 8's sod_reference.json: True
+E2 reproduction of round 8's supplementary analysis S by the round-8b pipeline (r = [1, 2, 98, 134]): ALL EQUAL

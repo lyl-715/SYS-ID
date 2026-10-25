@@ -1,0 +1,106 @@
+{
+ "reps": [
+  1,
+  2,
+  98,
+  134
+ ],
+ "rows": [
+  {
+   "r": 1,
+   "n_diff": 0,
+   "diffs": [],
+   "table_codes_sha_equal": true,
+   "compared_top_keys": [
+    "theta1",
+    "eps1",
+    "stage1_converged",
+    "design",
+    "posthoc",
+    "N2",
+    "H_r",
+    "seq",
+    "sod",
+    "success_all"
+   ],
+   "seq_converged": true,
+   "sod_converged": true,
+   "seq_used": "first",
+   "sod_used": "first"
+  },
+  {
+   "r": 2,
+   "n_diff": 0,
+   "diffs": [],
+   "table_codes_sha_equal": true,
+   "compared_top_keys": [
+    "theta1",
+    "eps1",
+    "stage1_converged",
+    "design",
+    "posthoc",
+    "N2",
+    "H_r",
+    "seq",
+    "sod",
+    "success_all"
+   ],
+   "seq_converged": true,
+   "sod_converged": true,
+   "seq_used": "first",
+   "sod_used": "first"
+  },
+  {
+   "r": 98,
+   "n_diff": 0,
+   "diffs": [],
+   "table_codes_sha_equal": true,
+   "compared_top_keys": [
+    "theta1",
+    "eps1",
+    "stage1_converged",
+    "design",
+    "posthoc",
+    "N2",
+    "H_r",
+    "seq",
+    "sod",
+    "success_all"
+   ],
+   "seq_converged": true,
+   "sod_converged": false,
+   "seq_used": "first",
+   "sod_used": "none"
+  },
+  {
+   "r": 134,
+   "n_diff": 0,
+   "diffs": [],
+   "table_codes_sha_equal": true,
+   "compared_top_keys": [
+    "theta1",
+    "eps1",
+    "stage1_converged",
+    "design",
+    "posthoc",
+    "N2",
+    "H_r",
+    "seq",
+    "sod",
+    "success_all"
+   ],
+   "seq_converged": false,
+   "sod_converged": true,
+   "seq_used": "none",
+   "sod_used": "first"
+  }
+ ],
+ "b1_J1_equal": true,
+ "all_equal": true,
+ "seeds": [
+  20261028,
+  20271028,
+  30261028,
+  40261028
+ ]
+}

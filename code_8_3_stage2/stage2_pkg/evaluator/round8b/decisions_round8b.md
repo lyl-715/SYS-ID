@@ -53,3 +53,47 @@ using the true error. Wording: 本场景、固定设计规则下的序贯仿真�
   that); (b) sqrt(Δθᵀ H_obs Δθ) ≤ 1e-3 standard errors from the archived ML AND accepted; (c) unchanged (relative 1e-6,
   Richardson); check 3 additionally requires the static import graph and the fresh-interpreter import of estimator_r8b to
   reach no θ_0 holder (allowlist {estimator_r8b, estimator_r8, declared, tables_r8, r8k_*}).
+
+## B — pipeline (Part B; written before the official run)
+
+- DECISION B-1 (pipeline entry): round 8's seq_pipeline.one_replication loops over round 8's two acceptance rules and reads
+  its seeds from module constants (truth_r8.SEED1/2, estimator_r8.SEED_R1/RJ), so seq_pipeline_r8b.one_replication recomposes
+  the same steps for one analysis from the same round-8 functions, with the seed family as a parameter. Engineering test E2
+  (round-8 seeds, r ∈ {1, 2, 98, 134}) reproduces round 8's archived supplementary analysis S bit for bit: every archived
+  number of the stage-1 calls, design, table codes (sha256), stage-2 records, post-hoc evaluation, H_r and both joint
+  estimates, including the two joint fallbacks (r = 134 sequential, r = 98 control), and b_1, J_1
+  (`logs/engineering_repro_S.log`, `results/engineering_repro_S.json`). The comparison was checked to detect a one-ulp change.
+- DECISION B-2 (noise): e^(1), e^(2) = default_rng(S + r).standard_normal(K), the construction of truth_r8.noise, with the
+  official family (S1, S2) = (50261028, 50271028); restart seeds (60261028 + r, 70261028 + r).
+- DECISION B-3 (gate, overnight mode): the official run refuses to start unless `results/partA_checks.json` has all
+  required checks passed and E2 is all equal. Round 8's B-1, B-2, B-3, B-5, B-6 apply unchanged (first transmission counted
+  in N and E[N]; a pre-listed design failure runs the constant-Δ* SoD on the same e^(2); ε_1 with declared.H(); 4 worker
+  processes with one numba thread; b_1, J_1 by the reuse path at n = 120). Round 8's B-4 (designs shared between its two
+  analyses) has no counterpart. If the official run stops on a correctness failure it is recorded and investigated with
+  round-8 seeds only; no official seed is used for debugging.
+- DECISION B-4 (archive layout): one JSON line per replication in `results/archive_round8b.jsonl`, round 8's layout with the
+  single analysis under the key 'P' (rule 'newton_decrement'), so that round 8's statistics code reads it unchanged; packed
+  tables `results/tables_packed/T_r<r>.npz.bz2` (round 8's pack format; the metadata adds the seed family).
+
+## C — statistics (Part C; written before the official run)
+
+- DECISION C-1 (reuse): the statistics are round 8's stats_r8.analyse, called with stats_r8.RES = this round's results
+  directory and stats_r8.SEED_BOOT = 50281028 (module parameters set before the call; the code is not changed). Round 8's
+  DECISIONs C-1 to C-5 (bootstrap draws, failure rates in the verdict, |bias|/RMSE, Hessian–FIM z and whitening, subset)
+  apply unchanged. Engineering test E3 re-computes round 8's analysis S through stats_r8b with seed 20281028 and matches
+  round 8's `stats_round8.json` on all 29 quantities compared (ΔD and its interval, subset ΔD, b̂_seq, both proportions,
+  failures, information differences, C5, verdict readings and case, M̂; `logs/engineering_stats_E3.log`). The log lines are
+  round 8's log_analysis with the analysis label replaced. The bootstrap draws are saved as `results/bootstrap_round8b.npz`.
+- DECISION C-2 (Clopper–Pearson): two-sided 95 %, from beta quantiles (scipy.stats.beta: lower = Beta(0.025; x, n − x + 1),
+  0 for x = 0; upper = Beta(0.975; x + 1, n − x), 1 for x = n). For 0/300 the interval is [0, 1 − 0.025^(1/300)] =
+  [0, 1.2221 %]. A bootstrap interval is called degenerate when its two ends are equal. CP is reported for both over-budget
+  proportions (and, extra, for the failure counts); it supplements the frozen verdict rule and never enters it.
+- DECISION C-3 (figures, as round 8 with one analysis): ε_1 histogram (with the median and 0.5 marked); E[N_2|T,θ_0] against
+  ε_1 with B; box plots of the final errors of both schemes in units of the SoD+SoD CRB standard deviation. Palette: round 8's
+  two colours (checked with the dataviz validator: CVD ΔE 24.7, normal-vision ΔE 33.6, contrast ≥ 3:1).
+- DECISION C-4 (verdict and scoring): the verdict is the C7 of stats_r8.analyse (spec v3.1 §5, cases 1–4 in order; case 1
+  uses this round's A3 result). Q1–Q6 are scored with round 8's verdict_round8.subclaims (readings S-1..S-6), Q7 with S-7.
+  The Part B wall time is the sum of the "run finished … s wall" lines of `logs/partB_pipeline.log`.
+- DECISION C-5 (engineering tests run before the official run, all on round-8 seeds as listed): E1 = A3 (104.3 s), E2 (4
+  replications, 98.2 s wall), E3 (round 8's archive and the E2 output, ~2 s). The reserve E4 was not needed. Their run
+  outputs stay under `results/runs/` (not committed); their logs and comparison files are committed.
