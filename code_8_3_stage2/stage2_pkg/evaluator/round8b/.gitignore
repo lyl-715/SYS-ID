@@ -1,0 +1,5 @@
+*.stdout
+__pycache__/
+*.tmp
+results/runs/
+results/ckpt/

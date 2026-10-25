@@ -31,3 +31,25 @@ using the true error. Wording: 本场景、固定设计规则下的序贯仿真�
   control's stage 2, one design, the stage-2 simulation, the post-hoc evaluation, both joint estimates); (ii) Part B + Part C
   wall time as run (Part C includes the bootstrap) ≤ 3 h. This round runs the primary analysis only, so the as-run total is
   the primary-only total.
+
+## A — Part A3 (re-checks under the round-8b acceptance)
+
+- DECISION A-1 (Part 0 numbers, checked read-only after the predictions commit): over the 3000 optimiser calls in
+  `round8/results/archive_round8.jsonl` (600 stage 1, 2400 joint) the median terminal ‖∇_ϑ ℓ‖∞ is 2.019e-2 (minimum
+  1.658e-4; 0 of 3000 ≤ 1e-8) and the median Newton decrement 2.509e-7, as the spec states. Nothing was changed.
+- DECISION A-2 (reuse, no copies): round8b/ imports every round-8 module from ../round8 unchanged (estimator_r8, declared,
+  tables_r8, design_r8 with its verbatim mirrors r8k_*, isolation_r8, truth_r8, posthoc_r8, build_kernels). Isolation does not
+  require any copy: the design module is round 8's, and its static import graph is checked by round 8's isolation_r8 as it
+  stands. So round 8b adds no copy; the 57 mirror blocks of round 8 are still re-extracted and checked byte-equal (R-VERB).
+- DECISION A-3 (the acceptance rule): estimator_r8b.accepted(att) is round 8's run_lbfgsb flag accept['supp'] (success,
+  all finite, Cholesky of the analytic H_ϑ of the summed NLL, η ≤ 1e-5), i.e. the supplementary analysis S of dcc660b exactly.
+  It is re-evaluated from the archived fields (success, finite, η finite and ≤ 1e-5; η stays inf in run_lbfgsb unless H_ϑ is
+  finite and its Cholesky factor succeeds) and an assertion requires both to agree on every call. Round 8's 'frozen' flag is
+  still computed by run_lbfgsb and archived but plays no role. Seeds are explicit arguments (no module constant patched).
+- DECISION A-4 (A3 seeds): the A3 checks use round 8's A3 seeds (listed in the predictions file); the estimator calls inside
+  A3 use restart seed 30261028 (r = 0), as round 8's A3 did. No official seed is used.
+- DECISION A-5 (A3 pass criteria; round 8's DECISION A-8 tolerances): (a) max_i |θ̂_i − θ̂^LS_i| / s_i ≤ 1e-8 AND the call is
+  accepted (round 8's (a) passed vacuously under the frozen rule because the fallback is θ̂^LS; requiring acceptance closes
+  that); (b) sqrt(Δθᵀ H_obs Δθ) ≤ 1e-3 standard errors from the archived ML AND accepted; (c) unchanged (relative 1e-6,
+  Richardson); check 3 additionally requires the static import graph and the fresh-interpreter import of estimator_r8b to
+  reach no θ_0 holder (allowlist {estimator_r8b, estimator_r8, declared, tables_r8, r8k_*}).

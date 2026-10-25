@@ -1,0 +1,117 @@
+=== checks_r8b.py (round 8b Part A3, acceptance = Newton decrement <= 1e-05 with result.success and Cholesky) started 2026-10-25 21:18:21; python 3.13.17, numpy 2.5.3, scipy 1.18.1, numba 0.68.0; numba threads 4
+A0 modules: estimator_r8b /home/user/SYS-ID/code_8_3_stage2/stage2_pkg/evaluator/round8b/estimator_r8b.py; estimator_r8 /home/user/SYS-ID/code_8_3_stage2/stage2_pkg/evaluator/round8/estimator_r8.py; design_r8 /home/user/SYS-ID/code_8_3_stage2/stage2_pkg/evaluator/round8/design_r8.py; truth_r8 /home/user/SYS-ID/code_8_3_stage2/stage2_pkg/evaluator/round8/truth_r8.py
+A0 warm-up 6.1 s
+R-DECL K True
+R-DECL t True
+R-DECL w True
+R-DECL a0 True
+R-DECL D True
+R-DECL s True
+R-DECL B True
+R-DECL H True
+R-DECL X0_eq_dr True
+R-DECL x_polar_theta0 True
+R-DECL grid True
+R-DECL R_SUP True
+R-DECL H_theta0_close 7.448991274709775e-12
+R-DECL pass True
+R-VERB round-8 verbatim mirror blocks re-extracted from the frozen sources and byte-equal: 57/57 -> PASS; round 8b adds no copy (every round-8 module is imported unchanged)
+R-VERB global names used by functions but not defined in the generated module (legacy branches never called): {}
+DESIGN test_theta0 G = 35146, support window nodes 4224-4224, cache built in 8.0 s
+A3-2 status 'ok'
+A3-2 codes_equal True
+A3-2 start_equal True
+A3-2 width_equal True
+A3-2 lam_equal True
+A3-2 lam 0.08634921708872922
+A3-2 z0_equal True
+A3-2 h_equal True
+A3-2 G_equal True
+A3-2 EN_hat 262.7986258567231
+A3-2 EN_hat_equal_T4_sigma24 True
+A3-2 J_sod_bitwise_evaluator_fast True
+A3-2 gbar 0.021587304272182303
+A3-2 gbar_equal_scan True
+A3-2 wall_s 35.38485148999996
+A3-2 t_dp_s 22.168108723000046
+A3-2 pass True
+A3-2 design-chain regression (T4 bit for bit): PASS
+R-POST T4_EN 262.7464450212968
+R-POST T4_EN_equal True
+R-POST T4_S_equal True
+R-POST T4_logdet_equal True
+R-POST T4_J_equal True
+R-POST grid_n0 0
+R-POST boundary_gap 0.0999999999476131
+R-POST b1 316.8911511745014
+R-POST b1_equal True
+R-POST J1_equal True
+R-POST t_posthoc_s 11.544457440999963
+R-POST pass True
+R-SIM const480_equal_mc83_sod 100
+R-SIM trajectories 100
+R-SIM events 31666
+R-SIM lookup_scalar_eq_vec True
+R-SIM lookup_eq_round7_cell_round5_table True
+R-SIM lookups 20000
+R-SIM pass True
+A3-1a LS_usable True
+A3-1a converged True
+A3-1a used 'first'
+A3-1a fallback None
+A3-1a dist 2.220446049250313e-16
+A3-1a terminal [{'success': True, 'message': 'CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH', 'nit': 1, 'grad_inf': 7.030069355096202e-05, 'decrement': 6.524690215782787e-11, 'accepted': True, 'dist_over_s': 2.220446049250313e-16}, {'success': True, 'message': 'CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH', 'nit': 29, 'grad_inf': 0.030971206269896356, 'decrement': 2.467234773928309e-07, 'accepted': True, 'dist_over_s': 2.0013244533823027e-12}]
+A3-1a pass True
+A3-1b N 318
+A3-1b LS_equal_archived True
+A3-1b LS_maxdiff 0.0
+A3-1b converged True
+A3-1b used 'first'
+A3-1b fallback None
+A3-1b se_dist 1.045511216613469e-07
+A3-1b max_abs_over_s 2.256430719355107e-12
+A3-1b terminal [{'success': True, 'message': 'CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH', 'nit': 41, 'grad_inf': 0.003167097078403458, 'decrement': 1.0439215382994644e-07, 'accepted': True, 'dist_over_s': 2.256430719355107e-12, 'se_dist': 1.045511216613469e-07}, {'success': True, 'message': 'CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH', 'nit': 67, 'grad_inf': 0.008179760712664574, 'decrement': 3.246260301163801e-08, 'accepted': True, 'dist_over_s': 4.57148208177216e-13, 'se_dist': 3.2041473854136924e-08}]
+A3-1b pass True
+A3-1c N1 318
+A3-1c N2 629
+A3-1c frac_asymmetric_windows 0.9553877831159918
+A3-1c distinct_windows 400
+A3-1c points [{'theta_offset_over_s': [8.357010338211346e-05, 2.4999911109324646e-07, -2.4707906191114015e-05, 7.240719744439766e-06, 2.01456576726846e-05, -0.00014444734357067085, -0.00021961243584385287, 0.00010521643352690707, -6.134930224387276e-05], 'f': 2322.8945010336893, 'g_inf': 31418138.59489687, 'rel_err': 1.699127076408979e-12, 'rel_err_plain_cd': 2.8536928176781987e-10}, {'theta_offset_over_s': [2.9229073606140688e-05, 2.5273421434643395e-05, -8.099140228143287e-05, 6.396869767517563e-05, -5.347148285015594e-05, 0.00010310794078197995, 3.9801098373739175e-05, -6.113625818050458e-06, -5.405142817448399e-06], 'f': 1067.5800719856518, 'g_inf': 10278553.47576653, 'rel_err': 1.6828798560456126e-12, 'rel_err_plain_cd': 4.6364029223673615e-10}, {'theta_offset_over_s': [1.7706277905427115e-05, 0.00012485052803416774, 0.00015275628990901735, 3.697582401787289e-05, -5.920370104136284e-05, -7.661518636088022e-06, 1.610001684525849e-05, 0.00011769931910912863, -6.676882479058743e-06], 'f': 1065.029914860118, 'g_inf': 4642583.069278461, 'rel_err': 2.928122072888959e-12, 'rel_err_plain_cd': 7.174626269515107e-10}]
+A3-1c pass True
+A3-1d points [{'f_rel': np.float64(3.528392205852552e-15), 'g_rel': 4.5961432420076605e-15, 'H_rel': 8.314720462509783e-15, 'H_vs_numgrad': 2.850371301448303e-10}, {'f_rel': np.float64(0.0), 'g_rel': 2.05676996979541e-16, 'H_rel': 2.7481605827142794e-15, 'H_vs_numgrad': 8.729780734092225e-11}, {'f_rel': np.float64(0.0), 'g_rel': 8.663866516170209e-16, 'H_rel': 7.680806673222795e-15, 'H_vs_numgrad': 3.9062840228646166e-10}]
+A3-1d pass True
+A3-1 estimator check under the round-8b acceptance (a, b, c): PASS (a True, b True, c True; supporting d True)
+DESIGN guarded G = 35146, support window nodes 4224-4224, cache built in 2.0 s
+A3-3 static design_r8 local ['declared', 'design_r8', 'r8k_dr', 'r8k_ef', 'r8k_ew', 'r8k_td']
+A3-3 static design_r8 third_party ['numba', 'numpy', 'os', 'scipy', 'sys', 'time']
+A3-3 static design_r8 outside_allowlist []
+A3-3 static design_r8 bad_third_party []
+A3-3 static design_r8 forbidden_names {}
+A3-3 static design_r8 passed True
+A3-3 dynamic design_r8 passed True
+A3-3 dynamic design_r8 repo_local_loaded ['declared', 'design_r8', 'r8k_dr', 'r8k_ef', 'r8k_ew', 'r8k_td']
+A3-3 dynamic design_r8 forbidden_loaded []
+A3-3 dynamic design_r8 outside_allowlist []
+A3-3 dynamic design_r8 n_modules 678
+A3-3 static estimator_r8b local ['declared', 'estimator_r8', 'estimator_r8b', 'r8k_dr']
+A3-3 static estimator_r8b third_party ['numba', 'numpy', 'os', 'scipy', 'sys', 'time']
+A3-3 static estimator_r8b outside_allowlist []
+A3-3 static estimator_r8b bad_third_party []
+A3-3 static estimator_r8b forbidden_names {}
+A3-3 static estimator_r8b passed True
+A3-3 dynamic estimator_r8b passed True
+A3-3 dynamic estimator_r8b repo_local_loaded ['declared', 'estimator_r8', 'estimator_r8b']
+A3-3 dynamic estimator_r8b forbidden_loaded []
+A3-3 dynamic estimator_r8b outside_allowlist []
+A3-3 dynamic estimator_r8b n_modules 682
+A3-3 sentinel holders ['truth_r8.THETA0', 'truth_r8.X0', 'truth_r8._ns', 'truth_r8.H_MC83', 'posthoc_r8.THETA0', 'posthoc_r8.X0', 'density_recursion_v1.x', 'density_recursion_v1.G', 'density_recursion_v1.Gj', 'density_recursion_v1.output', 'density_recursion_v1.input_arrays', 'robustness.THETA0', 'robustness.INP', 'evaluator_refine.I24']
+A3-3 sentinel positive control [('THETA0 + 1', True), ('np.asarray(X0)', True), ('THETA0[0]', True), ('dr.Gj.real', True), ('dr.input_arrays("U")', True), ('rb.THETA0 @ H', True), ('er.I24["xbar"]', True)]; holders logged ['density_recursion_v1.Gj', 'density_recursion_v1.input_arrays', 'evaluator_refine.I24', 'robustness.THETA0', 'truth_r8.THETA0', 'truth_r8.X0'] -> PASS; originals restored True
+A3-3 guarded design at theta_0 + 0.3 sigma e1: status ok, sentinel accesses 0, E_hat[N] 262.79862585672527
+A3-3 isolation: PASS
+A3-4 mass_dev_max 1.759481449425948e-12
+A3-4 min_m 0.0
+A3-4 n_eval 6
+A3-4 assert_fail 0
+A3-4 pass True
+A3 SUMMARY (round-8b acceptance): check 1 PASS, check 2 PASS, check 3 PASS, check 4 PASS; supporting regressions PASS; all required PASS
+=== checks_r8b.py done in 104.3 s
