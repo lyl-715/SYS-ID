@@ -38,6 +38,17 @@ def main():
     out(f"V0 checks: Part 0 verification {'PASS' if P0['pass_'] else 'FAIL'}; A-CELL {'PASS' if A['cell']['pass_'] else 'FAIL'}; "
         f"A2 {'PASS' if A['a2']['pass_'] else 'FAIL'}; A3 {'PASS' if A['a3_pass'] else 'FAIL'}; A4 {'PASS' if A['a4']['pass_'] else 'FAIL'}; "
         f"T4 restoration {'PASS' if T['T4_restore']['pass_'] else 'FAIL'}")
+    rc = [json.loads(l) for l in open(os.path.join(RES, 'archive_regrade.jsonl'))]
+    rb_ = list(Bd['records'].values()); d4 = D.get('A4', {})
+    a4 = dict(n_C=len(rc), n_B=len(rb_), n_D=D.get('forwards', 0),
+              mass_dev_max=max([r['mass_dev_max'] for r in rc+rb_ if r.get('status', 'ok') == 'ok']+[d4.get('mass_dev_max', 0.0)]),
+              min_m=min([r['min_m'] for r in rc+rb_ if r.get('status', 'ok') == 'ok']+[d4.get('min_m', 0.0)]),
+              assert_fail=sum(r.get('assert_fail', 0) for r in rc+rb_)+d4.get('assert_fail', 0),
+              assert_stops=sum(r['status'] != 'ok' for r in rc)+d4.get('assert_stops', 0),
+              inv_all=all(r['inv_S'] and r['inv_J'] and r['inv_w'] for r in rc+rb_ if r.get('status', 'ok') == 'ok') and d4.get('inv_all', True))
+    a4['pass_'] = a4['mass_dev_max'] <= 1e-10 and a4['min_m'] >= 0 and a4['assert_fail'] == 0 and a4['assert_stops'] == 0 and a4['inv_all']
+    out(f"V0 A4 over Parts B-D ({a4['n_B']} + {a4['n_C']} + {a4['n_D']} evaluations): max |sum m - 1| {a4['mass_dev_max']!r}, min m {a4['min_m']!r}, "
+        f"assertion failures {a4['assert_fail']}, assertion stops {a4['assert_stops']}, invariants S, J, w all true {a4['inv_all']}: {'PASS' if a4['pass_'] else 'FAIL'}")
     out(f"V0 diagnosis (B2, diagnostic): (i) {Bd['values']['i_sigma48']!r}, (ii) {Bd['values']['ii_sigma48_shift']!r}, (iii) {Bd['values']['iii_sigma72']!r}; "
         f"(i)-(iii) {Bd['d_i_iii']!r}, (ii)-(iii) {Bd['d_ii_iii']!r} -> {Bd['reading']}")
     out(f"V0 gate: max|d2| {g['max_d2']!r} at {g['at']} (<= 0.05: {g['pass_']}); max|d1| {g['max_d1']!r} at {g['d1_at']}")
@@ -97,7 +108,7 @@ def main():
                (f"curve and local stages ~2.3 h serial (per-forward sums {curve_s!r}, {local_s!r} s in [1.15, 4.6] h)",
                 (all(1.15*3600 <= v <= 4.6*3600 for v in (curve_s, local_s)) if (curve_s is not None and local_s is not None) else None)),
                (f"total wall <= 6 h + rescan allowance ({total:.0f} s vs {allow:.0f} s)", total <= allow)]
-    res = dict(case=case, label=label, selected=selected, policy_id=pid, items={k: dict(met=v, text=t) for k, (v, t) in items.items()},
+    res = dict(case=case, label=label, selected=selected, policy_id=pid, A4=a4, items={k: dict(met=v, text=t) for k, (v, t) in items.items()},
                predictions={}, wall_s=walls, wall_total_s=total)
     for k, subs in G.items():
         sc = score(subs); res['predictions'][k] = dict(score=sc, subs=[dict(claim=a, value=b) for a, b in subs])

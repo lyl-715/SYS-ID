@@ -1,0 +1,25 @@
+V0 checks: Part 0 verification PASS; A-CELL PASS; A2 PASS; A3 PASS; A4 PASS; T4 restoration PASS
+V0 A4 over Parts B-D (3 + 486 + 1661 evaluations): max |sum m - 1| 2.4806823262224498e-12, min m 0.0, assertion failures 0, assertion stops 0, invariants S, J, w all true True: PASS
+V0 diagnosis (B2, diagnostic): (i) 286.1589816132073, (ii) 287.37120521758766, (iii) 287.36308703867985; (i)-(iii) -1.2041054254725623, (ii)-(iii) 0.008118178907807305 -> 支持分界取值影响的解释
+V0 gate: max|d2| 0.006240654281612024 at ['m000', 'P1|theta1|+|0.5'] (<= 0.05: True); max|d1| 0.078020655082355 at ['m000', 'P1|theta1|+|0.5']
+V1 verdict (spec §2.4): case 3 -- 支持进一步做序贯验证; selected policy T4 = U_W_m020_r02 (round 6 m = 0.20 scan run 2, lambda/gbar = 4)
+V1 item a_rho26: met -- rho_26 = 0.8655 (>= 0.8)
+V1 item b_main_points: met -- main check points 精度未定: []
+V1 item c_matched20: met -- P4 matched 20/20
+V1 item d_median_eq: met -- median Delta m_D^eq 7.772046918007092 (>= 5; 未定 unless all 20 matched)
+V2 G1: 对 -- |(i)-(iii)| > 1: 对; |(ii)-(iii)| < 0.1: 对
+V2 G2: 对 -- max|d1| <= 0.3: 对; max|d2| <= 0.05: 对; median d1/d2 in [8, 20]: 对; sign consistent at all 135 pairs: 对
+V2 G3: 部分对 -- m010 P1 +0.5 over B by ~7 on the reference grid (excess +7.9461): 错; T4 holds all 26 on the reference grid (26/26 on sigma/120): 对; max |log det_120 - log det_72| <= 0.01 (0.00003): 对
+V2 G4: 对 -- |second term (m020)| <= 0.1 (0.04091780537038403): 对; T4 c on the reference grid in [1.6, 1.9] (1.7412406777351066): 对
+V2 G5: 对 -- verdict case 3: 对; selection rule picks T4 (picked T4): 对
+V2 G6: 对 -- counts (T4 27 at n = 24; 162 + 162; curve 841; local 20 x 41 = 820): 对; sigma/120 forward ~10 s (median 18.5 s in [5, 20]): 对; curve and local stages ~2.3 h serial (per-forward sums 12795.31453691002, 13071.84158503498 s in [1.15, 4.6] h): 对; total wall <= 6 h + rescan allowance (8616 s vs 21600 s): 对
+V3 wall part0_verify 487.6 s
+V3 wall partA0_tables.log 48.4 s
+V3 wall partA_checks.log 267.0 s
+V3 wall partB_diagnose.log 11.2 s
+V3 wall partC_figs.log 1.7 s
+V3 wall partC_run.log 1317.6 s
+V3 wall partC_summary.log 0.1 s
+V3 wall partD_figs.log 0.9 s
+V3 wall partD_match.log 6481.0 s
+V3 total logged wall clock 8615.5 s = 2.393 h

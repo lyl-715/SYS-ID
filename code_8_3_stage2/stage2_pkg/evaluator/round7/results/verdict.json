@@ -1,0 +1,147 @@
+{
+ "case": 3,
+ "label": "支持进一步做序贯验证",
+ "selected": "T4",
+ "policy_id": "U_W_m020_r02 (round 6 m = 0.20 scan run 2, lambda/gbar = 4)",
+ "A4": {
+  "n_C": 486,
+  "n_B": 3,
+  "n_D": 1661,
+  "mass_dev_max": 2.4806823262224498e-12,
+  "min_m": 0.0,
+  "assert_fail": 0,
+  "assert_stops": 0,
+  "inv_all": true,
+  "pass_": true
+ },
+ "items": {
+  "a_rho26": {
+   "met": true,
+   "text": "rho_26 = 0.8655 (>= 0.8)"
+  },
+  "b_main_points": {
+   "met": true,
+   "text": "main check points 精度未定: []"
+  },
+  "c_matched20": {
+   "met": true,
+   "text": "P4 matched 20/20"
+  },
+  "d_median_eq": {
+   "met": true,
+   "text": "median Delta m_D^eq 7.772046918007092 (>= 5; 未定 unless all 20 matched)"
+  }
+ },
+ "predictions": {
+  "G1": {
+   "score": "对",
+   "subs": [
+    {
+     "claim": "|(i)-(iii)| > 1",
+     "value": true
+    },
+    {
+     "claim": "|(ii)-(iii)| < 0.1",
+     "value": true
+    }
+   ]
+  },
+  "G2": {
+   "score": "对",
+   "subs": [
+    {
+     "claim": "max|d1| <= 0.3",
+     "value": true
+    },
+    {
+     "claim": "max|d2| <= 0.05",
+     "value": true
+    },
+    {
+     "claim": "median d1/d2 in [8, 20]",
+     "value": true
+    },
+    {
+     "claim": "sign consistent at all 135 pairs",
+     "value": true
+    }
+   ]
+  },
+  "G3": {
+   "score": "部分对",
+   "subs": [
+    {
+     "claim": "m010 P1 +0.5 over B by ~7 on the reference grid (excess +7.9461)",
+     "value": false
+    },
+    {
+     "claim": "T4 holds all 26 on the reference grid (26/26 on sigma/120)",
+     "value": true
+    },
+    {
+     "claim": "max |log det_120 - log det_72| <= 0.01 (0.00003)",
+     "value": true
+    }
+   ]
+  },
+  "G4": {
+   "score": "对",
+   "subs": [
+    {
+     "claim": "|second term (m020)| <= 0.1 (0.04091780537038403)",
+     "value": true
+    },
+    {
+     "claim": "T4 c on the reference grid in [1.6, 1.9] (1.7412406777351066)",
+     "value": true
+    }
+   ]
+  },
+  "G5": {
+   "score": "对",
+   "subs": [
+    {
+     "claim": "verdict case 3",
+     "value": true
+    },
+    {
+     "claim": "selection rule picks T4 (picked T4)",
+     "value": true
+    }
+   ]
+  },
+  "G6": {
+   "score": "对",
+   "subs": [
+    {
+     "claim": "counts (T4 27 at n = 24; 162 + 162; curve 841; local 20 x 41 = 820)",
+     "value": true
+    },
+    {
+     "claim": "sigma/120 forward ~10 s (median 18.5 s in [5, 20])",
+     "value": true
+    },
+    {
+     "claim": "curve and local stages ~2.3 h serial (per-forward sums 12795.31453691002, 13071.84158503498 s in [1.15, 4.6] h)",
+     "value": true
+    },
+    {
+     "claim": "total wall <= 6 h + rescan allowance (8616 s vs 21600 s)",
+     "value": true
+    }
+   ]
+  }
+ },
+ "wall_s": {
+  "part0_verify": 487.6,
+  "partA0_tables.log": 48.4,
+  "partA_checks.log": 267.0,
+  "partB_diagnose.log": 11.2,
+  "partC_figs.log": 1.7,
+  "partC_run.log": 1317.6,
+  "partC_summary.log": 0.1,
+  "partD_figs.log": 0.9,
+  "partD_match.log": 6481.0
+ },
+ "wall_total_s": 8615.5
+}
