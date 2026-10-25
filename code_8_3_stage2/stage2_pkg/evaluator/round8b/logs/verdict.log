@@ -1,0 +1,11 @@
+V0 A3 required checks (round-8b acceptance): 1 True 2 True 3 True 4 True; supporting True
+V1 [P] case 2; readings {'dD': '支持达标', 'b_seq': '支持达标', 'p_EN2': '支持达标'}; items []; failure rates [0.0, 0.006666666666666667, 0.0033333333333333335, 0.013333333333333334]; max |bias|/RMSE 0.0864; X = Delta D 3.6724541905351487 CI [3.1411770770795258, 4.222492217075183]; Y = median eps_1 0.3316577020860556; Z = Pr{E[N_2|T,theta_0] > B} 0.0
+V1 [P] Z observed 0/300: bootstrap 95 % [0.0, 0.0] (degenerate), Clopper-Pearson 95 % [0.0, 0.01222097469429355]; Pr{N_2 > B} observed 0/300: bootstrap [0.0, 0.0] (degenerate), CP [0.0, 0.01222097469429355]
+V2 Part B wall 6620.5 s (1 run segment(s), 300 replications); Part C 1.0 s; total 6621.5 s = 1.839 h; median primary work 87.1 s
+V3 Q1 对: median eps_1 0.3317 in [0.2, 0.4] -> yes; q90 0.4851 <= 0.6 -> yes; fraction > 0.5 0.0867 <= 0.15 -> yes; stage-1 failure rate 0.0067 <= 0.02 -> yes
+V3 Q2 对: |-log det M_1 - log det J_1| 0.3203 <= 0.5 -> yes; Hessian-FIM whitened 0.0042 <= 0.05 -> yes
+V3 Q3 对: Pr{E[N_2|T,theta_0] > B} 0.0000 <= 0.10 -> yes; Pr{N_2 > B} 0.0000 <= 0.25 -> yes; b_seq 581.142 <= 2B 633.784 -> yes
+V3 Q4 对: Delta D 3.6724541905351487 in [2.5, 4] -> yes; CI lower 3.1411770770795258 >= 1.5 -> yes
+V3 Q5 对: seq |.| 0.12387656794899726 <= 0.5 -> yes; SoD+SoD |.| 0.16475706134087886 <= 0.5 -> yes
+V3 Q6 对: design failure rate 0.0000 <= 0.02 -> yes; estimation failure rates stage 1 0.0067, joint seq 0.0033, joint SoD 0.0133 all <= 0.02 -> yes; max of 18 |bias|/RMSE 0.0864 <= 0.2 -> yes
+V3 Q7 对: median primary work per replication 87.1 s <= 110 s -> yes; Part B + Part C wall 1.839 h <= 3 h -> yes

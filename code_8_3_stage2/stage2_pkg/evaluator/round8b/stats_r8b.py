@@ -104,18 +104,18 @@ def figures(X, o, th0, J1, outdir):
     bins = np.linspace(0, X['eps1'].max()*1.02, 31)
     ax.hist(X['eps1'], bins=bins, color=C1, edgecolor='white', lw=0.8, alpha=0.9)
     ax.axvline(0.5, color=MUTED, lw=1, ls='--'); ax.text(0.5, ax.get_ylim()[1]*0.95, ' 0.5', color=MUTED, va='top')
-    med = float(np.median(X['eps1'])); ax.axvline(med, color=INK, lw=1); ax.text(med, ax.get_ylim()[1]*0.85, f' median {med:.3f}', color=INK, va='top')
+    med = float(np.median(X['eps1'])); ax.axvline(med, color=INK, lw=1); ax.text(med, ax.get_ylim()[1]*0.85, f' median {med:.3f}', color=INK, va='top', bbox=dict(fc='white', ec='none', pad=1.5))
     ax.set_xlabel('eps_1 = max_k |h_k^T (theta_1 - theta_0)| / sigma'); ax.set_ylabel('replications')
     ax.set_title(f'Stage-1 estimation error (round 8b, Newton-decrement acceptance), R = {R}', loc='left', color=INK)
     fig.tight_layout(); fig.savefig(os.path.join(outdir, 'fig_eps1_hist.png'), dpi=150); plt.close(fig)
     # E[N_2 | T, theta_0] vs eps_1
     fig, ax = plt.subplots(figsize=(6.4, 3.8))
-    ax.scatter(X['eps1'], X['EN2'], s=16, color=C1, edgecolor='white', lw=0.4, label='generated table T(Y_1)')
+    ax.scatter(X['eps1'], X['EN2'], s=16, color=C1, edgecolor='white', lw=0.4)                    # one series: the title names it
     ax.axhline(B, color=MUTED, lw=1, ls='--'); ax.text(ax.get_xlim()[1], B, ' B', color=MUTED, va='center', ha='left')
     ax.set_xlabel('eps_1'); ax.set_ylabel('E[N_2 | T, theta_0]  (sigma/120)')
     c = o['tx_counts']['EN2_gt_B']
-    ax.set_title(f'Expected stage-2 transmissions vs stage-1 error ({c["n"]}/{c["R"]} tables above B)', loc='left', color=INK)
-    ax.legend(frameon=False, fontsize=8, loc='lower right'); fig.tight_layout(); fig.savefig(os.path.join(outdir, 'fig_EN2_vs_eps1.png'), dpi=150); plt.close(fig)
+    ax.set_title(f'E[N_2 | T, theta_0] of the generated tables vs stage-1 error ({c["n"]}/{c["R"]} above B)', loc='left', color=INK)
+    fig.tight_layout(); fig.savefig(os.path.join(outdir, 'fig_EN2_vs_eps1.png'), dpi=150); plt.close(fig)
     # final-error box plots, both schemes, in units of the control's CRB standard deviation
     sdc = np.sqrt(np.diag(np.linalg.inv(2*J1)))
     fig, ax = plt.subplots(figsize=(7.2, 3.6))

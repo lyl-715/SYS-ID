@@ -97,3 +97,22 @@ using the true error. Wording: 本场景、固定设计规则下的序贯仿真�
 - DECISION C-5 (engineering tests run before the official run, all on round-8 seeds as listed): E1 = A3 (104.3 s), E2 (4
   replications, 98.2 s wall), E3 (round 8's archive and the E2 output, ~2 s). The reserve E4 was not needed. Their run
   outputs stay under `results/runs/` (not committed); their logs and comparison files are committed.
+
+## R — recorded after the official run (no rule above was changed after the run started)
+
+- DECISION R-1 (commits): the Part B/C code was committed before the official run (f3da524); the run's outputs in the next
+  commit (bb34d5a); the statistics, verdict and figures after it. The official run was one segment (no resume).
+- DECISION R-2 (the 7 estimations not accepted): stage 1 in r = 48 and 232, the sequential joint estimate in r = 106 and the
+  control's joint estimate in r = 33, 189, 221, 239. In each, both optimiser calls ended in ABNORMAL_TERMINATION_IN_LNSRCH
+  (result.success False) with Newton decrements 4.2e-8 to 1.1e-6. The frozen rule sends them to the fallbacks (stage 1:
+  θ̂_1 := θ̂^LS, ε_1 = 0.563 and 0.680, and the design proceeds from θ̂^LS; joint: θ̂_final := θ̂_1). That is the rule as
+  written; nothing was re-run. Round 8's supplementary analysis S showed the same mode (its DECISION R-2).
+- DECISION R-3 (optimiser diagnostics, from the archive): 1800 calls (300 × 3 estimations × 2 calls). 1368 ended with
+  success, and every one of them was accepted (no success with η > 1e-5 or a Cholesky failure). 432 ended in line-search
+  abnormal termination: 12 first calls and 420 restart calls; the restart is run in every estimation (round 8 DECISION E-4)
+  but used only after a first call is not accepted, which happened 12 times (restart accepted 5 times, fallback 7 times).
+  Over the 893 calls whose result is used, η has median 1.44e-7 and maximum 1.46e-6 (gradient ∞-norm median 1.1e-2); the
+  largest η of any accepted call, 5.03e-6, belongs to an unused restart call.
+- DECISION R-4 (figure only): after the first Part C run, the legend of `fig_EN2_vs_eps1.png` (one series) overlapped a
+  point and was removed, and the median label of the histogram got a white background. Part C was re-run; every statistic is
+  identical (stats_round8b.json equal apart from the Part C wall time).

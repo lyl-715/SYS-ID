@@ -1,0 +1,155 @@
+{
+ "case": 2,
+ "readings": {
+  "dD": "支持达标",
+  "b_seq": "支持达标",
+  "p_EN2": "支持达标"
+ },
+ "items": [],
+ "X": 3.6724541905351487,
+ "X_ci": [
+  3.1411770770795258,
+  4.222492217075183
+ ],
+ "Y": 0.3316577020860556,
+ "Z": 0.0,
+ "Z_counts": {
+  "n": 0,
+  "R": 300,
+  "p": 0.0,
+  "cp95": [
+   0.0,
+   0.01222097469429355
+  ],
+  "boot95": [
+   0.0,
+   0.0
+  ],
+  "boot_degenerate": true
+ },
+ "N2_counts": {
+  "n": 0,
+  "R": 300,
+  "p": 0.0,
+  "cp95": [
+   0.0,
+   0.01222097469429355
+  ],
+  "boot95": [
+   0.0,
+   0.0
+  ],
+  "boot_degenerate": true
+ },
+ "predictions": {
+  "Q1": {
+   "score": "对",
+   "sub": [
+    [
+     "median eps_1 0.3317 in [0.2, 0.4]",
+     true
+    ],
+    [
+     "q90 0.4851 <= 0.6",
+     true
+    ],
+    [
+     "fraction > 0.5 0.0867 <= 0.15",
+     true
+    ],
+    [
+     "stage-1 failure rate 0.0067 <= 0.02",
+     true
+    ]
+   ]
+  },
+  "Q2": {
+   "score": "对",
+   "sub": [
+    [
+     "|-log det M_1 - log det J_1| 0.3203 <= 0.5",
+     true
+    ],
+    [
+     "Hessian-FIM whitened 0.0042 <= 0.05",
+     true
+    ]
+   ]
+  },
+  "Q3": {
+   "score": "对",
+   "sub": [
+    [
+     "Pr{E[N_2|T,theta_0] > B} 0.0000 <= 0.10",
+     true
+    ],
+    [
+     "Pr{N_2 > B} 0.0000 <= 0.25",
+     true
+    ],
+    [
+     "b_seq 581.142 <= 2B 633.784",
+     true
+    ]
+   ]
+  },
+  "Q4": {
+   "score": "对",
+   "sub": [
+    [
+     "Delta D 3.6724541905351487 in [2.5, 4]",
+     true
+    ],
+    [
+     "CI lower 3.1411770770795258 >= 1.5",
+     true
+    ]
+   ]
+  },
+  "Q5": {
+   "score": "对",
+   "sub": [
+    [
+     "seq |.| 0.12387656794899726 <= 0.5",
+     true
+    ],
+    [
+     "SoD+SoD |.| 0.16475706134087886 <= 0.5",
+     true
+    ]
+   ]
+  },
+  "Q6": {
+   "score": "对",
+   "sub": [
+    [
+     "design failure rate 0.0000 <= 0.02",
+     true
+    ],
+    [
+     "estimation failure rates stage 1 0.0067, joint seq 0.0033, joint SoD 0.0133 all <= 0.02",
+     true
+    ],
+    [
+     "max of 18 |bias|/RMSE 0.0864 <= 0.2",
+     true
+    ]
+   ]
+  },
+  "Q7": {
+   "score": "对",
+   "sub": [
+    [
+     "median primary work per replication 87.1 s <= 110 s",
+     true
+    ],
+    [
+     "Part B + Part C wall 1.839 h <= 3 h",
+     true
+    ]
+   ]
+  }
+ },
+ "wall_s": 6621.476893779,
+ "wallB_s": 6620.5
+}
