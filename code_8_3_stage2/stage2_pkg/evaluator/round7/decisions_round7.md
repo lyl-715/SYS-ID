@@ -108,8 +108,8 @@ nothing here is a bound. Round 6's verdict (case 1) stands and is not revisited.
   f = 1 from the round-6 archive); its d_1, d_2 are reported separately and are not part of the gate (the gate is "五个候选
   × 27 点").
 - DECISION C-2: the f = 1 values of the four old tables and of the SoD are the round-6 archive values (spec: reuse); as a
-  regression the new evaluator at f = 1 recomputes all four old tables at the 27 points and is compared bit for bit
-  (E[N], S, log det). T4 at f = 1 is evaluated at the 27 points and its θ_0 value regressed against the scan record.
+  regression the new evaluator at f = 1 recomputes all four old tables and the SoD at the 27 points and is compared bit for
+  bit (E[N], E[N]_P, S, log det, 81 J elements). T4 at f = 1 is evaluated at the 27 points and its θ_0 value regressed against the scan record.
 - DECISION C-3: "|d_2| near rounding" = |d_2| <= 1e-8 send (the forward's relative rounding level is ~1e-13, i.e. ~3e-11 send);
   "阶数未定" is set at a pair if sign(d_1) != sign(d_2) or |d_2| <= 1e-8.
 - DECISION C-4: budget pass, ρ_26 and c are computed on each of the three grids; the verdict uses the reference grid only.
@@ -137,3 +137,12 @@ nothing here is a bound. Round 6's verdict (case 1) stands and is not revisited.
   (`logs/partA_checks.log`); no number changed between the runs for the lines both produced.
 - DECISION A-10 (record): `tables.py` found no T4 checkpoint table and re-ran one DP (24.6 s); every regressed field of the scan
   record and of round 4's run at the same λ is equal bit for bit (`logs/partA0_tables.log`).
+
+## Records (Part C runs)
+
+- DECISION C-6 (record): `regrade.py run` ran once (486 evaluations, 1317.6 s, no assertion stop); `summary` once; `figs` twice:
+  the first render of `fig_d1_d2.png` used axes spanning the whole gate band, which squeezed all 135 points into a sliver;
+  the axes were set to the data range with the gate stated in text and the figures re-rendered (only the second figs log is
+  kept). No number changed.
+- DECISION C-7 (record): beyond the spec's 162 + 162 forwards and T4's 27 at n = 24, Part C ran 135 regression forwards at
+  f = 1 (four old tables + SoD at the 27 points) and 27 SoD forwards each at f = 3, 5 are among the 162 (6 × 27 counts the SoD).

@@ -1,0 +1,24 @@
+=== regrade.py run started 2026-10-25 09:43:34; spec reports_CN/plan_round7_CN.md v3.1 §2.2; B = 316.8921168493721
+C0 27 points x (five candidates + SoD) x f in (1, 3, 5): 486 evaluations; archive results/archive_regrade.jsonl: 0 resumed, 486 to evaluate; 4 workers
+C0 progress 25/486 (131 s); last m000 P4|d8|+|0.5 f=5 E[N] 335.5932738813749 18.4 s
+C0 progress 50/486 (251 s); last m005 P4|d6|+|0.5 f=5 E[N] 300.5650777669745 19.1 s
+C0 progress 75/486 (363 s); last m010 P4|d5|+|0.5 f=5 E[N] 283.0115024699961 18.9 s
+C0 progress 100/486 (479 s); last m020 P4|d2|+|0.5 f=5 E[N] 242.12169957405618 18.7 s
+C0 progress 125/486 (603 s); last T4 P4|d10|+|0.2 f=5 E[N] 270.5482434068165 19.0 s
+C0 progress 150/486 (704 s); last SoD P4|d8|+|0.2 f=5 E[N] 316.82062753547797 16.0 s
+C0 progress 175/486 (782 s); last m000 P4|d6|+|0.2 f=3 E[N] 315.19581156696285 11.4 s
+C0 progress 200/486 (846 s); last m005 P4|d4|+|0.2 f=3 E[N] 301.92020595709465 11.7 s
+C0 progress 225/486 (918 s); last m010 P4|d2|+|0.2 f=3 E[N] 278.1559973948516 10.4 s
+C0 progress 250/486 (981 s); last m020 P1|theta1|-|0.5 f=3 E[N] 259.6524502387933 9.7 s
+C0 progress 275/486 (1044 s); last T4 P1|theta1|-|0.2 f=3 E[N] 260.72219168826814 10.0 s
+C0 progress 300/486 (1108 s); last SoD P1|theta1|-|0.1 f=3 E[N] 316.8912227116179 8.8 s
+C0 progress 325/486 (1165 s); last m000 theta_0 f=1 E[N] 316.6035659260541 4.2 s
+C0 progress 350/486 (1190 s); last m000 P4|d8|+|0.5 f=1 E[N] 335.6734021674829 4.0 s
+C0 progress 375/486 (1216 s); last m005 P4|d7|+|0.5 f=1 E[N] 313.70589870678134 4.2 s
+C0 progress 400/486 (1242 s); last m010 P4|d5|+|0.5 f=1 E[N] 283.07138403473556 4.0 s
+C0 progress 425/486 (1265 s); last m020 P4|d3|+|0.5 f=1 E[N] 258.28943797909966 3.9 s
+C0 progress 450/486 (1289 s); last T4 P4|d1|+|0.5 f=1 E[N] 247.5228146119475 3.8 s
+C0 progress 475/486 (1310 s); last SoD P4|d9|+|0.2 f=1 E[N] 316.9589120237237 2.8 s
+C0 progress 486/486 (1318 s); last SoD P4|d10|+|0.5 f=1 E[N] 316.80166583627704 3.0 s
+C0 run wall 1317.5 s (486 new evaluations)
+=== regrade.py run done in 1317.6 s
