@@ -163,3 +163,15 @@ using the true error. Wording: 本场景、固定设计规则下的序贯仿真�
   simulations, post-hoc evaluation, joint estimates; worker wall time at one numba thread with 4 workers running) ≤ 60 s;
   (ii) Part B + Part C wall time as run ≤ 6 h. The as-run total includes the supplementary analysis; a primary-only estimate
   is reported next to it.
+
+## R — recorded after the run (no rule above was changed after Part B started)
+
+- DECISION R-1: Part B was committed in two commits: the pipeline, statistics and verdict code while the run was going
+  (88e223a, no results; a repository hook requires the working tree to be committed), then the run's outputs (3f32991).
+  Round 2b set the precedent. The probe smoke tests (seeds 93000000 + r / 94000000 + r, r = 10001..10004) were run before
+  the run; their outputs stay under `results/runs/` and are not committed.
+- DECISION R-2: under the supplementary rule 4 of the 600 joint estimations were "not converged". In replication 134
+  (sequential) and replications 98, 176 and 228 (control), both optimiser calls ended in ABNORMAL_TERMINATION_IN_LNSRCH
+  (result.success false) although their Newton decrements were 1e-7 to 1e-6. The frozen "optimiser reports success"
+  condition, kept in the supplementary rule, sends them to the fallback θ̂_final := θ̂_1. That is the rule as written;
+  nothing was re-run.
