@@ -1,0 +1,18 @@
+V0 A3 required checks: 1 False 2 True 3 True 4 True; supporting True
+V1 [P] binding: case 1; readings {'dD': '明确未达', 'b_seq': '支持达标', 'p_EN2': '支持达标'}; items ['第一段估计失败率 100.0% > 10%', '正确性检查未全部通过（A3_1）']; X = Delta D 0.0 CI [0.0, 0.0]; Y = median eps_1 0.7239883109682167; Z = Pr{E[N_2|T,theta_0] > B} 0.0
+V1 [S] not binding (supplementary rule): case 2; readings {'dD': '支持达标', 'b_seq': '支持达标', 'p_EN2': '支持达标'}; items []; X = Delta D 3.5711552503311736 CI [2.947907784176317, 4.169968209586018]; Y = median eps_1 0.3462007010676468; Z = Pr{E[N_2|T,theta_0] > B} 0.0
+V2 Part B wall 13618.5 s (1 run segment(s)); Part C 1.6 s; total 13620.1 s = 3.783 h; primary-only estimate (sum of primary work / 4 workers) 1.875 h
+V3 Q1 [P, scored] 错: median eps_1 0.7240 in [0.2, 0.4] -> no; q90 0.8648 <= 0.6 -> no; fraction > 0.5 0.9933 <= 0.15 -> no; stage-1 failure rate 1.0000 <= 0.02 -> no
+V3 Q1 [S, unscored reading 对]: median eps_1 0.3462 in [0.2, 0.4] -> yes; q90 0.4769 <= 0.6 -> yes; fraction > 0.5 0.0567 <= 0.15 -> yes; stage-1 failure rate 0.0000 <= 0.02 -> yes
+V3 Q2 [P, scored] 部分对: |-log det M_1 - log det J_1| 6.2533 <= 0.5 -> no; Hessian-FIM whitened 0.0068 <= 0.05 -> yes
+V3 Q2 [S, unscored reading 对]: |-log det M_1 - log det J_1| 0.2575 <= 0.5 -> yes; Hessian-FIM whitened 0.0047 <= 0.05 -> yes
+V3 Q3 [P, scored] 对: Pr{E[N_2|T,theta_0] > B} 0.0000 <= 0.10 -> yes; Pr{N_2 > B} 0.0000 <= 0.25 -> yes; b_seq 557.776 <= 2B 633.784 -> yes
+V3 Q3 [S, unscored reading 对]: Pr{E[N_2|T,theta_0] > B} 0.0000 <= 0.10 -> yes; Pr{N_2 > B} 0.0000 <= 0.25 -> yes; b_seq 581.243 <= 2B 633.784 -> yes
+V3 Q4 [P, scored] 错: Delta D 0.0 in [2.5, 4] -> no; CI lower 0.0 >= 1.5 -> no
+V3 Q4 [S, unscored reading 对]: Delta D 3.5711552503311736 in [2.5, 4] -> yes; CI lower 2.947907784176317 >= 1.5 -> yes
+V3 Q5 [P, scored] 错: seq |.| 15.225522309476958 <= 0.5 -> no; SoD+SoD |.| 12.491610934107456 <= 0.5 -> no
+V3 Q5 [S, unscored reading 对]: seq |.| 0.22240360414483007 <= 0.5 -> yes; SoD+SoD |.| 0.15681764558433997 <= 0.5 -> yes
+V3 Q6 [P, scored] 部分对: design failure rate 0.0000 <= 0.02 -> yes; estimation failure rates stage 1 1.0000, joint seq 1.0000, joint SoD 1.0000 all <= 0.02 -> no; max of 18 |bias|/RMSE 0.9785 <= 0.2 -> no
+V3 Q6 [S, unscored reading 对]: design failure rate 0.0000 <= 0.02 -> yes; estimation failure rates stage 1 0.0000, joint seq 0.0033, joint SoD 0.0100 all <= 0.02 -> yes; max of 18 |bias|/RMSE 0.0913 <= 0.2 -> yes
+V3 Q7 [P, scored] 部分对: max primary-analysis work per replication 104.2 s <= 60 s -> no; Part B + Part C wall 3.783 h <= 6 h -> yes
+V3 Q7 [S, unscored reading 部分对]: max primary-analysis work per replication 104.2 s <= 60 s -> no; Part B + Part C wall 3.783 h <= 6 h -> yes

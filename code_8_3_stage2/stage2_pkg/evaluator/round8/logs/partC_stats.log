@@ -1,0 +1,60 @@
+=== stats_r8.py started 2026-10-25 20:43:20; R = 300; b_1 316.8911511745014; B 316.8921168493721; A3 all required pass False
+
+######## analysis P (frozen acceptance rule, primary, binding) R = 300
+C4 [P] eps_1 median 0.7239883109682167 q90 0.8647672913635042 q99 0.9589348881500884 mean 0.7282769732117103; fraction > 0.5 0.9933333333333333; stage-1 fallback kinds {'theta_LS': 300}
+C4 [P] failure rates: design 0.0 (0), stage-1 estimation 1.0 (300), joint seq 1.0 (300), joint SoD+SoD 1.0 (300); shared designs 0; max boundary steps 0
+C3 [P] b_1 316.8911511745014; b_seq = b_1 + mean E[N_2|T,theta_0] = 557.7763295747069; 2 b_1 633.7823023490027; 2B 633.7842336987442
+C3 [P] Pr{E[N_2|T,theta_0] > B} (生成的表在条件期望上超预算的比例) 0.0; Pr{N_2 > B} (实际实验超预算的比例) 0.0; control Pr{N_2,SoD > B} 0.5866666666666667; Pr{N_1+N_2 > 2B} seq 0.0 control 0.5266666666666666
+C3 [P] N1 q00 309.000 q01 311.000 q05 313.000 q25 315.000 q50 317.000 q75 318.000 q90 320.000 q95 320.000 q99 322.000 q100 324.000 mean 316.837 sd 2.278
+C3 [P] N2_seq q00 215.000 q01 219.990 q05 225.950 q25 233.000 q50 240.000 q75 246.000 q90 251.100 q95 255.000 q99 260.010 q100 265.000 mean 239.830 sd 8.985
+C3 [P] N2_sod q00 311.000 q01 311.000 q05 313.000 q25 315.000 q50 317.000 q75 318.000 q90 320.000 q95 320.050 q99 321.000 q100 323.000 mean 316.837 sd 2.248
+C3 [P] total_seq q00 529.000 q01 536.990 q05 541.000 q25 550.000 q50 557.000 q75 563.000 q90 568.100 q95 572.000 q99 577.010 q100 578.000 mean 556.667 sd 9.181
+C3 [P] total_sod q00 624.000 q01 625.990 q05 628.950 q25 632.000 q50 634.000 q75 636.000 q90 637.100 q95 639.000 q99 641.010 q100 643.000 mean 633.673 sd 3.251
+C3 [P] EN2 q00 232.607 q01 233.426 q05 235.485 q25 238.441 q50 240.610 q75 243.221 q90 245.551 q95 246.453 q99 249.620 q100 251.450 mean 240.885 sd 3.486
+C3 [P] EN_hat q00 262.771 q01 262.780 q05 262.804 q25 262.843 q50 262.869 q75 262.894 q90 262.919 q95 262.933 q99 262.959 q100 262.995 mean 262.869 sd 0.039
+C3 [P] EN_hat_minus_EN2 q00 11.321 q01 13.260 q05 16.364 q25 19.643 q50 22.234 q75 24.428 q90 26.247 q95 27.376 q99 29.497 q100 30.260 mean 21.984 sd 3.492
+C1 [P] all R seq: D = -log det M 190.9478722209551; -log det C 194.84376354777882; log det M -190.9478722209551
+C1 [P] all R seq per parameter G0: bias +4.272e-06 rmse 7.723e-06 |b|/rmse 0.553 | Re1: bias -8.425e-06 rmse 2.375e-05 |b|/rmse 0.355 | Im1: bias -9.297e-05 rmse 9.502e-05 |b|/rmse 0.978 | Re2: bias -3.547e-06 rmse 2.033e-05 |b|/rmse 0.174 | Im2: bias -3.294e-05 rmse 3.794e-05 |b|/rmse 0.868 | Re3: bias -1.433e-05 rmse 4.414e-05 |b|/rmse 0.325 | Im3: bias -3.387e-05 rmse 5.246e-05 |b|/rmse 0.646 | Re4: bias +3.959e-05 rmse 5.655e-05 |b|/rmse 0.700 | Im4: bias -1.171e-05 rmse 4.576e-05 |b|/rmse 0.256
+C1 [P] all R sod: D = -log det M 190.9478722209551; -log det C 194.84376354777882; log det M -190.9478722209551
+C1 [P] all R sod per parameter G0: bias +4.272e-06 rmse 7.723e-06 |b|/rmse 0.553 | Re1: bias -8.425e-06 rmse 2.375e-05 |b|/rmse 0.355 | Im1: bias -9.297e-05 rmse 9.502e-05 |b|/rmse 0.978 | Re2: bias -3.547e-06 rmse 2.033e-05 |b|/rmse 0.174 | Im2: bias -3.294e-05 rmse 3.794e-05 |b|/rmse 0.868 | Re3: bias -1.433e-05 rmse 4.414e-05 |b|/rmse 0.325 | Im3: bias -3.387e-05 rmse 5.246e-05 |b|/rmse 0.646 | Re4: bias +3.959e-05 rmse 5.655e-05 |b|/rmse 0.700 | Im4: bias -1.171e-05 rmse 4.576e-05 |b|/rmse 0.256
+C1 [P] Delta D (all R) = D_seq - D_SoD+SoD = 0.0; Delta of -log det C 0.0
+C1 [P] stage 1: -log det M_1 190.9478722209551; per parameter |bias|/rmse max 0.978
+C1 [P] subset (both succeeded) n = 0; Delta D subset None
+C2 [P] log det J_1 197.2011585300231, J_seq 206.17339453043206, 2 J_1 203.43948315506256; 经验精度与信息参考的差异 seq 15.225522309476958 (signed -15.225522309476958), SoD+SoD 12.491610934107456 (signed -12.491610934107456), stage 1 6.253286309067988 (signed -6.253286309067988)
+C5 [P] Hessian-FIM (seq stage 2): whitened ||J^-1/2 Dbar J^-1/2||_2 0.006824537253126354; max |z| 2.721526387992068; flags |z| > 4: []
+C5 [P] Hessian-FIM (control stage 2 vs J_1, extra): whitened 0.006555194608247398; max |z| 2.6201193238597598; flags []
+C5 [P] paired d = N_2 - E[N_2|T,theta_0]: dbar -1.0551784002054732, s_d/sqrt(R) 0.4964662881808555, flag False; control (N_2,SoD - b_1): dbar -0.054484507834707374, se 0.12978829630612052, flag False
+C6 [P] paired bootstrap (2000, seed 20281028): Delta D [0.0, 0.0] (不可计算 0); b_seq [557.3777698894156, 558.1612109356936]; Pr{E[N_2|T,theta_0] > B} [0.0, 0.0]; Pr{N_2 > B} [0.0, 0.0]; subset Delta D [None, None] (不可计算 2000 of 2000)
+C7 [P] readings {'dD': '明确未达', 'b_seq': '支持达标', 'p_EN2': '支持达标'}; failure rates [0.0, 1.0, 1.0, 1.0]; max |bias|/RMSE 0.978; A3 ok False; case 1; items ['第一段估计失败率 100.0% > 10%', '正确性检查未全部通过（A3_1）']
+
+######## analysis S (supplementary rule (DECISION E-1), not binding) R = 300
+C4 [S] eps_1 median 0.3462007010676468 q90 0.47689972442337464 q99 0.5575345671624381 mean 0.3494829910199528; fraction > 0.5 0.056666666666666664; stage-1 fallback kinds {'': 300}
+C4 [S] failure rates: design 0.0 (0), stage-1 estimation 0.0 (0), joint seq 0.0033333333333333335 (1), joint SoD+SoD 0.01 (3); shared designs 0; max boundary steps 0
+C3 [S] b_1 316.8911511745014; b_seq = b_1 + mean E[N_2|T,theta_0] = 581.2432281100291; 2 b_1 633.7823023490027; 2B 633.7842336987442
+C3 [S] Pr{E[N_2|T,theta_0] > B} (生成的表在条件期望上超预算的比例) 0.0; Pr{N_2 > B} (实际实验超预算的比例) 0.0; control Pr{N_2,SoD > B} 0.5866666666666667; Pr{N_1+N_2 > 2B} seq 0.0 control 0.5266666666666666
+C3 [S] N1 q00 309.000 q01 311.000 q05 313.000 q25 315.000 q50 317.000 q75 318.000 q90 320.000 q95 320.000 q99 322.000 q100 324.000 mean 316.837 sd 2.278
+C3 [S] N2_seq q00 236.000 q01 238.990 q05 247.000 q25 257.000 q50 264.000 q75 271.000 q90 277.100 q95 283.000 q99 288.010 q100 295.000 mean 263.930 sd 10.691
+C3 [S] N2_sod q00 311.000 q01 311.000 q05 313.000 q25 315.000 q50 317.000 q75 318.000 q90 320.000 q95 320.050 q99 321.000 q100 323.000 mean 316.837 sd 2.248
+C3 [S] total_seq q00 550.000 q01 554.990 q05 563.950 q25 574.000 q50 581.000 q75 588.000 q90 594.000 q95 598.000 q99 604.010 q100 608.000 mean 580.767 sd 10.824
+C3 [S] total_sod q00 624.000 q01 625.990 q05 628.950 q25 632.000 q50 634.000 q75 636.000 q90 637.100 q95 639.000 q99 641.010 q100 643.000 mean 633.673 sd 3.251
+C3 [S] EN2 q00 251.796 q01 254.976 q05 256.744 q25 261.327 q50 263.979 q75 267.062 q90 270.561 q95 272.692 q99 275.987 q100 277.995 mean 264.352 sd 4.730
+C3 [S] EN_hat q00 262.704 q01 262.718 q05 262.751 q25 262.786 q50 262.811 q75 262.829 q90 262.850 q95 262.861 q99 262.880 q100 262.925 mean 262.808 sd 0.034
+C3 [S] EN_hat_minus_EN2 q00 -15.169 q01 -13.160 q05 -9.887 q25 -4.248 q50 -1.180 q75 1.482 q90 4.328 q95 6.085 q99 7.824 q100 11.060 mean -1.545 sd 4.736
+C1 [S] all R seq: D = -log det M 206.8538207598094; -log det C 206.8395238331789; log det M -206.8538207598094
+C1 [S] all R seq per parameter G0: bias +3.149e-08 rmse 3.448e-06 |b|/rmse 0.009 | Re1: bias +3.513e-07 rmse 1.016e-05 |b|/rmse 0.035 | Im1: bias +2.472e-07 rmse 9.287e-06 |b|/rmse 0.027 | Re2: bias -3.016e-07 rmse 9.896e-06 |b|/rmse 0.030 | Im2: bias -5.158e-07 rmse 9.786e-06 |b|/rmse 0.053 | Re3: bias +5.645e-07 rmse 2.200e-05 |b|/rmse 0.026 | Im3: bias -2.146e-06 rmse 2.350e-05 |b|/rmse 0.091 | Re4: bias +1.288e-06 rmse 2.141e-05 |b|/rmse 0.060 | Im4: bias +2.217e-06 rmse 2.428e-05 |b|/rmse 0.091
+C1 [S] all R sod: D = -log det M 203.28266550947822; -log det C 203.2666394959665; log det M -203.28266550947822
+C1 [S] all R sod per parameter G0: bias +2.159e-07 rmse 4.287e-06 |b|/rmse 0.050 | Re1: bias +1.808e-07 rmse 1.340e-05 |b|/rmse 0.013 | Im1: bias -6.822e-08 rmse 1.323e-05 |b|/rmse 0.005 | Re2: bias +8.248e-07 rmse 1.192e-05 |b|/rmse 0.069 | Im2: bias -6.823e-07 rmse 1.129e-05 |b|/rmse 0.060 | Re3: bias +1.172e-06 rmse 2.658e-05 |b|/rmse 0.044 | Im3: bias +1.151e-08 rmse 2.701e-05 |b|/rmse 0.000 | Re4: bias -7.852e-07 rmse 2.603e-05 |b|/rmse 0.030 | Im4: bias +8.962e-07 rmse 2.849e-05 |b|/rmse 0.031
+C1 [S] Delta D (all R) = D_seq - D_SoD+SoD = 3.5711552503311736; Delta of -log det C 3.5728843372124004
+C1 [S] stage 1: -log det M_1 196.9436727868372; per parameter |bias|/rmse max 0.082
+C1 [S] subset (both succeeded) n = 296; Delta D subset 3.489557232630915; D_seq 206.88990917896004, D_SoD 203.40035194632912
+C2 [S] log det J_1 197.2011585300231, J_seq 207.07622436395422, 2 J_1 203.43948315506256; 经验精度与信息参考的差异 seq 0.22240360414483007 (signed -0.22240360414483007), SoD+SoD 0.15681764558433997 (signed -0.15681764558433997), stage 1 0.2574857431858959 (signed -0.2574857431858959)
+C5 [S] Hessian-FIM (seq stage 2): whitened ||J^-1/2 Dbar J^-1/2||_2 0.004682966540575753; max |z| 1.9895264597318465; flags |z| > 4: []
+C5 [S] Hessian-FIM (control stage 2 vs J_1, extra): whitened 0.006555194608247398; max |z| 2.6201193238597598; flags []
+C5 [S] paired d = N_2 - E[N_2|T,theta_0]: dbar -0.4220769355277117, s_d/sqrt(R) 0.5469155547535969, flag False; control (N_2,SoD - b_1): dbar -0.054484507834707374, se 0.12978829630612052, flag False
+C6 [S] paired bootstrap (2000, seed 20281028): Delta D [2.947907784176317, 4.169968209586018] (不可计算 0); b_seq [580.7438465545023, 581.79161436888]; Pr{E[N_2|T,theta_0] > B} [0.0, 0.0]; Pr{N_2 > B} [0.0, 0.0]; subset Delta D [2.8957912328470976, 4.068538077691485] (不可计算 0 of 2000)
+C7 [S] readings {'dD': '支持达标', 'b_seq': '支持达标', 'p_EN2': '支持达标'}; failure rates [0.0, 0.0, 0.0033333333333333335, 0.01]; max |bias|/RMSE 0.091; A3 ok True; case 2; items []
+
+C0 control stage-2 records identical in both analyses by construction; designs shared P/S in 0 replications
+
+T timing per replication (worker wall, 1 numba thread, 4 workers): primary-analysis work median 89.7 s max 104.2 s; whole replication (both analyses) median 180.8 s max 204.7 s; sums 27004 s / 54436 s; Part C 1.6 s
+=== stats_r8.py done in 1.6 s

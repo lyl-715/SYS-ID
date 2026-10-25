@@ -1,0 +1,208 @@
+{
+ "case_P": 1,
+ "case_S": 2,
+ "predictions": {
+  "Q1": {
+   "score": "错",
+   "sub": [
+    [
+     "median eps_1 0.7240 in [0.2, 0.4]",
+     false
+    ],
+    [
+     "q90 0.8648 <= 0.6",
+     false
+    ],
+    [
+     "fraction > 0.5 0.9933 <= 0.15",
+     false
+    ],
+    [
+     "stage-1 failure rate 1.0000 <= 0.02",
+     false
+    ]
+   ],
+   "supplementary": [
+    [
+     "median eps_1 0.3462 in [0.2, 0.4]",
+     true
+    ],
+    [
+     "q90 0.4769 <= 0.6",
+     true
+    ],
+    [
+     "fraction > 0.5 0.0567 <= 0.15",
+     true
+    ],
+    [
+     "stage-1 failure rate 0.0000 <= 0.02",
+     true
+    ]
+   ],
+   "supplementary_reading": "对"
+  },
+  "Q2": {
+   "score": "部分对",
+   "sub": [
+    [
+     "|-log det M_1 - log det J_1| 6.2533 <= 0.5",
+     false
+    ],
+    [
+     "Hessian-FIM whitened 0.0068 <= 0.05",
+     true
+    ]
+   ],
+   "supplementary": [
+    [
+     "|-log det M_1 - log det J_1| 0.2575 <= 0.5",
+     true
+    ],
+    [
+     "Hessian-FIM whitened 0.0047 <= 0.05",
+     true
+    ]
+   ],
+   "supplementary_reading": "对"
+  },
+  "Q3": {
+   "score": "对",
+   "sub": [
+    [
+     "Pr{E[N_2|T,theta_0] > B} 0.0000 <= 0.10",
+     true
+    ],
+    [
+     "Pr{N_2 > B} 0.0000 <= 0.25",
+     true
+    ],
+    [
+     "b_seq 557.776 <= 2B 633.784",
+     true
+    ]
+   ],
+   "supplementary": [
+    [
+     "Pr{E[N_2|T,theta_0] > B} 0.0000 <= 0.10",
+     true
+    ],
+    [
+     "Pr{N_2 > B} 0.0000 <= 0.25",
+     true
+    ],
+    [
+     "b_seq 581.243 <= 2B 633.784",
+     true
+    ]
+   ],
+   "supplementary_reading": "对"
+  },
+  "Q4": {
+   "score": "错",
+   "sub": [
+    [
+     "Delta D 0.0 in [2.5, 4]",
+     false
+    ],
+    [
+     "CI lower 0.0 >= 1.5",
+     false
+    ]
+   ],
+   "supplementary": [
+    [
+     "Delta D 3.5711552503311736 in [2.5, 4]",
+     true
+    ],
+    [
+     "CI lower 2.947907784176317 >= 1.5",
+     true
+    ]
+   ],
+   "supplementary_reading": "对"
+  },
+  "Q5": {
+   "score": "错",
+   "sub": [
+    [
+     "seq |.| 15.225522309476958 <= 0.5",
+     false
+    ],
+    [
+     "SoD+SoD |.| 12.491610934107456 <= 0.5",
+     false
+    ]
+   ],
+   "supplementary": [
+    [
+     "seq |.| 0.22240360414483007 <= 0.5",
+     true
+    ],
+    [
+     "SoD+SoD |.| 0.15681764558433997 <= 0.5",
+     true
+    ]
+   ],
+   "supplementary_reading": "对"
+  },
+  "Q6": {
+   "score": "部分对",
+   "sub": [
+    [
+     "design failure rate 0.0000 <= 0.02",
+     true
+    ],
+    [
+     "estimation failure rates stage 1 1.0000, joint seq 1.0000, joint SoD 1.0000 all <= 0.02",
+     false
+    ],
+    [
+     "max of 18 |bias|/RMSE 0.9785 <= 0.2",
+     false
+    ]
+   ],
+   "supplementary": [
+    [
+     "design failure rate 0.0000 <= 0.02",
+     true
+    ],
+    [
+     "estimation failure rates stage 1 0.0000, joint seq 0.0033, joint SoD 0.0100 all <= 0.02",
+     true
+    ],
+    [
+     "max of 18 |bias|/RMSE 0.0913 <= 0.2",
+     true
+    ]
+   ],
+   "supplementary_reading": "对"
+  },
+  "Q7": {
+   "score": "部分对",
+   "sub": [
+    [
+     "max primary-analysis work per replication 104.2 s <= 60 s",
+     false
+    ],
+    [
+     "Part B + Part C wall 3.783 h <= 6 h",
+     true
+    ]
+   ],
+   "supplementary": [
+    [
+     "max primary-analysis work per replication 104.2 s <= 60 s",
+     false
+    ],
+    [
+     "Part B + Part C wall 3.783 h <= 6 h",
+     true
+    ]
+   ],
+   "supplementary_reading": "部分对"
+  }
+ },
+ "wall_s": 13620.07974372,
+ "wallB_s": 13618.5
+}
