@@ -15,7 +15,12 @@ lowest-Delta m_D points among all 80. A main point is 精度未定 if the budget
 min(|N_24 - B|, |N_48 - B|) <= 0.05 (0.05 is a decision threshold, not a certified error bound).
 Path regression: the m = 0 table and the SoD at theta_0 through this path against round 4 C2 (round4/results/c2.json).
 
-Usage (from this directory): python3 refine_check.py   -> logs/partB_refine.log, results/partB_refine.json
+Usage (from this directory): python3 refine_check.py [--outdir DIR] [--max-new N]   -> logs/partB_refine.log, results/partB_refine.json
+
+Round 7 Part 0 (no numerical change): every sigma/48 evaluation is appended (and fsync'ed) to the incremental checkpoint
+results/partB_refine.ckpt.jsonl as it completes (job index, job, record; not committed); a re-run resumes and evaluates only
+the missing jobs. --outdir redirects the checkpoint, partB_refine.json and the log to DIR (verification runs); --max-new N
+stops after N newly completed evaluations (an interruption, to exercise the resume).
 """
 import os
 for _v in ('OMP_NUM_THREADS', 'OPENBLAS_NUM_THREADS', 'MKL_NUM_THREADS'): os.environ.setdefault(_v, '1')
@@ -36,6 +41,7 @@ I24 = rb.INP[NAME]
 _z48, _dz48 = dr.make_grid(I24['xbar'], N48, 8*D, 'B')
 I48 = dict(z=_z48, dz=_dz48, G=len(_z48))
 VERDICT = '离散方案下'
+OUT = dict(ckpt=os.path.join(RES, 'partB_refine.ckpt.jsonl'), json=os.path.join(RES, 'partB_refine.json'))
 
 
 def eval_table48(tab, xth):
@@ -69,7 +75,7 @@ def _job(i):
     keep['assert_fail'] = int((~r['assert_ok']).sum()); keep['wall_s'] = time.perf_counter()-t0; keep['G'] = int(rec['G'])
     return i, keep
 
-def main(out):
+def main(out, max_new=None):
     global _T, _JOBS
     import multiprocessing as mp
     S_ = json.load(open(rm.SUMMARY)); sel = S_['selected']
@@ -92,10 +98,26 @@ def main(out):
     for pid, (r, roles) in uniq.items():
         _JOBS += [('SoD', None, r['theta']), ('table', sel, r['theta'])]
     _JOBS += [('SoD', None, list(rb.THETA0)), ('table', 'm000', list(rb.THETA0))] if sel != 'm000' else []
-    t0 = time.perf_counter()
-    with mp.get_context('fork').Pool(4, initializer=_init) as pool:
-        res = dict(pool.map(_job, range(len(_JOBS)), chunksize=1))
+    # per-evaluation incremental checkpoint (round 7 Part 0)
+    jkey = [json.dumps([k_, t_, [float(v) for v in th]]) for k_, t_, th in _JOBS]
+    res = {}
+    if os.path.exists(OUT['ckpt']):
+        for l in open(OUT['ckpt']):
+            c = json.loads(l); assert c['job'] == jkey[c['i']], "checkpoint does not belong to this job list"; res[c['i']] = c['rec']
+    todo = [i for i in range(len(_JOBS)) if i not in res]
+    out(f"B0-CKPT {OUT['ckpt']}: {len(res)} evaluations resumed, {len(todo)} to evaluate")
+    t0 = time.perf_counter(); n_new = 0
+    if todo:
+        with mp.get_context('fork').Pool(4, initializer=_init) as pool, open(OUT['ckpt'], 'a') as fc:
+            for i, keep in pool.imap_unordered(_job, todo, chunksize=1):
+                fc.write(json.dumps(dict(i=i, job=jkey[i], rec=keep), ensure_ascii=False)+'\n'); fc.flush(); os.fsync(fc.fileno())
+                res[i] = keep; n_new += 1
+                if max_new is not None and n_new >= max_new:
+                    pool.terminate(); break
     wall = time.perf_counter()-t0
+    if len(res) < len(_JOBS):
+        out(f"B0-CKPT stopped after {n_new} new evaluations ({len(res)}/{len(_JOBS)} in the checkpoint; --max-new {max_new}); re-run to resume")
+        return None
     out(f"B0 {len(_JOBS)} sigma/48 evaluations in {wall:.1f} s with 4 workers; max |sum m - 1| {max(v['mass_dev_max'] for v in res.values())!r}; "
         f"min m {min(v['min_m'] for v in res.values())!r}; assertion failures {sum(v['assert_fail'] for v in res.values())}")
     # path regression at theta_0 (m = 0 table and SoD vs round 4 C2)
@@ -136,11 +158,16 @@ def main(out):
     out(f"B3 main check points 精度未定: {main_und} ({len(main_und)} of {sum(d['main'] for d in rows)}); verdict item (b) "
         f"{'met' if not main_und else 'not met'} ({VERDICT})")
     json.dump(dict(selected=sel, selected_label=S_['selected_label'], rows=rows, regression=reg, main_undetermined=main_und, wall_s=wall,
-                   n_evals=len(_JOBS), G48=I48['G'], nested_even=even_ok, tie_dev=tie_dev), open(os.path.join(RES, 'partB_refine.json'), 'w'),
+                   n_evals=len(_JOBS), G48=I48['G'], nested_even=even_ok, tie_dev=tie_dev), open(OUT['json'], 'w'),
               indent=1, ensure_ascii=False)
 
 
 if __name__ == '__main__':
-    sys.stdout = dr.Tee(os.path.join(LOGS, 'partB_refine.log'))
+    import argparse
+    ap = argparse.ArgumentParser(); ap.add_argument('--outdir'); ap.add_argument('--max-new', type=int); A_ = ap.parse_args()
+    if A_.outdir:
+        os.makedirs(A_.outdir, exist_ok=True)
+        OUT.update(ckpt=os.path.join(A_.outdir, 'partB_refine.ckpt.jsonl'), json=os.path.join(A_.outdir, 'partB_refine.json'))
+    sys.stdout = dr.Tee(os.path.join(A_.outdir or LOGS, 'partB_refine.log'), 'a' if A_.outdir else 'w')
     print(f"=== refine_check.py started {time.strftime('%Y-%m-%d %H:%M:%S')}; spec reports_CN/plan_round6_CN.md v3.2 §2; B = {B!r}; tolerance {TOL}")
-    t0 = time.perf_counter(); main(print); print(f"=== refine_check.py done in {time.perf_counter()-t0:.1f} s")
+    t0 = time.perf_counter(); main(print, A_.max_new); print(f"=== refine_check.py done in {time.perf_counter()-t0:.1f} s")

@@ -13,7 +13,18 @@ rule, reward) does not see B; the dual value logged per lambda uses B_m (lambda 
 
 Usage (from this directory):
   python3 margin_design.py scan [--margin m005 ...]   # lambda scans; checkpoint after every DP run, a re-run resumes
-  python3 margin_design.py final                      # per-table report rows, forward-backward check, packed npz
+  python3 margin_design.py final                      # recompute the report rows from the COMMITTED npz tables only
+                                                      #   (forward-backward check, J via the round-4 path) and compare
+                                                      #   with the committed results/margin_final.json; writes
+                                                      #   results/margin_final_npz.json, logs/partA1_final_npz.log
+  python3 margin_design.py pack                       # the original round-6 packing step (reads the uncommitted
+                                                      #   results/tables/*.u16.npy memmaps of the scan; refuses to run when
+                                                      #   a packed npz already exists) -> logs/partA1_final.log
+
+Round 7 Part 0 (spec reports_CN/plan_round7_CN.md v3.1 §3 item 4; no numerical change): `final` reads only files that
+`git ls-files` lists and that are unmodified against HEAD (the three packed margin tables, round 4's packed U/W table, the
+scan records, margin_final.json, round 4's scan_U_W.json and final_checks.json); the round-6 run that produced
+margin_final.json is the `pack` stage (logs/partA1_final.log).
 """
 import os
 for _v in ('OMP_NUM_THREADS', 'OPENBLAS_NUM_THREADS', 'MKL_NUM_THREADS'): os.environ.setdefault(_v, '1')
@@ -73,9 +84,15 @@ def scan(margins, log_main):
     return out
 
 
-def final(log):
-    """per margin: final run of the scan, forward-backward consistency (round-4 B4 check), packed npz with round trip;
-    the m = 0 row from the round-4 records."""
+def pack(log):
+    """(round 6's original `final`) per margin: final run of the scan read from the UNCOMMITTED memmap of the scan
+    (results/tables/), forward-backward consistency (round-4 B4 check), packed npz with round trip; the m = 0 row from the
+    round-4 records. Refuses to run when a packed npz exists (it would overwrite a committed table)."""
+    for mt in MARGINS:
+        pk = os.path.join(RES, f'table_{tag_of(mt)}.npz')
+        if os.path.exists(pk):
+            raise SystemExit(f"pack: {os.path.relpath(pk, HERE)} exists (committed table); refusing to overwrite it. Use `final` to "
+                             "recompute from the committed npz.")
     td._warmup()
     des = td.Design('U', log); gam, gbar, g1 = des.gamma('W')
     rows = {}
@@ -128,18 +145,93 @@ def final(log):
     return rows
 
 
+# --- round 7 Part 0: recompute from the committed npz tables ---------------------------------------------------------
+TIMING_KEYS = ('check_s',)                       # wall-clock fields: not compared
+
+def committed(path):
+    """True iff `git ls-files` lists path and the working copy equals HEAD (no uncommitted change)."""
+    import subprocess
+    d, f = os.path.split(os.path.abspath(path))
+    t = subprocess.run(['git', 'ls-files', '--error-unmatch', f], cwd=d, capture_output=True).returncode == 0
+    u = subprocess.run(['git', 'diff', '--quiet', 'HEAD', '--', f], cwd=d, capture_output=True).returncode == 0
+    return t and u
+
+def final(log):
+    """recompute every row of results/margin_final.json from committed files only: the packed tables
+    (results/table_U_W_m*.npz, round4/results/table_U_W.npz), the scan records (lambda, run, scan fields) and round 4's
+    scan_U_W.json / final_checks.json for the m = 0 row's scan fields. Per table: the round-4 evaluation path
+    (evaluator_window.evaluate_table, as the scan's own run record) for E[N], S, F, log det, Delta m_D, mass, min m,
+    assertions; forward and backward (round-4 B4 check) for F_rel, N_rel. Each recomputed field is compared with the
+    committed margin_final.json (exact equality; wall-clock fields excluded). Nothing committed is overwritten."""
+    td._warmup()
+    des = td.Design('U', log); gam, gbar, g1 = des.gamma('W')
+    _, J_sod, _ = des.sod_reference(); ld_sod = float(np.linalg.slogdet(J_sod)[1])
+    ref = json.load(open(os.path.join(RES, 'margin_final.json')))
+    st4p, fc4p = os.path.join(R4, 'results', 'scan_U_W.json'), os.path.join(R4, 'results', 'final_checks.json')
+    srcs = {'m000': (os.path.join(R4, 'results', 'table_U_W.npz'), st4p)}
+    for mt in MARGINS: srcs[mt] = (os.path.join(RES, f'table_{tag_of(mt)}.npz'), paths(mt)[1])
+    for f_ in [os.path.join(RES, 'margin_final.json'), fc4p]+[x for v in srcs.values() for x in v]:
+        ok = committed(f_)
+        log(f"A1N-SRC {os.path.relpath(f_, HERE)} committed and unmodified: {ok}")
+        if not ok: raise SystemExit(f"final: {f_} is not a committed, unmodified file")
+    rows = {}; cmp = {}
+    for mt, (npz, jpath) in srcs.items():
+        st = json.load(open(jpath))
+        with np.load(npz) as f_:
+            codes, start, width, lam, run = f_['codes'], f_['start'], f_['width'], float(f_['lam']), int(f_['run'])
+        assert np.array_equal(start, des.a[1:]) and np.array_equal(width, des.w[1:]), mt
+        r = [x for x in st['runs'] if x['run'] == st['final_run']][0]
+        assert run == st['final_run'] and lam == r['lam'], (mt, run, lam)
+        tab = des.table(codes)
+        t0 = time.perf_counter()
+        rec, J, rr = ew.evaluate_table('U', tab)
+        fw = ew.forward(des.z, des.dz, s, des.xk, des.a, des.b, tab, gam=gam)
+        bw = ew.backward(des.z, des.dz, s, des.xk, des.a, des.b, tab, gam)
+        t_c = time.perf_counter()-t0
+        Ff = fw['Fgam']; Nf = fw['EN']-1.0
+        eF = abs(bw['Fc']-Ff)/abs(Ff); eN = abs(bw['Nq']-Nf)/abs(Nf)
+        m = 0.0 if mt == 'm000' else MARGINS[mt]; Bm = B if mt == 'm000' else B_m(m)
+        EN = float(rec['EN'])
+        d = dict(m=m, B_m=Bm, run=run, runs=len(st['runs']), lam=lam, lam_over_gbar=r['lam_over_gbar'], EN=EN, S=float(rec['S']),
+                 F=float(gam[1:]@rr['W'][1:]), logdet=float(rec['logdet']), dmD=float(rec['logdet'])-ld_sod, slack_Bm=Bm-EN, slack_B=B-EN,
+                 feasible_Bm=bool(EN <= Bm), utilisation_target_met=bool(Bm-EN <= 0.5), status=st['status'], notes=st.get('notes'),
+                 fb_pass=bool(eF <= 1e-10 and eN <= 1e-10), F_rel=eF, N_rel=eN, mass_dev_max=float(rec['mass_dev_max']),
+                 min_m=float(rec['min_m']), assert_fail=int((~rr['assert_ok']).sum()), mono_worst=st.get('mono_worst'),
+                 check_s=t_c, EN_forward_equal=bool(fw['EN'] == EN), EN_scan_equal=bool(EN == r['EN']), F_scan_equal=bool(gam[1:]@rr['W'][1:] == r['F']),
+                 logdet_scan_equal=bool(float(rec['logdet']) == r['logdet']))
+        if mt != 'm000':
+            d.update(EN_forward_same_as_scan=bool(fw['EN'] == r['EN']), scan_wall_s=st.get('wall_s'), lam_bracket=st.get('lam_bracket'),
+                     min_dual=st.get('min_dual'))
+        rows[mt] = d
+        c = {}
+        for k, v in ref[mt].items():
+            if k in TIMING_KEYS or k not in d: continue
+            c[k] = bool(v == d[k])
+        cmp[mt] = c
+        for k, v in d.items(): log(f"A1N {mt} {k} {v!r}")
+        log(f"A1N {mt} fields equal to the committed margin_final.json: {sum(c.values())}/{len(c)}; unequal {[k for k, v in c.items() if not v]}; "
+            f"not recomputed (packing / source labels): {[k for k in ref[mt] if k not in d]}")
+    ok = all(all(c.values()) for c in cmp.values())
+    log(f"A1N recomputation from the committed npz tables equals margin_final.json in every recomputed field (wall clock excluded): "
+        f"{'PASS' if ok else 'FAIL'}")
+    td._atomic_json(dict(rows=rows, compare=cmp, pass_=ok), os.path.join(RES, 'margin_final_npz.json'))
+    return ok
+
+
 if __name__ == '__main__':
     import numba
-    ap = argparse.ArgumentParser(); ap.add_argument('stage', choices=['scan', 'final']); ap.add_argument('--margin', action='append')
+    ap = argparse.ArgumentParser(); ap.add_argument('stage', choices=['scan', 'final', 'pack']); ap.add_argument('--margin', action='append')
     ap.add_argument('--threads', type=int, default=4)
     A_ = ap.parse_args()
     numba.set_num_threads(A_.threads)
-    sys.stdout = dr.Tee(os.path.join(LOGS, f'partA1_{A_.stage}.log'), 'a' if A_.stage == 'scan' else 'w')
+    sys.stdout = dr.Tee(os.path.join(LOGS, {'scan': 'partA1_scan.log', 'pack': 'partA1_final.log', 'final': 'partA1_final_npz.log'}[A_.stage]),
+                         'a' if A_.stage == 'scan' else 'w')
     import scipy
     print(f"=== margin_design.py {A_.stage} started {time.strftime('%Y-%m-%d %H:%M:%S')}; spec reports_CN/plan_round6_CN.md v3.2; python "
           f"{sys.version.split()[0]}, numpy {np.__version__}, scipy {scipy.__version__}, numba {numba.__version__} ({numba.get_num_threads()} threads); "
           f"B = {B!r}")
     t0 = time.perf_counter()
     if A_.stage == 'scan': scan(A_.margin or list(MARGINS), print)
-    else: final(print)
+    elif A_.stage == 'pack': pack(print)
+    else: ok = final(print)
     print(f"=== margin_design.py {A_.stage} done in {time.perf_counter()-t0:.1f} s")

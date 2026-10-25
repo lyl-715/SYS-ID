@@ -3,3 +3,4 @@ __pycache__/
 *.tmp
 results/tables/
 results/runs/
+*.ckpt.jsonl

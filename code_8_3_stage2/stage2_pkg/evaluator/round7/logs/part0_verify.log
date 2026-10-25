@@ -1,0 +1,27 @@
+=== part0_verify.py started 2026-10-25 09:25:09; spec reports_CN/plan_round7_CN.md v3.1 §3 item 4
+P0-RUN margin_design final (committed npz): python3 margin_design.py final (cwd round6) exit 0, 76.5 s
+P0-1 m000 recomputed fields equal to margin_final.json: 24/24; unequal []
+P0-1 m005 recomputed fields equal to margin_final.json: 28/28; unequal []
+P0-1 m010 recomputed fields equal to margin_final.json: 28/28; unequal []
+P0-1 m020 recomputed fields equal to margin_final.json: 28/28; unequal []
+P0-1 margin_design.py final reproduces margin_final.json from committed files only: PASS
+P0-RUN sweep interrupted after 20 points: python3 robustness_margin.py sweep --outdir /home/user/SYS-ID/code_8_3_stage2/stage2_pkg/evaluator/round7/results/runs/part0_verify/A --max-new 20 (cwd round6) exit 0, 91.5 s
+P0-2 after the interrupted run: 20 points in the checkpoint (>= 20 expected), archive not yet written: True
+P0-RUN sweep resumed: python3 robustness_margin.py sweep --outdir /home/user/SYS-ID/code_8_3_stage2/stage2_pkg/evaluator/round7/results/runs/part0_verify/A (cwd round6) exit 0, 292.8 s
+P0-2 log: A2-CKPT /home/user/SYS-ID/code_8_3_stage2/stage2_pkg/evaluator/round7/results/runs/part0_verify/A/partA_sweep.ckpt.jsonl: 0 points resumed, 81 to evaluate
+P0-2 log: A2-CKPT stopped after 20 new points (20/81 in the checkpoint; --max-new 20); re-run to resume
+P0-2 log: A2-CKPT /home/user/SYS-ID/code_8_3_stage2/stage2_pkg/evaluator/round7/results/runs/part0_verify/A/partA_sweep.ckpt.jsonl: 20 points resumed, 61 to evaluate
+P0-2 archive lines 405 (committed 405), same order; lines differing in any non-timing field: []
+P0-2 J_partA.npz: 405 arrays (committed 405), arrays not bitwise equal: []
+P0-2 partA_sweep.json equal apart from wall clock (n, n_ok, n_stop, regression block): True
+P0-2 checkpointed sweep (interrupted + resumed) reproduces the committed Part A archive: PASS
+P0-RUN refine_check interrupted after 5 evaluations: python3 refine_check.py --outdir /home/user/SYS-ID/code_8_3_stage2/stage2_pkg/evaluator/round7/results/runs/part0_verify/B --max-new 5 (cwd round6) exit 0, 12.5 s
+P0-RUN refine_check resumed: python3 refine_check.py --outdir /home/user/SYS-ID/code_8_3_stage2/stage2_pkg/evaluator/round7/results/runs/part0_verify/B (cwd round6) exit 0, 14.2 s
+P0-3 log: B0-CKPT /home/user/SYS-ID/code_8_3_stage2/stage2_pkg/evaluator/round7/results/runs/part0_verify/B/partB_refine.ckpt.jsonl: 0 evaluations resumed, 12 to evaluate
+P0-3 log: B0-CKPT stopped after 5 new evaluations (5/12 in the checkpoint; --max-new 5); re-run to resume
+P0-3 log: B0-CKPT /home/user/SYS-ID/code_8_3_stage2/stage2_pkg/evaluator/round7/results/runs/part0_verify/B/partB_refine.ckpt.jsonl: 5 evaluations resumed, 7 to evaluate
+P0-3 after the interrupted run: 5 evaluations in the checkpoint, partB_refine.json not yet written: True
+P0-3 rows 5 (committed 5); rows differing in any non-timing field: []; other fields equal: True
+P0-3 checkpointed refine_check (interrupted + resumed) reproduces the committed Part B record: PASS
+P0 wall clock of the verification runs: {'final': 76.53090784300002, 'sweep_part1': 91.51682238299998, 'sweep_part2': 292.823415654, 'refine_part1': 12.456712273999983, 'refine_part2': 14.229077228999927}; total 487.6 s
+P0 Part 0 verification (no numerical change): PASS

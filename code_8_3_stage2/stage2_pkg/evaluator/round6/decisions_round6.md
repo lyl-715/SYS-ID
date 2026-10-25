@@ -131,3 +131,17 @@ nothing here is a bound.
 - DECISION R-3: the report's §0 item 4 places Delta m_D^eq(theta_0) of the m = 0.20 table (7.806, equal-send baseline) next to
   the m = 0 table's nominal Delta m_D (7.830, whose SoD sends almost the same number) as a note on the dependence of the
   "nominal cost" on the Delta* baseline; it is not used to override the frozen §6 rule, and the verdict stands as case 1.
+
+## Correction (round 7 Part 0, spec `reports_CN/plan_round7_CN.md` v3.1 §3 item 4; no number changed)
+
+- DECISION R-3 is corrected. The nominal cost 2.12 nat = Delta m_D(0; theta_0) - Delta m_D(0.20; theta_0) = log det J_m=0(theta_0)
+  - log det J_m=0.20(theta_0) is the actual nominal information difference between the two tables: the common fixed-Delta* SoD
+  baseline cancels, so it does not depend on that baseline. The juxtaposition 7.806 vs 7.830 says only that each table's
+  advantage over its own equal-send SoD is similar at its own send level; it does not say that the margin costs 0.024 nat.
+  `report_round6_CN.md` §0 item 4 is rewritten accordingly (the old wording is quoted in its correction note).
+- Engineering fixes (same commit): `margin_design.py final` now recomputes every row of `results/margin_final.json` from the
+  committed npz tables only (git ls-files + unmodified against HEAD) and compares field by field; round 6's original
+  packing step, which read the uncommitted `results/tables/*.u16.npy` memmaps, is kept as `margin_design.py pack` and refuses
+  to overwrite a committed npz. `robustness_margin.py sweep` and `refine_check.py` write per-point (per-evaluation)
+  incremental checkpoints (`results/*.ckpt.jsonl`, not committed) and resume from them. Verified by
+  `round7/part0_verify.py` (interrupted and resumed runs reproduce the committed archives; `round7/logs/part0_verify.log`).

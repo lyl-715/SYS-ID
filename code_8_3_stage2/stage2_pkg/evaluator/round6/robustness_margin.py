@@ -13,7 +13,14 @@ m005, m010, m020 (results/table_U_W_m*.npz of margin_design.py). theta_0 is eval
   figs     fig_margin_EN_dmD.png (E[N] and Delta m_D vs eps, coloured by m), fig_margin_cost_slack.png (nominal gain and minimum
            slack vs m)
 
-Usage (from this directory): python3 robustness_margin.py sweep | summary | figs
+Usage (from this directory): python3 robustness_margin.py sweep [--outdir DIR] [--max-new N] | summary | figs
+
+Round 7 Part 0 (no numerical change): `sweep` writes a per-point incremental checkpoint, results/partA_sweep.ckpt.jsonl (one
+line per completed point: its five evaluation records with the 81 J elements as exact JSON floats, appended and fsync'ed as
+the point completes; not committed); a re-run resumes from it and evaluates only the missing points. The archive and
+J_partA.npz are assembled from the checkpoint in point order once all 81 points are done (same format and order as before).
+--outdir redirects every output of `sweep` (archive, J npz, checkpoint, partA_sweep.json, log) to DIR (verification runs);
+--max-new N stops after N newly completed points (an interruption, to exercise the resume).
 """
 import os
 for _v in ('OMP_NUM_THREADS', 'OPENBLAS_NUM_THREADS', 'MKL_NUM_THREADS'): os.environ.setdefault(_v, '1')
@@ -30,6 +37,13 @@ assert B == 316.8921168493721
 LOGS = os.path.join(HERE, 'logs'); RES = os.path.join(HERE, 'results')
 os.makedirs(LOGS, exist_ok=True); os.makedirs(RES, exist_ok=True)
 ARCHIVE = os.path.join(RES, 'archive_partA.jsonl'); JNPZ = os.path.join(RES, 'J_partA.npz'); SUMMARY = os.path.join(RES, 'partA_summary.json')
+OUT = dict(archive=ARCHIVE, jnpz=JNPZ, ckpt=os.path.join(RES, 'partA_sweep.ckpt.jsonl'), sweep=os.path.join(RES, 'partA_sweep.json'))
+
+def set_outdir(d):
+    """redirect the outputs of `sweep` to directory d (verification runs); inputs are unchanged."""
+    os.makedirs(d, exist_ok=True)
+    OUT.update(archive=os.path.join(d, 'archive_partA.jsonl'), jnpz=os.path.join(d, 'J_partA.npz'), ckpt=os.path.join(d, 'partA_sweep.ckpt.jsonl'),
+               sweep=os.path.join(d, 'partA_sweep.json'))
 VERDICT = '离散方案下'
 NAME = 'U'
 TABS = ('m000', 'm005', 'm010', 'm020')
@@ -70,17 +84,38 @@ def _points():
 def _task(k):
     return k, rb.evaluate_point(NAME, _points()[k], _T, TABS)
 
-def sweep(out, workers=4):
+def sweep(out, workers=4, max_new=None):
     global _T
     import multiprocessing as mp
     _T = load_tables()
     for t in TABS: out(f"A2-TABLE {t} {os.path.relpath(TABLE_NPZ[t], HERE)} run {_T[f'{NAME}/{t}'].run} lam {_T[f'{NAME}/{t}'].lam!r}")
     pts = _points(); assert len(pts) == 81
-    t0 = time.perf_counter()
-    with mp.get_context('fork').Pool(workers, initializer=_init) as pool:
-        res = pool.map(_task, range(len(pts)), chunksize=1)
+    # per-point incremental checkpoint (round 7 Part 0): one line per completed point, J as exact JSON floats
+    done = {}
+    if os.path.exists(OUT['ckpt']):
+        for l in open(OUT['ckpt']):
+            c = json.loads(l); done[c['k']] = c
+    todo = [k for k in range(len(pts)) if k not in done]
+    out(f"A2-CKPT {OUT['ckpt']}: {len(done)} points resumed, {len(todo)} to evaluate")
+    t0 = time.perf_counter(); n_new = 0
+    if todo:
+        with mp.get_context('fork').Pool(workers, initializer=_init) as pool, open(OUT['ckpt'], 'a') as fc:
+            for k, recs in pool.imap_unordered(_task, todo, chunksize=1):
+                c = dict(k=k, recs=[{**r, **({'J': r['J'].tolist()} if 'J' in r else {})} for r in recs])
+                fc.write(json.dumps(c, ensure_ascii=False)+'\n'); fc.flush(); os.fsync(fc.fileno())
+                done[k] = c; n_new += 1
+                if max_new is not None and n_new >= max_new:
+                    pool.terminate(); break
     wall = time.perf_counter()-t0
-    res.sort(key=lambda x: x[0])
+    if len(done) < len(pts):
+        out(f"A2-CKPT stopped after {n_new} new points ({len(done)}/{len(pts)} in the checkpoint; --max-new {max_new}); re-run to resume")
+        return None
+    res = []
+    for k in range(len(pts)):
+        recs = [dict(r) for r in done[k]['recs']]
+        for r in recs:
+            if 'J' in r: r['J'] = np.array(r['J'], dtype=float)
+        res.append((k, recs))
     lines = []; Js = {}
     for k, recs in res:
         sod = recs[0]; assert sod['table'] == 'SoD'
@@ -101,9 +136,9 @@ def sweep(out, workers=4):
     for r in lines:
         if r['status'] == 'ok' and r['table'] != 'SoD' and r['dmD'] is not None:
             r['dmD_nominal'] = nom[r['table']]['dmD']; r['retention'] = r['dmD']/r['dmD_nominal']
-    with open(ARCHIVE, 'w') as f:
+    with open(OUT['archive'], 'w') as f:
         for r in lines: f.write(json.dumps(r, ensure_ascii=False)+'\n')
-    np.savez(JNPZ, **Js)
+    np.savez(OUT['jnpz'], **Js)
     hdr = (f"{'table':5s} {'cls':6s} {'dir':20s} {'sg':2s} {'eps_t':>5s} {'eps_att':>12s} {'sel':>3s} {'E[N]':>10s} {'S':>10s} {'logdet':>11s} "
            f"{'dmD':>9s} {'keep':>7s} {'E[N]<=B':>8s} {'B-E[N]':>9s} {'bnd':>4s}")
     out(f"A2-TAB {hdr}")
@@ -123,7 +158,7 @@ def sweep(out, workers=4):
     out(f"A2-SUM table evaluations using a boundary lookup with mass: {sum(1 for r in ok if r['table'] != 'SoD' and r['boundary_steps'] > 0)}")
     reg = regression(out, lines, Js)
     json.dump(dict(wall_s=wall, workers=workers, n=len(lines), n_ok=len(ok), n_stop=len(lines)-len(ok), regression=reg),
-              open(os.path.join(RES, 'partA_sweep.json'), 'w'), indent=1)
+              open(OUT['sweep'], 'w'), indent=1)
     return lines
 
 def regression(out, lines, Js):
@@ -298,11 +333,13 @@ def figs(out):
 
 if __name__ == '__main__':
     ap = argparse.ArgumentParser(); ap.add_argument('stage', choices=['sweep', 'summary', 'figs']); ap.add_argument('--workers', type=int, default=4)
+    ap.add_argument('--outdir'); ap.add_argument('--max-new', type=int)
     A_ = ap.parse_args()
-    sys.stdout = dr.Tee(os.path.join(LOGS, f'partA_{A_.stage}.log'))
+    if A_.outdir: set_outdir(A_.outdir)
+    sys.stdout = dr.Tee(os.path.join(A_.outdir or LOGS, f'partA_{A_.stage}.log'), 'a' if A_.outdir else 'w')
     import numba, scipy
     print(f"=== robustness_margin.py {A_.stage} started {time.strftime('%Y-%m-%d %H:%M:%S')}; spec reports_CN/plan_round6_CN.md v3.2; python "
           f"{sys.version.split()[0]}, numpy {np.__version__}, scipy {scipy.__version__}, numba {numba.__version__}; B = {B!r}")
     t0 = time.perf_counter()
-    {'sweep': lambda: sweep(print, A_.workers), 'summary': lambda: summary(print), 'figs': lambda: figs(print)}[A_.stage]()
+    {'sweep': lambda: sweep(print, A_.workers, A_.max_new), 'summary': lambda: summary(print), 'figs': lambda: figs(print)}[A_.stage]()
     print(f"=== robustness_margin.py {A_.stage} done in {time.perf_counter()-t0:.1f} s")

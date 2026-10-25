@@ -1,0 +1,146 @@
+=== margin_design.py final started 2026-10-25 09:25:12; spec reports_CN/plan_round6_CN.md v3.2; python 3.13.17, numpy 2.5.3, scipy 1.18.1, numba 0.68.0 (4 threads); B = 316.8921168493721
+DESIGN U G = 35146, support window nodes 4224-4224, cache built in 13.7 s
+A1N-SRC results/margin_final.json committed and unmodified: True
+A1N-SRC ../round4/results/final_checks.json committed and unmodified: True
+A1N-SRC ../round4/results/table_U_W.npz committed and unmodified: True
+A1N-SRC ../round4/results/scan_U_W.json committed and unmodified: True
+A1N-SRC results/table_U_W_m005.npz committed and unmodified: True
+A1N-SRC results/scan_U_W_m005.json committed and unmodified: True
+A1N-SRC results/table_U_W_m010.npz committed and unmodified: True
+A1N-SRC results/scan_U_W_m010.json committed and unmodified: True
+A1N-SRC results/table_U_W_m020.npz committed and unmodified: True
+A1N-SRC results/scan_U_W_m020.json committed and unmodified: True
+A1N m000 m 0.0
+A1N m000 B_m 316.8921168493721
+A1N m000 run 5
+A1N m000 runs 11
+A1N m000 lam 0.07339683452541984
+A1N m000 lam_over_gbar 3.4000000000000004
+A1N m000 EN 316.6035659260541
+A1N m000 S 1037.2604257322414
+A1N m000 F 22.832342701943073
+A1N m000 logdet 205.03141309913676
+A1N m000 dmD 7.830436416895992
+A1N m000 slack_Bm 0.2885509233179846
+A1N m000 slack_B 0.2885509233179846
+A1N m000 feasible_Bm True
+A1N m000 utilisation_target_met True
+A1N m000 status 'done'
+A1N m000 notes []
+A1N m000 fb_pass True
+A1N m000 F_rel 9.336003033534072e-16
+A1N m000 N_rel 2.521542688265347e-15
+A1N m000 mass_dev_max 5.182521078950231e-13
+A1N m000 min_m 0.0
+A1N m000 assert_fail 0
+A1N m000 mono_worst 0.0
+A1N m000 check_s 11.921802856
+A1N m000 EN_forward_equal True
+A1N m000 EN_scan_equal True
+A1N m000 F_scan_equal True
+A1N m000 logdet_scan_equal True
+A1N m000 fields equal to the committed margin_final.json: 24/24; unequal []; not recomputed (packing / source labels): ['packed', 'source']
+A1N m005 m 0.05
+A1N m005 B_m 301.04751100690345
+A1N m005 run 11
+A1N m005 runs 11
+A1N m005 lam 0.07656746984039661
+A1N m005 lam_over_gbar 3.5468750000000004
+A1N m005 EN 300.9096381748455
+A1N m005 S 986.8609850000391
+A1N m005 F 21.656086809706643
+A1N m005 logdet 204.5853104571662
+A1N m005 dmD 7.384333774925437
+A1N m005 slack_Bm 0.1378728320579512
+A1N m005 slack_B 15.98247867452659
+A1N m005 feasible_Bm True
+A1N m005 utilisation_target_met True
+A1N m005 status 'done'
+A1N m005 notes []
+A1N m005 fb_pass True
+A1N m005 F_rel 3.281030141796542e-16
+A1N m005 N_rel 1.137210912061492e-15
+A1N m005 mass_dev_max 5.140332604014475e-13
+A1N m005 min_m 0.0
+A1N m005 assert_fail 0
+A1N m005 mono_worst 0.0
+A1N m005 check_s 12.465741751999985
+A1N m005 EN_forward_equal True
+A1N m005 EN_scan_equal True
+A1N m005 F_scan_equal True
+A1N m005 logdet_scan_equal True
+A1N m005 EN_forward_same_as_scan True
+A1N m005 scan_wall_s 201.38472015399998
+A1N m005 lam_bracket [0.07656746984039661, 0.07650000951454605]
+A1N m005 min_dual 21.69651705144615
+A1N m005 fields equal to the committed margin_final.json: 28/28; unequal []; not recomputed (packing / source labels): ['packed', 'packed_bytes', 'packed_roundtrip_equal']
+A1N m010 m 0.1
+A1N m010 B_m 285.20290516443487
+A1N m010 run 11
+A1N m010 runs 11
+A1N m010 lam 0.08021032743632739
+A1N m010 lam_over_gbar 3.715625000000001
+A1N m010 EN 285.03784430818547
+A1N m010 S 933.6565788034153
+A1N m010 F 20.412562440779176
+A1N m010 logdet 204.08783852103005
+A1N m010 dmD 6.886861838789287
+A1N m010 slack_Bm 0.16506085624939715
+A1N m010 slack_B 31.854272541186617
+A1N m010 feasible_Bm True
+A1N m010 utilisation_target_met True
+A1N m010 status 'done'
+A1N m010 notes []
+A1N m010 fb_pass True
+A1N m010 F_rel 1.7404545309329077e-16
+A1N m010 N_rel 4.0025243114528094e-16
+A1N m010 mass_dev_max 5.064837438339964e-13
+A1N m010 min_m 0.0
+A1N m010 assert_fail 0
+A1N m010 mono_worst 0.0
+A1N m010 check_s 12.120228774999987
+A1N m010 EN_forward_equal True
+A1N m010 EN_scan_equal True
+A1N m010 F_scan_equal True
+A1N m010 logdet_scan_equal True
+A1N m010 EN_forward_same_as_scan True
+A1N m010 scan_wall_s 199.71077178500002
+A1N m010 lam_bracket [0.08021032743632739, 0.08014286711047681]
+A1N m010 min_dual 20.455673673209386
+A1N m010 fields equal to the committed margin_final.json: 28/28; unequal []; not recomputed (packing / source labels): ['packed', 'packed_bytes', 'packed_roundtrip_equal']
+A1N m020 m 0.2
+A1N m020 B_m 253.51369347949768
+A1N m020 run 8
+A1N m020 runs 10
+A1N m020 lam 0.08938493175200488
+A1N m020 lam_over_gbar 4.140625000000002
+A1N m020 EN 253.47685274907272
+A1N m020 S 819.6136035777506
+A1N m020 F 17.744052436065708
+A1N m020 logdet 202.91159336220306
+A1N m020 dmD 5.7106166799623
+A1N m020 slack_Bm 0.036840730424955836
+A1N m020 slack_B 63.41526410029937
+A1N m020 feasible_Bm True
+A1N m020 utilisation_target_met True
+A1N m020 status 'done'
+A1N m020 notes []
+A1N m020 fb_pass True
+A1N m020 F_rel 1.001099859122211e-15
+A1N m020 N_rel 2.926860174088645e-15
+A1N m020 mass_dev_max 4.89164264649844e-13
+A1N m020 min_m 0.0
+A1N m020 assert_fail 0
+A1N m020 mono_worst 0.0
+A1N m020 check_s 12.573831966000057
+A1N m020 EN_forward_equal True
+A1N m020 EN_scan_equal True
+A1N m020 F_scan_equal True
+A1N m020 logdet_scan_equal True
+A1N m020 EN_forward_same_as_scan True
+A1N m020 scan_wall_s 181.68709554399993
+A1N m020 lam_bracket [0.08938493175200488, 0.08930060634469167]
+A1N m020 min_dual 17.77721911006807
+A1N m020 fields equal to the committed margin_final.json: 28/28; unequal []; not recomputed (packing / source labels): ['packed', 'packed_bytes', 'packed_roundtrip_equal']
+A1N recomputation from the committed npz tables equals margin_final.json in every recomputed field (wall clock excluded): PASS
+=== margin_design.py final done in 72.4 s

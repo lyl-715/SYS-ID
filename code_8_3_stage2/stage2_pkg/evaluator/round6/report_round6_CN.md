@@ -30,7 +30,8 @@ date: "2026-10-24"
    - 同一点匹配前后比较，增益由 $\Delta m_D=5.711$ 升到 $\Delta m_D^{\rm eq}=7.806$ nat。
    - 20 个 P4 点上 $\Delta m_D-\Delta m_D^{\rm eq}$ 的中位数为 $-2.039$ nat（`logs/partC_equal_send.log:579–580`）。
    - 补充读法"比较优势明显缩小"的条件（中位数 $>2$）不成立。
-4. **读法上的一处依赖（建模选择）。** §6 第 1 条的"名义代价"以固定 $\Delta^*$ 的 SoD 为基准。这个基准下，少发 63 次本身就计为代价。按等发送数基准，$m=0.20$ 表在名义点的 $\Delta m_D^{\rm eq}$（7.806）与 $m=0$ 表的名义增益（7.830，其 SoD 发送数与表几乎相同）只差 0.024 nat。两个数来自不同的比较基准，这里只作并列，不改变按冻结规则得到的判定。
+4. **名义代价的含义（第 7 轮 Part 0 更正）。** §6 第 1 条的名义代价 2.12 nat 是两张表名义信息的实际差：$\Delta m_D(0;\theta_0)-\Delta m_D(m^\star;\theta_0)=\log\det J_{m=0}(\theta_0)-\log\det J_{m=0.20}(\theta_0)$，两项共同的固定 $\Delta^*$ SoD 基准相消。$m=0.20$ 表在名义点的 $\Delta m_D^{\rm eq}$（7.806，对照是发送数与它匹配的 SoD）与 $m=0$ 表的名义增益（7.830，对照是固定 $\Delta^*$ 的 SoD，其发送数与该表几乎相同），只说明各自发送水平下相对各自对照的优势相近；它不表示余量只花 0.024 nat。两个数来自不同的对照，这里只作并列，不改变按冻结规则得到的判定。
+   - 更正记录：原句写"名义代价以固定 $\Delta^*$ 的 SoD 为基准……少发 63 次本身就计为代价"和"只差 0.024 nat"，前者把 2.12 说成依赖基准，后者可被读作余量的代价。第 7 轮 Part 0 按 `reports_CN/plan_round7_CN.md` v3.1 §3 第 4 项改正，数值不变；见 `decisions_round6.md` 末尾。
 
 # 1. 四项检查（方案 §4）
 
@@ -226,11 +227,12 @@ date: "2026-10-24"
 
 ```
 python3 margin_design.py scan        # 三档 λ 扫描（检查点，可续跑）-> results/scan_U_W_m*.json, logs/scan_U_W_m*.log
-python3 margin_design.py final       # 报告行、前向–后向检查、打包 -> results/table_U_W_m*.npz, results/margin_final.json
-python3 robustness_margin.py sweep   # 405 次评价 + 回归 -> results/archive_partA.jsonl, results/J_partA.npz
+python3 margin_design.py pack        # 第 6 轮原 final：读未提交的扫描 memmap，打包 -> results/table_U_W_m*.npz, results/margin_final.json（已有 npz 时拒绝运行）
+python3 margin_design.py final       # 第 7 轮 Part 0：只从已提交的 npz 复算报告行并与 margin_final.json 逐项比较 -> results/margin_final_npz.json
+python3 robustness_margin.py sweep   # 405 次评价 + 回归（逐点增量 checkpoint，可续跑）-> results/archive_partA.jsonl, results/J_partA.npz
 python3 robustness_margin.py summary # A3–A5 -> results/partA_summary.json
 python3 robustness_margin.py figs    # fig_margin_EN_dmD.png, fig_margin_cost_slack.png
-python3 refine_check.py              # Part B -> results/partB_refine.json
+python3 refine_check.py              # Part B（逐次增量 checkpoint，可续跑）-> results/partB_refine.json
 python3 equal_send.py run            # Part C（逐次写存档，可续跑）-> results/archive_partC.jsonl, results/partC_equal_send.json
 python3 equal_send.py figs           # fig_equal_send.png
 python3 verdict_round6.py            # §6 判定与 M1–M7 -> logs/verdict.log
