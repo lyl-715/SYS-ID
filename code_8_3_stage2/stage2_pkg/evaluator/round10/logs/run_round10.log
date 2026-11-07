@@ -1,4 +1,4 @@
-ROUND 10 run 2026-11-07 11:29:19; python 3.13.18, numpy 2.5.3, scipy 1.18.1
+ROUND 10 run 2026-11-07 11:31:13; python 3.13.18, numpy 2.5.3, scipy 1.18.1
 numba 0.68.0; frozen modules: /home/user/SYS-ID/code_8_3_stage2/stage2_pkg/evaluator/round4/evaluator_window.py, /home/user/SYS-ID/code_8_3_stage2/stage2_pkg/evaluator/round4/part_c.py, /home/user/SYS-ID/code_8_3_stage2/stage2_pkg/evaluator/round7/evaluator_refine.py
 INPUT B_nom = 316.8921168493721   [round4/results/mc.json["U/SoD"]["EN_eval"]]
 INPUT I_SoD = 197.20097668224076   [round4/results/mc.json["U/SoD"]["logdet_eval"]]
@@ -13,16 +13,16 @@ INPUT M_T4 = 581   [round7/results/partD_match.json["nominal"]["T4"]["M"]]
 SCENARIO K = 5000, p = 9, sigma = Delta*/20 = 0.00011923472413178926, Delta* = 0.002384694482635785; Hk from round4 evaluator_window.design_grid('U'); t_k = k dt, dt = 0.001 s
 REPRO U/SoD EN (= B_nom): recomputed 316.8921168493721 archived 316.8921168493721 rel err 0.000e+00 -> PASS
 REPRO U/SoD logdet: recomputed 197.20097668224076 archived 197.20097668224076 rel err 0.000e+00 -> PASS
-REPRO U/SoD J vs round4/results/J_U_SoD.npy: max rel 0.000e+00; path accepted operator (evaluator_fast.evaluate_fast); 2.0 s
+REPRO U/SoD J vs round4/results/J_U_SoD.npy: max rel 0.000e+00; path accepted operator (evaluator_fast.evaluate_fast); 2.1 s
 REPRO U/W EN: recomputed 316.6035659260541 archived 316.6035659260541 rel err 0.000e+00 -> PASS
 REPRO U/W logdet: recomputed 205.03141309913676 archived 205.03141309913676 rel err 0.000e+00 -> PASS
-REPRO U/W per-step transmission probability fw['Q'][1:]: 1 + sum = 316.6035659260533 vs fw['EN'] 316.6035659260541 (rel 2.5e-15); Q[0] = 1.0; min 0.01429126150330688 max 0.1184206055591239; 4.9 s
+REPRO U/W per-step transmission probability fw['Q'][1:]: 1 + sum = 316.6035659260533 vs fw['EN'] 316.6035659260541 (rel 2.5e-15); Q[0] = 1.0; min 0.01429126150330688 max 0.1184206055591239; 4.7 s
 REPRO T4 EN (= B_T4): recomputed 262.7986258567231 archived 262.7986258567231 rel err 0.000e+00 -> PASS
 REPRO T4 logdet: recomputed 203.29000089955792 archived 203.29000089955792 rel err 0.000e+00 -> PASS
-REPRO T4 path general window path (R = 88 sigma); 2.2 s
+REPRO T4 path general window path (R = 88 sigma); 2.1 s
 REPRO SoD@T4 EN (M = 581, sigma/120): recomputed 262.69687929169646 archived 262.69687929169646 rel err 0.000e+00 -> PASS
 REPRO SoD@T4 logdet (Q): recomputed 195.4410611333331 archived 195.4410611333331 rel err 0.000e+00 -> PASS
-REPRO SoD@T4 route general, f = 5; E[N] 262.69687929169646 <= B_T4 262.7986258567231: True; 9.0 s
+REPRO SoD@T4 route general, f = 5; E[N] 262.69687929169646 <= B_T4 262.7986258567231: True; 9.2 s
 FULL-DATA log det(sigma^-2 sum_k h_k h_k^T) = 219.00850592919505 (not archived; computed here, reference of check 2)
 REPRO all archived inputs reproduced within 1e-9 -> proceed
 CHECK 2 f(q = 1): c_max 219.00850592919502, c_one 219.00850592919502; full-data 219.00850592919505; diffs -2.84e-14, -2.84e-14 (|.| <= 1e-09) -> PASS
@@ -115,6 +115,11 @@ PROFILE qhat_sum = 315.8921168493721
 PROFILE qtable_sum = 315.6035659260533
 PROFILE q_uniform = 0.06319106158219086
 PROFILE gamma_sod_source = 'round4/results/J_U_SoD.npy (sigma^-2 h_k^T J_SoD^-1 h_k, k = 2..K)'
+PROFILE seg_mean_qhat = [0.07816729311388354, 0.05842495380374176, 0.04272696179631431, 0.05840851064181161, 0.07824248959025834]
+PROFILE seg_mean_qtable = [0.07488601503871943, 0.05557787292219152, 0.05283298740151446, 0.058699620323221256, 0.07368315911137267]
+PROFILE seg_spearman = [0.5647740733137203, -0.08085587685587688, 0.04375002775002775, 0.18752021552021553, 0.6719726859966381]
+PROFILE frac_qhat_above_qtable = 0.5719143828765754
+PROFILE frac_ratio_outside_half_double = 0.04740948189637927
 DERIVED delta_I_UB = 11.87122486254637
 DERIVED delta_I_table = 7.830436416895992
 DERIVED gain_fraction_table_over_UB = 0.6596148676789843
@@ -148,5 +153,5 @@ TABLE 2  checks
   5_lemmaA             PASS
   6_gap                PASS
   kkt_crosscheck       PASS
-ALL CHECKS PASS; wall 69.8 s
+ALL CHECKS PASS; wall 72.7 s
 WROTE results/round10.json, results/q_opt_B316.npy, results/q_opt_B263.npy, results/q_table_nominal.npy, results/fig_send_profile.png

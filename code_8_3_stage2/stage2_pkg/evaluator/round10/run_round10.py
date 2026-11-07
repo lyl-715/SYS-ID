@@ -264,6 +264,12 @@ def main():
                 qtable_min=float(q_table.min()), qtable_max=float(q_table.max()), qtable_cv=float(q_table.std()/q_table.mean()),
                 qhat_sum=float(qh.sum()), qtable_sum=float(q_table.sum()), q_uniform=float((A['B_nom']-1)/(K-1)),
                 gamma_sod_source='round4/results/J_U_SoD.npy (sigma^-2 h_k^T J_SoD^-1 h_k, k = 2..K)')
+    seg = np.minimum((tk[1:]//1.0).astype(int), 4)                  # 1-s segments [0,1), ..., [4,5] by t_k
+    prof['seg_mean_qhat'] = [float(qh[seg == j].mean()) for j in range(5)]
+    prof['seg_mean_qtable'] = [float(q_table[seg == j].mean()) for j in range(5)]
+    prof['seg_spearman'] = [float(spearmanr(qh[seg == j], q_table[seg == j]).statistic) for j in range(5)]
+    prof['frac_qhat_above_qtable'] = float(np.mean(qh > q_table))
+    prof['frac_ratio_outside_half_double'] = float(np.mean((q_table > 2*qh) | (q_table < 0.5*qh)))
     res['profile'] = prof
     for k, v in prof.items(): out(f"PROFILE {k} = {v!r}")
     res['derived'] = dict(delta_I_UB=U316-A['I_SoD'], delta_I_table=A['I_W']-A['I_SoD'], gain_fraction_table_over_UB=(A['I_W']-A['I_SoD'])/(U316-A['I_SoD']),
