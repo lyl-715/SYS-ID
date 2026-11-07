@@ -5,7 +5,8 @@ date: "2026-11-07"
 
 **任务。** 第 11b 轮补充 prompt（对话中给出，未单独入库）。分支 `round11-edge-actions`，自 `395a11a` 继续：
 - 预测 `round11/addendum/predictions_round11b.md`：`4c67843`，在任何计算之前提交，计分规则与两条"运行前发现的问题"一并写定；
-- 代码、检查 1 与输入：`aa60e5d`；扫描与后处理结果：`bf2c628`；本报告在其后提交。
+- 代码、检查 1 与输入：`aa60e5d`；扫描与后处理结果：`bf2c628`；首版报告：`fd8e961`；
+- 追加（T′ 的 Monte Carlo、形状统计、命题 5 改用 B + 0.25，第 12 节）：其后的提交。
 
 round4–round10 与 round11 的 `dp11.py`、`eval11.py`（以及 round11 其他文件）只读；新代码全部在 `round11/addendum/`。每次运行后 `git status` 对这些目录为空 [L 17, 28, 48, 95, 142]。
 
@@ -15,16 +16,16 @@ round4–round10 与 round11 的 `dp11.py`、`eval11.py`（以及 round11 其他
 - **实际运行的类是 S ∪ S′**（逐节点并集，884 个动作），不是字面的 S′。原因见第 2 节和 DECISION 11b-2：字面 S′ 不包含 S。这一改动由用户在预测提交之后、运行之前选定。
 
 **来源。** 路径相对 `code_8_3_stage2/stage2_pkg/evaluator/round11/addendum/`。
-- `[L n]`：`logs/run_round11b.log` 第 n 行。后处理跑了两次（DECISION 11b-10），本报告引用第二次，即第 99–139 行。
+- `[L n]`：`logs/run_round11b.log` 第 n 行。后处理跑了两次（DECISION 11b-10），本报告引用第二次，即第 99–139 行。追加阶段 mc 也跑了两次（DECISION 11b-14），引用第二次，即第 164–188 行。
 - `[J a.b]`：`results/round11b.json` 的字段 `a.b`。
 - 逐 λ 记录：`results/scan_union.json`、`results/archive_union.jsonl`。
-- 代码：`sprime.py`（动作块、通用 DP 核、可续跑扫描）、`run_round11b.py`（驱动，阶段 inputs、regress、scan、post）。
+- 代码：`sprime.py`（动作块、通用 DP 核、可续跑扫描）、`mc11b.py`（并集动作集的 Monte Carlo）、`run_round11b.py`（驱动，阶段 inputs、regress、scan、post、mc）。
 
 ## 1. 一句话结论
 
-在 S ∪ S′ 类（包含第 11 轮的 S 与字面 S′）上，名义预算下认证上界 UB_SoD = **207.7097**，所以 **T₁ 距该类最优不超过 0.354 nat（D-efficiency ≥ 96.1 %）**；按 B′ = B + 0.1 口径为 0.356 nat（≥ 96.1 %）。
+在 S ∪ S′ 类（包含第 11 轮的 S 与字面 S′）上，名义预算下认证上界 UB_SoD = **207.7097**，所以 **T₁ 距该类最优不超过 0.3545 nat（D-efficiency ≥ 96.13 %）**；按命题 5 最终陈述采用的预算 B + 0.25 为 0.3594 nat（≥ 96.08 %，第 12.3 节）。
 
-同一扫描给出的原始表 **T′ 的 I = 207.6467，比 T₁ 高 0.291 nat**，σ/120 下 E[N] = 316.633 ≤ B；它距上界不超过 **0.063 nat（D-efficiency ≥ 99.3 %）**，作为新的最优表报告。
+同一扫描给出的原始表 **T′ 的 I = 207.6467，比 T₁ 高 0.291 nat**，σ/120 下 E[N] = 316.633 ≤ B；它距上界不超过 **0.0631 nat（D-efficiency ≥ 99.30 %）**（B + 0.25 下 0.0680 nat，≥ 99.24 %），作为新的最优表报告。T′ 的 Monte Carlo 在 σ/120 口径下通过（|z| ≤ 0.65，第 12.1 节）。
 
 来源：[L 111–112, 118]；[J ub.UB, ub.gap, ub.deff_lower, ub.UB_Bprime, Tprime.\*]。
 
@@ -106,7 +107,7 @@ UB(B′) = I(T₁) − p + min_λ [ γ₁ + V_λ + λ(B − 1) + 0.1 λ ]
 
 因此 B′ = B + 0.1 **不能**覆盖所有 σ/120 E[N] ≤ B 的边类表；要覆盖到目前见过的表，需要 δ ≥ 0.211，例如 δ = 0.25（gap(T₁) 0.359，D-efficiency ≥ 96.09 %）。
 
-命题 5 本身按"σ/24 E[N] ≤ B′"表述，不受影响；受影响的只是"它覆盖哪些 σ/120 可行的表"这一解释。用哪个 δ 留给你决定。下面命题 5 的数值推论按 prompt 用 B′，同时给出 δ = 0.25。
+命题 5 本身按"σ/24 E[N] ≤ B′"表述，不受影响；受影响的只是"它覆盖哪些 σ/120 可行的表"这一解释。首版报告之后你决定：命题 5 的最终陈述用 **B + 0.25**（DECISION 11b-6），数值推论据此重述（第 9 节、第 12.3 节）。
 
 ## 5. C：扫描的原始表 T′
 
@@ -153,9 +154,9 @@ T′ 是扫描返回的表：σ/24 可行者中 F 最大的一张，即 run 10�
 
 第 4 条：argmin 落在 run 10，比最后一步早两步。runs 9–12 的 D(λ) 彼此相差不超过 5.8e-5 nat，即对偶在这一段几乎是平的。
 
-## 8. 检查 1–6
+## 8. 检查 1–7
 
-全部通过 [L 127–133；J checks, all_checks_pass]。
+全部通过 [L 127–133, 184；J checks, all_checks_pass]。检查 7 是追加的 Monte Carlo（第 12.1 节）。
 
 | # | 检查 | 结果 | 来源 |
 |---|---|---|---|
@@ -165,6 +166,7 @@ T′ 是扫描返回的表：σ/24 可行者中 F 最大的一张，即 run 10�
 | 4 | 最小对偶单调（D） | +0.2949；逐点补充全部为正（第 6 节） | [L 120–126] |
 | 5 | UB ≥ I(T₁) 且 ≥ I(T′) | 207.7097 ≥ 207.3552、207.6467 | [J checks.5_UB_ge_I] |
 | 6 | T′ 的 σ/120 E[N] ≤ B | 316.633 ≤ 316.892 | [J checks.6_budget120_Tprime] |
+| 7（追加） | T′ 的 Monte Carlo（DECISION 11-7） | 10⁴ 条轨迹；对 σ/120 的 z：E[N] −0.01，S +0.59，log det +0.65（\|z\| ≤ 3）；0 次越界查表；同一代码在 T₁ 上逐位复现第 11 轮的 MC | [L 182–184]；[J mc_Tprime, mc_T1_regression] |
 | 附 | 边节点向外取整 | 三个动作集均 0 违例 | [L 11–13] |
 
 检查 1 的扫描状态字串"run cap (40 DP runs) reached"是 dp11 写死的文本；本次上限是 2。
@@ -185,11 +187,11 @@ T′ 是扫描返回的表：σ/24 可行者中 F 最大的一张，即 run 10�
 >
 > **证明.** 在 J(T₁) 处用引理 3；式 (12)；引理 1；再用有限时域动态规划对加性期望回报的精确性——对加性期望回报，Markov 策略已足够（Bertsekas, Dynamic Programming and Optimal Control, Vol. I, Ch. 1）。V_λ 以浮点计算；前向–后向一致性把它的舍入误差限制在相对 1e-12。
 
-**数值推论。** 名义预算下，按 B′ = B + 0.1：
-- T₁ 距 S ∪ S′ 的最优不超过 **0.356 nat**（D-efficiency ≥ **96.1 %**）；
-- T′ 距 S ∪ S′ 的最优不超过 **0.065 nat**（D-efficiency ≥ **99.3 %**）。
+**数值推论（最终陈述，B′ = B + 0.25；DECISION 11b-6）。** 名义预算下，取 B′ = B + 0.25（覆盖到目前所有边类表的 σ/120 预算，第 4 节）：
+- T₁ 距 S ∪ S′ 的最优不超过 **0.3594 nat**（D-efficiency ≥ **96.08 %**）；
+- T′ 距 S ∪ S′ 的最优不超过 **0.0680 nat**（D-efficiency ≥ **99.24 %**）。
 
-若按 δ = 0.25（覆盖到目前所有边类表的 σ/120 口径，见第 4 节）：T₁ 0.359 nat（≥ 96.1 %），T′ 0.068 nat（≥ 99.2 %）。
+作为参照，按 prompt 原先的 B′ = B + 0.1：T₁ 0.3565 nat（≥ 96.11 %），T′ 0.0651 nat（≥ 99.28 %）。差距向上取整、D-efficiency 向下取整（DECISION 11b-16）。来源：[L 185]；[J proposition5, ub.UB_B_plus_delta]。
 
 **English.**
 
@@ -205,11 +207,11 @@ T′ 是扫描返回的表：σ/24 可行者中 F 最大的一张，即 run 10�
 >
 > **Proof.** Lemma 3 at J(T₁); eq. (12); Lemma 1; and the exactness of finite-horizon dynamic programming for additive expected rewards over Markov policies, which suffice (Bertsekas, Dynamic Programming and Optimal Control, Vol. I, Ch. 1). V_λ is evaluated in floating point; the forward–backward agreement bounds its rounding at 1e-12 relative.
 
-**Numerical corollary.** At the nominal budget, with B′ = B + 0.1:
-- T₁ is within **0.356 nat** of the optimum of S ∪ S′ (D-efficiency ≥ **96.1 %**);
-- T′ is within **0.065 nat** (D-efficiency ≥ **99.3 %**).
+**Numerical corollary (final statement, B′ = B + 0.25; DECISION 11b-6).** At the nominal budget, with B′ = B + 0.25 (which covers the σ/120 budget of every edge-class table seen so far, section 4):
+- T₁ is within **0.3594 nat** of the optimum of S ∪ S′ (D-efficiency ≥ **96.08 %**);
+- T′ is within **0.0680 nat** (D-efficiency ≥ **99.24 %**).
 
-With δ = 0.25 (which covers the σ/120 budget of every edge-class table seen so far, section 4): 0.359 nat (≥ 96.1 %) and 0.068 nat (≥ 99.2 %).
+For reference, with the prompt's original B′ = B + 0.1: T₁ 0.3565 nat (≥ 96.11 %), T′ 0.0651 nat (≥ 99.28 %). Gaps are rounded up and D-efficiencies down (DECISION 11b-16).
 
 ## 10. DECISION 列表
 
@@ -225,7 +227,7 @@ With δ = 0.25 (which covers the σ/120 budget of every edge-class table seen so
   - `_dp_step_u` 是 `dp11._dp_step` 的拷贝，只改三处：半宽由逐步边节点构成；夹到所属块的 MIN；对块循环。浮点表达式与运算顺序不变。
   - `ScanG` 继承 `dp11.Scan11`，只覆盖 `run()`：通用 DP 与表；每个 λ 写入 JSONL 存档（fsync）以便续跑；只保留当前最优可行表，其余运行表写完记录即删。`scan()` 的 λ 逻辑原样复用。
   - 前向、后向、σ/120 直接用 `eval11`（它们接受任何 `rows_full`）。
-- **DECISION 11b-6（预算口径）。** 按 prompt 计算 B′ = B + 0.1。同时报告 B + δ（δ = 0.25、0.5），并指出 prompt 的 < 0.1 前提对边类表不成立（第 4 节）。命题采用哪个 δ 留给你。
+- **DECISION 11b-6（预算口径）。** 按 prompt 计算 B′ = B + 0.1。同时报告 B + δ（δ = 0.25、0.5），并指出 prompt 的 < 0.1 前提对边类表不成立（第 4 节）。首版报告之后，你决定命题 5 的最终陈述用 **B + 0.25**；数值推论据此重述（第 9 节、第 12.3 节），B + 0.1 的数字保留作参照。你的消息把这一条标为"DECISION 11b-3"，但 11b-3 在本报告和 `sprime.py` 中已用于边节点规则，为免混淆记在这里。
 - **DECISION 11b-7（检查 D 的补充）。** 除 prompt 的最小值比较外，加了两项逐点比较：共享的 λ，以及在并集 argmin λ 上补跑一次 S 块 DP（37 s）。
 - **DECISION 11b-8（T′）。** T′ 是扫描的最终表（σ/24 可行者中 F 最大，并列取较小 λ），在 σ/24 与 σ/120 上评价。因 +0.291 > 0.05，报告为新的最优表并打包。A 没有再迭代。
 - **DECISION 11b-9（γ）。** `scan_edge_j2.json` 只存 γ̄ 和 γ₁，没有 γ 向量。所以先用 eval11 在 σ/24 上算 J(T₁)，再用 `Design11.gamma_from_J` 得到 γ，并检查 γ̄、γ₁ 按位相同。γ 向量存为 `results/gamma_A1.npy`。
@@ -235,16 +237,100 @@ With δ = 0.25 (which covers the σ/120 budget of every edge-class table seen so
   - 后处理跑了两次：第二次只修正检查 3 的记录方式（把回归的前向计入，去掉手写的前向计数），其余数字两次相同。日志第 52–92 行是第一次，第 99–139 行是第二次。
 - **DECISION 11b-11（T₁ 对字面 S′ 的可表示性）。** 节点 i 的下边可表示，当且仅当 L = 24 或 i − L ∈ {LN_k(e) : e ∈ E′ 有限}；上边同理。按 k ≥ 2 的前向质量加权，信息量 m·c 加权作为补充。
 - **DECISION 11b-12（预测计分）。** 预测为字面 S′ 而写，按实际运行的 S ∪ S′ 计分（第 7 节）。
+- **DECISION 11b-13（Monte Carlo 的实现）。**
+  - `mc11b._mc_batch_u` 是 `eval11._mc_batch` 的拷贝，只改一处：所查节点的半宽由并集动作集构成（逐步边节点 LN、UN 与所属块的 MIN）。
+  - 其余与第 11 轮相同：最近节点（并列取较小下标）、窗口以连续 r 为中心、cfun、随机数顺序、种子 20261109 + b、20 批 × 500 条、4 个进程。
+  - 验证：用它重跑 T₁，逐位复现 `round11.json` 的 checks.4_monte_carlo（EN_mc、EN_se、S_mc、S_se、logdet_mc、logdet_batch_se、n_clipped）。
+  - 种子与第 11 轮相同，所以 T₁ 与 T′ 的 MC 用的是公共随机数。判据不变：对 σ/120 的 |z| ≤ 3 且无越界查表。
+- **DECISION 11b-14（mc 阶段跑了两次）。** 第一次（日志第 143–163 行）在写任何结果之前停在一条内部一致性断言上：UB(B + 0.25) 按另一种求和顺序重算，与 post 的值差最后一位，而断言要求完全相等。改为按 post 的顺序计算、容差 1e-12 后，第二次（第 164–188 行）写出结果。两次的 MC 与形状数字完全相同。
+- **DECISION 11b-15（形状统计）。** 用 `eval11.Stats`，γ 权重取 A₀ = J_SoD⁻¹ 处的 γ，与 `round11/post11.analyse` 相同。T₁ 经并集动作集算出的统计量与 `round11.json` 的 tables.edge_j1 逐位相同（分位数、全部分箱字段、支撑宽度、I）[L 181]。
+- **DECISION 11b-16（界的取整）。** 正文里"不超过 X nat、D-efficiency ≥ Y %"的界：差距向上取整到 4 位小数，D-efficiency 向下取整到 0.01 %；表格保留 6 位小数。首版报告第 1、9 节按四舍五入（例如 0.354477 写成 0.354），本次在第 1、9、12 节改正。
 
 ## 11. 本轮没做的事
 
 - 只在字面 S′（784 个动作）上的扫描，以及 S′ 内的原始表。
 - A 的再次迭代（prompt 不要求）；以 J(T′) 为切点的界。
-- T′ 的 Monte Carlo、形状统计、失配扫描与余量设计（第 12 轮内容）。
+- T′ 的失配扫描与余量设计（第 12 轮内容）。T′ 的 Monte Carlo 与形状统计见第 12 节。
 - 非名义真值处的界。
 
 **输出。** `round11/addendum/`（来源路径以此为根）：
-- `results/round11b.json`：逐 λ 表，B 与 B′（及 B + δ）的界，差距，D-efficiency，T′ 的数字，检查 1–6，预测，预算口径证据；
+- `results/round11b.json`：逐 λ 表，B 与 B′（及 B + δ）的界，差距，D-efficiency，T′ 的数字，检查 1–7，预测，预算口径证据；追加字段 mc_Tprime、mc_T1_regression、shape、proposition5，以及 per_lambda 中的 D_B025、UB_B025；
 - `results/table_edge_Sprime.npz`；
 - `results/scan_union.json`、`results/archive_union.jsonl`、`results/state_inputs.json`、`results/state_regress.json`、`results/gamma_A1.npy`；
 - `logs/run_round11b.log`。
+
+## 12. 追加：T′ 的 Monte Carlo、形状统计与命题 5 的预算
+
+本节在首版报告之后追加，来源为日志第 164–188 行（阶段 mc 的第二次运行）与 `results/round11b.json` 的追加字段。
+
+### 12.1 Monte Carlo（DECISION 11-7）
+
+做法与第 11 轮相同（DECISION 11b-13）：
+- 10⁴ 条轨迹，20 批 × 500，种子 20261109 + b，4 个进程；
+- 运行时查表规则：最近节点，并列取较小下标，窗口以连续 r 为中心；
+- 判据：对 σ/120 的 |z| ≤ 3，且没有越界查表。
+
+先做回归：同一代码在 T₁ 上（经并集动作集查表）逐位复现 `round11.json` 的 checks.4_monte_carlo [L 182；J mc_T1_regression]。
+
+| 量 | MC（± 标准误） | σ/120 | z（σ/120） | σ/24 | z（σ/24） |
+|---|---:|---:|---:|---:|---:|
+| E[N] | 316.6347 ± 0.1716 | 316.6330 | **−0.01** | 316.8433 | +1.22 |
+| S | 1384.0752 ± 0.0493 | 1384.1041 | **+0.59** | 1384.4325 | +7.25 |
+| log det J | 207.64430 ± 0.00035 | 207.64453 | **+0.65** | 207.64665 | +6.62 |
+
+越界查表 0 次。**通过** [L 183–184；J mc_Tprime, checks.7_monte_carlo_Tprime]。
+
+对 σ/24 的 z 在 S 与 log det 上偏大（7.2、6.6），与第 11 轮 T₁ 的情形相同（当时为 +14.0、+12.9）：
+- σ/24 的求积比连续 r 的过程在 S 上高 0.36，在 log det 上高 0.0023 nat；σ/120 与 MC 一致。
+- 0.0023 nat 相对 T′ 比 T₁ 高出的 0.291 nat、以及 T′ 到上界的 0.068 nat 都很小。
+
+### 12.2 形状统计（与第 11 轮相同的定义）
+
+定义：
+- 面向边 = 近侧半宽 − |r − x̄_k|（σ 单位，正值表示 x̄_k 在窗内），在 k ≥ 2 的 (k, i) 上按质量加权；
+- 分箱按 |r − x̄_k|/σ；
+- "远侧半宽"是背离 x̄_k 一侧的半宽，按质量加权平均。
+
+统计量由 `eval11.Stats` 算出（DECISION 11b-15）。T₁ 的数字与 `round11.json` 逐位相同 [L 181]。
+
+| 表 | 面向边 10 / 50 / 90 %（σ） | 均值 | ≥ 40σ 分箱的质量 | 该箱发送（份额） | 该箱每次发送的信息（未加权 c） | 该箱面向边均值 | 平均支撑宽度 |
+|---|---|---:|---:|---:|---:|---:|---:|
+| T₁ | 1.28 / 1.53 / 1.78 | 1.558 | 15.0 % | 50.4（16.0 %） | 4.11 | +1.52 | 1116.3σ |
+| T′ | 1.41 / 1.62 / 1.81 | 1.601 | 19.5 % | 48.8（15.4 %） | 4.55 | +1.67 | 1116.3σ |
+
+来源：[L 167–180]；[J shape.T1, shape.Tprime]。
+
+各分箱（T₁ / T′）：
+
+| \|r − x̄_k\|/σ | 质量份额 | 发送份额 | 每次发送的信息 | 远侧半宽（σ） | 面向边（σ） |
+|---|---:|---:|---:|---:|---:|
+| [0, 2) | 20.7 % / 22.8 % | 18.8 % / 27.0 % | 4.63 / 4.65 | 2.00 / 1.14 | 1.64 / 1.68 |
+| [2, 5) | 15.9 % / 15.4 % | 15.5 % / 16.8 % | 4.25 / 4.09 | 2.00 / 1.03 | 1.56 / 1.50 |
+| [5, 10) | 15.3 % / 13.4 % | 15.4 % / 13.8 % | 4.19 / 4.16 | 2.00 / 1.14 | 1.54 / 1.53 |
+| [10, 20) | 17.1 % / 14.6 % | 17.6 % / 14.1 % | 4.16 / 4.26 | 2.00 / 1.23 | 1.53 / 1.56 |
+| [20, 40) | 16.0 % / 14.3 % | 16.8 % / 12.8 % | 4.12 / 4.36 | 2.00 / 1.20 | 1.52 / 1.60 |
+| [40, ∞) | 15.0 % / 19.5 % | 16.0 % / 15.4 % | 4.11 / 4.55 | 2.00 / 1.16 | 1.52 / 1.67 |
+
+描述性解读（不归因）：
+- **面向边。** T′ 的面向边整体外移：10 % 分位 1.28 → 1.41σ，中位数 1.53 → 1.62σ，90 % 分位 1.78 → 1.81σ，均值 1.558 → 1.601σ。
+- **远侧。** T₁ 的远侧半宽在每个分箱都恰为 2σ（S 的 r 侧下限）；T′ 为 1.03–1.23σ（T′ 88.5 % 的质量用 S′ 块的动作，其 r 侧下限为 1σ，第 5 节）。
+- **[0, 2) 分箱。** 参考值离输出不到 2σ 的状态承担了 T′ 27.0 % 的发送（T₁ 为 18.8 %）。
+- **≥ 40σ 分箱。** T′ 在该箱的质量更多（19.5 % 对 15.0 %），每次发送的信息也更多（4.55 对 4.11）。
+- 两张表的平均支撑宽度相同（1116.3σ），因为质量支撑由测量核的覆盖范围决定，而不由表决定。
+
+### 12.3 命题 5 的最终陈述：B′ = B + 0.25
+
+依你的决定（DECISION 11b-6）。UB(B + 0.25) = I(T₁) − p + min_λ [γ₁ + V_λ + λ(B − 1) + 0.25 λ] = **207.714588**，取在 run 12（λ = 0.019559102893885853，二分步）。来源：[L 185]；[J proposition5]；逐 λ 的 D(λ) + 0.25λ 在 [J per_lambda.\*.D_B025]。
+
+| 表 | gap = UB(B + 0.25) − I | D-efficiency 下界 |
+|---|---:|---:|
+| T₁ | 0.359371 | 96.0857 % |
+| T′ | 0.067938 | 99.2480 % |
+
+B + 0.25 覆盖到目前为止见过的每一张 σ/120 E[N] ≤ B 的边类表：最大的 E[N]₂₄ − E[N]₁₂₀ 是 T′ 的 0.2103（第 4 节）。
+
+重述的数值推论（可直接粘贴；命题正文见第 9 节，B′ = B + 0.25）：
+
+> **推论.** 在名义预算 B 下取 B′ = B + 0.25：T₁ 距 S ∪ S′ 的最优不超过 0.3594 nat（D-efficiency ≥ 96.08 %）；T′ 距 S ∪ S′ 的最优不超过 0.0680 nat（D-efficiency ≥ 99.24 %）。
+
+> **Corollary.** At the nominal budget B, with B′ = B + 0.25: T₁ is within 0.3594 nat of the optimum of S ∪ S′ (D-efficiency ≥ 96.08 %); T′ is within 0.0680 nat (D-efficiency ≥ 99.24 %).

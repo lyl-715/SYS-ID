@@ -359,7 +359,95 @@ def stage_post(out):
     return res
 
 
-STAGES = ('inputs', 'regress', 'scan', 'post')
+MC_FIELDS = ('EN_mc', 'EN_se', 'S_mc', 'S_se', 'logdet_mc', 'logdet_batch_se', 'n_clipped')
+DELTA_P5 = 0.25                   # budget of Proposition 5's final statement: B + 0.25 (user's decision after the first report)
+
+def _shape_same(a, b):
+    if a['edge_quantiles'] != b['edge_quantiles']: return False
+    keys = ('mass_share', 'sends', 'send_share', 'info', 'gamma_info', 'info_per_send', 'near', 'far', 'edge')
+    return all(x['bin'] == y['bin'] and all(x[k] == y[k] for k in keys) for x, y in zip(a['bins'], b['bins']))
+
+def stage_mc(out):
+    """Monte Carlo on T' (DECISION 11-7, 10^4 trajectories, |z| <= 3 against sigma/120), facing-edge shape statistics as in round 11
+    (eval11.Stats with gamma at A_0 = J_SoD^-1, as round11/post11.analyse), Proposition 5's final statement at B + 0.25. Appends to
+    results/round11b.json."""
+    import mc11b
+    A = archived(); des = design(out); r11 = A['r11']
+    res = json.load(open(os.path.join(RES, 'round11b.json')))
+    acts = sp.set_union(); tp = res['Tprime']
+    with np.load(os.path.join(RES, 'table_edge_Sprime.npz')) as f: cP = np.array(f['codes'])
+    pP = os.path.join(WORK, 'Tprime_codes.npy'); np.save(pP, cP)
+    c1, lam1 = load_T1(); p1 = os.path.join(WORK, 'T1_codes.npy'); np.save(p1, c1)
+    rec_sod, J_sod, W_sod = des.sod_reference(); gam0 = des.gamma_from_J(J_sod)
+
+    # shape statistics (and the sigma/24 re-evaluation of T' from the committed npz)
+    shapes = {}
+    for lab, path in (('T1', p1), ('Tprime', pP)):
+        tab = sp.TableG(np.load(path, mmap_mode='r'), acts, lab); st = e11.Stats(gam0[0])
+        t0 = time.perf_counter(); rec, J, fw = e11.evaluate(tab, stats=st); tw = time.perf_counter()-t0
+        sh, ev, w = st.result(); sh['mean_support_width_sigma'] = float((fw['sup_hi']-fw['sup_lo'])[1:].mean()/24)
+        sh['EN24'] = rec['EN']; sh['I24'] = rec['logdet']; sh['S24'] = rec['S']; shapes[lab] = sh
+        out(f"SHAPE {lab}: E[N] {rec['EN']!r} I {rec['logdet']!r} S {rec['S']!r}; facing edge 10/25/50/75/90 % {sh['edge_quantiles']!r} sigma, "
+            f"mean {sh['edge_mean']!r}; body send share {sh['body_send_share']!r}, info/send there {sh['body_info_per_send']!r}; "
+            f"mean support width {sh['mean_support_width_sigma']!r} sigma; {tw:.1f} s")
+        for b in sh['bins']:
+            out(f"SHAPE {lab} bin {b['bin']}: mass share {b['mass_share']!r}, sends {b['sends']!r} (share {b['send_share']!r}), info {b['info']!r}, "
+                f"info/send {b['info_per_send']!r}, gamma0-info/send {b['gamma_info_per_send']!r}, near {b['near']!r}, far {b['far']!r}, edge {b['edge']!r}")
+    if not (shapes['Tprime']['EN24'] == tp['EN24'] and shapes['Tprime']['I24'] == tp['I24'] and shapes['Tprime']['S24'] == tp['S24']):
+        raise Stop("T' from the committed npz does not reproduce its sigma/24 record")
+    ref = r11['tables']['edge_j1']
+    same1 = bool(_shape_same(shapes['T1'], ref['shape']) and shapes['T1']['mean_support_width_sigma'] == ref['mean_support_width_sigma']
+                 and shapes['T1']['I24'] == ref['I'])
+    out(f"SHAPE regression: T_1 through the union set and eval11.Stats equals round11.json tables.edge_j1 (quantiles, all bin fields, "
+        f"support width, I) bit for bit: {same1}")
+    if not same1: raise Stop("shape statistics of T_1 differ from round 11")
+
+    # Monte Carlo: regression on T_1 (round-11 MC, same seeds) then T'
+    t0 = time.perf_counter()
+    m1 = mc11b.monte_carlo_u(p1, dict(EN=ref['EN24'], S=r11['checks']['4_monte_carlo']['S_eval'], logdet=ref['I']),
+                             dict(EN=ref['EN120'], S=ref['S120'], logdet=ref['I120']))
+    m1['wall_s'] = time.perf_counter()-t0
+    mref = r11['checks']['4_monte_carlo']
+    eq = {k: bool(m1[k] == mref[k]) for k in MC_FIELDS}
+    m1['equal_to_round11'] = eq; m1['bit_for_bit'] = bool(all(eq.values()))
+    out(f"MC regression T_1 (union-set lookup, seeds {m1['seed']}+b): " + ", ".join(f"{k} {'=' if v else '!='}" for k, v in eq.items()) +
+        f" round11.json checks.4_monte_carlo -> {'PASS' if m1['bit_for_bit'] else 'FAIL'} ({m1['wall_s']:.1f} s)")
+    if not m1['bit_for_bit']: raise Stop("the Monte Carlo copy does not reproduce round 11's MC on T_1")
+    t0 = time.perf_counter()
+    mP = mc11b.monte_carlo_u(pP, dict(EN=tp['EN24'], S=tp['S24'], logdet=tp['I24']), dict(EN=tp['EN120'], S=tp['S120'], logdet=tp['I120']))
+    mP['wall_s'] = time.perf_counter()-t0
+    out(f"MC T': R {mP['R']} ({mP['batches']} x {mP['R']//mP['batches']}, seeds {mP['seed']}+b): E[N] {mP['EN_mc']!r} +- {mP['EN_se']!r}, "
+        f"S {mP['S_mc']!r} +- {mP['S_se']!r}, log det {mP['logdet_mc']!r} +- {mP['logdet_batch_se']!r}, clipped {mP['n_clipped']}")
+    out(f"MC T' z vs sigma/120: E[N] {mP['z120_EN']!r}, S {mP['z120_S']!r}, log det {mP['z120_logdet']!r} -> {'PASS' if mP['pass_'] else 'FAIL'}; "
+        f"z vs sigma/24: E[N] {mP['z_EN']!r}, S {mP['z_S']!r}, log det {mP['z_logdet']!r} (pass_sigma24 {mP['pass_sigma24']}); {mP['wall_s']:.1f} s")
+
+    # Proposition 5 final statement at B + 0.25
+    I1 = A['I_T1']; Ip = tp['I24']; d25 = res['ub']['UB_B_plus_delta'][str(DELTA_P5)]; U25 = d25['UB']
+    for row in res['per_lambda']: row['D_B025'] = row['D']+row['lam']*DELTA_P5; row['UB_B025'] = I1-P+row['D']+row['lam']*DELTA_P5   # post's order
+    chk = min(res['per_lambda'], key=lambda x: x['D_B025'])
+    assert chk['run'] == d25['argmin_run'] and abs(chk['UB_B025']-U25) <= 1e-12, (chk['run'], d25['argmin_run'], chk['UB_B025'], U25)
+    p5 = dict(budget='B + 0.25', B_used=B+DELTA_P5, delta=DELTA_P5, UB=U25, argmin_run=d25['argmin_run'], argmin_lam=d25['argmin_lam'],
+              gap_T1=U25-I1, deff_lower_T1=float(np.exp(-(U25-I1)/P)), gap_Tprime=U25-Ip, deff_lower_Tprime=float(np.exp(-(U25-Ip)/P)),
+              covers='every edge-class table seen so far whose sigma/120 E[N] <= B (largest E24 - E120 = 0.2103, T\')',
+              decision='budget of Proposition 5 = B + 0.25 (user, after the first round-11b report)')
+    out(f"PROP5 B + {DELTA_P5}: UB {U25!r} (run {p5['argmin_run']}); T_1 within {p5['gap_T1']!r} nat (D-eff >= {p5['deff_lower_T1']!r}); "
+        f"T' within {p5['gap_Tprime']!r} nat (D-eff >= {p5['deff_lower_Tprime']!r})")
+
+    res['mc_Tprime'] = mP; res['mc_T1_regression'] = m1
+    res['shape'] = dict(Tprime=shapes['Tprime'], T1=shapes['T1'], T1_equals_round11=same1,
+                        gamma_weights='gamma at A_0 = J_SoD^-1 (as round11/post11.analyse)',
+                        definition='facing edge = near-side half-width - |r - xbar_k| (sigma), mass-weighted over (k >= 2, i); bins of |r - xbar_k|/sigma')
+    res['proposition5'] = p5
+    res['checks']['7_monte_carlo_Tprime'] = dict(pass_=mP['pass_'], z120=dict(EN=mP['z120_EN'], S=mP['z120_S'], logdet=mP['z120_logdet']),
+                                               n_clipped=mP['n_clipped'], regression_T1_bit_for_bit=m1['bit_for_bit'])
+    res['all_checks_pass'] = bool(all(v['pass_'] for k, v in res['checks'].items() if v['pass_'] is not None))
+    jdump(res, os.path.join(RES, 'round11b.json'))
+    out(f"WROTE results/round11b.json (mc_Tprime, mc_T1_regression, shape, proposition5, per_lambda D_B025); all checks "
+        f"{'PASS' if res['all_checks_pass'] else 'FAIL'}")
+    return res
+
+
+STAGES = ('inputs', 'regress', 'scan', 'post', 'mc')
 
 def main():
     args = sys.argv[1:]
@@ -370,7 +458,7 @@ def main():
         out(f"=== ROUND 11b stage {stg} started {time.strftime('%Y-%m-%d %H:%M:%S')}; python {platform.python_version()}, numpy {np.__version__}, "
             f"scipy {scipy.__version__}, numba {numba.__version__} ({numba.get_num_threads()} threads); B = {B!r}; work {WORK}")
         t0 = time.perf_counter()
-        {'inputs': stage_inputs, 'regress': stage_regress, 'scan': stage_scan, 'post': stage_post}[stg](out)
+        {'inputs': stage_inputs, 'regress': stage_regress, 'scan': stage_scan, 'post': stage_post, 'mc': stage_mc}[stg](out)
         out(f"=== ROUND 11b stage {stg} done in {time.perf_counter()-t0:.1f} s")
         frozen_clean(out)
 
