@@ -136,6 +136,50 @@ def pack(entry, cell, path, note_extra=''):
     return dict(path=os.path.relpath(path, HERE), bytes=os.path.getsize(path), roundtrip_equal=same)
 
 
+def ub_sod(cells, A, res, out):
+    """addendum to the post-processing (no new run). For the edge scan of round 2 (tangent point A_1 = J(T_1)^-1, T_1 the accepted
+    edge round-1 table), every evaluated lambda gives
+        UB(lambda) = I(T_1) - p + gamma_1 + V_lambda + lambda (B - 1),   V_lambda = sum_i ghat_{1,i} V_2(i) (the DP value, 'dsum'),
+    and UB_SoD = min over those lambda. For any table T of the class below with E[N] <= B: log det J(T) <= I(T_1) + tr(A_1 J(T)) - p
+    (concavity of log det, tangent at J(T_1)), tr(A_1 J(T)) = gamma_1 + F(T), F(T) <= F(T) - lambda (N(T) - (B - 1)) <= V_lambda +
+    lambda (B - 1) (the DP maximises F - lambda N over the class). Class: tables that assign to every (step k >= 2, sigma/24 node r_i)
+    one of the 100 edge actions (E^2, edges on grid nodes, at least 2 sigma from r_i), evaluated by the sigma/24 discrete model at
+    theta_0 with E[N] <= B (sigma/24)."""
+    e1 = [e for e in cells['edge'] if e['round'] == 1][0]
+    sc = json.load(open(os.path.join(rr.RES, 'scan_edge_j2.json')))
+    I1 = e1['I']; g1 = sc['gamma1']; Bm1 = B-1.0
+    rows = []
+    for r in sc['runs']:
+        v = I1-P+g1+r['dsum']+r['lam']*Bm1
+        rows.append(dict(run=r['run'], phase=r['phase'], lam=r['lam'], lam_over_gbar=r['lam_over_gbar'], V_lambda=r['dsum'], EN=r['EN'],
+                         dual=r['dual'], dual_recomputed_absdiff=abs(g1+r['dsum']+r['lam']*Bm1-r['dual']), UB=v))
+        out(f"UB_SoD edge_j2 run {r['run']:02d} lam {r['lam']!r} V_lambda {r['dsum']!r} EN {r['EN']!r} -> I(T_1) - p + gamma_1 + V + lambda (B - 1) = {v!r}")
+    best = min(rows, key=lambda x: x['UB'])
+    ub = best['UB']; gap = ub-I1
+    # consistency: every edge-class table of this round with sigma/24 E[N] <= B must lie below UB_SoD
+    below = {e['label']: dict(I=e['I'], EN24=e['EN'], below=bool(e['I'] <= ub)) for e in cells['edge'] if 'table' in e and e['EN'] <= B}
+    d = dict(scan='edge_j2', tangent='A_1 = J(T_1)^-1', T1=e1['label'], I_T1=I1, gamma1=g1, p=P, B=B, per_lambda=rows, UB_SoD=ub, argmin_run=best['run'],
+             argmin_lam=best['lam'], gap=gap, deff_lower=float(np.exp(-gap/P)), U_cert=A['U_cert'], gap_U_cert=A['U_cert']-I1,
+             deff_lower_U_cert=float(np.exp(-(A['U_cert']-I1)/P)), check_UB_ge_I_T1=bool(ub >= I1), edge_tables_below=below,
+             class_='discrete SoD class with the edge action set: a table assigns to every (step k >= 2, sigma/24 grid node r_i) one of the '
+                    '100 edge actions (E^2, edges on grid nodes, at least 2 sigma from r_i); E[N] <= B on the sigma/24 discrete model at theta_0',
+             basis='Lemma 3 (tangent at J(T_1)), eq. (12), Lemma 1; V_lambda from the DP of the scan (floating point)')
+    # supplementary: the same bound from every scan of this round (tangent at that scan's reference table), for context only
+    sup = {}
+    for c, rounds in cells.items():
+        for j, e in enumerate(rounds):
+            p_ = os.path.join(rr.RES, f"scan_{e['label']}.json")
+            if not os.path.exists(p_): continue
+            s2 = json.load(open(p_)); I_ref = A['I_SoD'] if j == 0 else rounds[j-1]['I']
+            sup[e['label']] = dict(actions=c, I_ref=I_ref, UB=I_ref-P+min(r['dual'] for r in s2['runs']))
+    d['supplementary_all_scans'] = sup
+    out(f"UB_SoD = {ub!r} (edge_j2 run {best['run']}, lam {best['lam']!r}); I(T_1) = {I1!r}; gap {gap!r}; exp(-gap/9) = {d['deff_lower']!r}; "
+        f"UB_SoD >= I(T_1): {d['check_UB_ge_I_T1']}; side by side: U_cert = {A['U_cert']!r}, U_cert - I(T_1) = {d['gap_U_cert']!r}, "
+        f"exp(-./9) = {d['deff_lower_U_cert']!r}; edge tables with sigma/24 E[N] <= B below UB_SoD: {below}")
+    for k, v in sup.items(): out(f"UB_SoD supplementary: bound from scan {k} (tangent at its reference, I_ref {v['I_ref']!r}): {v['UB']!r}")
+    return d
+
+
 def stage_post(out):
     A = rr.archived_inputs()
     dp11.warmup(); des = dp11.Design11(out); gam0 = gamma0(des)
@@ -249,6 +293,8 @@ def stage_post(out):
     out(f"MC best table {bt['label']}: {mc}")
     res['checks'] = dict(sorted(checks.items())); res['all_checks_pass'] = all(v['pass_'] for v in checks.values())
     for k, v in res['checks'].items(): out(f"CHECK {k}: {'PASS' if v['pass_'] else 'FAIL'}")
+    # addendum: certified bound within the discrete edge SoD class from the edge round-2 scan (tangent A_1 = J(T_1)^-1), no new run
+    res['ub_sod'] = ub_sod(cells, A, res, out)
     # verdict (plan §7)
     dI_best = bt['I']-A['I_old']; gp = bt['g_prime']
     case = 1 if dI_best < 0.5 else (2 if gp < 2 else 3)

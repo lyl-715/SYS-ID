@@ -22,6 +22,29 @@
    "status": "done",
    "wall_s": 2131.3104789199997,
    "accepted": true
+  },
+  {
+   "round": 1,
+   "label": "old_j1",
+   "reference": "T_0 (old_j0)",
+   "I_ref": 205.03141309913676,
+   "gbar": 0.00853132883542926,
+   "gamma1": 0.012642833333999395,
+   "lam": 0.027513535494259365,
+   "lam_over_gbar": 3.225,
+   "run": 8,
+   "n_runs": 11,
+   "EN": 316.77123736297676,
+   "S": 1055.0645149512952,
+   "I": 205.1467835167689,
+   "F": 9.160497863994529,
+   "tangent_overestimate": 0.057770279696391924,
+   "table": "/tmp/claude-0/-home-user-SYS-ID/67f6c0d6-50d6-5a80-a0af-f1131227ebfe/scratchpad/work/old_j1_r08.npy",
+   "J": "/tmp/claude-0/-home-user-SYS-ID/67f6c0d6-50d6-5a80-a0af-f1131227ebfe/scratchpad/work/old_j1_r08_J.npy",
+   "status": "done",
+   "wall_s": 2487.2285485560005,
+   "accepted": true,
+   "gain_over_previous": 0.11537041763213551
   }
  ]
 }
