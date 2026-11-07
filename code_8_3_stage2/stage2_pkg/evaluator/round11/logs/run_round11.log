@@ -31,3 +31,26 @@ LAM old_j0 run=05 phase=bisect lam=0.07339683452541984 lam/gbar=3.40000000000000
 LAM old_j0 run=06 phase=bisect lam=0.07123810409820161 lam/gbar=3.3000000000000007 dual=22.89548928767514 EN=328.54709070660164 S=1074.2687212927544 F=23.69589386074844 feasible=False slack=-11.65497385722955 logdet=205.34477158644873 dmD=8.143794904207965 dp_s=173.2 fwd_s=5.4 [diag: V-policy rel 1.1378816441060241e-11, support [2917, 32228]]
 LAM old_j0 run=07 phase=bisect lam=0.07231746931181073 lam/gbar=3.3500000000000005 dual=22.886246971629816 EN=322.47705906959953 S=1055.5747576860222 F=23.260262191419695 feasible=False slack=-5.584942220227447 logdet=205.1879769627755 dmD=7.987000280534744 dp_s=172.6 fwd_s=5.7 [diag: V-policy rel 3.3239307933544697e-10, support [2917, 32228]]
 LAM old_j0 run=08 phase=bisect lam=0.07285715191861528 lam/gbar=3.375 dual=22.884026001473295 EN=319.5482733428587 S=1046.4630285730195 F=23.047672330809256 feasible=False slack=-2.6561564934866055 logdet=205.11042295492322 dmD=7.909446272682459 dp_s=183.8 fwd_s=5.5 [diag: V-policy rel 2.4201806051379593e-11, support [2917, 32228]]
+LAM old_j0 run=09 phase=bisect lam=0.07312699322201756 lam/gbar=3.3875 dual=22.883514425783275 EN=318.0625211757123 S=1041.8347601380055 F=22.939228907192998 feasible=False slack=-1.17040432634019 logdet=205.07071764836053 dmD=7.869740966119764 dp_s=171.0 fwd_s=5.6 [diag: V-policy rel 1.5656242591666068e-11, support [2917, 32228]]
+LAM old_j0 run=10 phase=bisect lam=0.07326191387371869 lam/gbar=3.3937500000000003 dual=22.883405094976563 EN=317.33001279737385 S=1039.547433865509 F=22.885612522375208 feasible=False slack=-0.437895948001767 logdet=205.05107817689645 dmD=7.850101494655689 dp_s=175.1 fwd_s=5.7 [diag: V-policy rel 1.3113717994941021e-11, support [2917, 32228]]
+LAM old_j0 run=11 phase=bisect lam=0.07332937419956927 lam/gbar=3.3968750000000005 dual=22.883387772655503 EN=316.9654231430363 S=1038.4041233156017 F=22.858889609465265 feasible=False slack=-0.07330629366418862 logdet=205.04122076818004 dmD=7.8402440859392755 dp_s=182.0 fwd_s=5.7 [diag: V-policy rel 1.2243800683249141e-11, support [2917, 32228]]
+FINAL old_j0 run=05 lam=0.07339683452541984 F=22.832342701943073 EN=316.6035659260541 slack=0.2885509233179846 logdet=205.03141309913676; DP runs 11
+GATE run 01: lam True EN True F True S True logdet True feasible True dual rel 0.0
+GATE run 02: lam True EN True F True S True logdet True feasible True dual rel 0.0
+GATE run 03: lam True EN True F True S True logdet True feasible True dual rel 0.0
+GATE run 04: lam True EN True F True S True logdet True feasible True dual rel 0.0
+GATE run 05: lam True EN True F True S True logdet True feasible True dual rel 0.0
+GATE run 06: lam True EN True F True S True logdet True feasible True dual rel 0.0
+GATE run 07: lam True EN True F True S True logdet True feasible True dual rel 0.0
+GATE run 08: lam True EN True F True S True logdet True feasible True dual rel 0.0
+GATE run 09: lam True EN True F True S True logdet True feasible True dual rel 0.0
+GATE run 10: lam True EN True F True S True logdet True feasible True dual rel 0.0
+GATE run 11: lam True EN True F True S True logdet True feasible True dual rel 0.0
+GATE final run 5 (round 4: 5), lam 0.07339683452541984 (round 4: 0.07339683452541984); codes on the round-4 support windows: 0 differing nodes in 4999 rows -> bitwise True; EN 316.6035659260541 |diff| 0.0; I 205.03141309913676 rel 0.0; all runs bitwise True
+GATE (check 1, blocking): PASS
+ROUND old_j0 j=0: I 205.03141309913676 EN 316.6035659260541 F_j 22.832342701943073 gamma_1j 0.02987366782571452 I_ref 197.20097668224076 E_j = F_j + gamma_1j - p - (I - I_ref) = 6.031779952872796
+=== ROUND 11 stage gate done in 2143.5 s
+CLEANUP removed empty folders []; git status on round4..round10: clean
+=== ROUND 11 stage edge started 2026-11-07 13:52:02; python 3.13.18, numpy 2.5.3, scipy 1.18.1, numba 0.68.0 (4 threads); B = 316.8921168493721; work /tmp/claude-0/-home-user-SYS-ID/67f6c0d6-50d6-5a80-a0af-f1131227ebfe/scratchpad/work
+DESIGN11 G = 35146 (full grid at every step), kernel windows 4224 nodes, cache range 6144 nodes per step, built in 1.6 s; limits outside the cache range exact: True
+SCAN edge_j0: actions edge (100); gbar 0.021587304272182303 gamma_1 0.02987366782571452; lambda_0 = 5 gbar = 0.10793652136091152

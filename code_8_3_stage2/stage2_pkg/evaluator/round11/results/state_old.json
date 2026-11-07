@@ -1,0 +1,27 @@
+{
+ "cell": "old",
+ "rounds": [
+  {
+   "round": 0,
+   "label": "old_j0",
+   "reference": "constant SoD (A_0 = J_SoD^-1)",
+   "I_ref": 197.20097668224076,
+   "gbar": 0.021587304272182303,
+   "gamma1": 0.02987366782571452,
+   "lam": 0.07339683452541984,
+   "lam_over_gbar": 3.4000000000000004,
+   "run": 5,
+   "n_runs": 11,
+   "EN": 316.6035659260541,
+   "S": 1037.2604257322414,
+   "I": 205.03141309913676,
+   "F": 22.832342701943073,
+   "tangent_overestimate": 6.031779952872796,
+   "table": "/tmp/claude-0/-home-user-SYS-ID/67f6c0d6-50d6-5a80-a0af-f1131227ebfe/scratchpad/work/old_j0_r05.npy",
+   "J": "/tmp/claude-0/-home-user-SYS-ID/67f6c0d6-50d6-5a80-a0af-f1131227ebfe/scratchpad/work/old_j0_r05_J.npy",
+   "status": "done",
+   "wall_s": 2131.3104789199997,
+   "accepted": true
+  }
+ ]
+}

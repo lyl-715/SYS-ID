@@ -1,0 +1,177 @@
+{
+ "final_run": 5,
+ "final_run_round4": 5,
+ "lam": 0.07339683452541984,
+ "lam_round4": 0.07339683452541984,
+ "runs_compared": [
+  {
+   "run": 1,
+   "phase": [
+    "start",
+    "start"
+   ],
+   "lam_equal": true,
+   "EN_equal": true,
+   "F_equal": true,
+   "S_equal": true,
+   "logdet_equal": true,
+   "feasible_equal": true,
+   "dual_rel": 0.0
+  },
+  {
+   "run": 2,
+   "phase": [
+    "scan",
+    "scan"
+   ],
+   "lam_equal": true,
+   "EN_equal": true,
+   "F_equal": true,
+   "S_equal": true,
+   "logdet_equal": true,
+   "feasible_equal": true,
+   "dual_rel": 0.0
+  },
+  {
+   "run": 3,
+   "phase": [
+    "scan",
+    "scan"
+   ],
+   "lam_equal": true,
+   "EN_equal": true,
+   "F_equal": true,
+   "S_equal": true,
+   "logdet_equal": true,
+   "feasible_equal": true,
+   "dual_rel": 0.0
+  },
+  {
+   "run": 4,
+   "phase": [
+    "bisect",
+    "bisect"
+   ],
+   "lam_equal": true,
+   "EN_equal": true,
+   "F_equal": true,
+   "S_equal": true,
+   "logdet_equal": true,
+   "feasible_equal": true,
+   "dual_rel": 0.0
+  },
+  {
+   "run": 5,
+   "phase": [
+    "bisect",
+    "bisect"
+   ],
+   "lam_equal": true,
+   "EN_equal": true,
+   "F_equal": true,
+   "S_equal": true,
+   "logdet_equal": true,
+   "feasible_equal": true,
+   "dual_rel": 0.0
+  },
+  {
+   "run": 6,
+   "phase": [
+    "bisect",
+    "bisect"
+   ],
+   "lam_equal": true,
+   "EN_equal": true,
+   "F_equal": true,
+   "S_equal": true,
+   "logdet_equal": true,
+   "feasible_equal": true,
+   "dual_rel": 0.0
+  },
+  {
+   "run": 7,
+   "phase": [
+    "bisect",
+    "bisect"
+   ],
+   "lam_equal": true,
+   "EN_equal": true,
+   "F_equal": true,
+   "S_equal": true,
+   "logdet_equal": true,
+   "feasible_equal": true,
+   "dual_rel": 0.0
+  },
+  {
+   "run": 8,
+   "phase": [
+    "bisect",
+    "bisect"
+   ],
+   "lam_equal": true,
+   "EN_equal": true,
+   "F_equal": true,
+   "S_equal": true,
+   "logdet_equal": true,
+   "feasible_equal": true,
+   "dual_rel": 0.0
+  },
+  {
+   "run": 9,
+   "phase": [
+    "bisect",
+    "bisect"
+   ],
+   "lam_equal": true,
+   "EN_equal": true,
+   "F_equal": true,
+   "S_equal": true,
+   "logdet_equal": true,
+   "feasible_equal": true,
+   "dual_rel": 0.0
+  },
+  {
+   "run": 10,
+   "phase": [
+    "bisect",
+    "bisect"
+   ],
+   "lam_equal": true,
+   "EN_equal": true,
+   "F_equal": true,
+   "S_equal": true,
+   "logdet_equal": true,
+   "feasible_equal": true,
+   "dual_rel": 0.0
+  },
+  {
+   "run": 11,
+   "phase": [
+    "bisect",
+    "bisect"
+   ],
+   "lam_equal": true,
+   "EN_equal": true,
+   "F_equal": true,
+   "S_equal": true,
+   "logdet_equal": true,
+   "feasible_equal": true,
+   "dual_rel": 0.0
+  }
+ ],
+ "all_runs_bitwise": true,
+ "codes_rows_equal": 4999,
+ "codes_rows": 4999,
+ "codes_differing_nodes": 0,
+ "codes_bitwise": true,
+ "EN": 316.6035659260541,
+ "EN_ref": 316.6035659260541,
+ "EN_absdiff": 0.0,
+ "I": 205.03141309913676,
+ "I_ref": 205.03141309913676,
+ "I_rel": 0.0,
+ "dmD": 7.830436416895992,
+ "scan_wall_s": 2131.3104789199997,
+ "dp_s_mean": 188.10132356309094,
+ "pass_": true
+}
