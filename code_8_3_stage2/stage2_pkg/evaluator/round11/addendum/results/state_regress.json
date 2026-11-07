@@ -1,0 +1,135 @@
+{
+ "n_runs": 2,
+ "status": "run cap (40 DP runs) reached",
+ "rows": [
+  {
+   "run": 1,
+   "fields": {
+    "run": {
+     "new": 1,
+     "round11": 1
+    },
+    "phase": {
+     "new": "start",
+     "round11": "start"
+    },
+    "lam": {
+     "new": 0.032955522988855686,
+     "round11": 0.032955522988855686
+    },
+    "EN": {
+     "new": 77.05350164778999,
+     "round11": 77.05350164778999
+    },
+    "N": {
+     "new": 76.05350164778999,
+     "round11": 76.05350164778999
+    },
+    "F": {
+     "new": 3.3596816121695294,
+     "round11": 3.3596816121695294
+    },
+    "dsum": {
+     "new": 0.853298690232889,
+     "round11": 0.853298690232889
+    },
+    "S": {
+     "new": 492.43240575604136,
+     "round11": 492.43240575604136
+    },
+    "logdet": {
+     "new": 198.43541504564934,
+     "round11": 198.43541504564934
+    },
+    "dual": {
+     "new": 11.273136472253464,
+     "round11": 11.273136472253464
+    },
+    "feasible": {
+     "new": true,
+     "round11": true
+    }
+   },
+   "equal": {
+    "run": true,
+    "phase": true,
+    "lam": true,
+    "EN": true,
+    "N": true,
+    "F": true,
+    "dsum": true,
+    "S": true,
+    "logdet": true,
+    "dual": true,
+    "feasible": true
+   },
+   "dp_s": 42.571088611999926
+  },
+  {
+   "run": 2,
+   "fields": {
+    "run": {
+     "new": 2,
+     "round11": 2
+    },
+    "phase": {
+     "new": "scan",
+     "round11": "scan"
+    },
+    "lam": {
+     "new": 0.02636441839108455,
+     "round11": 0.02636441839108455
+    },
+    "EN": {
+     "new": 142.0542067483099,
+     "round11": 142.0542067483099
+    },
+    "N": {
+     "new": 141.0542067483099,
+     "round11": 141.0542067483099
+    },
+    "F": {
+     "new": 5.255381404194445,
+     "round11": 5.255381404194445
+    },
+    "dsum": {
+     "new": 1.5365692816597853,
+     "round11": 1.5365692816597853
+    },
+    "S": {
+     "new": 775.0378730744792,
+     "round11": 775.0378730744792
+    },
+    "logdet": {
+     "new": 202.46939653692604,
+     "round11": 202.46939653692604
+    },
+    "dual": {
+     "new": 9.874329079914808,
+     "round11": 9.874329079914808
+    },
+    "feasible": {
+     "new": true,
+     "round11": true
+    }
+   },
+   "equal": {
+    "run": true,
+    "phase": true,
+    "lam": true,
+    "EN": true,
+    "N": true,
+    "F": true,
+    "dsum": true,
+    "S": true,
+    "logdet": true,
+    "dual": true,
+    "feasible": true
+   },
+   "dp_s": 41.60086075700008
+  }
+ ],
+ "bit_for_bit": true,
+ "wall_s": 119.43726521399992,
+ "note": "first two lambda of the round-11 edge round-2 scan only (prompt \u00a74 item 1)"
+}
