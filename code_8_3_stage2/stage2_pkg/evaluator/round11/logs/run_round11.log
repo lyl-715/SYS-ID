@@ -107,3 +107,7 @@ ROUND edge_j2 j=2: I 207.38340595036806 EN 316.56259963845736 F_j 9.044053099558
 ITER edge round 2: I(T_2) = 207.38340595036806, I(T_1) = 207.35521730257756, gain 0.028188647790500454 -> REJECTED (stop; keep the previous table)
 === ROUND 11 stage edge done in 2385.1 s
 CLEANUP removed empty folders []; git status on round4..round10: clean
+=== ROUND 11 stage old started 2026-11-07 14:32:02; python 3.13.18, numpy 2.5.3, scipy 1.18.1, numba 0.68.0 (4 threads); B = 316.8921168493721; work /tmp/claude-0/-home-user-SYS-ID/67f6c0d6-50d6-5a80-a0af-f1131227ebfe/scratchpad/work
+DESIGN11 G = 35146 (full grid at every step), kernel windows 4224 nodes, cache range 6144 nodes per step, built in 1.7 s; limits outside the cache range exact: True
+SCAN old_j1: actions old (400); gbar 0.00853132883542926 gamma_1 0.012642833333999395; lambda_0 = 5 gbar = 0.0426566441771463
+LAM old_j1 run=01 phase=start lam=0.0426566441771463 lam/gbar=5.0 dual=10.206934491126185 EN=206.19708248564203 S=630.2621486177695 F=5.472412964761462 feasible=True slack=110.69503436373006 logdet=200.30799091270913 dmD=3.1070142304683657 dp_s=332.7 fwd_s=6.2 [diag: V-policy rel 3.3029802489776e-14, support [2917, 32228]]
