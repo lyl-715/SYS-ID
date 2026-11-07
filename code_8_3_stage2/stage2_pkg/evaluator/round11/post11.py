@@ -56,9 +56,14 @@ def analyse(entry, cell, des, A, gam0, out, keep_edges=False):
                        N_rel=abs(bw['Nq']-Nf)/abs(Nf), total_forward=Ff-entry['lam']*Nf, total_backward=bw['Fc']-entry['lam']*bw['Nq'],
                        dp_value=entry['dsum'], bw_s=t_bw)
     tf, tb = d['check2']['total_forward'], d['check2']['total_backward']
-    d['check2']['total_rel'] = abs(tb-tf)/abs(tf); d['check2']['dp_vs_forward_rel'] = abs(entry['dsum']-tf)/abs(tf)
-    d['check2']['pass_'] = bool(d['check2']['F_rel'] <= FB_TOL and d['check2']['N_rel'] <= FB_TOL and d['check2']['total_rel'] <= FB_TOL
-                                and d['check2']['dp_vs_forward_rel'] <= FB_TOL)
+    d['check2']['total_rel'] = abs(tb-tf)/abs(tf)
+    # diagnostic (DECISION 11-15): the DP's own value V_lambda against the forward total F - lambda N of its argmax table. The DP forms c
+    # from the per-node arrays u_{i-L} (round4/trigger_dp), the forward from cfun at (r - L h - x)/sigma: a different rounding path; the
+    # round-4 archive has the same differences bit for bit (scan_U_W.json 'dp_minus_policy'). Reported, not part of the pass rule.
+    d['check2']['dp_vs_forward_abs'] = abs(entry['dsum']-tf); d['check2']['dp_vs_forward_rel'] = abs(entry['dsum']-tf)/abs(tf)
+    d['check2']['dp_vs_forward_rel_to_F_plus_lamN'] = abs(entry['dsum']-tf)/(Ff+entry['lam']*Nf)
+    d['check2']['rule'] = 'forward vs fixed-policy backward recursion: F, N and F - lambda N relative errors <= 1e-12'
+    d['check2']['pass_'] = bool(d['check2']['F_rel'] <= FB_TOL and d['check2']['N_rel'] <= FB_TOL and d['check2']['total_rel'] <= FB_TOL)
     # check 5
     d['check5'] = e11.check_edges(tab)
     # sigma/120
@@ -84,7 +89,8 @@ def analyse(entry, cell, des, A, gam0, out, keep_edges=False):
         f"g' {gp!r} D-eff {d['deff_lower']!r}; EN24 {rec['EN']!r} EN120 {rf['EN']!r} (<= B: {d['budget120_pass']}); I120 {rf['logdet']!r}; "
         f"E_j {d['tangent_overestimate']!r}, E_0 {d['E0']!r}; edge quantiles 10/25/50/75/90 {sres['edge_quantiles']!r}; "
         f"body send share {sres['body_send_share']!r} info/send {sres['body_info_per_send']!r}; check2 {d['check2']['pass_']} "
-        f"(F {d['check2']['F_rel']:.1e}, N {d['check2']['N_rel']:.1e}, total {d['check2']['total_rel']:.1e}, DP {d['check2']['dp_vs_forward_rel']:.1e}); "
+        f"(F {d['check2']['F_rel']:.1e}, N {d['check2']['N_rel']:.1e}, total {d['check2']['total_rel']:.1e}; diag DP-forward abs {d['check2']['dp_vs_forward_abs']:.1e}, "
+        f"rel {d['check2']['dp_vs_forward_rel']:.1e}, rel to F+lamN {d['check2']['dp_vs_forward_rel_to_F_plus_lamN']:.1e}); "
         f"check5 {d['check5']['pass_']} (min L {d['check5']['min_L']}, min U {d['check5']['min_U']}); check6 {d['check6']}"
         + (f"; round-7 f=5 path {d['round7_f5']}" if 'round7_f5' in d else ''))
     for b in sres['bins']:
@@ -250,7 +256,10 @@ def stage_post(out):
         '2_forward_backward': dict(pass_=all(d['check2']['pass_'] for d in all_tabs),
                                    worst_F_rel=max(d['check2']['F_rel'] for d in all_tabs), worst_N_rel=max(d['check2']['N_rel'] for d in all_tabs),
                                    worst_total_rel=max(d['check2']['total_rel'] for d in all_tabs),
-                                   worst_dp_vs_forward_rel=max(d['check2']['dp_vs_forward_rel'] for d in all_tabs), tol=FB_TOL),
+                                   tol=FB_TOL, rule='forward vs fixed-policy backward recursion (F, N, F - lambda N), relative <= 1e-12',
+                                   diag_worst_dp_vs_forward_abs=max(d['check2']['dp_vs_forward_abs'] for d in all_tabs),
+                                   diag_worst_dp_vs_forward_rel=max(d['check2']['dp_vs_forward_rel'] for d in all_tabs),
+                                   diag_worst_dp_vs_forward_rel_to_F_plus_lamN=max(d['check2']['dp_vs_forward_rel_to_F_plus_lamN'] for d in all_tabs)),
         '3_conservation': dict(pass_=bool(mdev <= e11.TOL24 and mdev120 <= e11.TOL120 and minm >= 0), max_mass_dev_sigma24_all_runs=mdev,
                                max_mass_dev_sigma120=mdev120, min_m=minm, n_dp_runs=sum(len(sc['runs']) for sc in scans.values()),
                                note='asserted at every step of every forward (sigma/24: 1e-12, sigma/120: 1e-10, DECISION 11-5), '
