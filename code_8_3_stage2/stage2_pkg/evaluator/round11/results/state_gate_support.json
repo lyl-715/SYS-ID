@@ -1,0 +1,20 @@
+{
+ "code_comparison_nodes": "only the nodes stored in round4/results/table_U_W.npz: [start[r], start[r] + width[r] - 1] per step",
+ "stored_nodes_total": 21115776,
+ "codes_differing_nodes": 0,
+ "gate_final_table": {
+  "zero_mass_outside_round4_windows": true,
+  "EN": 316.6035659260541,
+  "logdet": 205.03141309913676,
+  "min_margin_lo": 866,
+  "min_margin_hi": 860
+ },
+ "round4_archived_table": {
+  "zero_mass_outside_round4_windows": true,
+  "EN": 316.6035659260541,
+  "logdet": 205.03141309913676,
+  "min_margin_lo": 866,
+  "min_margin_hi": 860
+ },
+ "pass_": true
+}

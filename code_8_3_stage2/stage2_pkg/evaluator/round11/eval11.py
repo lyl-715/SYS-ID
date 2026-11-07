@@ -228,10 +228,11 @@ def warmup():
 
 
 # --- forward and backward on a full grid --------------------------------------------------------------------------------
-def forward(z, dz, xk, ka, kb, rows, X, tol, gam=None, stats=None):
+def forward(z, dz, xk, ka, kb, rows, X, tol, gam=None, stats=None, window=None):
     """forward on all nodes z (z_i = z_0 + i dz) at every step; rows(p) -> (L, U) int64 over the full grid; kernel of step p on
     [ka[p], kb[p]] (asserted to end in exact zeros). stats(p, m_k, qhat, L, U, lo, hi, c) is called once per step k >= 2 with the
-    pre-update mass (read-only views)."""
+    pre-update mass (read-only views). window = (wa, wb): additionally assert that the mass is exactly zero outside [wa[p], wb[p]]
+    at every array index p (the round-4 support windows; used for every old-action-set table, clarification (3))."""
     ng = z.size; Kn = xk.size; L_ = ng+2*X
     gE, LgE, SgE = (np.empty(L_) for _ in range(3))
     Bl, Bu, SBl, PBu = (np.empty(ng+3) for _ in range(4)); Ph = np.empty(ng); qn = np.empty(ng)
@@ -244,6 +245,8 @@ def forward(z, dz, xk, ka, kb, rows, X, tol, gam=None, stats=None):
     if not (m[0] == 0.0 and m[-1] == 0.0): raise AssertionStop("initialisation: non-zero mass at a grid end")
     nz = np.flatnonzero(m); lo, hi = int(nz[0]), int(nz[-1])
     mass[0] = m.sum(); minm[0] = m.min(); nnz[0] = nz.size; slo[0], shi[0] = lo, hi
+    if window is not None and not (lo >= window[0][1] and hi <= window[1][1]):
+        raise AssertionStop(f"m_2: non-zero mass outside the round-4 support window [{window[0][1]}, {window[1][1]}]")
     for p in range(1, Kn):
         A, Bb = int(ka[p]), int(kb[p])
         Mm, Mp = rows(p)
@@ -264,6 +267,11 @@ def forward(z, dz, xk, ka, kb, rows, X, tol, gam=None, stats=None):
         if abs(mass[p]-1) > tol or minm[p] < 0:
             raise AssertionStop(f"step {p+1}: |sum m - 1| = {abs(mass[p]-1)!r} (tol {tol}) or min m = {minm[p]!r}")
         if stats is not None: stats(p, m, qn, Mm, Mp, lo, hi, c)
+        if window is not None:
+            pn = p+1 if p < Kn-1 else p
+            if not (lo_n >= window[0][pn] and hi_n <= window[1][pn]):
+                raise AssertionStop(f"step {p+1}: non-zero mass on a new support node, outside the round-4 support window "
+                                    f"[{window[0][pn]}, {window[1][pn]}] (support [{lo_n}, {hi_n}])")
         slo[p], shi[p] = lo_n, hi_n
         Q[p] = en; EN += en; m, mn = mn, m; lo, hi = int(lo_n), int(hi_n)
     out = dict(EN=EN, ENP=ENP, W=W, Q=Q, mass=mass, minm=minm, kmass=kmass, G=ng, nnz=nnz, sup_lo=slo, sup_hi=shi,
@@ -299,9 +307,10 @@ def record(fw):
     return dict(EN=float(fw['EN']), EN_P=float(fw['ENP']), S=float(fw['W'].sum()), logdet=float(ld), logdet_sign=float(sgn),
                 mass_dev_max=fw['mass_dev_max'], min_m=fw['min_m']), J
 
-def evaluate(table, gam=None, stats=None):
-    """sigma/24 design-grid evaluation of a Table11 (or any object with rows_full(p))."""
-    fw = forward(Z, DZ, XK, KA, KB, table.rows_full, X_PAD, TOL24, gam=gam, stats=stats)
+def evaluate(table, gam=None, stats=None, window=None):
+    """sigma/24 design-grid evaluation of a Table11 (or any object with rows_full(p)); window=True asserts zero mass outside the
+    round-4 support windows [KA, KB] at every step."""
+    fw = forward(Z, DZ, XK, KA, KB, table.rows_full, X_PAD, TOL24, gam=gam, stats=stats, window=((KA, KB) if window else None))
     rec, J = record(fw)
     return rec, J, fw
 

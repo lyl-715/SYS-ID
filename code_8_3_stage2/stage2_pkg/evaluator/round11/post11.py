@@ -65,21 +65,21 @@ def analyse(entry, cell, des, A, gam0, out, keep_edges=False):
     rf, Jf, ff = e11.evaluate_refined(tab, 5)
     d['EN120'] = rf['EN']; d['I120'] = rf['logdet']; d['S120'] = rf['S']; d['mass_dev_max120'] = rf['mass_dev_max']; d['min_m120'] = rf['min_m']
     d['budget120_pass'] = bool(rf['EN'] <= B); d['slack120'] = B-rf['EN']; d['slack24'] = B-rec['EN']; d['wall120_s'] = rf['wall_s']
-    d['check6'] = bool(I <= A['U_cert'])
-    # old-set tables: the frozen round-7 path at f = 5 as a cross-check (support must stay in the 88-sigma windows)
+    # check 6 (clarification 2): applies only to tables whose sigma/120 E[N] <= B
+    d['check6_applies'] = d['budget120_pass']; d['check6'] = bool(I <= A['U_cert']) if d['budget120_pass'] else None
+    # old-set tables: zero mass outside the round-4 windows asserted at every step (clarification 3), then the frozen round-7 path at
+    # f = 5 as a cross-check of the sigma/120 entry
     if cell == 'old':
-        inside = bool((fw['sup_lo'][1:-1] >= e11.KA[2:]).all() and (fw['sup_hi'][1:-1] <= e11.KB[2:]).all())
-        d['support_inside_88'] = inside
-        if inside:
-            sys.path.insert(0, R7); import evaluator_refine as er
-            codes = np.asarray(tab.codes)
-            cw = np.full((K-1, int(e11.KB[1]-e11.KA[1]+1)), 0xFFFF, np.uint16)
-            for r in range(K-1):
-                a_, b_ = int(e11.KA[r+1]), int(e11.KB[r+1]); cw[r, :b_-a_+1] = codes[r, a_:b_+1]
-            lt = er.rb.LookupTable(cw, e11.KA[1:], (e11.KB-e11.KA+1)[1:])
-            r7, J7, _ = er.evaluate(lt, 5, xth=e11.XK)
-            d['round7_f5'] = dict(EN=r7['EN'], logdet=r7['logdet'], EN_rel=rr.relerr(r7['EN'], rf['EN']), logdet_diff=r7['logdet']-rf['logdet'],
-                                  bitwise=bool(r7['EN'] == rf['EN'] and r7['logdet'] == rf['logdet']), route=r7['route'])
+        e11.evaluate(tab, window=True); d['zero_mass_outside_round4_windows'] = True
+        sys.path.insert(0, R7); import evaluator_refine as er
+        codes = np.asarray(tab.codes)
+        cw = np.full((K-1, int(e11.KB[1]-e11.KA[1]+1)), 0xFFFF, np.uint16)
+        for r in range(K-1):
+            a_, b_ = int(e11.KA[r+1]), int(e11.KB[r+1]); cw[r, :b_-a_+1] = codes[r, a_:b_+1]
+        lt = er.rb.LookupTable(cw, e11.KA[1:], (e11.KB-e11.KA+1)[1:])
+        r7, J7, _ = er.evaluate(lt, 5, xth=e11.XK)
+        d['round7_f5'] = dict(EN=r7['EN'], logdet=r7['logdet'], EN_rel=rr.relerr(r7['EN'], rf['EN']), logdet_diff=r7['logdet']-rf['logdet'],
+                              bitwise=bool(r7['EN'] == rf['EN'] and r7['logdet'] == rf['logdet']), route=r7['route'])
     out(f"POST {entry['label']} ({cell} round {entry['round']}{'' if entry.get('accepted', True) else ', rejected'}): I {I!r} dI {dI!r} "
         f"g' {gp!r} D-eff {d['deff_lower']!r}; EN24 {rec['EN']!r} EN120 {rf['EN']!r} (<= B: {d['budget120_pass']}); I120 {rf['logdet']!r}; "
         f"E_j {d['tangent_overestimate']!r}, E_0 {d['E0']!r}; edge quantiles 10/25/50/75/90 {sres['edge_quantiles']!r}; "
@@ -194,8 +194,9 @@ def stage_post(out):
         for e in rounds:
             p_ = os.path.join(rr.RES, f"scan_{e['label']}.json")
             if os.path.exists(p_): scans[e['label']] = json.load(open(p_))
-    feas = [(lab, r['logdet']) for lab, sc in scans.items() for r in sc['runs'] if r['feasible']]
-    worst6 = max(feas, key=lambda x: x[1])
+    feas = [(lab, r['run'], r['logdet']) for lab, sc in scans.items() for r in sc['runs'] if r['feasible']]
+    over = [(lab, r['run'], r['logdet']) for lab, sc in scans.items() for r in sc['runs'] if not r['feasible'] and r['logdet'] > A['U_cert']]
+    applies = [d for d in all_tabs if d['check6_applies']]
     mdev = max([r['mass_dev_max'] for sc in scans.values() for r in sc['runs']])
     mdev120 = max(d['mass_dev_max120'] for d in all_tabs)
     minm = min([r['min_m'] for sc in scans.values() for r in sc['runs']]+[d['min_m120'] for d in all_tabs])
@@ -211,15 +212,24 @@ def stage_post(out):
                                note='asserted at every step of every forward (sigma/24: 1e-12, sigma/120: 1e-10, DECISION 11-5), '
                                     'together with min m >= 0 and zero mass at the first and last grid node; a failure would have stopped the run'),
         '5_edges': dict(pass_=all(d['check5']['pass_'] for d in all_tabs), per_table={d['label']: d['check5'] for d in all_tabs}),
-        '6_ucert': dict(pass_=bool(worst6[1] <= A['U_cert']), max_I_feasible=worst6[1], max_I_scan=worst6[0], U_cert=A['U_cert'],
-                        n_feasible_tables=len(feas)),
+        '6_ucert': dict(pass_=all(d['I'] <= A['U_cert'] for d in applies), U_cert=A['U_cert'],
+                        rule='applies only to tables with sigma/120 E[N] <= B (clarification 2): every reported table that passes the '
+                             'sigma/120 budget; scan candidates are not re-evaluated on sigma/120 and are reported for information only',
+                        per_table={d['label']: dict(I=d['I'], EN120=d['EN120'], applies=d['check6_applies'], margin=A['U_cert']-d['I']) for d in all_tabs},
+                        max_I_applicable=max(d['I'] for d in applies) if applies else None,
+                        info_scan_candidates_sigma24_feasible=dict(n=len(feas), max_I=max(x[2] for x in feas), at=max(feas, key=lambda x: x[2])[:2],
+                                                                   n_above_Ucert=sum(x[2] > A['U_cert'] for x in feas)),
+                        info_scan_candidates_over_budget_above_Ucert=len(over)),
         '7_budget120': dict(pass_=all(d['budget120_pass'] for d in all_tabs), per_table={d['label']: dict(EN120=d['EN120'], slack120=d['slack120'])
                                                                                        for d in all_tabs}),
     }
-    if not checks['6_ucert']['pass_']: out("CHECK 6 FAILED: a feasible table exceeds U_cert -- STOP (Round 10 or this round is wrong)")
+    if not checks['6_ucert']['pass_']:
+        out("CHECK 6 FAILED: a table with sigma/120 E[N] <= B exceeds U_cert -- STOP (Round 10 or this round is wrong)")
+        rr.jdump(dict(res, checks=checks), os.path.join(rr.RES, 'round11_stopped_check6.json'))
+        raise rr.Stop("check 6 failed")
     # best cell: largest I among the cells whose table passes sigma/120 budget and the per-table checks
     elig = {cn: c for cn, c in res['cells'].items() if c['budget120_pass'] and res['tables'][c['table']]['check2']['pass_']
-            and res['tables'][c['table']]['check5']['pass_'] and res['tables'][c['table']]['check6']}
+            and res['tables'][c['table']]['check5']['pass_'] and res['tables'][c['table']]['check6'] is True}
     best = max(elig, key=lambda cn: (elig[cn]['I'], -list(res['cells']).index(cn)))
     res['best_cell'] = best
     bt = res['tables'][res['cells'][best]['table']]

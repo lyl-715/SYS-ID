@@ -246,7 +246,7 @@ class Scan11:
         t0 = time.perf_counter(); dsum, nbad = self.des.dp(self.acts, self.gam, lam, codes); t_dp = time.perf_counter()-t0
         codes.flush(); del codes
         codes = np.load(tpath, mmap_mode='r'); tab = e11.Table11(codes, self.acts, f"{self.label}_r{j:02d}")
-        t0 = time.perf_counter(); rec, J, fw = e11.evaluate(tab, gam=self.gam); t_fw = time.perf_counter()-t0
+        t0 = time.perf_counter(); rec, J, fw = e11.evaluate(tab, gam=self.gam, window=(self.acts.name == 'old')); t_fw = time.perf_counter()-t0
         W = fw['W']; F = float(self.gam[1:]@W[1:]); EN = rec['EN']; N = EN-1.0
         dual = self.g1+dsum+lam*(B-1.0)
         r = dict(run=j, phase=phase, lam=lam, lam_over_gbar=lam/self.gbar, dual=dual, EN=EN, N=N, S=rec['S'], F=F,

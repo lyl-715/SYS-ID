@@ -8,12 +8,15 @@ the work directory $ROUND11_WORK, default round11/work/, which is not committed)
                against the frozen path; the per-step DP arrays bitwise against full scipy arrays; sigma/120 eval11 on the round-4
                table against round 7's archived f = 5 value.
   gate   §2.4  edge-code path (dp11) with the OLD action set, A_0, nominal scan: every run against round4/results/scan_U_W.json,
-               the final table's codes against round4/results/table_U_W.npz bit for bit, E[N] to 1e-12, I to 1e-9. Blocking.
+               the final table's codes against round4/results/table_U_W.npz bit for bit on the nodes stored there, E[N] to 1e-12,
+               I to 1e-9. Blocking.
+  gatesupport  (clarification 3) zero mass on the new support nodes (outside the round-4 windows) at every step of the gate's
+               final table and of the archived round-4 table; from here on asserted in every forward of an old-action-set table.
   edge   §2.3  edge action set: A_0 scan, then the iteration of A (at most 3 rounds, acceptance I(T_j) > I(T_{j-1}) + 0.05).
   old    §2.3  old action set: iteration of A starting from the gate table (= old/A_0).
   post   §3-§5 per-table numbers, checks 1-7, Monte Carlo on the best table, figure, results/round11.json, packed tables.
 
-Usage (from this directory):  ROUND11_WORK=/path python3 run_round11.py inputs gate edge old post
+Usage (from this directory):  ROUND11_WORK=/path python3 run_round11.py inputs gate gatesupport edge old post
 """
 import os
 for _v in ('OMP_NUM_THREADS', 'OPENBLAS_NUM_THREADS', 'MKL_NUM_THREADS'): os.environ.setdefault(_v, '1')
@@ -254,6 +257,28 @@ def stage_gate(out):
     return gate
 
 
+def stage_gate_support(out):
+    """clarification (3): under the old action set no mass reaches the new support nodes (outside the round-4 windows [a_k, b_k]).
+    Asserted (exact zero) at every step of the forward of the gate's final table and of the archived round-4 table; the gate's code
+    comparison is restricted to the nodes stored in the archived table ([start, start + width - 1] of every step), as run."""
+    dp11.warmup()
+    g = load_state('gate'); e0 = load_state('old')['rounds'][0]
+    codes_w, start, width, lam4, run4 = round4_table()
+    res = dict(code_comparison_nodes='only the nodes stored in round4/results/table_U_W.npz: [start[r], start[r] + width[r] - 1] per step',
+               stored_nodes_total=int(width.sum()), codes_differing_nodes=g['codes_differing_nodes'])
+    for name, tab in (('gate_final_table', table_from(e0['table'], e11.old_set(), 'gate')),
+                      ('round4_archived_table', e11.from_round4(codes_w, start, width, e11.old_set()))):
+        rec, J, fw = e11.evaluate(tab, window=True)                      # raises AssertionStop on any non-zero mass outside
+        mass_out = 0.0
+        res[name] = dict(zero_mass_outside_round4_windows=True, EN=rec['EN'], logdet=rec['logdet'],
+                         min_margin_lo=int((fw['sup_lo'][:-1]-e11.KA[1:]).min()), min_margin_hi=int((e11.KB[1:]-fw['sup_hi'][:-1]).min()))
+        out(f"GATE-SUPPORT {name}: mass exactly zero on every new support node (outside [a_k, b_k]) at every step; EN {rec['EN']!r} "
+            f"logdet {rec['logdet']!r}; smallest distance of the mass support to the window ends {res[name]['min_margin_lo']} / {res[name]['min_margin_hi']} nodes")
+    res['pass_'] = True
+    jdump(res, state_path('gate_support'))
+    return res
+
+
 def stage_cell(cell, out):
     dp11.warmup(); des = dp11.Design11(out)
     A = archived_inputs(); rec_sod, J_sod, W_sod = des.sod_reference()
@@ -278,7 +303,7 @@ def stage_cell(cell, out):
     return rounds
 
 
-STAGES = ('inputs', 'gate', 'edge', 'old', 'post')
+STAGES = ('inputs', 'gate', 'gatesupport', 'edge', 'old', 'post')
 
 def main():
     args = [a for a in sys.argv[1:]]
@@ -291,6 +316,7 @@ def main():
         t0 = time.perf_counter()
         if stg == 'inputs': stage_inputs(out)
         elif stg == 'gate': stage_gate(out)
+        elif stg == 'gatesupport': stage_gate_support(out)
         elif stg in ('edge', 'old'): stage_cell(stg, out)
         elif stg == 'post':
             import post11; post11.stage_post(out)

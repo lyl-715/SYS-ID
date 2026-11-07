@@ -1,0 +1,27 @@
+{
+ "cell": "edge",
+ "rounds": [
+  {
+   "round": 0,
+   "label": "edge_j0",
+   "reference": "constant SoD (A_0 = J_SoD^-1)",
+   "I_ref": 197.20097668224076,
+   "gbar": 0.021587304272182303,
+   "gamma1": 0.02987366782571452,
+   "lam": 0.06022857891938863,
+   "lam_over_gbar": 2.7900000000000005,
+   "run": 10,
+   "n_runs": 12,
+   "EN": 316.61009947208913,
+   "S": 1319.979070171587,
+   "I": 207.10197960571716,
+   "F": 30.28222222730798,
+   "tangent_overestimate": 11.411092971657297,
+   "table": "/tmp/claude-0/-home-user-SYS-ID/67f6c0d6-50d6-5a80-a0af-f1131227ebfe/scratchpad/work/edge_j0_r10.npy",
+   "J": "/tmp/claude-0/-home-user-SYS-ID/67f6c0d6-50d6-5a80-a0af-f1131227ebfe/scratchpad/work/edge_j0_r10_J.npy",
+   "status": "done",
+   "wall_s": 775.3502635740001,
+   "accepted": true
+  }
+ ]
+}
