@@ -15,6 +15,7 @@ the work directory $ROUND11_WORK, default round11/work/, which is not committed)
   edge   §2.3  edge action set: A_0 scan, then the iteration of A (at most 3 rounds, acceptance I(T_j) > I(T_{j-1}) + 0.05).
   old    §2.3  old action set: iteration of A starting from the gate table (= old/A_0).
   post   §3-§5 per-table numbers, checks 1-7, Monte Carlo on the best table, figure, results/round11.json, packed tables.
+  figure       redraw results/fig_edge_positions.png from the two tables named in round11.json (no other output changes).
 
 Usage (from this directory):  ROUND11_WORK=/path python3 run_round11.py inputs gate gatesupport edge old post
 """
@@ -303,7 +304,7 @@ def stage_cell(cell, out):
     return rounds
 
 
-STAGES = ('inputs', 'gate', 'gatesupport', 'edge', 'old', 'post')
+STAGES = ('inputs', 'gate', 'gatesupport', 'edge', 'old', 'post', 'figure')
 
 def main():
     args = [a for a in sys.argv[1:]]
@@ -320,6 +321,8 @@ def main():
         elif stg in ('edge', 'old'): stage_cell(stg, out)
         elif stg == 'post':
             import post11; post11.stage_post(out)
+        elif stg == 'figure':
+            import post11; post11.stage_figure(out)
         out(f"=== ROUND 11 stage {stg} done in {time.perf_counter()-t0:.1f} s")
         cleanup_frozen(out)
 

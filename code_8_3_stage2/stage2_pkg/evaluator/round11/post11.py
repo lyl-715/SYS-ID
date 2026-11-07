@@ -104,30 +104,45 @@ def figure(edges_old, edges_new, lab_new, q_old, q_new, path):
     INK, INK2, GRID, SURF = '#0b0b0b', '#52514e', '#e4e3df', '#fcfcfb'; C1, C2 = '#2a78d6', '#eb6834'
     plt.rcParams.update({'axes.edgecolor': INK2, 'axes.labelcolor': INK, 'xtick.color': INK2, 'ytick.color': INK2,
                          'axes.facecolor': SURF, 'figure.facecolor': SURF, 'font.size': 10})
-    lo, hi, bw = -4.0, 8.0, 1/8
+    lo, hi, bw = -2.5, 4.5, 1/24
     bins = np.arange(lo, hi+bw/2, bw)
-    fig, axs = plt.subplots(2, 1, figsize=(9, 6.2), sharex=True, sharey=True, constrained_layout=True)
-    ymax = 0.0; hs = []
+    fig, axs = plt.subplots(2, 1, figsize=(9, 6.4), sharex=True, sharey=True, constrained_layout=True)
+    hs = []
     for (ev, w) in (edges_old, edges_new):
-        h, _ = np.histogram(np.clip(ev, lo, hi-1e-9), bins=bins, weights=w); h = h/w.sum()/bw; hs.append(h); ymax = max(ymax, h.max())
+        h, _ = np.histogram(np.clip(ev, lo, hi-1e-9), bins=bins, weights=w); hs.append(h/w.sum()/bw)
     for ax, (ev, w), h, col, lab, q in ((axs[0], edges_old, hs[0], C1, 'old action set, A$_0$ (round-4 table)', q_old),
                                         (axs[1], edges_new, hs[1], C2, lab_new, q_new)):
-        ax.bar(bins[:-1], h, width=bw*0.92, align='edge', color=col, linewidth=0)
-        for qq, v in zip(('10 %', '50 %', '90 %'), (q[0], q[2], q[4])):
-            ax.axvline(v, color=INK2, lw=1.0, ls='--')
-            ax.text(v, ymax*1.02, f"{qq}: {v:.2f}", rotation=0, ha='center', va='bottom', fontsize=9, color=INK)
+        ax.bar(bins[:-1], h, width=bw, align='edge', color=col, linewidth=0)
+        for v in (q[0], q[2], q[4]): ax.axvline(v, color=INK2, lw=1.0, ls='--')
         out_lo = float(w[ev < lo].sum()/w.sum()); out_hi = float(w[ev >= hi].sum()/w.sum())
-        ax.set_title(f"{lab}: mass outside the axis range {out_lo:.1%} (< {lo:g}) and {out_hi:.1%} (>= {hi:g}), stacked in the end bins",
-                     fontsize=10, color=INK, loc='left')
+        ax.set_title(f"{lab}\nquantiles 10 / 50 / 90 %: {q[0]:.2f} / {q[2]:.2f} / {q[4]:.2f} sigma (dashed); "
+                     f"mass below {lo:g}: {out_lo:.1%}, at or above {hi:g}: {out_hi:.1%} (in the end bins)", fontsize=10, color=INK, loc='left')
         ax.set_ylabel('mass density per sigma')
         ax.grid(True, axis='y', color=GRID, lw=0.6); ax.set_axisbelow(True)
         for sp in ('top', 'right'): ax.spines[sp].set_visible(False)
-    axs[0].set_ylim(0, ymax*1.15)
-    axs[1].set_xlabel(r'facing-edge offset: near-side half-width $-\ |r-\bar x_k|$ (sigma; > 0: $\bar x_k$ inside the window)')
-    fig.suptitle('Where the facing window edge sits relative to the predicted output (mass-weighted over all steps k >= 2 and reference values r).\n'
-                 'Look at the spread: the edge set concentrates the facing edge in a narrow band; dashed lines = 10/50/90 % quantiles.',
-                 fontsize=10, color=INK, x=0.01, ha='left')
+    axs[1].set_xlabel(r'facing-edge offset = near-side half-width $-\ |r-\bar x_k|$ (sigma; > 0: $\bar x_k$ inside the window); bins of sigma/24')
+    fig.suptitle('Facing-edge position relative to the predicted output, mass-weighted over all steps k >= 2 and reference values r '
+                 '(same axes).\nWhat to look at: the old table spreads the facing edge over about 1-3 sigma; the edge table puts it in a '
+                 'narrow band at 1.25-1.8 sigma.', fontsize=10, color=INK, x=0.01, ha='left')
     fig.savefig(path, dpi=130); plt.close(fig)
+
+
+def stage_figure(out):
+    """redraw results/fig_edge_positions.png from the two tables named in round11.json (recomputes their edge statistics only)."""
+    res = json.load(open(os.path.join(rr.RES, 'round11.json')))
+    cells = {c: rr.load_state(c)['rounds'] for c in ('old', 'edge')}
+    dp11.warmup(); des = dp11.Design11(out); gam0 = gamma0(des)
+    eds = {}
+    for c, lab in (('old', res['figure']['old']), ('edge', res['figure']['edge'])):
+        e = [x for x in cells[c] if x.get('label') == lab][0]
+        tab = rr.table_from(e['table'], acts_of(c), lab); st = e11.Stats(gam0[0])
+        e11.evaluate(tab, stats=st); sres, ev, w = st.result()
+        assert sres['edge_quantiles'] == res['tables'][lab]['shape']['edge_quantiles']
+        eds[lab] = (ev.astype(np.float32), w.astype(np.float32), sres['edge_quantiles'])
+    lo_, le_ = res['figure']['old'], res['figure']['edge']
+    lab_new = f"edge action set, {'A$_0$' if le_ == res['cells']['edge/A0']['table'] else 'iterated A, accepted round 1'} ({le_})"
+    figure(eds[lo_][:2], eds[le_][:2], lab_new, eds[lo_][2], eds[le_][2], os.path.join(rr.RES, 'fig_edge_positions.png'))
+    out(f"FIGURE results/fig_edge_positions.png redrawn from {lo_} and {le_} (edge quantiles identical to round11.json)")
 
 
 def pack(entry, cell, path, note_extra=''):
@@ -333,7 +348,7 @@ def stage_post(out):
     # figure: old table vs the best edge table (largest I among the edge rounds' cell tables)
     edge_best_lab = max((res['cells']['edge/A0']['table'], res['cells']['edge/iterated']['table']), key=lambda l: res['tables'][l]['I'])
     fig_path = os.path.join(rr.RES, 'fig_edge_positions.png')
-    lab_new = f"edge action set, {'A$_0$' if edge_best_lab == res['cells']['edge/A0']['table'] else 'iterated A'} ({edge_best_lab})"
+    lab_new = f"edge action set, {'A$_0$' if edge_best_lab == res['cells']['edge/A0']['table'] else 'iterated A, accepted round 1'} ({edge_best_lab})"
     figure(keep[res['cells']['old/A0']['table']], keep[edge_best_lab], lab_new, res['tables'][res['cells']['old/A0']['table']]['shape']['edge_quantiles'],
            res['tables'][edge_best_lab]['shape']['edge_quantiles'], fig_path)
     res['figure'] = dict(path='results/fig_edge_positions.png', old=res['cells']['old/A0']['table'], edge=edge_best_lab)
