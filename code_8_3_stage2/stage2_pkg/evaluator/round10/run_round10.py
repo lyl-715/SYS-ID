@@ -270,7 +270,17 @@ def main():
                           V1_minus_I_SoD=res['budgets']['B316']['V1_f']-A['I_SoD'], V1_ucert_minus_I_SoD=res['budgets']['B316']['V1_u_cert']-A['I_SoD'],
                           UB_minus_V1_B316=res['budgets']['B316']['f']-res['budgets']['B316']['V1_f'],
                           delta_I_UB_B263_vs_SoD_M581=U263-A['I_SoD_T4'], delta_I_T4_vs_SoD_M581=A['I_T4']-A['I_SoD_T4'],
-                          full_minus_UB316=ld_full-U316)
+                          full_minus_UB316=ld_full-U316,
+                          deff_upper_B316=float(np.exp(-res['budgets']['B316']['g_L']/p)), deff_upper_B263=float(np.exp(-res['budgets']['B263']['g_L']/p)))
+    # sensitivity of the gap interval to the quadrature grid of I_table (descriptive; DECISION 10-10): the same two tables on
+    # sigma/120 as archived by round 7 Part D (L = log det J_table(theta_0) on sigma/120)
+    L120 = dict(B316=pdm['nominal']['m000']['L'], B263=pdm['nominal']['T4']['L'])
+    for tag in ('B316', 'B263'):
+        d = res['budgets'][tag]
+        res['derived'][f'I_table_sigma120_{tag}'] = L120[tag]
+        res['derived'][f'g_L_sigma120_{tag}'] = d['f']-L120[tag]; res['derived'][f'g_U_sigma120_{tag}'] = d['u_cert']-L120[tag]
+    res['derived']['I_table_sigma120_source'] = ('round7/results/partD_match.json["nominal"]["m000"]["L"] (table U/W = m000), '
+                                                 '["nominal"]["T4"]["L"] (T4)')
     for k, v in res['derived'].items(): out(f"DERIVED {k} = {v!r}")
 
     # ---------------------------------------------------------------- figure ------------------------------------------------
