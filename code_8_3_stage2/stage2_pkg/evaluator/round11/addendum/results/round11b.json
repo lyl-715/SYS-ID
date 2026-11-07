@@ -1,0 +1,952 @@
+{
+ "class_": {
+  "name": "S u S'",
+  "description": {
+   "name": "S u S'",
+   "blocks": [
+    {
+     "E": [
+      "1",
+      "1.25",
+      "1.5",
+      "1.75",
+      "2",
+      "2.25",
+      "2.5",
+      "3",
+      "4",
+      "inf"
+     ],
+     "MIN_grid": 48,
+     "MIN_sigma": 2.0,
+     "n_actions": 100
+    },
+    {
+     "E": [
+      "0.5",
+      "0.75",
+      "1.0",
+      "1.1",
+      "1.2",
+      "1.3",
+      "1.4",
+      "1.5",
+      "1.6",
+      "1.7",
+      "1.8",
+      "1.9",
+      "2.0",
+      "2.1",
+      "2.2",
+      "2.3",
+      "2.4",
+      "2.5",
+      "2.6",
+      "2.7",
+      "2.8",
+      "2.9",
+      "3.0",
+      "3.5",
+      "4",
+      "5",
+      "6",
+      "inf"
+     ],
+     "MIN_grid": 24,
+     "MIN_sigma": 1.0,
+     "n_actions": 784
+    }
+   ],
+   "n_actions": 884,
+   "code": "off_b + (j_lo - lo_b) n_b + (j_hi - lo_b), blocks in the listed order"
+  },
+  "chosen": "user, 2026-11-07, after the predictions commit (DECISION 11b-2)"
+ },
+ "inputs": {
+  "I_T1": 207.35521730257756,
+  "EN24_T1": 316.7261244018059,
+  "lam_T1": 0.01907644076499873,
+  "gbar": 0.006591104597771138,
+  "gamma1": 0.009447863192807387,
+  "gamma_sum": 32.95837974745072,
+  "lam0": 0.032955522988855686,
+  "actions": {
+   "S": {
+    "name": "S",
+    "blocks": [
+     {
+      "E": [
+       "1",
+       "1.25",
+       "1.5",
+       "1.75",
+       "2",
+       "2.25",
+       "2.5",
+       "3",
+       "4",
+       "inf"
+      ],
+      "MIN_grid": 48,
+      "MIN_sigma": 2.0,
+      "n_actions": 100
+     }
+    ],
+    "n_actions": 100,
+    "code": "off_b + (j_lo - lo_b) n_b + (j_hi - lo_b), blocks in the listed order"
+   },
+   "S'": {
+    "name": "S'",
+    "blocks": [
+     {
+      "E": [
+       "0.5",
+       "0.75",
+       "1.0",
+       "1.1",
+       "1.2",
+       "1.3",
+       "1.4",
+       "1.5",
+       "1.6",
+       "1.7",
+       "1.8",
+       "1.9",
+       "2.0",
+       "2.1",
+       "2.2",
+       "2.3",
+       "2.4",
+       "2.5",
+       "2.6",
+       "2.7",
+       "2.8",
+       "2.9",
+       "3.0",
+       "3.5",
+       "4",
+       "5",
+       "6",
+       "inf"
+      ],
+      "MIN_grid": 24,
+      "MIN_sigma": 1.0,
+      "n_actions": 784
+     }
+    ],
+    "n_actions": 784,
+    "code": "off_b + (j_lo - lo_b) n_b + (j_hi - lo_b), blocks in the listed order"
+   },
+   "union": {
+    "name": "S u S'",
+    "blocks": [
+     {
+      "E": [
+       "1",
+       "1.25",
+       "1.5",
+       "1.75",
+       "2",
+       "2.25",
+       "2.5",
+       "3",
+       "4",
+       "inf"
+      ],
+      "MIN_grid": 48,
+      "MIN_sigma": 2.0,
+      "n_actions": 100
+     },
+     {
+      "E": [
+       "0.5",
+       "0.75",
+       "1.0",
+       "1.1",
+       "1.2",
+       "1.3",
+       "1.4",
+       "1.5",
+       "1.6",
+       "1.7",
+       "1.8",
+       "1.9",
+       "2.0",
+       "2.1",
+       "2.2",
+       "2.3",
+       "2.4",
+       "2.5",
+       "2.6",
+       "2.7",
+       "2.8",
+       "2.9",
+       "3.0",
+       "3.5",
+       "4",
+       "5",
+       "6",
+       "inf"
+      ],
+      "MIN_grid": 24,
+      "MIN_sigma": 1.0,
+      "n_actions": 784
+     }
+    ],
+    "n_actions": 884,
+    "code": "off_b + (j_lo - lo_b) n_b + (j_hi - lo_b), blocks in the listed order"
+   }
+  },
+  "edge_checks": {
+   "S": {
+    "violations": 0,
+    "max_lower_offset_grid": 0.9998607535003543,
+    "max_upper_offset_grid": 0.9999554363770167,
+    "min_frac_dist_nonint": null,
+    "pass_": true
+   },
+   "S'": {
+    "violations": 0,
+    "max_lower_offset_grid": 0.9999647259693414,
+    "max_upper_offset_grid": 0.9999554363770167,
+    "min_frac_dist_nonint": 3.527404805936385e-05,
+    "pass_": true
+   },
+   "union": {
+    "violations": 0,
+    "max_lower_offset_grid": 0.9999647259693414,
+    "max_upper_offset_grid": 0.9999554363770167,
+    "min_frac_dist_nonint": 3.527404805936385e-05,
+    "pass_": true
+   }
+  },
+  "rows_differences": 0,
+  "T1_vs_Sprime": {
+   "mass_share_lower_not_in_Sprime": 0.6553581280897711,
+   "mass_share_upper_not_in_Sprime": 0.6870643629389156,
+   "mass_share_window_not_in_Sprime": 0.9768539841773252,
+   "info_share_window_not_in_Sprime": 0.9758573842782651
+  },
+  "S_subset_union": true,
+  "Sprime_subset_union": true,
+  "archived": {
+   "I_T1": 207.35521730257756,
+   "gbar": 0.006591104597771138,
+   "gamma1": 0.009447863192807387,
+   "min_dual_S": 9.059544225542712,
+   "ub_sod_S": 207.41476152812027
+  },
+  "sources": {
+   "I_T1": "round11/results/round11.json[\"tables\"][\"edge_j1\"][\"I\"]",
+   "gbar": "round11/results/scan_edge_j2.json[\"gbar\"]",
+   "gamma1": "round11/results/scan_edge_j2.json[\"gamma1\"]",
+   "min_dual_S": "round11/results/scan_edge_j2.json[\"min_dual\"]",
+   "ub_sod_S": "round11/results/round11.json[\"ub_sod\"][\"UB_SoD\"]"
+  }
+ },
+ "check1": {
+  "n_runs": 2,
+  "status": "run cap (40 DP runs) reached",
+  "rows": [
+   {
+    "run": 1,
+    "fields": {
+     "run": {
+      "new": 1,
+      "round11": 1
+     },
+     "phase": {
+      "new": "start",
+      "round11": "start"
+     },
+     "lam": {
+      "new": 0.032955522988855686,
+      "round11": 0.032955522988855686
+     },
+     "EN": {
+      "new": 77.05350164778999,
+      "round11": 77.05350164778999
+     },
+     "N": {
+      "new": 76.05350164778999,
+      "round11": 76.05350164778999
+     },
+     "F": {
+      "new": 3.3596816121695294,
+      "round11": 3.3596816121695294
+     },
+     "dsum": {
+      "new": 0.853298690232889,
+      "round11": 0.853298690232889
+     },
+     "S": {
+      "new": 492.43240575604136,
+      "round11": 492.43240575604136
+     },
+     "logdet": {
+      "new": 198.43541504564934,
+      "round11": 198.43541504564934
+     },
+     "dual": {
+      "new": 11.273136472253464,
+      "round11": 11.273136472253464
+     },
+     "feasible": {
+      "new": true,
+      "round11": true
+     }
+    },
+    "equal": {
+     "run": true,
+     "phase": true,
+     "lam": true,
+     "EN": true,
+     "N": true,
+     "F": true,
+     "dsum": true,
+     "S": true,
+     "logdet": true,
+     "dual": true,
+     "feasible": true
+    },
+    "dp_s": 42.571088611999926
+   },
+   {
+    "run": 2,
+    "fields": {
+     "run": {
+      "new": 2,
+      "round11": 2
+     },
+     "phase": {
+      "new": "scan",
+      "round11": "scan"
+     },
+     "lam": {
+      "new": 0.02636441839108455,
+      "round11": 0.02636441839108455
+     },
+     "EN": {
+      "new": 142.0542067483099,
+      "round11": 142.0542067483099
+     },
+     "N": {
+      "new": 141.0542067483099,
+      "round11": 141.0542067483099
+     },
+     "F": {
+      "new": 5.255381404194445,
+      "round11": 5.255381404194445
+     },
+     "dsum": {
+      "new": 1.5365692816597853,
+      "round11": 1.5365692816597853
+     },
+     "S": {
+      "new": 775.0378730744792,
+      "round11": 775.0378730744792
+     },
+     "logdet": {
+      "new": 202.46939653692604,
+      "round11": 202.46939653692604
+     },
+     "dual": {
+      "new": 9.874329079914808,
+      "round11": 9.874329079914808
+     },
+     "feasible": {
+      "new": true,
+      "round11": true
+     }
+    },
+    "equal": {
+     "run": true,
+     "phase": true,
+     "lam": true,
+     "EN": true,
+     "N": true,
+     "F": true,
+     "dsum": true,
+     "S": true,
+     "logdet": true,
+     "dual": true,
+     "feasible": true
+    },
+    "dp_s": 41.60086075700008
+   }
+  ],
+  "bit_for_bit": true,
+  "wall_s": 119.43726521399992,
+  "note": "first two lambda of the round-11 edge round-2 scan only (prompt \u00a74 item 1)"
+ },
+ "per_lambda": [
+  {
+   "run": 1,
+   "phase": "start",
+   "lam": 0.032955522988855686,
+   "lam_over_gbar": 5.0,
+   "EN": 81.34241116944376,
+   "F": 3.54373722607045,
+   "V": 0.8960110477957884,
+   "D": 11.315848829816364,
+   "D_Bprime": 11.31914438211525,
+   "dual_record": 11.315848829816364,
+   "dual_absdiff": 0.0,
+   "feasible": true,
+   "logdet": 198.9148054440745,
+   "UB": 209.67106613239392,
+   "UB_Bprime": 209.6743616846928
+  },
+  {
+   "run": 2,
+   "phase": "scan",
+   "lam": 0.02636441839108455,
+   "lam_over_gbar": 4.0,
+   "EN": 154.25659849953578,
+   "F": 5.679979408537252,
+   "V": 1.6394583245013414,
+   "D": 9.977218122756364,
+   "D_Bprime": 9.979854564595472,
+   "dual_record": 9.977218122756364,
+   "dual_absdiff": 0.0,
+   "feasible": true,
+   "logdet": 203.16290276263987,
+   "UB": 208.33243542533393,
+   "UB_Bprime": 208.33507186717304
+  },
+  {
+   "run": 3,
+   "phase": "scan",
+   "lam": 0.021091534712867642,
+   "lam_over_gbar": 3.2,
+   "EN": 268.32536430920675,
+   "F": 8.358833561755576,
+   "V": 2.720531360798776,
+   "D": 9.392628772041355,
+   "D_Bprime": 9.394737925512642,
+   "dual_record": 9.392628772041355,
+   "dual_absdiff": 0.0,
+   "feasible": true,
+   "logdet": 206.64257254899874,
+   "UB": 207.7478460746189,
+   "UB_Bprime": 207.7499552280902
+  },
+  {
+   "run": 4,
+   "phase": "scan",
+   "lam": 0.016873227770294114,
+   "lam_over_gbar": 2.56,
+   "EN": 428.86103431446406,
+   "F": 11.374476209544408,
+   "V": 4.15507952352564,
+   "D": 9.494647025158265,
+   "D_Bprime": 9.496334347935294,
+   "dual_record": 9.494647025158265,
+   "dual_absdiff": 0.0,
+   "feasible": false,
+   "logdet": 209.41768501008323,
+   "UB": 207.84986432773582,
+   "UB_Bprime": 207.85155165051285
+  },
+  {
+   "run": 5,
+   "phase": "bisect",
+   "lam": 0.01898238124158088,
+   "lam_over_gbar": 2.8800000000000003,
+   "EN": 335.75391309176587,
+   "F": 9.708520233861922,
+   "V": 3.354093833444531,
+   "D": 9.359926289882134,
+   "D_Bprime": 9.361824528006292,
+   "dual_record": 9.359926289882134,
+   "dual_absdiff": 0.0,
+   "feasible": false,
+   "logdet": 207.99120671256486,
+   "UB": 207.7151435924597,
+   "UB_Bprime": 207.71704183058387
+  },
+  {
+   "run": 6,
+   "phase": "bisect",
+   "lam": 0.02003695797722426,
+   "lam_over_gbar": 3.0400000000000005,
+   "EN": 302.0451149075864,
+   "F": 9.050777156560878,
+   "V": 3.0187488399100184,
+   "D": 9.35771377375011,
+   "D_Bprime": 9.359717469547832,
+   "dual_record": 9.35771377375011,
+   "dual_absdiff": 0.0,
+   "feasible": true,
+   "logdet": 207.35965621187847,
+   "UB": 207.71293107632766,
+   "UB_Bprime": 207.7149347721254
+  },
+  {
+   "run": 7,
+   "phase": "bisect",
+   "lam": 0.01950966960940257,
+   "lam_over_gbar": 2.9600000000000004,
+   "EN": 318.84850517906074,
+   "F": 9.3832618862814,
+   "V": 3.1821425643966865,
+   "D": 9.354541259535534,
+   "D_Bprime": 9.356492226496474,
+   "dual_record": 9.354541259535534,
+   "dual_absdiff": 0.0,
+   "feasible": false,
+   "logdet": 207.6845365187609,
+   "UB": 207.70975856211308,
+   "UB_Bprime": 207.71170952907403
+  },
+  {
+   "run": 8,
+   "phase": "bisect",
+   "lam": 0.019773313793313416,
+   "lam_over_gbar": 3.0000000000000004,
+   "EN": 311.2262722115121,
+   "F": 9.233545052832339,
+   "V": 3.099343625465446,
+   "D": 9.355025439954915,
+   "D_Bprime": 9.357002771334246,
+   "dual_record": 9.355025439954915,
+   "dual_absdiff": 0.0,
+   "feasible": true,
+   "logdet": 207.5399050113013,
+   "UB": 207.71024274253247,
+   "UB_Bprime": 207.7122200739118
+  },
+  {
+   "run": 9,
+   "phase": "bisect",
+   "lam": 0.019641491701357993,
+   "lam_over_gbar": 2.9800000000000004,
+   "EN": 315.065787166139,
+   "F": 9.30921533142835,
+   "V": 3.1404947791253766,
+   "D": 9.354535033939534,
+   "D_Bprime": 9.356499183109669,
+   "dual_record": 9.354535033939534,
+   "dual_absdiff": 0.0,
+   "feasible": true,
+   "logdet": 207.61306221218206,
+   "UB": 207.70975233651708,
+   "UB_Bprime": 207.71171648568722
+  },
+  {
+   "run": 10,
+   "phase": "bisect",
+   "lam": 0.01957558065538028,
+   "lam_over_gbar": 2.97,
+   "EN": 316.8433410803525,
+   "F": 9.344074393202016,
+   "V": 3.1612575954199977,
+   "D": 9.3544770703965,
+   "D_Bprime": 9.356434628462038,
+   "dual_record": 9.3544770703965,
+   "dual_absdiff": 0.0,
+   "feasible": true,
+   "logdet": 207.64665023111849,
+   "UB": 207.70969437297407,
+   "UB_Bprime": 207.7116519310396
+  },
+  {
+   "run": 11,
+   "phase": "bisect",
+   "lam": 0.019542625132391425,
+   "lam_over_gbar": 2.9650000000000003,
+   "EN": 317.8502922467304,
+   "F": 9.363769681900255,
+   "V": 3.1716831974349438,
+   "D": 9.354492282492618,
+   "D_Bprime": 9.356446545005857,
+   "dual_record": 9.354492282492618,
+   "dual_absdiff": 0.0,
+   "feasible": false,
+   "logdet": 207.66578107611576,
+   "UB": 207.7097095850702,
+   "UB_Bprime": 207.71166384758342
+  },
+  {
+   "run": 12,
+   "phase": "bisect",
+   "lam": 0.019559102893885853,
+   "lam_over_gbar": 2.9675000000000002,
+   "EN": 317.3365406012296,
+   "F": 9.353725410621717,
+   "V": 3.1664664639075797,
+   "D": 9.354480743924668,
+   "D_Bprime": 9.356436654214058,
+   "dual_record": 9.354480743924668,
+   "dual_absdiff": 0.0,
+   "feasible": false,
+   "logdet": 207.65605225064743,
+   "UB": 207.70969804650224,
+   "UB_Bprime": 207.71165395679162
+  }
+ ],
+ "ub": {
+  "I_T1": 207.35521730257756,
+  "p": 9,
+  "gamma1": 0.009447863192807387,
+  "B": 316.8921168493721,
+  "Bprime": 316.9921168493721,
+  "UB": 207.70969437297407,
+  "gap": 0.3544770703965128,
+  "deff_lower": 0.9613792170323784,
+  "argmin_run": 10,
+  "argmin_lam": 0.01957558065538028,
+  "argmin_lam_over_gbar": 2.97,
+  "argmin_phase": "bisect",
+  "UB_Bprime": 207.7116519310396,
+  "gap_Bprime": 0.3564346284620399,
+  "deff_lower_Bprime": 0.9611701335894425,
+  "argmin_run_Bprime": 10,
+  "argmin_lam_Bprime": 0.01957558065538028,
+  "Bprime_added": 0.0019575580655271096,
+  "UB_B_plus_delta": {
+   "0.1": {
+    "delta": 0.1,
+    "UB": 207.7116519310396,
+    "argmin_run": 10,
+    "argmin_lam": 0.01957558065538028,
+    "added": 0.0019575580655271096
+   },
+   "0.25": {
+    "delta": 0.25,
+    "UB": 207.71458782222572,
+    "argmin_run": 12,
+    "argmin_lam": 0.019559102893885853,
+    "added": 0.004893449251653692
+   },
+   "0.5": {
+    "delta": 0.5,
+    "UB": 207.71947759794918,
+    "argmin_run": 12,
+    "argmin_lam": 0.019559102893885853,
+    "added": 0.009783224975109306
+   }
+  },
+  "n_runs": 12,
+  "formula_Bprime": "UB(B + 0.1) = I(T_1) - p + min_lambda [gamma_1 + V_lambda + lambda (B - 1) + 0.1 lambda]",
+  "UB_S_round11": 207.41476152812027,
+  "UB_minus_UB_S": 0.294932844853804
+ },
+ "Tprime": {
+  "run": 10,
+  "lam": 0.01957558065538028,
+  "lam_over_gbar": 2.97,
+  "EN24": 316.8433410803525,
+  "I24": 207.64665023111849,
+  "S24": 1384.4324696171584,
+  "F": 9.344074393202016,
+  "EN120": 316.63304916056063,
+  "I120": 207.6445328331193,
+  "S120": 1384.1041020907778,
+  "d1": 0.2102919197918709,
+  "budget120_pass": true,
+  "slack120": 0.2590676888114558,
+  "mass_dev_max24": 2.291500322826323e-13,
+  "min_m24": 0.0,
+  "mass_dev_max120": 1.3917755836700962e-12,
+  "min_m120": 0.0,
+  "improvement_over_T1": 0.29143292854092806,
+  "reported": true,
+  "gap_to_UB": 0.06304414185558471,
+  "deff_lower_vs_UB": 0.9930195725072287,
+  "gap_to_UB_Bprime": 0.06500169992111182,
+  "mass_share_Sprime_block": 0.8848577160388447,
+  "mass_share_margin_below_2sigma": 0.8848577160388447,
+  "wall24_s": 17.2975562849997,
+  "wall120_s": 87.23309386499932
+ },
+ "check2": {
+  "F_forward": 9.344074393202016,
+  "F_backward": 9.344074393204252,
+  "F_rel": 2.3934240746541584e-13,
+  "N_forward": 315.8433410803525,
+  "N_backward": 315.8433410804314,
+  "N_rel": 2.4980316225419237e-13,
+  "total_forward": 3.1612575954187916,
+  "total_backward": 3.1612575954194835,
+  "dp_value": 3.1612575954199977,
+  "bw_s": 14.410066976999587,
+  "total_rel": 2.1886574189622102e-13,
+  "dp_minus_forward_abs": 1.20614629395277e-12,
+  "pass_": true
+ },
+ "packed": {
+  "path": "results/table_edge_Sprime.npz",
+  "bytes": 994731,
+  "roundtrip_equal": true
+ },
+ "checks": {
+  "1_regression": {
+   "pass_": true,
+   "detail": "state_regress.json"
+  },
+  "2_forward_backward": {
+   "F_forward": 9.344074393202016,
+   "F_backward": 9.344074393204252,
+   "F_rel": 2.3934240746541584e-13,
+   "N_forward": 315.8433410803525,
+   "N_backward": 315.8433410804314,
+   "N_rel": 2.4980316225419237e-13,
+   "total_forward": 3.1612575954187916,
+   "total_backward": 3.1612575954194835,
+   "dp_value": 3.1612575954199977,
+   "bw_s": 14.410066976999587,
+   "total_rel": 2.1886574189622102e-13,
+   "dp_minus_forward_abs": 1.20614629395277e-12,
+   "pass_": true
+  },
+  "3_conservation": {
+   "max_mass_dev24": 5.752065490582936e-13,
+   "min_m24": 0.0,
+   "max_mass_dev120": 1.3917755836700962e-12,
+   "min_m120": 0.0,
+   "n_forwards_recorded": {
+    "scan": 12,
+    "regression": 2,
+    "Tprime_sigma24": 1,
+    "Tprime_sigma120": 1
+   },
+   "n_forwards_unrecorded": "2 sigma/24 forwards of T_1 in stage inputs (asserted; not stored), 1 forward in each of the 12 scan runs is the recorded one",
+   "note": "asserted at every step of every forward by eval11.forward (|sum m - 1| <= 1e-12 on sigma/24, 1e-10 on sigma/120, min m >= 0, zero mass at the first and last node); any failure raises AssertionStop and stops the run",
+   "pass_": true
+  },
+  "4_min_dual_monotone": {
+   "min_D_union": 9.3544770703965,
+   "min_D_S": 9.059544225542712,
+   "diff": 0.294932844853788,
+   "pass_": true,
+   "pointwise_shared_lambda": [
+    {
+     "lam": 0.032955522988855686,
+     "run_union": 1,
+     "run_S": 1,
+     "V_union": 0.8960110477957884,
+     "V_S": 0.853298690232889,
+     "diff": 0.04271235756289948,
+     "ge": true
+    },
+    {
+     "lam": 0.02636441839108455,
+     "run_union": 2,
+     "run_S": 2,
+     "V_union": 1.6394583245013414,
+     "V_S": 1.5365692816597853,
+     "diff": 0.10288904284155609,
+     "ge": true
+    },
+    {
+     "lam": 0.021091534712867642,
+     "run_union": 3,
+     "run_S": 3,
+     "V_union": 2.720531360798776,
+     "V_S": 2.508946059165683,
+     "diff": 0.21158530163309308,
+     "ge": true
+    },
+    {
+     "lam": 0.016873227770294114,
+     "run_union": 4,
+     "run_S": 4,
+     "V_union": 4.15507952352564,
+     "V_S": 3.7708459451867755,
+     "diff": 0.38423357833886485,
+     "ge": true
+    },
+    {
+     "lam": 0.01898238124158088,
+     "run_union": 5,
+     "run_S": 5,
+     "V_union": 3.354093833444531,
+     "V_S": 3.0631323111143782,
+     "diff": 0.2909615223301527,
+     "ge": true
+    }
+   ],
+   "pointwise_at_argmin": {
+    "lam": 0.01957558065538028,
+    "V_union": 3.1612575954199977,
+    "V_S": 2.8967842965936246,
+    "D_union": 9.3544770703965,
+    "D_S": 9.090003771570126,
+    "diff": 0.26447329882637405,
+    "ge": true,
+    "dp_s": 37.13346314299997
+   },
+   "pointwise_all_ge": true
+  },
+  "5_UB_ge_I": {
+   "UB": 207.70969437297407,
+   "I_T1": 207.35521730257756,
+   "I_Tprime": 207.64665023111849,
+   "UB_ge_I_T1": true,
+   "UB_ge_I_Tprime": true,
+   "pass_": true
+  },
+  "6_budget120_Tprime": {
+   "applies": true,
+   "EN120": 316.63304916056063,
+   "B": 316.8921168493721,
+   "pass_": true
+  },
+  "edges": {
+   "pass_": true,
+   "detail": {
+    "S": {
+     "violations": 0,
+     "max_lower_offset_grid": 0.9998607535003543,
+     "max_upper_offset_grid": 0.9999554363770167,
+     "min_frac_dist_nonint": null,
+     "pass_": true
+    },
+    "S'": {
+     "violations": 0,
+     "max_lower_offset_grid": 0.9999647259693414,
+     "max_upper_offset_grid": 0.9999554363770167,
+     "min_frac_dist_nonint": 3.527404805936385e-05,
+     "pass_": true
+    },
+    "union": {
+     "violations": 0,
+     "max_lower_offset_grid": 0.9999647259693414,
+     "max_upper_offset_grid": 0.9999554363770167,
+     "min_frac_dist_nonint": 3.527404805936385e-05,
+     "pass_": true
+    }
+   }
+  }
+ },
+ "all_checks_pass": true,
+ "budget_convention": {
+  "d1_round11_tables": {
+   "old_j0": 0.07240787355704015,
+   "old_j1": 0.07215971961574041,
+   "old_j2": 0.07247652275975724,
+   "edge_j0": 0.19668581961610698,
+   "edge_j1": 0.21013126712199437,
+   "edge_j2": 0.20553748586371512,
+   "Tprime": 0.2102919197918709
+  },
+  "max_d1_round7_partC": "0.078020655082355 (round7/results/partC_regrade.json[\"gate\"][\"max_d1\"])",
+  "max_d1_edge_class": 0.2102919197918709,
+  "covers_all_seen": false
+ },
+ "predictions": [
+  {
+   "n": 1,
+   "text": "UB_SoD(S') - I(T_1) in [0.06, 0.40] nat",
+   "value": 0.3544770703965128,
+   "hit": true
+  },
+  {
+   "n": 2,
+   "text": "the B' = B + 0.1 correction adds < 0.005 nat",
+   "value": 0.0019575580655271096,
+   "hit": true
+  },
+  {
+   "n": 3,
+   "text": "T' improves on I(T_1) by < 0.20 nat",
+   "value": 0.29143292854092806,
+   "hit": false
+  },
+  {
+   "n": "3b",
+   "text": "(consequence) certificate gap, whichever table, < 0.40",
+   "value": 0.3544770703965128,
+   "hit": true
+  },
+  {
+   "n": 4,
+   "text": "argmin lambda at or next to the final bisection step",
+   "value": {
+    "argmin_run": 10,
+    "n_runs": 12,
+    "phase": "bisect"
+   },
+   "hit": false
+  }
+ ],
+ "scan": {
+  "label": "union",
+  "actions": "S u S'",
+  "gbar": 0.006591104597771138,
+  "gamma1": 0.009447863192807387,
+  "B": 316.8921168493721,
+  "status": "done",
+  "mono_worst": 0.0,
+  "mono_pair": null,
+  "notes": [],
+  "final_run": 10,
+  "min_dual": 9.3544770703965,
+  "lam_bracket": [
+   0.01957558065538028,
+   0.019559102893885853
+  ],
+  "wall_s_this_invocation": 4232.927274454,
+  "n_resumed": 0,
+  "actions_describe": {
+   "name": "S u S'",
+   "blocks": [
+    {
+     "E": [
+      "1",
+      "1.25",
+      "1.5",
+      "1.75",
+      "2",
+      "2.25",
+      "2.5",
+      "3",
+      "4",
+      "inf"
+     ],
+     "MIN_grid": 48,
+     "MIN_sigma": 2.0,
+     "n_actions": 100
+    },
+    {
+     "E": [
+      "0.5",
+      "0.75",
+      "1.0",
+      "1.1",
+      "1.2",
+      "1.3",
+      "1.4",
+      "1.5",
+      "1.6",
+      "1.7",
+      "1.8",
+      "1.9",
+      "2.0",
+      "2.1",
+      "2.2",
+      "2.3",
+      "2.4",
+      "2.5",
+      "2.6",
+      "2.7",
+      "2.8",
+      "2.9",
+      "3.0",
+      "3.5",
+      "4",
+      "5",
+      "6",
+      "inf"
+     ],
+     "MIN_grid": 24,
+     "MIN_sigma": 1.0,
+     "n_actions": 784
+    }
+   ],
+   "n_actions": 884,
+   "code": "off_b + (j_lo - lo_b) n_b + (j_hi - lo_b), blocks in the listed order"
+  }
+ }
+}

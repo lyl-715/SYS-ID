@@ -26,3 +26,117 @@ CHECK 1 run 2: run =, phase =, lam =, EN =, N =, F =, dsum =, S =, logdet =, dua
 CHECK 1 regression (S block, 2 sigma, first two lambda of scan_edge_j2): PASS; scan status run cap (40 DP runs) reached; 119.4 s
 === ROUND 11b stage regress done in 123.1 s
 CLEANUP removed empty folders []; git status on round4..round10 and round11 (outside addendum/): clean
+=== ROUND 11b stage scan started 2026-11-07 16:31:58; python 3.13.18, numpy 2.5.3, scipy 1.18.1, numba 0.68.0 (4 threads); B = 316.8921168493721; work /home/user/round11b_work
+WARMUP 0.2 s
+DESIGN11 G = 35146 (full grid at every step), kernel windows 4224 nodes, cache range 6144 nodes per step, built in 1.4 s; limits outside the cache range exact: True
+SCAN union: actions 884 ([{'E': ['1', '1.25', '1.5', '1.75', '2', '2.25', '2.5', '3', '4', 'inf'], 'MIN_grid': 48, 'MIN_sigma': 2.0, 'n_actions': 100}, {'E': ['0.5', '0.75', '1.0', '1.1', '1.2', '1.3', '1.4', '1.5', '1.6', '1.7', '1.8', '1.9', '2.0', '2.1', '2.2', '2.3', '2.4', '2.5', '2.6', '2.7', '2.8', '2.9', '3.0', '3.5', '4', '5', '6', 'inf'], 'MIN_grid': 24, 'MIN_sigma': 1.0, 'n_actions': 784}]); gbar 0.006591104597771138 gamma_1 0.009447863192807387; lambda_0 = 5 gbar = 0.032955522988855686; archive /home/user/SYS-ID/code_8_3_stage2/stage2_pkg/evaluator/round11/addendum/results/archive_union.jsonl
+LAM union run=01 phase=start lam=0.032955522988855686 lam/gbar=5.0 dual=11.315848829816364 EN=81.34241116944376 S=518.0582815907482 F=3.54373722607045 V=0.8960110477957884 feasible=True slack=235.5497056799283 logdet=198.9148054440745 dp_s=327.6 fwd_s=17.3 [diag: V-policy rel 4.274801571230088e-14, mass dev 4.1233683134578314e-13, support [2917, 32228]; table kept]
+LAM union run=02 phase=scan lam=0.02636441839108455 lam/gbar=4.0 dual=9.977218122756364 EN=154.25659849953578 S=835.1115981951112 F=5.679979408537252 V=1.6394583245013414 feasible=True slack=162.6355183498363 logdet=203.16290276263987 dp_s=350.4 fwd_s=18.1 [diag: V-policy rel 1.900192130865131e-13, mass dev 3.7481129311345285e-13, support [2917, 32228]; table kept]
+LAM union run=03 phase=scan lam=0.021091534712867642 lam/gbar=3.2 dual=9.392628772041355 EN=268.32536430920675 S=1236.7093381834118 F=8.358833561755576 V=2.720531360798776 feasible=True slack=48.56675254016534 logdet=206.64257254899874 dp_s=334.4 fwd_s=17.2 [diag: V-policy rel 3.0231344820854553e-13, mass dev 3.6148861681795097e-13, support [2917, 32228]; table kept]
+LAM union run=04 phase=scan lam=0.016873227770294114 lam/gbar=2.56 dual=9.494647025158265 EN=428.86103431446406 S=1690.860155359871 F=11.374476209544408 V=4.15507952352564 feasible=False slack=-111.96891746509198 logdet=209.41768501008323 dp_s=328.0 fwd_s=15.4 [diag: V-policy rel 6.763279749574101e-13, mass dev 5.752065490582936e-13, support [2917, 32228]; table deleted]
+LAM union run=05 phase=bisect lam=0.01898238124158088 lam/gbar=2.8800000000000003 dual=9.359926289882134 EN=335.75391309176587 S=1439.6249712395406 F=9.708520233861922 V=3.354093833444531 feasible=False slack=-18.86179624239378 logdet=207.99120671256486 dp_s=343.2 fwd_s=16.6 [diag: V-policy rel 4.597002389216626e-13, mass dev 3.489430966396867e-13, support [2917, 32228]; table deleted]
+LAM union run=06 phase=bisect lam=0.02003695797722426 lam/gbar=3.0400000000000005 dual=9.35771377375011 EN=302.0451149075864 S=1339.872357640577 F=9.050777156560878 V=3.0187488399100184 feasible=True slack=14.847001941785663 logdet=207.35965621187847 dp_s=365.3 fwd_s=17.0 [diag: V-policy rel 3.639510152829421e-13, mass dev 1.7508217098338719e-13, support [2917, 32228]; table kept]
+LAM union run=07 phase=bisect lam=0.01950966960940257 lam/gbar=2.9600000000000004 dual=9.354541259535534 EN=318.84850517906074 S=1390.38537818654 F=9.3832618862814 V=3.1821425643966865 feasible=False slack=-1.9563883296886502 logdet=207.6845365187609 dp_s=349.5 fwd_s=16.3 [diag: V-policy rel 3.907586672869294e-13, mass dev 2.2637447472106942e-13, support [2917, 32228]; table deleted]
+LAM union run=08 phase=bisect lam=0.019773313793313416 lam/gbar=3.0000000000000004 dual=9.355025439954915 EN=311.2262722115121 S=1367.554616932336 F=9.233545052832339 V=3.099343625465446 feasible=True slack=5.665844637860005 logdet=207.5399050113013 dp_s=335.5 fwd_s=16.5 [diag: V-policy rel 3.8744242928362003e-13, mass dev 2.1671553440683056e-13, support [2917, 32228]; table kept]
+LAM union run=09 phase=bisect lam=0.019641491701357993 lam/gbar=2.9800000000000004 dual=9.354535033939534 EN=315.065787166139 S=1379.1639130504095 F=9.30921533142835 V=3.1404947791253766 feasible=True slack=1.826329683233098 logdet=207.61306221218206 dp_s=337.6 fwd_s=15.9 [diag: V-policy rel 3.859008019172082e-13, mass dev 2.219335826225688e-13, support [2917, 32228]; table kept]
+LAM union run=10 phase=bisect lam=0.01957558065538028 lam/gbar=2.97 dual=9.3544770703965 EN=316.8433410803525 S=1384.4324696171584 F=9.344074393202016 V=3.1612575954199977 feasible=True slack=0.048775769019584914 logdet=207.64665023111849 dp_s=330.2 fwd_s=15.9 [diag: V-policy rel 3.8154002245836733e-13, mass dev 2.291500322826323e-13, support [2917, 32228]; table kept]
+LAM union run=11 phase=bisect lam=0.019542625132391425 lam/gbar=2.9650000000000003 dual=9.354492282492618 EN=317.8502922467304 S=1387.4176473180783 F=9.363769681900255 V=3.1716831974349438 feasible=False slack=-0.9581753973583318 logdet=207.66578107611576 dp_s=315.0 fwd_s=16.3 [diag: V-policy rel 3.816860356768226e-13, mass dev 2.2803980925800715e-13, support [2917, 32228]; table deleted]
+LAM union run=12 phase=bisect lam=0.019559102893885853 lam/gbar=2.9675000000000002 dual=9.354480743924668 EN=317.3365406012296 S=1385.9051849441064 F=9.353725410621717 V=3.1664664639075797 feasible=False slack=-0.4444237518575278 logdet=207.65605225064743 dp_s=314.5 fwd_s=16.2 [diag: V-policy rel 3.828758512714571e-13, mass dev 2.2315482794965646e-13, support [2917, 32228]; table deleted]
+FINAL union run=10 lam=0.01957558065538028 F=9.344074393202016 EN=316.8433410803525 slack=0.048775769019584914 logdet=207.64665023111849; DP runs 12
+SCAN union done: status done, 12 runs (0 resumed), final run 10, min dual 9.3544770703965
+=== ROUND 11b stage scan done in 4236.3 s
+CLEANUP removed empty folders []; git status on round4..round10 and round11 (outside addendum/): clean
+=== ROUND 11b stage post started 2026-11-07 17:42:56; python 3.13.18, numpy 2.5.3, scipy 1.18.1, numba 0.68.0 (4 threads); B = 316.8921168493721; work /home/user/round11b_work
+WARMUP 0.1 s
+DESIGN11 G = 35146 (full grid at every step), kernel windows 4224 nodes, cache range 6144 nodes per step, built in 1.4 s; limits outside the cache range exact: True
+PERLAM run 01 start  lam 0.032955522988855686 lam/gbar 5.0 EN 81.34241116944376 V 0.8960110477957884 D 11.315848829816364 D+0.1lam 11.31914438211525 feasible True logdet 198.9148054440745
+PERLAM run 02 scan   lam 0.02636441839108455 lam/gbar 4.0 EN 154.25659849953578 V 1.6394583245013414 D 9.977218122756364 D+0.1lam 9.979854564595472 feasible True logdet 203.16290276263987
+PERLAM run 03 scan   lam 0.021091534712867642 lam/gbar 3.2 EN 268.32536430920675 V 2.720531360798776 D 9.392628772041355 D+0.1lam 9.394737925512642 feasible True logdet 206.64257254899874
+PERLAM run 04 scan   lam 0.016873227770294114 lam/gbar 2.56 EN 428.86103431446406 V 4.15507952352564 D 9.494647025158265 D+0.1lam 9.496334347935294 feasible False logdet 209.41768501008323
+PERLAM run 05 bisect lam 0.01898238124158088 lam/gbar 2.8800000000000003 EN 335.75391309176587 V 3.354093833444531 D 9.359926289882134 D+0.1lam 9.361824528006292 feasible False logdet 207.99120671256486
+PERLAM run 06 bisect lam 0.02003695797722426 lam/gbar 3.0400000000000005 EN 302.0451149075864 V 3.0187488399100184 D 9.35771377375011 D+0.1lam 9.359717469547832 feasible True logdet 207.35965621187847
+PERLAM run 07 bisect lam 0.01950966960940257 lam/gbar 2.9600000000000004 EN 318.84850517906074 V 3.1821425643966865 D 9.354541259535534 D+0.1lam 9.356492226496474 feasible False logdet 207.6845365187609
+PERLAM run 08 bisect lam 0.019773313793313416 lam/gbar 3.0000000000000004 EN 311.2262722115121 V 3.099343625465446 D 9.355025439954915 D+0.1lam 9.357002771334246 feasible True logdet 207.5399050113013
+PERLAM run 09 bisect lam 0.019641491701357993 lam/gbar 2.9800000000000004 EN 315.065787166139 V 3.1404947791253766 D 9.354535033939534 D+0.1lam 9.356499183109669 feasible True logdet 207.61306221218206
+PERLAM run 10 bisect lam 0.01957558065538028 lam/gbar 2.97 EN 316.8433410803525 V 3.1612575954199977 D 9.3544770703965 D+0.1lam 9.356434628462038 feasible True logdet 207.64665023111849
+PERLAM run 11 bisect lam 0.019542625132391425 lam/gbar 2.9650000000000003 EN 317.8502922467304 V 3.1716831974349438 D 9.354492282492618 D+0.1lam 9.356446545005857 feasible False logdet 207.66578107611576
+PERLAM run 12 bisect lam 0.019559102893885853 lam/gbar 2.9675000000000002 EN 317.3365406012296 V 3.1664664639075797 D 9.354480743924668 D+0.1lam 9.356436654214058 feasible False logdet 207.65605225064743
+UB_SoD(S u S'; B) = 207.70969437297407 (run 10, bisect, lam 0.01957558065538028); gap 0.3544770703965128; exp(-gap/9) 0.9613792170323784
+UB_SoD(S u S'; B') = 207.7116519310396 (run 10, lam 0.01957558065538028); gap 0.3564346284620399; exp(-gap/9) 0.9611701335894425; added 0.0019575580655271096
+UB_SoD(S u S'; B + 0.1) = 207.7116519310396 (run 10); added 0.0019575580655271096
+UB_SoD(S u S'; B + 0.25) = 207.71458782222572 (run 12); added 0.004893449251653692
+UB_SoD(S u S'; B + 0.5) = 207.71947759794918 (run 12); added 0.009783224975109306
+round-11 UB_SoD(S) = 207.41476152812027; UB(S u S') - UB(S) = 0.294932844853804
+CHECK 2 T' forward vs fixed-policy backward: F rel 2.3934240746541584e-13, N rel 2.4980316225419237e-13, F - lam N rel 2.1886574189622102e-13 (<= 1e-12) -> PASS; diagnostic DP value - forward total 1.20614629395277e-12; 14.6 s
+T' (run 10, lam 0.01957558065538028): sigma/24 E[N] 316.8433410803525 I 207.64665023111849; sigma/120 E[N] 316.63304916056063 I 207.6445328331193 (d1 = E24 - E120 = 0.2102919197918709); I(T') - I(T_1) = 0.29143292854092806; reported as new best (> +0.05): True; mass share on S'-block actions 0.8848577160388447, on windows with an edge < 2 sigma from r 0.8848577160388447
+PACK {'path': 'results/table_edge_Sprime.npz', 'bytes': 994731, 'roundtrip_equal': True}
+CHECK 4 (D) min D(S u S') 9.3544770703965 >= min D(S) 9.059544225542712 - 1e-09: diff 0.294932844853788 -> PASS
+CHECK 4 supplementary: same lambda 0.032955522988855686 (union run 1, S run 1): V(S u S') - V(S) = 0.04271235756289948
+CHECK 4 supplementary: same lambda 0.02636441839108455 (union run 2, S run 2): V(S u S') - V(S) = 0.10288904284155609
+CHECK 4 supplementary: same lambda 0.021091534712867642 (union run 3, S run 3): V(S u S') - V(S) = 0.21158530163309308
+CHECK 4 supplementary: same lambda 0.016873227770294114 (union run 4, S run 4): V(S u S') - V(S) = 0.38423357833886485
+CHECK 4 supplementary: same lambda 0.01898238124158088 (union run 5, S run 5): V(S u S') - V(S) = 0.2909615223301527
+CHECK 4 supplementary: S-block DP at the union argmin lambda 0.01957558065538028: D(S u S') - D(S) = 0.26447329882637405 (37.7 s)
+CHECK 1_regression: PASS
+CHECK 2_forward_backward: PASS
+CHECK 3_conservation: PASS
+CHECK 4_min_dual_monotone: PASS
+CHECK 5_UB_ge_I: PASS
+CHECK 6_budget120_Tprime: PASS
+CHECK edges: PASS
+BUDGET d1 = E24 - E120: {'old_j0': 0.07240787355704015, 'old_j1': 0.07215971961574041, 'old_j2': 0.07247652275975724, 'edge_j0': 0.19668581961610698, 'edge_j1': 0.21013126712199437, 'edge_j2': 0.20553748586371512, 'Tprime': 0.2102919197918709}; max over edge-class tables 0.2102919197918709; all < 0.1: False
+PREDICTION 1: UB_SoD(S') - I(T_1) in [0.06, 0.40] nat: value 0.3544770703965128 -> hit
+PREDICTION 2: the B' = B + 0.1 correction adds < 0.005 nat: value 0.0019575580655271096 -> hit
+PREDICTION 3: T' improves on I(T_1) by < 0.20 nat: value 0.29143292854092806 -> miss
+PREDICTION 3b: (consequence) certificate gap, whichever table, < 0.40: value 0.3544770703965128 -> hit
+PREDICTION 4: argmin lambda at or next to the final bisection step: value {'argmin_run': 10, 'n_runs': 12, 'phase': 'bisect'} -> miss
+WROTE results/round11b.json; all checks PASS
+=== ROUND 11b stage post done in 162.6 s
+CLEANUP removed empty folders []; git status on round4..round10 and round11 (outside addendum/): clean
+=== ROUND 11b stage post started 2026-11-07 17:46:14; python 3.13.18, numpy 2.5.3, scipy 1.18.1, numba 0.68.0 (4 threads); B = 316.8921168493721; work /home/user/round11b_work
+WARMUP 0.2 s
+DESIGN11 G = 35146 (full grid at every step), kernel windows 4224 nodes, cache range 6144 nodes per step, built in 1.4 s; limits outside the cache range exact: True
+PERLAM run 01 start  lam 0.032955522988855686 lam/gbar 5.0 EN 81.34241116944376 V 0.8960110477957884 D 11.315848829816364 D+0.1lam 11.31914438211525 feasible True logdet 198.9148054440745
+PERLAM run 02 scan   lam 0.02636441839108455 lam/gbar 4.0 EN 154.25659849953578 V 1.6394583245013414 D 9.977218122756364 D+0.1lam 9.979854564595472 feasible True logdet 203.16290276263987
+PERLAM run 03 scan   lam 0.021091534712867642 lam/gbar 3.2 EN 268.32536430920675 V 2.720531360798776 D 9.392628772041355 D+0.1lam 9.394737925512642 feasible True logdet 206.64257254899874
+PERLAM run 04 scan   lam 0.016873227770294114 lam/gbar 2.56 EN 428.86103431446406 V 4.15507952352564 D 9.494647025158265 D+0.1lam 9.496334347935294 feasible False logdet 209.41768501008323
+PERLAM run 05 bisect lam 0.01898238124158088 lam/gbar 2.8800000000000003 EN 335.75391309176587 V 3.354093833444531 D 9.359926289882134 D+0.1lam 9.361824528006292 feasible False logdet 207.99120671256486
+PERLAM run 06 bisect lam 0.02003695797722426 lam/gbar 3.0400000000000005 EN 302.0451149075864 V 3.0187488399100184 D 9.35771377375011 D+0.1lam 9.359717469547832 feasible True logdet 207.35965621187847
+PERLAM run 07 bisect lam 0.01950966960940257 lam/gbar 2.9600000000000004 EN 318.84850517906074 V 3.1821425643966865 D 9.354541259535534 D+0.1lam 9.356492226496474 feasible False logdet 207.6845365187609
+PERLAM run 08 bisect lam 0.019773313793313416 lam/gbar 3.0000000000000004 EN 311.2262722115121 V 3.099343625465446 D 9.355025439954915 D+0.1lam 9.357002771334246 feasible True logdet 207.5399050113013
+PERLAM run 09 bisect lam 0.019641491701357993 lam/gbar 2.9800000000000004 EN 315.065787166139 V 3.1404947791253766 D 9.354535033939534 D+0.1lam 9.356499183109669 feasible True logdet 207.61306221218206
+PERLAM run 10 bisect lam 0.01957558065538028 lam/gbar 2.97 EN 316.8433410803525 V 3.1612575954199977 D 9.3544770703965 D+0.1lam 9.356434628462038 feasible True logdet 207.64665023111849
+PERLAM run 11 bisect lam 0.019542625132391425 lam/gbar 2.9650000000000003 EN 317.8502922467304 V 3.1716831974349438 D 9.354492282492618 D+0.1lam 9.356446545005857 feasible False logdet 207.66578107611576
+PERLAM run 12 bisect lam 0.019559102893885853 lam/gbar 2.9675000000000002 EN 317.3365406012296 V 3.1664664639075797 D 9.354480743924668 D+0.1lam 9.356436654214058 feasible False logdet 207.65605225064743
+UB_SoD(S u S'; B) = 207.70969437297407 (run 10, bisect, lam 0.01957558065538028); gap 0.3544770703965128; exp(-gap/9) 0.9613792170323784
+UB_SoD(S u S'; B') = 207.7116519310396 (run 10, lam 0.01957558065538028); gap 0.3564346284620399; exp(-gap/9) 0.9611701335894425; added 0.0019575580655271096
+UB_SoD(S u S'; B + 0.1) = 207.7116519310396 (run 10); added 0.0019575580655271096
+UB_SoD(S u S'; B + 0.25) = 207.71458782222572 (run 12); added 0.004893449251653692
+UB_SoD(S u S'; B + 0.5) = 207.71947759794918 (run 12); added 0.009783224975109306
+round-11 UB_SoD(S) = 207.41476152812027; UB(S u S') - UB(S) = 0.294932844853804
+CHECK 2 T' forward vs fixed-policy backward: F rel 2.3934240746541584e-13, N rel 2.4980316225419237e-13, F - lam N rel 2.1886574189622102e-13 (<= 1e-12) -> PASS; diagnostic DP value - forward total 1.20614629395277e-12; 14.4 s
+T' (run 10, lam 0.01957558065538028): sigma/24 E[N] 316.8433410803525 I 207.64665023111849; sigma/120 E[N] 316.63304916056063 I 207.6445328331193 (d1 = E24 - E120 = 0.2102919197918709); I(T') - I(T_1) = 0.29143292854092806; reported as new best (> +0.05): True; mass share on S'-block actions 0.8848577160388447, on windows with an edge < 2 sigma from r 0.8848577160388447
+PACK {'path': 'results/table_edge_Sprime.npz', 'bytes': 994731, 'roundtrip_equal': True}
+CHECK 4 (D) min D(S u S') 9.3544770703965 >= min D(S) 9.059544225542712 - 1e-09: diff 0.294932844853788 -> PASS
+CHECK 4 supplementary: same lambda 0.032955522988855686 (union run 1, S run 1): V(S u S') - V(S) = 0.04271235756289948
+CHECK 4 supplementary: same lambda 0.02636441839108455 (union run 2, S run 2): V(S u S') - V(S) = 0.10288904284155609
+CHECK 4 supplementary: same lambda 0.021091534712867642 (union run 3, S run 3): V(S u S') - V(S) = 0.21158530163309308
+CHECK 4 supplementary: same lambda 0.016873227770294114 (union run 4, S run 4): V(S u S') - V(S) = 0.38423357833886485
+CHECK 4 supplementary: same lambda 0.01898238124158088 (union run 5, S run 5): V(S u S') - V(S) = 0.2909615223301527
+CHECK 4 supplementary: S-block DP at the union argmin lambda 0.01957558065538028: D(S u S') - D(S) = 0.26447329882637405 (37.1 s)
+CHECK 1_regression: PASS
+CHECK 2_forward_backward: PASS
+CHECK 3_conservation: PASS
+CHECK 4_min_dual_monotone: PASS
+CHECK 5_UB_ge_I: PASS
+CHECK 6_budget120_Tprime: PASS
+CHECK edges: PASS
+BUDGET d1 = E24 - E120: {'old_j0': 0.07240787355704015, 'old_j1': 0.07215971961574041, 'old_j2': 0.07247652275975724, 'edge_j0': 0.19668581961610698, 'edge_j1': 0.21013126712199437, 'edge_j2': 0.20553748586371512, 'Tprime': 0.2102919197918709}; max over edge-class tables 0.2102919197918709; all < 0.1: False
+PREDICTION 1: UB_SoD(S') - I(T_1) in [0.06, 0.40] nat: value 0.3544770703965128 -> hit
+PREDICTION 2: the B' = B + 0.1 correction adds < 0.005 nat: value 0.0019575580655271096 -> hit
+PREDICTION 3: T' improves on I(T_1) by < 0.20 nat: value 0.29143292854092806 -> miss
+PREDICTION 3b: (consequence) certificate gap, whichever table, < 0.40: value 0.3544770703965128 -> hit
+PREDICTION 4: argmin lambda at or next to the final bisection step: value {'argmin_run': 10, 'n_runs': 12, 'phase': 'bisect'} -> miss
+WROTE results/round11b.json; all checks PASS
+=== ROUND 11b stage post done in 159.2 s
+CLEANUP removed empty folders []; git status on round4..round10 and round11 (outside addendum/): clean

@@ -314,8 +314,13 @@ def stage_post(out):
 
     # checks
     allfw = [r for r in st['runs']]
-    c3 = dict(max_mass_dev24=max([r['mass_dev_max'] for r in allfw]+[tp['mass_dev_max24']]), min_m24=min([r['min_m'] for r in allfw]+[tp['min_m24']]),
-              max_mass_dev120=tp['mass_dev_max120'], min_m120=tp['min_m120'], n_forwards=len(allfw)+2+2+1,
+    rarch = os.path.join(WORK, 'archive_regress_S.jsonl')
+    regfw = [json.loads(l) for l in open(rarch)] if os.path.exists(rarch) else []
+    recs24 = [r['mass_dev_max'] for r in allfw+regfw]+[tp['mass_dev_max24']]; mins24 = [r['min_m'] for r in allfw+regfw]+[tp['min_m24']]
+    c3 = dict(max_mass_dev24=max(recs24), min_m24=min(mins24), max_mass_dev120=tp['mass_dev_max120'], min_m120=tp['min_m120'],
+              n_forwards_recorded=dict(scan=len(allfw), regression=len(regfw), Tprime_sigma24=1, Tprime_sigma120=1),
+              n_forwards_unrecorded='2 sigma/24 forwards of T_1 in stage inputs (asserted; not stored), 1 forward in each of the 12 '
+                                    'scan runs is the recorded one',
               note='asserted at every step of every forward by eval11.forward (|sum m - 1| <= 1e-12 on sigma/24, 1e-10 on sigma/120, '
                    'min m >= 0, zero mass at the first and last node); any failure raises AssertionStop and stops the run')
     c3['pass_'] = bool(c3['max_mass_dev24'] <= 1e-12 and c3['min_m24'] >= 0 and c3['max_mass_dev120'] <= 1e-10 and c3['min_m120'] >= 0)
