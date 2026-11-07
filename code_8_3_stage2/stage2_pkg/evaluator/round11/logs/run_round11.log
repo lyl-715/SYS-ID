@@ -1,0 +1,30 @@
+=== ROUND 11 stage inputs started 2026-11-07 13:15:11; python 3.13.18, numpy 2.5.3, scipy 1.18.1, numba 0.68.0 (4 threads); B = 316.8921168493721; work /tmp/claude-0/-home-user-SYS-ID/67f6c0d6-50d6-5a80-a0af-f1131227ebfe/scratchpad/work
+INPUT B = 316.8921168493721   [round4/results/mc.json["U/SoD"]["EN_eval"]]
+INPUT I_SoD = 197.20097668224076   [round4/results/mc.json["U/SoD"]["logdet_eval"]]
+INPUT I_old = 205.03141309913676   [round4/results/mc.json["U/W"]["logdet_eval"]]
+INPUT EN_old = 316.6035659260541   [round4/results/mc.json["U/W"]["EN_eval"]]
+INPUT U_cert = 209.07220154478713   [round10/results/round10.json["budgets"]["B316"]["u_cert"]]
+INPUT sigma = 0.00011923472413178926, Delta* = 0.002384694482635785, K = 5000, grid h = sigma/24 = 4.968113505491219e-06, G = 35146, z_0 = 1.9098150805683891; x range np.float64(1144.3561317634142) sigma; Hk (5000, 9) from round4/evaluator_window.design_grid('U')
+WARMUP (JIT) 0.2 s
+REPRO B frozen evaluator 316.8921168493721 rel err 0.0 (PASS)
+REPRO I_SoD frozen evaluator 197.20097668224076 rel err 0.0 (PASS)
+REPRO EN_old frozen evaluator 316.6035659260541 rel err 0.0 (PASS)
+REPRO I_old frozen evaluator 205.03141309913676 rel err 0.0 (PASS)
+EVAL11 round-4 table on the full grid vs frozen general path (88-sigma support): bitwise {'EN': True, 'W': True, 'S': True, 'logdet': True, 'J': True}; mass_dev_max 5.182521078950231e-13
+DESIGN11 G = 35146 (full grid at every step), kernel windows 4224 nodes, cache range 6144 nodes per step, built in 1.7 s; limits outside the cache range exact: True
+PREP per-step u, ndtr(u), ndtr(-u), phi(u) on [-X, G-1+X] bitwise equal to full scipy/numpy arrays at steps [1, 1250, 2500, 3750, 4999]: {1: True, 1250: True, 2500: True, 3750: True, 4999: True}
+SIGMA120 eval11 refined (f = 5, full fine grid) on the round-4 table: EN 316.53115805249706 (round 7 316.53115805249706), logdet 205.03107573358153 (round 7 205.03107573358153); bitwise True; mass_dev_max 1.8809398483199402e-12; 27.0 s
+=== ROUND 11 stage inputs done in 40.4 s
+CLEANUP removed empty folders []; git status on round4..round10: clean
+=== ROUND 11 stage gate started 2026-11-07 13:15:59; python 3.13.18, numpy 2.5.3, scipy 1.18.1, numba 0.68.0 (4 threads); B = 316.8921168493721; work /tmp/claude-0/-home-user-SYS-ID/67f6c0d6-50d6-5a80-a0af-f1131227ebfe/scratchpad/work
+DESIGN11 G = 35146 (full grid at every step), kernel windows 4224 nodes, cache range 6144 nodes per step, built in 1.8 s; limits outside the cache range exact: True
+SCAN old_j0: actions old (400); gbar 0.021587304272182303 gamma_1 0.02987366782571452; lambda_0 = 5 gbar = 0.10793652136091152
+=== NOTE 2026-11-07 13:16:18: the stage-gate start above was stopped by hand after 1 minute (no DP run finished) to split the run into 'gate edge' and 'old' invocations under the 2 h job limit; restarted below.
+=== ROUND 11 stage gate started 2026-11-07 13:16:19; python 3.13.18, numpy 2.5.3, scipy 1.18.1, numba 0.68.0 (4 threads); B = 316.8921168493721; work /tmp/claude-0/-home-user-SYS-ID/67f6c0d6-50d6-5a80-a0af-f1131227ebfe/scratchpad/work
+DESIGN11 G = 35146 (full grid at every step), kernel windows 4224 nodes, cache range 6144 nodes per step, built in 1.8 s; limits outside the cache range exact: True
+SCAN old_j0: actions old (400); gbar 0.021587304272182303 gamma_1 0.02987366782571452; lambda_0 = 5 gbar = 0.10793652136091152
+LAM old_j0 run=01 phase=start lam=0.10793652136091152 lam/gbar=5.0 dual=25.02931596908651 EN=213.2275366545322 S=651.607717883586 F=13.810248126689798 feasible=True slack=103.66458019483989 logdet=200.8072723430486 dmD=3.606295660807831 dp_s=190.2 fwd_s=5.7 [diag: V-policy rel 8.142823978543352e-14, support [2917, 32228]]
+LAM old_j0 run=02 phase=scan lam=0.08634921708872922 lam/gbar=4.000000000000001 dual=23.26370146209454 EN=262.7986258567231 S=854.5948000440887 F=18.562897197455154 feasible=True slack=54.09349099264898 logdet=203.29000089955792 dmD=6.08902421731716 dp_s=312.5 fwd_s=5.3 [diag: V-policy rel 5.461037143958229e-13, support [2917, 32228]]
+LAM old_j0 run=03 phase=scan lam=0.06907937367098338 lam/gbar=3.2000000000000006 dual=22.934431744810023 EN=341.5602784034902 S=1113.4128368316801 F=24.608619226752882 feasible=False slack=-24.668161554118115 logdet=205.6643462833049 dmD=8.46336960106413 dp_s=162.2 fwd_s=5.2 [diag: V-policy rel 4.19083041111031e-12, support [2917, 32228]]
+LAM old_j0 run=04 phase=bisect lam=0.0777142953798563 lam/gbar=3.6000000000000005 dual=22.931061315414524 EN=295.64592905233286 S=969.5172891953092 F=21.25005513343063 feasible=True slack=21.246187797039227 logdet=204.4262258369341 dmD=7.22524915469333 dp_s=174.3 fwd_s=5.6 [diag: V-policy rel 1.9252045133328506e-12, support [2917, 32228]]
+LAM old_j0 run=05 phase=bisect lam=0.07339683452541984 lam/gbar=3.4000000000000004 dual=22.883395094143587 EN=316.6035659260541 S=1037.2604257322414 F=22.832342701943073 feasible=True slack=0.2885509233179846 logdet=205.03141309913676 dmD=7.830436416895992 dp_s=172.2 fwd_s=5.7 [diag: V-policy rel 1.1672124150555166e-11, support [2917, 32228]]
