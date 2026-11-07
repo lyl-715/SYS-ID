@@ -90,7 +90,7 @@ def analyse(entry, cell, des, A, gam0, out, keep_edges=False):
     for b in sres['bins']:
         out(f"POST {entry['label']} bin {b['bin']}: mass share {b['mass_share']!r}, sends {b['sends']!r} (share {b['send_share']!r}), "
             f"info {b['info']!r}, info/send {b['info_per_send']!r}, gamma0-info/send {b['gamma_info_per_send']!r}, near {b['near']!r}, edge {b['edge']!r}")
-    return d, ((ev, w) if keep_edges else None)
+    return d, ((ev.astype(np.float32), w.astype(np.float32)) if keep_edges else None)    # float32 copies for the figure only
 
 
 def figure(edges_old, edges_new, lab_new, q_old, q_new, path):
@@ -200,7 +200,7 @@ def stage_post(out):
     for c, rounds in cells.items():
         for e in rounds:
             if 'table' not in e: continue
-            kk = (c == 'old' and e['round'] == 0) or c == 'edge'
+            kk = (c == 'old' and e['round'] == 0) or (c == 'edge' and e.get('accepted', True))
             d, ed = analyse(e, c, des, A, gam0, out, keep_edges=kk)
             res['tables'][e['label']] = d
             if ed is not None: keep[e['label']] = ed

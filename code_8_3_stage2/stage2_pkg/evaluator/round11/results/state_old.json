@@ -45,6 +45,29 @@
    "wall_s": 2487.2285485560005,
    "accepted": true,
    "gain_over_previous": 0.11537041763213551
+  },
+  {
+   "round": 2,
+   "label": "old_j2",
+   "reference": "T_1 (old_j1)",
+   "I_ref": 205.1467835167689,
+   "gbar": 0.008459691543791534,
+   "gamma1": 0.012034003104700436,
+   "lam": 0.02765261673376858,
+   "lam_over_gbar": 3.26875,
+   "run": 10,
+   "n_runs": 11,
+   "EN": 316.5926118223635,
+   "S": 1053.1327538237917,
+   "I": 205.15461809226898,
+   "F": 9.004304210052098,
+   "tangent_overestimate": 0.008503637656714247,
+   "table": "/tmp/claude-0/-home-user-SYS-ID/67f6c0d6-50d6-5a80-a0af-f1131227ebfe/scratchpad/work/old_j2_r10.npy",
+   "J": "/tmp/claude-0/-home-user-SYS-ID/67f6c0d6-50d6-5a80-a0af-f1131227ebfe/scratchpad/work/old_j2_r10_J.npy",
+   "status": "done",
+   "wall_s": 1978.1679813669998,
+   "accepted": false,
+   "gain_over_previous": 0.007834575500083929
   }
  ]
 }
