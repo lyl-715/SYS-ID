@@ -1,0 +1,17 @@
+make_figures.py 2026-11-08 17:51:14; numpy 2.5.3
+matplotlib 3.11.2
+DESIGN11 G = 35146 (full grid at every step), kernel windows 4224 nodes, cache range 6144 nodes per step, built in 3.0 s; limits outside the cache range exact: True
+FORWARD T1 (edge_j1): E[N] 316.7261244018059 log det 207.35521730257756 S 1344.2138518296865; sum m qhat over bins 315.72612440180853; facing-edge quantiles [1.2799974646893588, 1.5074069002653534, 1.5261001109339425, 1.7525064447861753, 1.778042099551506]; 60.6 s
+CHECK T1 binned statistic equals round11.json tables.edge_j1.shape.bins (mass_share, sends, send_share, info, info_per_send): True
+FORWARD round-4 table (old action set): E[N] 316.6035659260541 log det 205.03141309913676 S 1037.2604257322414; sum m qhat over bins 315.6035659260533; facing-edge quantiles [1.070864902357691, 1.4395100817654196, 1.9201224570513808, 2.4845778978192783, 2.867403970412038]; 10.3 s
+FORWARD T' (S u S'): E[N] 316.8433410803525 log det 207.64665023111849 S 1384.4324696171584; sum m qhat over bins 315.8433410803553; facing-edge quantiles [1.4057541843665602, 1.4359298925834376, 1.6164730961598437, 1.7261959632820154, 1.8141790947637064]; 64.5 s
+CHECK T' eq. (12) recomputation vs table rows: 0 mismatches over 175694854 (node, step) pairs
+CHECK quantiles old: ['1.0709', '1.4395', '1.9201', '2.4846', '2.8674']; archived max |diff| 0.00e+00 (<= 0.01: True); vs prompt 10/50/90 (1.05, 1.9, 2.87): diffs ['+0.0209', '+0.0201', '-0.0026'] (<= 0.01: False)
+CHECK quantiles T': ['1.4058', '1.4359', '1.6165', '1.7262', '1.8142']; archived max |diff| 0.00e+00 (<= 0.01: True); vs prompt 10/50/90 (1.41, 1.62, 1.81): diffs ['-0.0042', '-0.0035', '+0.0042'] (<= 0.01: True)
+CHECK fig 3 totals old: sum over bins of m qhat 315.6035659260533, E[N] - 1 315.6035659260541, |diff| 7.96e-13 (<= 1e-6: True)
+CHECK fig 3 totals Tprime: sum over bins of m qhat 315.8433410803553, E[N] - 1 315.8433410803525, |diff| 2.79e-12 (<= 1e-6: True)
+CHECK binned statistic equals the archive: old (round11.json old_j0) True; T' (round11b.json) True
+FIG2 old: excluded mass (|offset| < 1 sigma) 0.1092; share < 0.5 sigma 0.0271, > 3.5 sigma 0.0034; facing edge < 0 (x-bar outside the window, all cells) 0.0141; quantiles 10/50/90 (|offset| >= 1, resolution 0.001) ['1.038', '1.988', '2.850']
+FIG2 Tprime: excluded mass (|offset| < 1 sigma) 0.1243; share < 0.5 sigma 0.0000, > 3.5 sigma 0.0000; facing edge < 0 (x-bar outside the window, all cells) 0.0000; quantiles 10/50/90 (|offset| >= 1, resolution 0.001) ['1.403', '1.609', '1.791']
+HEATMAP y-range: shortest interval with >= 0.999 of T''s reference mass (pooled over k >= 2): [-326.40, 459.45] sigma (covers 0.99900)
+DONE in 150.7 s
