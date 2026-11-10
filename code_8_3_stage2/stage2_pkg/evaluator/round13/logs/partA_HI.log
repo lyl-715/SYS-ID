@@ -1,0 +1,4 @@
+=== ROUND 13 stage partA input HI started 2026-11-10 15:34:22; python 3.13.18, numpy 2.5.3, scipy 1.18.1, numba 0.68.0 (4 threads); B = 316.8921168493721; G = 28540; work /tmp/claude-0/-home-user-SYS-ID/1fa7f25a-e8aa-51eb-92ab-58a088560e53/scratchpad/work
+WARMUP 0.2 s
+PARTA HI I_full 218.03428773489773; G 28540; output range 869.106 sigma; largest step 3.4359 sigma
+PARTA HI constant SoD at Delta*: sigma/24 EN 274.26820475836394 S 421.78075746012905 I 195.46022300588672; sigma/120 EN 274.2671337160425 S 421.789207185417 I 195.4604267166107
