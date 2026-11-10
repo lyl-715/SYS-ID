@@ -1,0 +1,136 @@
+{
+ "table": {
+  "V0": {
+   "frac_c1": 0.525,
+   "frac_c2": 0.5,
+   "med_dI_c2": 10.032026444608363,
+   "complies": false
+  },
+  "VM(0.05)": {
+   "frac_c1": 0.0,
+   "frac_c2": 0.15,
+   "med_dI_c2": 9.401828861306527,
+   "complies": false
+  },
+  "VM(0.10)": {
+   "frac_c1": 0.0,
+   "frac_c2": 0.0,
+   "med_dI_c2": 8.755235045817855,
+   "complies": true
+  },
+  "VM(0.15)": {
+   "frac_c1": 0.0,
+   "frac_c2": 0.0,
+   "med_dI_c2": 8.083673304076882,
+   "complies": true
+  },
+  "VM(0.20)": {
+   "frac_c1": 0.0,
+   "frac_c2": 0.0,
+   "med_dI_c2": 7.3889890009443775,
+   "complies": true
+  },
+  "VM(0.30)": {
+   "frac_c1": 0.0,
+   "frac_c2": 0.0,
+   "med_dI_c2": 5.922832616416798,
+   "complies": true
+  },
+  "VF(50,0)": {
+   "frac_c1": 0.9,
+   "frac_c2": 0.825,
+   "med_dI_c2": 9.994761224589311,
+   "complies": false
+  },
+  "VF(50,3)": {
+   "frac_c1": 0.0,
+   "frac_c2": 0.0,
+   "med_dI_c2": 9.935344955289793,
+   "complies": true
+  },
+  "VF(50,6)": {
+   "frac_c1": 0.0,
+   "frac_c2": 0.0,
+   "med_dI_c2": 9.877103507082126,
+   "complies": true
+  },
+  "VF(100,0)": {
+   "frac_c1": 0.675,
+   "frac_c2": 0.525,
+   "med_dI_c2": 10.042460065668521,
+   "complies": false
+  },
+  "VF(100,3)": {
+   "frac_c1": 0.0,
+   "frac_c2": 0.025,
+   "med_dI_c2": 9.98529788969931,
+   "complies": true
+  },
+  "VF(100,6)": {
+   "frac_c1": 0.0,
+   "frac_c2": 0.0,
+   "med_dI_c2": 9.929151789406703,
+   "complies": true
+  },
+  "VF(300,0)": {
+   "frac_c1": 0.475,
+   "frac_c2": 0.475,
+   "med_dI_c2": 10.059243331286623,
+   "complies": false
+  },
+  "VF(300,3)": {
+   "frac_c1": 0.1,
+   "frac_c2": 0.225,
+   "med_dI_c2": 10.004045899428831,
+   "complies": false
+  },
+  "VF(300,6)": {
+   "frac_c1": 0.0,
+   "frac_c2": 0.05,
+   "med_dI_c2": 9.949416241509738,
+   "complies": true
+  },
+  "VF(1000,0)": {
+   "frac_c1": 0.575,
+   "frac_c2": 0.6,
+   "med_dI_c2": 10.053453612482059,
+   "complies": false
+  },
+  "VF(1000,3)": {
+   "frac_c1": 0.3,
+   "frac_c2": 0.425,
+   "med_dI_c2": 10.008094829804705,
+   "complies": false
+  },
+  "VF(1000,6)": {
+   "frac_c1": 0.125,
+   "frac_c2": 0.225,
+   "med_dI_c2": 9.963383005812574,
+   "complies": false
+  }
+ },
+ "selection": {
+  "VM": {
+   "variant": "VM(0.10)",
+   "complying": true,
+   "complying_members": [
+    "VM(0.10)",
+    "VM(0.15)",
+    "VM(0.20)",
+    "VM(0.30)"
+   ]
+  },
+  "VF": {
+   "variant": "VF(100,3)",
+   "complying": true,
+   "complying_members": [
+    "VF(50,3)",
+    "VF(50,6)",
+    "VF(100,3)",
+    "VF(100,6)",
+    "VF(300,6)"
+   ]
+  }
+ },
+ "rule": "prompt \u00a74b"
+}

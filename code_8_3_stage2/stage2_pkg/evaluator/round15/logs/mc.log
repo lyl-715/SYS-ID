@@ -1,0 +1,83 @@
+=== ROUND 15 stage mc started 2026-11-10 20:36:34; python 3.13.18, numpy 2.5.3, scipy 1.18.1, numba 0.68.0; B = 316.8921168493721; input U; TOL24 1e-11
+SETUP e0 = 1.58 (Round 14 part 1d e_C rounded up); 295 models; 18 variants; R = 2000 per job, seed 20261112 for every job
+MODELS main: 120 models; rms prediction error 0.0674 .. 0.4778 sigma (median 0.1963); max 0.1521 .. 1.0910 sigma (median 0.4619)
+MODELS ref: 12 models; rms prediction error 0.1066 .. 0.3388 sigma (median 0.1711); max 0.2284 .. 0.7061 sigma (median 0.3868)
+MODELS scaled: 160 models; rms prediction error 0.1766 .. 2.1882 sigma (median 0.6267); max 0.5000 .. 4.0000 sigma (median 1.5000)
+MODELS gross_plus: rms 335.64 sigma, max 346.43 sigma
+MODELS gross_minus: rms 335.64 sigma, max 346.43 sigma
+TRUE V0: EN 314.543 (0.130) sd N 18.32 frac N>B 0.451 S 1387.37 logdet 207.4646 (0.0004) dI 10.2636
+TRUE VM(0.05): EN 283.661 (0.123) sd N 17.43 frac N>B 0.032 S 1294.68 logdet 206.8428 (0.0004) dI 9.6418
+TRUE VM(0.10): EN 255.230 (0.117) sd N 16.54 frac N>B 0.000 S 1205.12 logdet 206.1982 (0.0004) dI 8.9972
+TRUE VM(0.15): EN 229.010 (0.111) sd N 15.68 frac N>B 0.000 S 1118.88 logdet 205.5305 (0.0004) dI 8.3295
+TRUE VM(0.20): EN 204.932 (0.105) sd N 14.88 frac N>B 0.000 S 1036.07 logdet 204.8391 (0.0004) dI 7.6381
+TRUE VM(0.30): EN 163.034 (0.094) sd N 13.25 frac N>B 0.000 S 881.60 logdet 203.3876 (0.0005) dI 6.1866
+TRUE VF(50,0): EN 317.236 (0.009) sd N 1.31 frac N>B 0.715 S 1365.40 logdet 207.3293 (0.0024) dI 10.1283; e mean 1.6054 sd 0.2048 clip lo 0.0000 hi 0.0000
+TRUE VF(50,3): EN 314.261 (0.009) sd N 1.30 frac N>B 0.041 S 1356.57 logdet 207.2711 (0.0022) dI 10.0701; e mean 1.6103 sd 0.2056 clip lo 0.0000 hi 0.0000
+TRUE VF(50,6): EN 311.292 (0.009) sd N 1.29 frac N>B 0.000 S 1347.82 logdet 207.2133 (0.0022) dI 10.0123; e mean 1.6153 sd 0.2065 clip lo 0.0000 hi 0.0000
+MC true model: 100/220 jobs, 34 s
+TRUE VF(100,0): EN 317.122 (0.013) sd N 1.83 frac N>B 0.633 S 1379.82 logdet 207.4224 (0.0026) dI 10.2215; e mean 1.5907 sd 0.1438 clip lo 0.0000 hi 0.0000
+TRUE VF(100,3): EN 314.178 (0.013) sd N 1.82 frac N>B 0.099 S 1371.27 logdet 207.3670 (0.0026) dI 10.1661; e mean 1.5953 sd 0.1444 clip lo 0.0000 hi 0.0000
+TRUE VF(100,6): EN 311.237 (0.013) sd N 1.81 frac N>B 0.002 S 1362.53 logdet 207.3099 (0.0025) dI 10.1090; e mean 1.6001 sd 0.1450 clip lo 0.0000 hi 0.0000
+TRUE VF(300,0): EN 316.814 (0.022) sd N 3.10 frac N>B 0.540 S 1389.04 logdet 207.4782 (0.0027) dI 10.2772; e mean 1.5813 sd 0.0817 clip lo 0.0000 hi 0.0000
+TRUE VF(300,3): EN 313.993 (0.022) sd N 3.08 frac N>B 0.204 S 1380.72 logdet 207.4250 (0.0027) dI 10.2240; e mean 1.5858 sd 0.0821 clip lo 0.0000 hi 0.0000
+TRUE VF(300,6): EN 311.172 (0.022) sd N 3.06 frac N>B 0.040 S 1372.37 logdet 207.3713 (0.0026) dI 10.1703; e mean 1.5903 sd 0.0825 clip lo 0.0000 hi 0.0000
+TRUE VF(1000,0): EN 316.677 (0.040) sd N 5.66 frac N>B 0.512 S 1392.08 logdet 207.4940 (0.0021) dI 10.2930; e mean 1.5782 sd 0.0429 clip lo 0.0000 hi 0.0000
+TRUE VF(1000,3): EN 314.264 (0.040) sd N 5.63 frac N>B 0.346 S 1384.98 logdet 207.4490 (0.0021) dI 10.2481; e mean 1.5819 sd 0.0432 clip lo 0.0000 hi 0.0000
+TRUE VF(1000,6): EN 311.832 (0.040) sd N 5.61 frac N>B 0.200 S 1377.87 logdet 207.4037 (0.0021) dI 10.2028; e mean 1.5857 sd 0.0435 clip lo 0.0000 hi 0.0000
+TRUE V0@1.5768: EN 316.615 (0.130) sd N 18.38 frac N>B 0.494 S 1393.41 logdet 207.5037 (0.0004) dI 10.3027
+MC true model: 200/220 jobs, 69 s
+TRUE VF(1000,0)@1.5768: EN 317.073 (0.040) sd N 5.67 frac N>B 0.543 S 1393.27 logdet 207.5023 (0.0021) dI 10.3014; e mean 1.5775 sd 0.0430 clip lo 0.0000 hi 0.0000
+TRUE VF(300,0)@1.5768: EN 316.935 (0.022) sd N 3.10 frac N>B 0.555 S 1389.43 logdet 207.4813 (0.0026) dI 10.2803; e mean 1.5811 sd 0.0817 clip lo 0.0000 hi 0.0000
+MC true model: 220/220 jobs, 76 s
+TRUE VF(100,0)@1.5768: EN 317.162 (0.013) sd N 1.83 frac N>B 0.641 S 1380.04 logdet 207.4241 (0.0025) dI 10.2232; e mean 1.5905 sd 0.1438 clip lo 0.0000 hi 0.0000
+MC main + reference: 100/2208 jobs, 34 s
+MC main + reference: 200/2208 jobs, 69 s
+MC main + reference: 300/2208 jobs, 104 s
+MC main + reference: 400/2208 jobs, 138 s
+MC main + reference: 500/2208 jobs, 174 s
+MC main + reference: 600/2208 jobs, 209 s
+MC main + reference: 700/2208 jobs, 243 s
+MC main + reference: 800/2208 jobs, 277 s
+MC main + reference: 900/2208 jobs, 311 s
+MC main + reference: 1000/2208 jobs, 344 s
+MC main + reference: 1100/2208 jobs, 378 s
+MC main + reference: 1200/2208 jobs, 411 s
+MC main + reference: 1300/2208 jobs, 445 s
+MC main + reference: 1400/2208 jobs, 479 s
+MC main + reference: 1500/2208 jobs, 513 s
+MC main + reference: 1600/2208 jobs, 547 s
+MC main + reference: 1700/2208 jobs, 581 s
+MC main + reference: 1800/2208 jobs, 615 s
+MC main + reference: 1900/2208 jobs, 650 s
+MC main + reference: 2000/2208 jobs, 684 s
+MC main + reference: 2100/2208 jobs, 719 s
+MC main + reference: 2200/2208 jobs, 754 s
+MC main + reference: 2208/2208 jobs, 756 s
+SELECT VM* = VM(0.10) (complying: True; complying members ['VM(0.10)', 'VM(0.15)', 'VM(0.20)', 'VM(0.30)'])
+SELECT VF* = VF(100,3) (complying: True; complying members ['VF(50,3)', 'VF(50,6)', 'VF(100,3)', 'VF(100,6)', 'VF(300,6)'])
+COMPLY V0: frac E[N] > B c=1 0.525 c=2 0.500; median dI c=2 10.0320; complies False
+COMPLY VM(0.05): frac E[N] > B c=1 0.000 c=2 0.150; median dI c=2 9.4018; complies False
+COMPLY VM(0.10): frac E[N] > B c=1 0.000 c=2 0.000; median dI c=2 8.7552; complies True
+COMPLY VM(0.15): frac E[N] > B c=1 0.000 c=2 0.000; median dI c=2 8.0837; complies True
+COMPLY VM(0.20): frac E[N] > B c=1 0.000 c=2 0.000; median dI c=2 7.3890; complies True
+COMPLY VM(0.30): frac E[N] > B c=1 0.000 c=2 0.000; median dI c=2 5.9228; complies True
+COMPLY VF(50,0): frac E[N] > B c=1 0.900 c=2 0.825; median dI c=2 9.9948; complies False
+COMPLY VF(50,3): frac E[N] > B c=1 0.000 c=2 0.000; median dI c=2 9.9353; complies True
+COMPLY VF(50,6): frac E[N] > B c=1 0.000 c=2 0.000; median dI c=2 9.8771; complies True
+COMPLY VF(100,0): frac E[N] > B c=1 0.675 c=2 0.525; median dI c=2 10.0425; complies False
+COMPLY VF(100,3): frac E[N] > B c=1 0.000 c=2 0.025; median dI c=2 9.9853; complies True
+COMPLY VF(100,6): frac E[N] > B c=1 0.000 c=2 0.000; median dI c=2 9.9292; complies True
+COMPLY VF(300,0): frac E[N] > B c=1 0.475 c=2 0.475; median dI c=2 10.0592; complies False
+COMPLY VF(300,3): frac E[N] > B c=1 0.100 c=2 0.225; median dI c=2 10.0040; complies False
+COMPLY VF(300,6): frac E[N] > B c=1 0.000 c=2 0.050; median dI c=2 9.9494; complies True
+COMPLY VF(1000,0): frac E[N] > B c=1 0.575 c=2 0.600; median dI c=2 10.0535; complies False
+COMPLY VF(1000,3): frac E[N] > B c=1 0.300 c=2 0.425; median dI c=2 10.0081; complies False
+COMPLY VF(1000,6): frac E[N] > B c=1 0.125 c=2 0.225; median dI c=2 9.9634; complies False
+MC scaled + gross: 100/486 jobs, 33 s
+MC scaled + gross: 200/486 jobs, 64 s
+MC scaled + gross: 300/486 jobs, 96 s
+MC scaled + gross: 400/486 jobs, 128 s
+MC scaled + gross: 486/486 jobs, 155 s
+MC done: 2716 job records; check 5 (finite dI, 0 <= W <= 1, N >= 1) failures: []
+=== ROUND 15 stage mc done in 987.9 s
+CLEANUP removed empty folders []; git status on rounds 4-14 and the frozen files: clean
