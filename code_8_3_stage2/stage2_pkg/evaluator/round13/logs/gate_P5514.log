@@ -1,0 +1,6 @@
+=== ROUND 13 stage gate input P5514 started 2026-11-10 12:16:30; python 3.13.18, numpy 2.5.3, scipy 1.18.1, numba 0.68.0 (4 threads); B = 316.8921168493721; G = 34951; work /tmp/claude-0/-home-user-SYS-ID/1fa7f25a-e8aa-51eb-92ab-58a088560e53/scratchpad/work
+WARMUP (JIT / cache) 0.2 s; registered in memory from inputs13.json: ['SCH', 'LO', 'HI']
+G4 P5514: sum a^2 - 1 = -1.1102230246251565e-16; output range 1136.209356739948 sigma (ref 1136.2); largest per-step motion 3.175876812737922 sigma (ref 3.18; <= 4.6: True); G = 34951 (ref 34951, equal: True); I_full = 219.00797787214196 (ref 219.008, |diff| 2.21e-05 <= 1e-4: True); a = [0.5023487014960141, 0.500932888579383, 0.5015874665268123, 0.49509800713393903]; chi = [5.1395250078490875, 5.337759812830718, 1.0969395125410395, 4.207133021554178] -> PASS
+G1 P5514: eval13.XK, HK (module grid of R13_INPUT=P5514) bitwise: {'XK_vs_input_arrays': True, 'HK_vs_input_arrays': True, 'XK_vs_config_D': True, 'HK_vs_config_D': True, 'a_chi_from_config_recheck': True, 'registered_by': 'round4/evaluator_window.py (in memory)', 'not_reregistered': True} -> PASS
+=== ROUND 13 stage gate input P5514 done in 0.2 s
+CLEANUP removed empty folders []; git status on rounds 4-11, config.json, density_recursion_v1.py, evaluator_fast.py: clean

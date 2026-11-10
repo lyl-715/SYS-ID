@@ -1,0 +1,671 @@
+{
+ "input": "U",
+ "versions": {
+  "python": "3.13.18",
+  "numpy": "2.5.3",
+  "scipy": "1.18.1",
+  "numba": "0.68.0",
+  "numba_threads": 4
+ },
+ "registered13": [
+  "SCH",
+  "LO",
+  "HI"
+ ],
+ "started": "2026-11-10 12:18:28",
+ "warmup_s": 0.17190549600002214,
+ "G4": {
+  "input": "U",
+  "a": [
+   0.5,
+   0.5,
+   0.5,
+   0.5
+  ],
+  "chi": [
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "sum_a2": 1.0,
+  "sum_a2_minus_1": 0.0,
+  "range_sigma": 1144.3561317634142,
+  "max_step_sigma": 3.9878407530954423,
+  "G": 35146,
+  "I_full": 219.00850592919505,
+  "z0": 1.9098150805683891,
+  "min_KA_minus_X24": 800,
+  "max_KB_plus_X24": 34376,
+  "ref_I_full": 219.0085,
+  "ref_max_step_sigma": 3.99,
+  "ref_G": 35146,
+  "ref_range_sigma": 1144.4,
+  "I_full_absdiff": 5.929195054932279e-06,
+  "G_equal": true,
+  "step_agrees_at_2_decimals": true,
+  "range_agrees_at_1_decimal": true,
+  "step_le_4_6": true,
+  "sum_a2_ok": true,
+  "pass_": true
+ },
+ "G0a": {
+  "bitwise": {
+   "XK": true,
+   "HK": true,
+   "Z": true,
+   "KA": true,
+   "KB": true,
+   "FL": true,
+   "CL": true,
+   "DZ": true,
+   "Z0": true,
+   "G": true,
+   "X_PAD": true,
+   "NAME": true,
+   "B": true,
+   "s": true
+  },
+  "pass_": true
+ },
+ "G2": {
+  "sigma24": {
+   "EN": 316.8921168493916,
+   "logdet": 197.20097668224133,
+   "S": 466.15774934468135,
+   "EN_ref": 316.8921168493721,
+   "logdet_ref": 197.20097668224076,
+   "S_ref": 466.15774934465276,
+   "ref_path": "accepted operator (evaluator_fast.evaluate_fast)",
+   "EN_rel": 6.152659417061097e-14,
+   "logdet_rel": 2.882512035039385e-15,
+   "S_rel": 6.133597420011315e-14,
+   "J_maxrel": 6.56163058422408e-14,
+   "EN_vs_prompt_rel": 6.152659417061097e-14,
+   "logdet_vs_prompt_rel": 2.882512035039385e-15,
+   "mass_dev_max": 3.852473895449293e-14,
+   "wall_s": 4.59364761300003,
+   "support": {
+    "clipped": false
+   },
+   "pass24": true
+  },
+  "sigma120": {
+   "EN": 316.8911511746132,
+   "logdet": 197.20115853002983,
+   "S": 466.16547466570563,
+   "G": 175724,
+   "mass_dev_max": 4.3587355946783646e-13,
+   "wall_s": 24.908984112999974,
+   "archive_present": true,
+   "EN_ref": 316.8911511745014,
+   "logdet_ref": 197.2011585300231,
+   "S_ref": 466.1654746653685,
+   "ref_route": "reuse",
+   "ref_source": "round7/results/archive_match.jsonl (theta_0, M = 480, f = 5)",
+   "EN_rel": 3.5283725810834896e-13,
+   "logdet_rel": 3.4157736116850596e-14,
+   "S_rel": 7.232159728376778e-13,
+   "n_entries": 1,
+   "pass120": true
+  },
+  "pass_": true
+ },
+ "G0bcd": {
+  "b": {
+   "scans": {
+    "j0": {
+     "runs": [
+      {
+       "lam": true,
+       "EN": true,
+       "S": true,
+       "F": true,
+       "dsum": true,
+       "dual": true,
+       "logdet": true,
+       "feasible": true,
+       "phase": true,
+       "run": 1
+      },
+      {
+       "lam": true,
+       "EN": true,
+       "S": true,
+       "F": true,
+       "dsum": true,
+       "dual": true,
+       "logdet": true,
+       "feasible": true,
+       "phase": true,
+       "run": 2
+      },
+      {
+       "lam": true,
+       "EN": true,
+       "S": true,
+       "F": true,
+       "dsum": true,
+       "dual": true,
+       "logdet": true,
+       "feasible": true,
+       "phase": true,
+       "run": 3
+      },
+      {
+       "lam": true,
+       "EN": true,
+       "S": true,
+       "F": true,
+       "dsum": true,
+       "dual": true,
+       "logdet": true,
+       "feasible": true,
+       "phase": true,
+       "run": 4
+      },
+      {
+       "lam": true,
+       "EN": true,
+       "S": true,
+       "F": true,
+       "dsum": true,
+       "dual": true,
+       "logdet": true,
+       "feasible": true,
+       "phase": true,
+       "run": 5
+      },
+      {
+       "lam": true,
+       "EN": true,
+       "S": true,
+       "F": true,
+       "dsum": true,
+       "dual": true,
+       "logdet": true,
+       "feasible": true,
+       "phase": true,
+       "run": 6
+      },
+      {
+       "lam": true,
+       "EN": true,
+       "S": true,
+       "F": true,
+       "dsum": true,
+       "dual": true,
+       "logdet": true,
+       "feasible": true,
+       "phase": true,
+       "run": 7
+      },
+      {
+       "lam": true,
+       "EN": true,
+       "S": true,
+       "F": true,
+       "dsum": true,
+       "dual": true,
+       "logdet": true,
+       "feasible": true,
+       "phase": true,
+       "run": 8
+      },
+      {
+       "lam": true,
+       "EN": true,
+       "S": true,
+       "F": true,
+       "dsum": true,
+       "dual": true,
+       "logdet": true,
+       "feasible": true,
+       "phase": true,
+       "run": 9
+      },
+      {
+       "lam": true,
+       "EN": true,
+       "S": true,
+       "F": true,
+       "dsum": true,
+       "dual": true,
+       "logdet": true,
+       "feasible": true,
+       "phase": true,
+       "run": 10
+      },
+      {
+       "lam": true,
+       "EN": true,
+       "S": true,
+       "F": true,
+       "dsum": true,
+       "dual": true,
+       "logdet": true,
+       "feasible": true,
+       "phase": true,
+       "run": 11
+      },
+      {
+       "lam": true,
+       "EN": true,
+       "S": true,
+       "F": true,
+       "dsum": true,
+       "dual": true,
+       "logdet": true,
+       "feasible": true,
+       "phase": true,
+       "run": 12
+      }
+     ],
+     "top": {
+      "gbar": true,
+      "gamma1": true,
+      "final_run": true,
+      "min_dual": true,
+      "n_runs": true,
+      "lam_bracket": true,
+      "status": true
+     },
+     "gbar": 0.021587304272182303,
+     "gamma1": 0.02987366782571452,
+     "final_run": 10,
+     "final_run_ref": 10,
+     "n_runs": 12,
+     "min_dual": 30.329080230826694,
+     "pass_": true,
+     "dp_s": [
+      40.67589908599996,
+      40.04240073800008,
+      40.89807445099996,
+      38.919498945999976,
+      39.53570879199992,
+      38.121389403999956,
+      40.746702183000025,
+      44.57604187900006,
+      37.593378209999855,
+      38.189890822999814,
+      43.16548540500003,
+      41.0771952340001
+     ],
+     "fwd_s": [
+      20.091315287000043,
+      20.572037982000097,
+      18.9077824740001,
+      17.736180182,
+      18.361239239000042,
+      17.8168870909999,
+      18.827202526000065,
+      18.106075033000025,
+      18.275875112999984,
+      18.572672931999932,
+      18.744742916000178,
+      18.246981132999963
+     ]
+    },
+    "j1": {
+     "runs": [
+      {
+       "lam": true,
+       "EN": true,
+       "S": true,
+       "F": true,
+       "dsum": true,
+       "dual": true,
+       "logdet": true,
+       "feasible": true,
+       "phase": true,
+       "run": 1
+      },
+      {
+       "lam": true,
+       "EN": true,
+       "S": true,
+       "F": true,
+       "dsum": true,
+       "dual": true,
+       "logdet": true,
+       "feasible": true,
+       "phase": true,
+       "run": 2
+      },
+      {
+       "lam": true,
+       "EN": true,
+       "S": true,
+       "F": true,
+       "dsum": true,
+       "dual": true,
+       "logdet": true,
+       "feasible": true,
+       "phase": true,
+       "run": 3
+      },
+      {
+       "lam": true,
+       "EN": true,
+       "S": true,
+       "F": true,
+       "dsum": true,
+       "dual": true,
+       "logdet": true,
+       "feasible": true,
+       "phase": true,
+       "run": 4
+      },
+      {
+       "lam": true,
+       "EN": true,
+       "S": true,
+       "F": true,
+       "dsum": true,
+       "dual": true,
+       "logdet": true,
+       "feasible": true,
+       "phase": true,
+       "run": 5
+      },
+      {
+       "lam": true,
+       "EN": true,
+       "S": true,
+       "F": true,
+       "dsum": true,
+       "dual": true,
+       "logdet": true,
+       "feasible": true,
+       "phase": true,
+       "run": 6
+      },
+      {
+       "lam": true,
+       "EN": true,
+       "S": true,
+       "F": true,
+       "dsum": true,
+       "dual": true,
+       "logdet": true,
+       "feasible": true,
+       "phase": true,
+       "run": 7
+      },
+      {
+       "lam": true,
+       "EN": true,
+       "S": true,
+       "F": true,
+       "dsum": true,
+       "dual": true,
+       "logdet": true,
+       "feasible": true,
+       "phase": true,
+       "run": 8
+      },
+      {
+       "lam": true,
+       "EN": true,
+       "S": true,
+       "F": true,
+       "dsum": true,
+       "dual": true,
+       "logdet": true,
+       "feasible": true,
+       "phase": true,
+       "run": 9
+      },
+      {
+       "lam": true,
+       "EN": true,
+       "S": true,
+       "F": true,
+       "dsum": true,
+       "dual": true,
+       "logdet": true,
+       "feasible": true,
+       "phase": true,
+       "run": 10
+      },
+      {
+       "lam": true,
+       "EN": true,
+       "S": true,
+       "F": true,
+       "dsum": true,
+       "dual": true,
+       "logdet": true,
+       "feasible": true,
+       "phase": true,
+       "run": 11
+      },
+      {
+       "lam": true,
+       "EN": true,
+       "S": true,
+       "F": true,
+       "dsum": true,
+       "dual": true,
+       "logdet": true,
+       "feasible": true,
+       "phase": true,
+       "run": 12
+      }
+     ],
+     "top": {
+      "gbar": true,
+      "gamma1": true,
+      "final_run": true,
+      "min_dual": true,
+      "n_runs": true,
+      "lam_bracket": true,
+      "status": true
+     },
+     "gbar": 0.006849709430879255,
+     "gamma1": 0.009928291424921748,
+     "final_run": 11,
+     "final_run_ref": 11,
+     "n_runs": 12,
+     "min_dual": 9.458505981635199,
+     "pass_": true,
+     "dp_s": [
+      41.93460471200001,
+      41.37383782400002,
+      43.56303351800011,
+      42.84396790200003,
+      40.936733615999856,
+      43.44156036700019,
+      47.856870181999966,
+      49.49164820399983,
+      44.256029004000084,
+      43.24429649900003,
+      40.70504167199988,
+      41.558708128000035
+     ],
+     "fwd_s": [
+      20.10436013599997,
+      19.956547347999958,
+      19.426950783999928,
+      18.609055142999978,
+      20.161464774000024,
+      20.397374247000016,
+      21.811257762999958,
+      21.599698879999778,
+      20.716776020999987,
+      19.91096335200018,
+      19.75606133500014,
+      18.804453474000184
+     ]
+    }
+   },
+   "pass_": true
+  },
+  "c": {
+   "tables": {
+    "T0": {
+     "label": "edge_j0",
+     "archive": "round11/results/table_edge_A0.npz",
+     "codes_bitwise": true,
+     "values": {
+      "I": {
+       "value": 207.10197960571716,
+       "ref": 207.10197960571716,
+       "rel": 0.0
+      },
+      "EN24": {
+       "value": 316.61009947208913,
+       "ref": 316.61009947208913,
+       "rel": 0.0
+      },
+      "I120": {
+       "value": 207.0999194594685,
+       "ref": 207.0999194594685,
+       "rel": 0.0
+      },
+      "EN120": {
+       "value": 316.413413652473,
+       "ref": 316.413413652473,
+       "rel": 0.0
+      },
+      "S24": {
+       "value": 1319.979070171587,
+       "ref": 1319.979070171587,
+       "rel": 0.0
+      },
+      "S120": {
+       "value": 1319.68132021784,
+       "ref": 1319.68132021784,
+       "rel": 0.0
+      }
+     },
+     "pass_": true
+    },
+    "T1": {
+     "label": "edge_j1",
+     "archive": "round11/results/table_edge_iter.npz",
+     "codes_bitwise": true,
+     "values": {
+      "I": {
+       "value": 207.35521730257756,
+       "ref": 207.35521730257756,
+       "rel": 0.0
+      },
+      "EN24": {
+       "value": 316.7261244018059,
+       "ref": 316.7261244018059,
+       "rel": 0.0
+      },
+      "I120": {
+       "value": 207.35308449872582,
+       "ref": 207.35308449872582,
+       "rel": 0.0
+      },
+      "EN120": {
+       "value": 316.5159931346839,
+       "ref": 316.5159931346839,
+       "rel": 0.0
+      },
+      "S24": {
+       "value": 1344.2138518296865,
+       "ref": 1344.2138518296865,
+       "rel": 0.0
+      },
+      "S120": {
+       "value": 1343.8903701264146,
+       "ref": 1343.8903701264146,
+       "rel": 0.0
+      }
+     },
+     "pass_": true
+    }
+   },
+   "pass_": true
+  },
+  "d": {
+   "UB": 207.56048558735236,
+   "UB_archived": 207.56048558735236,
+   "I_T0": 207.10197960571716,
+   "min_dual_j1": 9.458505981635199,
+   "I_T0_archived": 207.10197960571716,
+   "min_dual_j1_archived": 9.458505981635199,
+   "abs_diff": 0.0,
+   "rel": 0.0,
+   "prompt_value": 207.56048558735236,
+   "lam_argmin": 0.01907644076499873,
+   "UBp": 207.56525182437946,
+   "lam_argmin_p": 0.019059316491421535,
+   "pass_": true
+  },
+  "design": {
+   "T_star": "T1",
+   "certificate": {
+    "UB": 207.56048558735236,
+    "UBp": 207.56525182437946,
+    "gap": 0.21003452180190152,
+    "gap_le_0_5": true,
+    "from_scan": "edge_j1",
+    "lam_argmin": 0.01907644076499873,
+    "lam_argmin_p": 0.019059316491421535
+   },
+   "checks": {
+    "scans_monotone": true,
+    "forward_backward": true,
+    "budget120_best": true,
+    "crit_le_UBp": true,
+    "mass_dev24_max": 6.549205622263798e-13,
+    "mass_dev120_max": 8.715250743307479e-13
+   },
+   "wall_s": 1820.3385156579998,
+   "best": {
+    "label": "edge_j1",
+    "logdet24": 207.35521730257756,
+    "EN24": 316.7261244018059,
+    "logdet120": 207.35308449872582,
+    "EN120": 316.5159931346839,
+    "S24": 1344.2138518296865,
+    "S120": 1343.8903701264146
+   }
+  },
+  "pass_": true
+ },
+ "timing": {
+  "dp_s_runs": [
+   40.67589908599996,
+   40.04240073800008,
+   40.89807445099996,
+   38.919498945999976,
+   39.53570879199992,
+   38.121389403999956,
+   40.746702183000025,
+   44.57604187900006,
+   37.593378209999855,
+   38.189890822999814,
+   43.16548540500003,
+   41.0771952340001,
+   41.93460471200001,
+   41.37383782400002,
+   43.56303351800011,
+   42.84396790200003,
+   40.936733615999856,
+   43.44156036700019,
+   47.856870181999966,
+   49.49164820399983,
+   44.256029004000084,
+   43.24429649900003,
+   40.70504167199988,
+   41.558708128000035
+  ],
+  "dp_s_median": 41.22551652900006,
+  "fwd24_s_scan_median": 19.167366629000014,
+  "fwd24_const_s": 4.59364761300003,
+  "fwd120_const_s": 24.908984112999974,
+  "fwd120_T0_s": 105.78548474800004,
+  "fwd120_T1_s": 110.15499300900001,
+  "scan_j0_s": 710.3062369470001,
+  "scan_j1_s": 765.4028890669999,
+  "design_s": 1820.3385156579998,
+  "numba_threads": 4
+ },
+ "finished": "2026-11-10 12:49:23"
+}

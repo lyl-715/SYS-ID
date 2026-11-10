@@ -1,0 +1,11 @@
+1c1,4
+< """Round 11: stand-alone DP on the FULL design grid with a generic product action set, the frozen price scan of Section IV-D and
+---
+> """[Round 13 copy of round11/dp11.py (prompt reports_CN/prompt_round13_part0_infrastructure_EN.md §2.3): the only change is
+> `import eval13 as e11` instead of `import eval11 as e11`. The rest of this docstring is round 11's, unchanged.]
+> 
+> Round 11: stand-alone DP on the FULL design grid with a generic product action set, the frozen price scan of Section IV-D and
+36c39
+< import eval11 as e11
+---
+> import eval13 as e11

@@ -1,0 +1,6 @@
+=== ROUND 13 stage gate input N started 2026-11-10 12:16:30; python 3.13.18, numpy 2.5.3, scipy 1.18.1, numba 0.68.0 (4 threads); B = 316.8921168493721; G = 43262; work /tmp/claude-0/-home-user-SYS-ID/1fa7f25a-e8aa-51eb-92ab-58a088560e53/scratchpad/work
+WARMUP (JIT / cache) 0.2 s; registered in memory from inputs13.json: ['SCH', 'LO', 'HI']
+G4 N: sum a^2 - 1 = 0.0; output range 1482.5144097331986 sigma (ref 1482.5); largest per-step motion 4.03921268381897 sigma (ref 4.04; <= 4.6: True); G = 43262 (ref 43262, equal: True); I_full = 218.41690668812643 (ref 218.4169, |diff| 6.69e-06 <= 1e-4: True); a = [0.6589278717330475, 0.4270232136184812, 0.42915920507660504, 0.4464164105208477]; chi = [0.5343112761025717, 5.733405535074931, 4.943465831064352, 4.116768656900249] -> PASS
+G1 N: eval13.XK, HK (module grid of R13_INPUT=N) bitwise: {'XK_vs_input_arrays': True, 'HK_vs_input_arrays': True, 'not_reregistered': True, 'registered_by': 'config.json'} -> PASS
+=== ROUND 13 stage gate input N done in 0.2 s
+CLEANUP removed empty folders []; git status on rounds 4-11, config.json, density_recursion_v1.py, evaluator_fast.py: clean

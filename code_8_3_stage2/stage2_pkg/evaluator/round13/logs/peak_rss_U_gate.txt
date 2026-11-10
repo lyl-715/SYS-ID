@@ -1,0 +1,2 @@
+peak VmHWM kB 9095468
+(VmHWM of the 'R13_INPUT=U run13.py gate' process, polled every 5 s from outside the process until it exited; 2026-11-10)

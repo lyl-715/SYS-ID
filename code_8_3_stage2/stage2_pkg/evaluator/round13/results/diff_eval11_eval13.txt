@@ -1,0 +1,49 @@
+1c1,7
+< """Round 11: stand-alone forward / backward evaluator on the FULL design grid (spec reports_CN/plan_round11_edge_actions_EN.md,
+---
+> """[Round 13 copy of round11/eval11.py (prompt reports_CN/prompt_round13_part0_infrastructure_EN.md §2.2). Changes, and nothing
+> else: (1) in-memory registration of the inputs of round13/inputs13.json (config.json is not edited) with the check
+> |sum a_m^2 - 1| <= 1e-12; (2) NAME from the environment variable R13_INPUT (default 'U'); (3) fine_grid passes this input's
+> own coarse origin and step to round 7's cell_index; (4) two input-specific assertions after the module-level grid. The rest
+> of this docstring is round 11's, unchanged.]
+> 
+> Round 11: stand-alone forward / backward evaluator on the FULL design grid (spec reports_CN/plan_round11_edge_actions_EN.md,
+32c38
+< import sys, time
+---
+> import sys, time, json
+40a47,67
+> # --- round 13 change (1): register the inputs of round13/inputs13.json in memory (as evaluator_window does for P5514) -------
+> INPUTS13 = json.load(open(os.path.join(HERE, 'inputs13.json')))
+> def _numeric(v): return isinstance(v, list) and len(v) == 4 and all(isinstance(x, (int, float)) for x in v)
+> REGISTERED13 = []
+> for _n, _e in INPUTS13.items():
+>     if _n in dr.CFG['inputs']:                         # U, N (config.json), P5514 (evaluator_window): taken from their sources
+>         if _numeric(_e.get('a')): assert [float(x) for x in _e['a']] == [float(x) for x in dr.CFG['inputs'][_n]['a']], _n
+>         if _numeric(_e.get('chi')): assert [float(x) for x in _e['chi']] == [float(x) for x in dr.CFG['inputs'][_n]['chi']], _n
+>         continue
+>     if _numeric(_e.get('a')): _a = [float(x) for x in _e['a']]
+>     elif _numeric(_e.get('p')): _a = [float(x) for x in np.sqrt(np.asarray(_e['p'], np.float64))]   # a = sqrt(p), double precision
+>     else: continue                                     # no numeric amplitudes yet (PAR: filled by Part B): not registered
+>     if _numeric(_e.get('chi')): _chi = [float(x) for x in _e['chi']]
+>     elif 'chi_rule' in _e:                              # SCH: chi_m = (-pi m (m - 1)/4) mod 2 pi, m = 1..4
+>         _m = np.arange(1, 5, dtype=np.float64); _chi = [float(x) for x in np.mod(-np.pi*_m*(_m-1)/4, 2*np.pi)]
+>         assert np.allclose(_chi, [0.0, 1.5*np.pi, 0.5*np.pi, np.pi], rtol=0, atol=1e-15), _chi
+>     else: raise ValueError(f"inputs13.json: input {_n} has no phases")
+>     dr.CFG['inputs'][_n] = dict(a=_a, chi=_chi); REGISTERED13.append(_n)
+> for _n, _e in dr.CFG['inputs'].items():
+>     assert abs(float(np.sum(np.asarray(_e['a'], np.float64)**2))-1.0) <= 1e-12, (_n, _e['a'])
+> 
+43c70,71
+< NAME = 'U'
+---
+> NAME = os.environ.get('R13_INPUT', 'U')               # round 13 change (2)
+> assert NAME in dr.CFG['inputs'], NAME
+59a88,90
+> # round 13 change (4): input-specific assertions (the support argument assumes them for every input)
+> assert float(np.abs(np.diff(XK)).max()) <= 4.6*s, (NAME, float(np.abs(np.diff(XK)).max()/s))
+> assert int((KA[1:]-ew.X24).min()) >= 0 and int((KB[1:]+ew.X24).max()) <= G-1, NAME
+329c360
+<         cell, gap = er.cell_index(zf)
+---
+>         cell, gap = er.cell_index(zf, z0=Z0, h=DZ)           # round 13 change (3): this input's own coarse origin and step

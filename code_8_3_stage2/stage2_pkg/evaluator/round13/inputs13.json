@@ -1,0 +1,9 @@
+{
+ "U":     {"a": [0.5, 0.5, 0.5, 0.5], "chi": [0, 0, 0, 0], "source": "config.json inputs.U"},
+ "P5514": {"source": "round2a/config_recheck.json candidates[0] (already registered by evaluator_window)"},
+ "N":     {"source": "config.json inputs.N"},
+ "SCH":   {"p": [0.25, 0.25, 0.25, 0.25], "chi_rule": "chi_m = (-pi m (m-1)/4) mod 2pi, m = 1..4  ->  (0, 3pi/2, pi/2, pi)"},
+ "LO":    {"p": [0.40, 0.30, 0.20, 0.10], "chi": [0, 0, 0, 0]},
+ "HI":    {"p": [0.10, 0.20, 0.30, 0.40], "chi": [0, 0, 0, 0]},
+ "PAR":   {"p": "filled by Part B (classical parametric-optimal input)", "chi": [0, 0, 0, 0]}
+}

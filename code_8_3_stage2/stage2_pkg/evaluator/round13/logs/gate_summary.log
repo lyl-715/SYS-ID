@@ -1,0 +1,9 @@
+=== ROUND 13 stage gate_summary input U started 2026-11-10 12:49:32; python 3.13.18, numpy 2.5.3, scipy 1.18.1, numba 0.68.0 (4 threads); B = 316.8921168493721; G = 35146; work /tmp/claude-0/-home-user-SYS-ID/1fa7f25a-e8aa-51eb-92ab-58a088560e53/scratchpad/work
+SUMMARY G0: {'a': True, 'b': True, 'c': True, 'd': True, 'pass_': True}
+SUMMARY G1: {'P5514': True, 'N': True, 'pass_': True}
+SUMMARY G2: {'sigma24': True, 'sigma120': True, 'pass_': True}
+SUMMARY G3: {'LO': True, 'pass_': True}
+SUMMARY G4: {'U': True, 'P5514': True, 'SCH': True, 'LO': True, 'HI': True, 'N': True, 'pass_': True}
+SUMMARY all gates pass: True
+=== ROUND 13 stage gate_summary input U done in 0.0 s
+CLEANUP removed empty folders []; git status on rounds 4-11, config.json, density_recursion_v1.py, evaluator_fast.py: clean

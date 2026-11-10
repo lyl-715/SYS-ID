@@ -1,0 +1,53 @@
+{
+ "input": "HI",
+ "versions": {
+  "python": "3.13.18",
+  "numpy": "2.5.3",
+  "scipy": "1.18.1",
+  "numba": "0.68.0",
+  "numba_threads": 4
+ },
+ "registered13": [
+  "SCH",
+  "LO",
+  "HI"
+ ],
+ "started": "2026-11-10 12:16:31",
+ "warmup_s": 0.1406225100000711,
+ "G4": {
+  "input": "HI",
+  "a": [
+   0.31622776601683794,
+   0.4472135954999579,
+   0.5477225575051661,
+   0.6324555320336759
+  ],
+  "chi": [
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "sum_a2": 0.9999999999999999,
+  "sum_a2_minus_1": -1.1102230246251565e-16,
+  "range_sigma": 869.1058151984747,
+  "max_step_sigma": 3.435879818573349,
+  "G": 28540,
+  "I_full": 218.03428773489773,
+  "z0": 1.9258723193725589,
+  "min_KA_minus_X24": 793,
+  "max_KB_plus_X24": 27770,
+  "ref_I_full": 218.0343,
+  "ref_max_step_sigma": 3.44,
+  "ref_G": 28540,
+  "ref_range_sigma": 869.1,
+  "I_full_absdiff": 1.226510227070321e-05,
+  "G_equal": true,
+  "step_agrees_at_2_decimals": true,
+  "range_agrees_at_1_decimal": true,
+  "step_le_4_6": true,
+  "sum_a2_ok": true,
+  "pass_": true
+ },
+ "finished": "2026-11-10 12:16:31"
+}

@@ -1,0 +1,10 @@
+=== ROUND 13 stage gate input LO started 2026-11-10 12:16:39; python 3.13.18, numpy 2.5.3, scipy 1.18.1, numba 0.68.0 (4 threads); B = 316.8921168493721; G = 40015; work /tmp/claude-0/-home-user-SYS-ID/1fa7f25a-e8aa-51eb-92ab-58a088560e53/scratchpad/work
+WARMUP (JIT / cache) 0.2 s; registered in memory from inputs13.json: ['SCH', 'LO', 'HI']
+G4 LO: sum a^2 - 1 = -1.1102230246251565e-16; output range 1347.2426234872555 sigma (ref 1347.2); largest per-step motion 4.282339941763543 sigma (ref 4.28; <= 4.6: True); G = 40015 (ref 40015, equal: True); I_full = 218.0342877348977 (ref 218.0343, |diff| 1.23e-05 <= 1e-4: True); a = [0.6324555320336759, 0.5477225575051661, 0.4472135954999579, 0.31622776601683794]; chi = [0.0, 0.0, 0.0, 0.0] -> PASS
+G3 LO: fine_grid(5) built without BoundaryNode in 0.0 s; zf[0] == Z0: True (1.8994231576096559; round 7 default z0 (input U) 1.9098150805683891); Gf 200071; coarse cells [0, 40014] within [0, 40014]: True; smallest distance to a cell boundary 0.0999999999476131 cell widths
+G3 LO ConstRows(480): sigma/24 EN 367.814772611902 logdet 197.35269715259415 S 529.6084442309646 mass dev 8.04e-14 (5.1 s); sigma/120 EN 367.8138573050662 logdet 197.3528664358578 S 529.6163340971577 mass dev 2.54e-13 (26.8 s) -> PASS
+DESIGN11 G = 40015 (full grid at every step), kernel windows 4224 nodes, cache range 6144 nodes per step, built in 1.8 s; limits outside the cache range exact: True
+DIAG LO: accepted operator at Delta* EN 367.814772611879 logdet 197.35269715259363; eval13 ConstRows(480) rel 6.26e-14 / 2.59e-15
+TIMING LO: one DP run (edge set, tangent at SoD, lam = 5 gbar = 0.0955843636375852) 42.9 s (4 numba threads); its table on sigma/24: EN 82.79335640436899 logdet 197.30478019168294 (22.5 s); DP value vs policy rel 2.9e-13
+=== ROUND 13 stage gate input LO done in 101.5 s
+CLEANUP removed empty folders []; git status on rounds 4-11, config.json, density_recursion_v1.py, evaluator_fast.py: clean
