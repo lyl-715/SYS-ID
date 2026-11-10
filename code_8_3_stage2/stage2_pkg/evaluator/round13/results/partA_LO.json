@@ -96,5 +96,10 @@
   "wall120_s": 27.194153490999952,
   "J24": "results/partA_LO/J_sod_matched_s24.npy",
   "J120": "results/partA_LO/J_sod_matched_s120.npy"
+ },
+ "dp_window_fix": {
+  "decision": "DECISION 13-22",
+  "W88": 4224,
+  "short_steps": []
  }
 }

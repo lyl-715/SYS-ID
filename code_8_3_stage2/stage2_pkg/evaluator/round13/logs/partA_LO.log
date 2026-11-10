@@ -19,3 +19,9 @@ MATCHED LO M*=561 (23.3750 sigma) EN120=317.11730065193586 residual 0.2251838025
 DESIGN11 G = 40015 (full grid at every step), kernel windows 4224 nodes, cache range 6144 nodes per step, built in 1.9 s; limits outside the cache range exact: True
 SCAN edge_j0: actions edge (100); gbar 0.01911687272751704 gamma_1 0.02708606800303848; lambda_0 = 5 gbar = 0.0955843636375852
 LAM edge_j0 run=01 phase=start lam=0.0955843636375852 lam/gbar=5.0 dual=33.136159812051886 EN=82.79335640436899 S=501.23390230386974 F=10.73289269856489 feasible=True slack=234.0987604450031 logdet=197.30478019168294 dmD=-0.047916960910697526 dp_s=43.3 fwd_s=22.6 [diag: V-policy rel 2.858282856182674e-13, support [2917, 37097]]
+=== ROUND 13 stage partA input LO started 2026-11-10 15:00:27; python 3.13.18, numpy 2.5.3, scipy 1.18.1, numba 0.68.0 (4 threads); B = 316.8921168493721; G = 40015; work /tmp/claude-0/-home-user-SYS-ID/1fa7f25a-e8aa-51eb-92ab-58a088560e53/scratchpad/work
+WARMUP 0.2 s
+PARTA LO I_full 218.0342877348977; G 40015; output range 1347.243 sigma; largest step 4.2823 sigma
+PARTA LO constant SoD at Delta*: sigma/24 EN 367.814772611879 S 529.6084442309325 I 197.35269715259363; sigma/120 EN 367.8138573050662 S 529.6163340971577 I 197.3528664358578
+DESIGN11 G = 40015 (full grid at every step), kernel windows 4224 nodes, cache range 6144 nodes per step, built in 2.0 s; limits outside the cache range exact: True
+SCAN edge_j0: actions edge (100); gbar 0.01911687272751704 gamma_1 0.02708606800303848; lambda_0 = 5 gbar = 0.0955843636375852
