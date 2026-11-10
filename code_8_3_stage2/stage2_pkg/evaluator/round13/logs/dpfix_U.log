@@ -1,0 +1,7 @@
+=== ROUND 13 stage dpfix input U started 2026-11-10 14:00:47; python 3.13.18, numpy 2.5.3, scipy 1.18.1, numba 0.68.0 (4 threads); B = 316.8921168493721; G = 35146; work /tmp/claude-0/-home-user-SYS-ID/1fa7f25a-e8aa-51eb-92ab-58a088560e53/scratchpad/work
+DESIGN11 G = 35146 (full grid at every step), kernel windows 4224 nodes, cache range 6144 nodes per step, built in 1.5 s; limits outside the cache range exact: True
+DESIGN11 G = 35146 (full grid at every step), kernel windows 4224 nodes, cache range 6144 nodes per step, built in 1.5 s; limits outside the cache range exact: True
+DPFIX (a) dp13.Design11 vs dp11.Design11 (input U), bitwise: {'UC': True, 'PPC': True, 'PNC': True, 'PHC': True, 'GK': True, 'g1': True, 'W88': True, 'NC': True, 'a1': True, 'b1': True, 'no_short_steps_U': True} -> PASS
+DPFIX (b) one DP at round 11's final lambda of scan j0 (run 10, lam 0.06022857891938863): codes vs table_edge_A0.npz bitwise True (0 differing nodes); dsum 11.273474443508011 vs 11.273474443508011 bitwise True; gbar/gamma1 equal True/True; 39.6 s -> PASS
+=== ROUND 13 stage dpfix input U done in 50.2 s
+CLEANUP removed empty folders []; git status on rounds 4-11, config.json, density_recursion_v1.py, evaluator_fast.py: clean

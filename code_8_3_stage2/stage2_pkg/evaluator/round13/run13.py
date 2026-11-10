@@ -335,6 +335,48 @@ def stage_gate_summary(out):
     return out_
 
 
+# --- DECISION 13-22: neutrality of the dp13 window-width change for U ----------------------------------------------------------------
+def stage_dpfix(out):
+    """(a) every Design11 constructor array of dp13 bitwise equal to dp11's (both built in this process, input U); (b) one DP run at round
+    11's final lambda of scan j0 (run 10) reproduces round11/results/table_edge_A0.npz codes and the archived dsum bitwise."""
+    if NAME != 'U': raise Stop("dpfix runs for input U only")
+    res = dict(input=NAME, versions=versions())
+    path = os.path.join(RES, 'dpfix13_U.json')
+    dp13.warmup()
+    sys.path.append(R11)
+    import dp11                                                 # frozen round 11 (read-only)
+    d13 = dp13.Design11(out)
+    d11 = dp11.Design11(out)
+    arr = {}
+    for n in ('UC', 'PPC', 'PNC', 'PHC', 'GK', 'g1'):
+        arr[n] = bitwise(getattr(d13, n), getattr(d11, n))
+    for n in ('W88', 'NC', 'a1', 'b1'):
+        arr[n] = bool(getattr(d13, n) == getattr(d11, n))
+    arr['no_short_steps_U'] = bool(d13.short_steps == [])
+    res['a'] = dict(bitwise=arr, pass_=all(arr.values()))
+    out(f"DPFIX (a) dp13.Design11 vs dp11.Design11 (input U), bitwise: {arr} -> {'PASS' if res['a']['pass_'] else 'FAIL'}")
+    del d11; import gc; gc.collect()
+    jdump(res, path)
+    sc = json.load(open(os.path.join(R11, 'results', 'scan_edge_j0.json')))
+    r10 = [r for r in sc['runs'] if r['run'] == sc['final_run']][0]
+    rec_sod, J_sod, W_sod = d13.sod_reference()
+    gam, gbar, g1 = d13.gamma_from_J(J_sod)
+    acts = e13.edge_set(); codes = np.empty((K-1, G), np.uint16)
+    t0 = time.perf_counter(); dsum, nbad = d13.dp(acts, gam, r10['lam'], codes); tdp = time.perf_counter()-t0
+    with np.load(os.path.join(R11, 'results', 'table_edge_A0.npz')) as z: ref = z['codes']; lam_ref = float(z['lam'])
+    b = dict(lam=r10['lam'], lam_npz=lam_ref, run=r10['run'], gbar_equal=bool(gbar == sc['gbar']), gamma1_equal=bool(g1 == sc['gamma1']),
+             codes_bitwise=bitwise(codes, ref), n_diff_nodes=int(np.count_nonzero(codes != ref)), dsum=dsum, dsum_ref=r10['dsum'],
+             dsum_bitwise=bool(dsum == r10['dsum']), nonfinite_V=int(nbad), dp_s=tdp)
+    res['b'] = dict(b, pass_=bool(b['gbar_equal'] and b['gamma1_equal'] and b['codes_bitwise'] and b['dsum_bitwise'] and lam_ref == r10['lam']))
+    out(f"DPFIX (b) one DP at round 11's final lambda of scan j0 (run {r10['run']}, lam {r10['lam']!r}): codes vs table_edge_A0.npz bitwise "
+        f"{b['codes_bitwise']} ({b['n_diff_nodes']} differing nodes); dsum {dsum!r} vs {r10['dsum']!r} bitwise {b['dsum_bitwise']}; gbar/gamma1 equal "
+        f"{b['gbar_equal']}/{b['gamma1_equal']}; {tdp:.1f} s -> {'PASS' if res['b']['pass_'] else 'FAIL'}")
+    res['pass_'] = bool(res['a']['pass_'] and res['b']['pass_'])
+    jdump(res, path)
+    if not res['pass_']: raise Stop("DECISION 13-22 neutrality for U failed")
+    return res
+
+
 # --- Part A -------------------------------------------------------------------------------------------------------------------------
 I_TABLE_U_R11 = 207.35521730257756          # round11.json tables.edge_j1.I (sigma/24), Part A §4 / check 5
 
@@ -379,6 +421,7 @@ def stage_partA(out):
             if not os.path.exists(dst) and os.path.exists(src): shutil.copyfile(src, dst); out(f"PARTA U: scan edge_{j} taken from gate G0 ({src})")
     if 'design' not in res:
         des = c13.get_design(out)
+        res['dp_window_fix'] = dict(decision='DECISION 13-22', W88=des.W88, short_steps=des.short_steps); save()
         dres = c13.design(e13.edge_set(), dp13.Design11.gamma_from_J, c13.logdet9, 9, 'edge', des=des, outdir=outdir,
                           work=os.path.join(WORK, NAME, 'edge'), log=out)
         del des
@@ -426,7 +469,7 @@ def stage_partA(out):
     return res
 
 
-STAGES = ('gate', 'gate_summary', 'partA', 'partA_summary', 'partB')
+STAGES = ('gate', 'gate_summary', 'dpfix', 'partA', 'partA_summary', 'partB')
 
 def main():
     args = sys.argv[1:]
@@ -435,7 +478,7 @@ def main():
         if stg not in STAGES: raise SystemExit(f"unknown stage {stg}")
         if stg == 'partB': raise SystemExit("stage partB is not implemented (Part B)")
         if stg == 'partA_summary': raise SystemExit("stage partA_summary is not implemented yet")
-        out = Tee(os.path.join(LOGS, f'{stg}_{NAME}.log' if stg in ('gate', 'partA') else f'{stg}.log'))
+        out = Tee(os.path.join(LOGS, f'{stg}_{NAME}.log' if stg in ('gate', 'partA', 'dpfix') else f'{stg}.log'))
         out(f"=== ROUND 13 stage {stg} input {NAME} started {time.strftime('%Y-%m-%d %H:%M:%S')}; python {platform.python_version()}, numpy {np.__version__}, "
             f"scipy {scipy.__version__}, numba {numba.__version__} ({numba.get_num_threads()} threads); B = {B!r}; G = {G}; work {WORK}")
         t0 = time.perf_counter()
@@ -443,6 +486,7 @@ def main():
             if stg == 'gate': stage_gate(out)
             elif stg == 'gate_summary': stage_gate_summary(out)
             elif stg == 'partA': stage_partA(out)
+            elif stg == 'dpfix': stage_dpfix(out)
         except (Stop, e13.AssertionStop, AssertionError) as e:
             out(f"STOP {type(e).__name__}: {e}")
             out(f"=== ROUND 13 stage {stg} input {NAME} STOPPED after {time.perf_counter()-t0:.1f} s")

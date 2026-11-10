@@ -1,5 +1,10 @@
 """[Round 13 copy of round11/dp11.py (prompt reports_CN/prompt_round13_part0_infrastructure_EN.md §2.3): the only change is
-`import eval13 as e11` instead of `import eval11 as e11`. The rest of this docstring is round 11's, unchanged.]
+`import eval13 as e11` instead of `import eval11 as e11`. Round 13 DECISION 13-22 (user decision 2026-11-10, Part A) adds one
+change to Design11.__init__: a step whose 88-sigma kernel window has W88 - 1 nodes (floating-point rounding drops one end node
+at exactly 88 sigma, where the kernel is exactly 0) is accepted; its kernel row keeps length W88 with the unused last entry
+exactly 0.0, and its u / ndtr / phi caches are built on the fixed-length index range [KA - XC, KA - XC + NC - 1]. Any other width
+stops. For inputs whose windows all have W88 nodes (U, LO, HI) every array is bitwise the same as before. The rest of this
+docstring is round 11's, unchanged.]
 
 Round 11: stand-alone DP on the FULL design grid with a generic product action set, the frozen price scan of Section IV-D and
 the iteration of the tangent point A (spec reports_CN/plan_round11_edge_actions_EN.md §2-§3, DECISIONS 11-1..11-3; execution
@@ -145,19 +150,25 @@ class Design11:
     def __init__(self, log=print):
         t0 = time.perf_counter()
         self.log = log
-        w = (KB-KA+1); assert int(w[1:].min()) == int(w[1:].max()); self.W88 = int(w[1])
+        w = (KB-KA+1); self.W88 = int(w[1:].max())
+        # round 13 DECISION 13-22: widths W88 or W88 - 1 only (any other width stops)
+        if not set(np.unique(w[1:]).tolist()) <= {self.W88, self.W88-1}:
+            raise e11.AssertionStop(f"kernel window widths {np.unique(w[1:]).tolist()}: only W88 = {self.W88} or W88 - 1 are accepted")
         self.NC = self.W88+2*XC
         assert int((KA[1:]-XC).min()) >= 0 and int((KB[1:]+XC).max()) <= G-1
+        assert int((KA[1:]-XC+self.NC-1).max()) <= G-1
+        self.short_steps = []
         self.UC = np.empty((K, self.NC)); self.PPC = np.empty((K, self.NC)); self.PNC = np.empty((K, self.NC))
         self.PHC = np.empty((K, self.NC)); self.GK = np.zeros((K, self.W88))
         lim_ok = True
         for p in range(1, K):
-            A, Bb = int(KA[p]), int(KB[p])
-            uE = (Z[A-XC:Bb+XC+1]-XK[p])/s                     # round4/trigger_dp.Design.__init__, unchanged expressions
+            A, Bb = int(KA[p]), int(KB[p]); wp = Bb-A+1; c0 = A-XC            # round 13: fixed-length cache range [c0, c0 + NC - 1]
+            uE = (Z[c0:c0+self.NC]-XK[p])/s                    # round4/trigger_dp.Design.__init__ expressions (= Z[A-XC:Bb+XC+1] if wp = W88)
             self.UC[p] = uE; self.PPC[p] = dr.ndtr(uE); self.PNC[p] = dr.ndtr(-uE); self.PHC[p] = dr.phi(uE)
-            dr._kernel(Z[A:Bb+1], XK[p], s, DZ, self.GK[p])
+            dr._kernel(Z[A:Bb+1], XK[p], s, DZ, self.GK[p, :wp])          # short row: last entry stays exactly 0.0 (np.zeros)
+            if wp != self.W88: self.short_steps.append(self._short_step(p, A, Bb, c0))
             # exact limits just outside the cache range (first node on each side), scipy/numpy vs the constants used by _prep
-            ul = (Z[A-XC-1]-XK[p])/s; uh = (Z[Bb+XC+1]-XK[p])/s
+            ul = (Z[c0-1]-XK[p])/s; uh = (Z[c0+self.NC]-XK[p])/s
             vals = (dr.ndtr(np.array([ul, uh])), dr.ndtr(-np.array([ul, uh])), dr.phi(np.array([ul, uh])))
             lim_ok &= bool(vals[0][0] == 0.0 and vals[0][1] == 1.0 and vals[1][0] == 1.0 and vals[1][1] == 0.0
                            and vals[2][0] == 0.0 and vals[2][1] == 0.0 and ul < -127 and uh > 127)
@@ -167,7 +178,43 @@ class Design11:
         self.cache_s = time.perf_counter()-t0
         log(f"DESIGN11 G = {G} (full grid at every step), kernel windows {self.W88} nodes, cache range {self.NC} nodes per step, "
             f"built in {self.cache_s:.1f} s; limits outside the cache range exact: {lim_ok}")
+        for d in self.short_steps:
+            log(f"DESIGN11 short window (DECISION 13-22): step k = {d['step']} [KA, KB] = [{d['KA']}, {d['KB']}] ({d['width']} nodes); "
+                f"(x_k -/+ 88 sigma - z0)/h = {d['lo_index_real']!r} / {d['hi_index_real']!r}; padded entry = node KB + 1 ({d['padded_end']} end); "
+                f"kernel at KA - 1 and KB + 1 exactly 0: {d['kernel_zero_lo']} / {d['kernel_zero_hi']}; padded row = evaluator kernel bitwise: "
+                f"{d['row_bitwise']} (sums {d['sum_row']!r} / {d['sum_eval']!r}); extra cache node KB + XC + 1: |u| = {d['u_extra_node']!r} > 127, "
+                f"at the limits: {d['extra_node_at_limits']}; limit check outside the cache range at this step (u = {d['u_outside_lo']:.2f} / "
+                f"{d['u_outside_hi']:.2f}): {d['limit_check_step']}")
         self.J_sod = None
+
+    def _short_step(self, p, A, Bb, c0):
+        """round 13 DECISION 13-22: checks of a W88 - 1 step (asserted): the kernel at both nodes adjacent to the window is exactly 0.0, so
+        dr._kernel on [KA - 1, KB + 1] gives the same values on [KA, KB] bitwise and zeros at the two ends; the padded row equals the
+        evaluator's kernel on [KA, KB] bitwise (and its sum); the one extra cached node KB + XC + 1 is beyond |u| = 127 with ndtr / phi at
+        their exact limits, i.e. the value the frozen rule would use there."""
+        wp = Bb-A+1
+        ext = np.empty(wp+2); dr._kernel(Z[A-1:Bb+2], XK[p], s, DZ, ext)
+        ev = np.empty(wp); dr._kernel(Z[A:Bb+1], XK[p], s, DZ, ev)
+        row = self.GK[p]
+        ux = float((Z[c0+self.NC-1]-XK[p])/s)
+        d = dict(step=p+1, array_index=p, KA=A, KB=Bb, width=wp, padded_end='upper',
+                 lo_index_real=float((XK[p]-ew.R_SUP-Z0)/DZ), hi_index_real=float((XK[p]+ew.R_SUP-Z0)/DZ),
+                 kernel_zero_lo=bool(ext[0] == 0.0), kernel_zero_hi=bool(ext[-1] == 0.0),
+                 ext_inner_bitwise=bool(ext[1:-1].tobytes() == ev.tobytes()),
+                 row_bitwise=bool(row[:wp].tobytes() == ev.tobytes() and row[wp] == 0.0 and row.size == self.W88),
+                 sum_row=float(np.cumsum(row)[-1]), sum_eval=float(np.cumsum(ev)[-1]),          # sequential sums (dr._kernel / prefix-pass order)
+                 sum_bitwise=bool(np.cumsum(row)[-1] == np.cumsum(ev)[-1]), pairwise_sum_equal_info=bool(row.sum() == ev.sum()),
+                 u_extra_node=abs(ux), extra_node_at_limits=bool(abs(ux) > 127 and self.PHC[p][-1] == 0.0 and
+                                                             self.PPC[p][-1] == (1.0 if ux > 0 else 0.0) and self.PNC[p][-1] == (0.0 if ux > 0 else 1.0)))
+        ul = (Z[c0-1]-XK[p])/s; uh = (Z[c0+self.NC]-XK[p])/s
+        vals = (dr.ndtr(np.array([ul, uh])), dr.ndtr(-np.array([ul, uh])), dr.phi(np.array([ul, uh])))
+        d.update(u_outside_lo=float(ul), u_outside_hi=float(uh),
+                 limit_check_step=bool(vals[0][0] == 0.0 and vals[0][1] == 1.0 and vals[1][0] == 1.0 and vals[1][1] == 0.0
+                                       and vals[2][0] == 0.0 and vals[2][1] == 0.0 and ul < -127 and uh > 127))
+        if not (d['kernel_zero_lo'] and d['kernel_zero_hi'] and d['ext_inner_bitwise'] and d['row_bitwise'] and d['sum_bitwise'] and d['extra_node_at_limits']
+                and d['limit_check_step']):
+            raise e11.AssertionStop(f"DECISION 13-22 checks failed at step {p+1}: {d}")
+        return d
 
     def sod_reference(self):
         """the constant-SoD table through the accepted operator (evaluator_fast via evaluator_window.evaluate_table), bitwise."""

@@ -1,0 +1,42 @@
+{
+ "input": "U",
+ "versions": {
+  "python": "3.13.18",
+  "numpy": "2.5.3",
+  "scipy": "1.18.1",
+  "numba": "0.68.0",
+  "numba_threads": 4
+ },
+ "a": {
+  "bitwise": {
+   "UC": true,
+   "PPC": true,
+   "PNC": true,
+   "PHC": true,
+   "GK": true,
+   "g1": true,
+   "W88": true,
+   "NC": true,
+   "a1": true,
+   "b1": true,
+   "no_short_steps_U": true
+  },
+  "pass_": true
+ },
+ "b": {
+  "lam": 0.06022857891938863,
+  "lam_npz": 0.06022857891938863,
+  "run": 10,
+  "gbar_equal": true,
+  "gamma1_equal": true,
+  "codes_bitwise": true,
+  "n_diff_nodes": 0,
+  "dsum": 11.273474443508011,
+  "dsum_ref": 11.273474443508011,
+  "dsum_bitwise": true,
+  "nonfinite_V": 0,
+  "dp_s": 39.56797867399999,
+  "pass_": true
+ },
+ "pass_": true
+}
