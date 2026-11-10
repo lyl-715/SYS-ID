@@ -46,5 +46,88 @@
   "wall120_s": 28.87603454300006,
   "J24": "results/partA_N/J_sod_delta_s24.npy",
   "J120": "results/partA_N/J_sod_delta_s120.npy"
+ },
+ "matched": {
+  "input": "N",
+  "B": 316.8921168493721,
+  "M_hat": 651,
+  "M_star": 651,
+  "M_star_sigma": 27.125,
+  "threshold": 0.003234241892074784,
+  "EN24": 317.014898712711,
+  "S24": 453.3810109125059,
+  "logdet24": 196.66202891655195,
+  "EN120": 317.0143339305934,
+  "S120": 453.3854639092558,
+  "logdet120": 196.66212491977495,
+  "residual120": 0.12221708122132213,
+  "residual24": 0.12278186333890062,
+  "accepted": true,
+  "mass_dev_max24": 1.0669243266647754e-13,
+  "mass_dev_max120": 6.799005802804459e-13,
+  "support24": {
+   "clipped": false
+  },
+  "support120": {
+   "clipped": false
+  },
+  "bracket": [
+   651,
+   652
+  ],
+  "evaluated24": {
+   "480": 423.97342665695413,
+   "500": 407.9719055578781,
+   "520": 393.1560074514321,
+   "540": 379.32930125917824,
+   "560": 366.4275704656323,
+   "580": 354.214051742928,
+   "600": 342.90051957562997,
+   "620": 332.4107661611597,
+   "640": 322.4902645080772,
+   "650": 317.48715255342347,
+   "651": 317.014898712711,
+   "652": 316.5607977024094,
+   "655": 315.28115680071244,
+   "660": 313.11915809553994
+  },
+  "evaluated120": {
+   "650": 317.4865786017826,
+   "651": 317.0143339305934,
+   "652": 316.5602458761208
+  },
+  "wall24_s": 5.115694179000457,
+  "wall120_s": 29.269008947000657,
+  "J24": "results/partA_N/J_sod_matched_s24.npy",
+  "J120": "results/partA_N/J_sod_matched_s120.npy"
+ },
+ "dp_window_fix": {
+  "decision": "DECISION 13-22",
+  "W88": 4224,
+  "short_steps": [
+   {
+    "step": 2717,
+    "array_index": 2716,
+    "KA": 1729,
+    "KB": 5951,
+    "width": 4223,
+    "padded_end": "upper",
+    "lo_index_real": 1728.000000000018,
+    "hi_index_real": 5951.999999999982,
+    "kernel_zero_lo": true,
+    "kernel_zero_hi": true,
+    "ext_inner_bitwise": true,
+    "row_bitwise": true,
+    "sum_row": 1.0,
+    "sum_eval": 1.0,
+    "sum_bitwise": true,
+    "pairwise_sum_equal_info": true,
+    "u_extra_node": 127.99999999999926,
+    "extra_node_at_limits": true,
+    "u_outside_lo": -127.99999999999926,
+    "u_outside_hi": 128.0416666666658,
+    "limit_check_step": true
+   }
+  ]
  }
 }
