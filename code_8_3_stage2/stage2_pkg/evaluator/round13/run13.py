@@ -447,7 +447,7 @@ def stage_partA(out):
     ch = dres['checks']
     tabs = dres['tables']
     res['checks'] = {
-        '1_forwards': dict(pass_=True, rule='asserted in every forward (conservation 1e-12 / 1e-10, min m >= 0, zero mass at the grid ends); a failure stops the run',
+        '1_forwards': dict(pass_=True, rule=f'asserted in every forward (conservation {e13.TOL24:g} on sigma/24 / {e13.TOL120:g} on sigma/120, min m >= 0, zero mass at the grid ends); a failure stops the run', tol24=e13.TOL24, tol120=e13.TOL120,
                            mass_dev24_max=max(ch['mass_dev24_max'], m['mass_dev_max24']), mass_dev120_max=max(ch['mass_dev120_max'], m['mass_dev_max120'], sd['mass_dev_max120'])),
         '2_scans': dict(pass_=bool(ch['scans_monotone'] and ch['forward_backward']), monotone=ch['scans_monotone'],
                         forward_backward={k: tabs[k]['check_fb'] for k in tabs}),

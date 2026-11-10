@@ -1,8 +1,11 @@
 """[Round 13 copy of round11/eval11.py (prompt reports_CN/prompt_round13_part0_infrastructure_EN.md §2.2). Changes, and nothing
 else: (1) in-memory registration of the inputs of round13/inputs13.json (config.json is not edited) with the check
 |sum a_m^2 - 1| <= 1e-12; (2) NAME from the environment variable R13_INPUT (default 'U'); (3) fine_grid passes this input's
-own coarse origin and step to round 7's cell_index; (4) two input-specific assertions after the module-level grid. The rest
-of this docstring is round 11's, unchanged.]
+own coarse origin and step to round 7's cell_index; (4) two input-specific assertions after the module-level grid;
+(5) DECISION 13-30 (user decision 2026-11-10, Part A): the sigma/24 conservation tolerance TOL24 = 1e-11 instead of 1e-12 for every
+input. Mass is conserved identically in exact arithmetic; K eps = 5000 x 2.2e-16 = 1.1e-12 is the rounding floor of the recursion, so
+1e-12 sat on that floor; 1e-11 is about 10 K eps. TOL120 stays 1e-10; non-negativity and zero mass at the grid ends stay strict.
+The rest of this docstring is round 11's, unchanged.]
 
 Round 11: stand-alone forward / backward evaluator on the FULL design grid (spec reports_CN/plan_round11_edge_actions_EN.md,
 frozen 2026-11-09, §2.1 and DECISION 11-3; execution prompt reports_CN/prompt_round11_claude_code_EN.md §2.1).
@@ -71,7 +74,7 @@ NAME = os.environ.get('R13_INPUT', 'U')               # round 13 change (2)
 assert NAME in dr.CFG['inputs'], NAME
 MIN_HW = 48                                          # 2 sigma in sigma/24 grid units
 X_PAD = 960                                          # padding of the extended index range (>= largest edge overshoot)
-TOL24, TOL120 = 1e-12, 1e-10                         # conservation tolerances (DECISION 11-5)
+TOL24, TOL120 = 1e-11, 1e-10                         # conservation tolerances (DECISION 11-5; TOL24 raised from 1e-12 by round 13 DECISION 13-30)
 E_SIGMA = (1.0, 1.25, 1.5, 1.75, 2.0, 2.25, 2.5, 3.0, 4.0, np.inf)
 P = 9
 

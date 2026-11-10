@@ -43,6 +43,23 @@ def rank_compare(v1, v2, names):
                 mixed_tie_pairs=mixed, n_pairs=len(names)*(len(names)-1)//2)
 
 
+FLAG_DEV = 1e-12                            # DECISION 13-30 / user condition 3: flag a reported table whose mass deviation exceeds 1e-12
+
+def massdev(r):
+    """largest |sum m - 1| of each reported evaluation of one input (sigma/24, sigma/120), with flags > 1e-12, and the sigma/24
+    tolerance the input ran under."""
+    d = {}
+    dz = r.get('design')
+    if dz:
+        for k, t in dz['tables'].items(): d[k] = dict(s24=t['mass_dev_max24'], s120=t['mass_dev_max120'])
+        d['T*'] = dict(s24=dz['best']['mass_dev_max24'], s120=dz['best']['mass_dev_max120'], label=dz['best']['label'])
+    m = r['matched']; d['matched SoD'] = dict(s24=m['mass_dev_max24'], s120=m['mass_dev_max120'])
+    d['SoD at Delta* (sigma/120)'] = dict(s24=None, s120=r['sod_delta']['mass_dev_max120'])
+    for v in d.values():
+        v['flag_over_1e12'] = [g for g in ('s24', 's120') if v.get(g) is not None and v[g] > FLAG_DEV]
+    tol = r.get('checks', {}).get('1_forwards', {}).get('tol24', 1e-12)
+    return dict(tables=d, tol24_run=tol, any_flag=any(v['flag_over_1e12'] for v in d.values()))
+
 def summary(log=print):
     D = load()
     missing = [n for n in INPUTS if D[n] is None or D[n].get('status') != 'done']
@@ -62,7 +79,8 @@ def summary(log=print):
                                   shape=(None if r['shape'].get('skipped') else dict(q10=r['shape']['shape']['edge_q10'], q50=r['shape']['shape']['edge_median'],
                                                                                      q90=r['shape']['shape']['edge_q90'])),
                                   shape_skipped=bool(r['shape'].get('skipped')), shape_reason=r['shape'].get('reason')),
-                       gain=dv['gain'], gain24=dv['sigma24']['gain'], all_checks_pass=r['all_checks_pass'])
+                       gain=dv['gain'], gain24=dv['sigma24']['gain'], all_checks_pass=r['all_checks_pass'],
+                       mass_dev=massdev(r))
     # inputs stopped before a designed table but with an accepted matched SoD: their constant-SoD numbers are complete (DECISION 13-28)
     partial = {}
     for n in missing:
@@ -213,6 +231,11 @@ def stage(log=print):
     if 'U' in out['rows'] and len(out['done']) >= 2:
         out['figure'] = figure(out, os.path.join(RES, 'fig_partA.png'))
     with open(os.path.join(RES, 'partA_summary.json'), 'w') as f: json.dump(out, f, indent=1)
+    for n in out['done']:
+        r = out['rows'][n]; md = r['mass_dev']['tables']
+        log(f"MASSDEV {n} (sigma/24 tolerance of the run {r['mass_dev']['tol24_run']:g}): " + '; '.join(
+            f"{k} {('%.2e' % v['s24']) if v['s24'] is not None else '-'} / {v['s120']:.2e}" + (f" FLAG {v['flag_over_1e12']}" if v['flag_over_1e12'] else '')
+            for k, v in md.items()))
     for n in out['done']:
         r = out['rows'][n]; t = r['table']; m = r['matched']
         log(f"ROW {n}: I_full {r['I_full']:.4f}; SoD(Delta*) EN24 {r['sod_delta']['EN24']:.2f} I24 {r['sod_delta']['I24']:.4f}; matched M* {m['M']} "
