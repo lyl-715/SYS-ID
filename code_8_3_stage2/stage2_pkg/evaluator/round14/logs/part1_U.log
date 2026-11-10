@@ -1,0 +1,26 @@
+=== ROUND 14 stage part1 input U started 2026-11-10 19:22:09; python 3.13.18, numpy 2.5.3, scipy 1.18.1, numba 0.68.0; B = 316.8921168493721; G = 35146; TOL24 1e-11, TOL120 1e-10
+1a R(36, 20) e = n/24 = 1.5000: EN 354.48311118855713 S 1500.472396458184 logdet 208.1697508229414; rel 0.0e+00 / 0.0e+00 / 0.0e+00; mass dev 7.64e-13 (20.4 s) -> PASS
+1a R(37, 20) e = n/24 = 1.5417: EN 326.06595206524514 S 1420.267400502641 logdet 207.67570557568936; rel 0.0e+00 / 0.0e+00 / 0.0e+00; mass dev 8.39e-13 (20.0 s) -> PASS
+1a R(38, 20) e = n/24 = 1.5833: EN 299.41680466967017 S 1341.9805960911076 logdet 207.1658140469431; rel 0.0e+00 / 0.0e+00 / 0.0e+00; mass dev 8.28e-13 (20.2 s) -> PASS
+1a R(40, 20) e = n/24 = 1.6667: EN 251.1909482065696 S 1191.7274066151504 logdet 206.0980178306077; rel 0.0e+00 / 0.0e+00 / 0.0e+00; mass dev 4.10e-13 (19.6 s) -> PASS
+FIT B=316.8921168493721 R(37, 20) e_bar=1.54167 sigma: sigma/24 EN 326.06595206524514 S 1420.267400502641 logdet 207.67570557568936 feasible False mass_dev 8.39e-13 (20.7 s)
+FIT B=316.8921168493721 R(38, 20) e_bar=1.58333 sigma: sigma/24 EN 299.41680466967017 S 1341.9805960911076 logdet 207.1658140469431 feasible True mass_dev 8.28e-13 (20.2 s)
+FIT B=316.8921168493721 R(37, 13) e_bar=1.55625 sigma: sigma/24 EN 316.7251743087337 S 1392.8421245551658 logdet 207.5002944958199 feasible True mass_dev 8.57e-13 (19.8 s)
+FIT B=316.8921168493721 R(37, 14) e_bar=1.55417 sigma: sigma/24 EN 318.0608520286389 S 1396.7630147487828 logdet 207.5255779539911 feasible False mass_dev 8.56e-13 (20.4 s)
+FIT B=316.8921168493721 -> R(37, 13) e_bar 1.5562500000000001 e_eff 1.5770833333333334: sigma/24 EN 316.7251743087337 logdet 207.5002944958199; sigma/120 EN 316.4986983108747 S 1392.4592724251975 logdet 207.49781936247174 mass_dev 6.30e-13 (115.3 s); start n 37, n visited [37], j0 13
+1b R(37, 13) sigma/24: EN 316.7251743087337 S 1392.8421245551658 logdet 207.5002944958199 cond 99.12669719075502; rel 0.0e+00 / 0.0e+00 / 0.0e+00, |cond - ref| 2.8e-06 -> PASS
+1b R(37, 13) sigma/120: EN 316.4986983108747 S 1392.4592724251975 logdet 207.49781936247174 cond 99.12692721625616; rel 0.0e+00 / 0.0e+00 / 0.0e+00, |cond - ref| 2.7e-05 -> PASS
+1b R(37, 14) sigma/24 (expected infeasible): {'EN': 318.0608520286389, 'S': 1396.7630147487828, 'logdet': 207.5255779539911, 'feasible': False, 'mass_dev_max': 8.558709296835332e-13, 'wall_s': 20.415416555000093}
+1c MC lattice R(37, 13): EN 316.4844 (0.1822) S 1392.320798611614 (0.099) logdet 207.4968247522991 (0.0005); z(sigma/120) EN +0.08 S +1.40 logdet +1.89; clipped 0; 3.3 s -> PASS
+1d MC continuous e = 1.50: EN 369.2445 (0.1964) S 1541.4163955247495 (0.100) logdet 208.4116146944267 (0.0006); 2.6 s
+1d MC continuous e = 1.54: EN 341.0597 (0.1894) S 1463.485579649646 (0.099) logdet 207.94499632407732 (0.0005); 2.8 s
+1d MC continuous e = 1.56: EN 327.6002 (0.1855) S 1425.1365078931674 (0.098) logdet 207.70619825162458 (0.0006); 2.7 s
+1d MC continuous e = 1.58: EN 314.4964 (0.1819) S 1387.2626468780581 (0.097) logdet 207.4639397749701 (0.0005); 2.6 s
+1d MC continuous e = 1.60: EN 301.8997 (0.1773) S 1349.8325467787765 (0.096) logdet 207.21798289225498 (0.0005); 2.5 s
+1d MC continuous e = 1.64: EN 277.7261 (0.1699) S 1276.3875005281873 (0.094) logdet 206.71485861325485 (0.0007); 2.6 s
+1d interpolation: E[N] = B between e = 1.56 and 1.58 -> e_C = 1.5763434776944518, interpolated logdet 207.50823095114987; extra MC at e = 1.580: EN 314.4964 (0.1819; EN - B = -2.3957, z -13.17) S 1387.2626468780581 logdet 207.4639397749701 (0.0005); dI vs constant SoD 10.262963092729336; lattice e_eff 1.5770833333333334 (e_C - e_eff -0.0007); logdet - lattice sigma/120 -0.0339
+1e context: I_SoD 197.20097668224076; T' 207.64665023111849 (sigma/24) / 207.6445328331193 (sigma/120), EN120 316.63304916056063; certificate (B + 0.25) 207.71458782222572; I_full 219.00850592919505; cond J_full 98.6792, cond J_SoD 94.9221
+1e rule sigma/24: I 207.5002944958199; dI vs SoD 10.2993; loss vs T' 0.1464; gap to certificate 0.2143; exp(-gap/9) 0.9765; sd ratio to full data SoD 3.3586 rule 1.8952 T' 1.8799
+1e rule sigma/120: I 207.49781936247174; dI vs SoD 10.2968; loss vs T' 0.1467; gap to certificate 0.2168; exp(-gap/9) 0.9762; sd ratio to full data SoD 3.3586 rule 1.8955 T' 1.8801
+=== ROUND 14 stage part1 input U done in 298.2 s
+CLEANUP removed empty folders []; git status on rounds 4-13 and the frozen files: clean
