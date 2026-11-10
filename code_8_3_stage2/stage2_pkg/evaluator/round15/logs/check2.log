@@ -1,0 +1,7 @@
+=== ROUND 15 stage check2 started 2026-11-10 20:31:14; python 3.13.18, numpy 2.5.3, scipy 1.18.1, numba 0.68.0; B = 316.8921168493721; input U; TOL24 1e-11
+CHECK2 ref_c1_d1: sigma/120 EN 340.51411578286417 S 1443.1113153272672 logdet 207.79041226233062 (104.4 s); MC (R = 1e4) EN 340.6027 (0.1856) S 1443.1043817626244 (0.1130) logdet 207.79024008676765 (0.00066); z EN -0.48 S +0.06 logdet +0.26; clipped 0 -> PASS
+CHECK2 ref_c2_d1: sigma/120 EN 353.62661160298893 S 1441.3392599767299 logdet 207.703593771976 (100.4 s); MC (R = 1e4) EN 353.6878 (0.1881) S 1441.387668153007 (0.1205) logdet 207.7037932338602 (0.00063); z EN -0.33 S -0.40 logdet -0.32; clipped 0 -> PASS
+CHECK2 ref_c4_d3: sigma/120 EN 386.5673043737037 S 1509.089274579805 logdet 208.13782673405146 (103.0 s); MC (R = 1e4) EN 386.5933 (0.2017) S 1508.7182263182474 (0.1841) logdet 208.1351660246739 (0.00127); z EN -0.13 S +2.02 logdet +2.09; clipped 0 -> PASS
+CHECK2 three models: PASS
+=== ROUND 15 stage check2 done in 317.7 s
+CLEANUP removed empty folders []; git status on rounds 4-14 and the frozen files: clean
