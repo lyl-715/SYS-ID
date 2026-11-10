@@ -1,0 +1,8 @@
+=== ROUND 14 stage input input N started 2026-11-10 20:08:03; python 3.13.18, numpy 2.5.3, scipy 1.18.1, numba 0.68.0; B = 316.8921168493721; G = 43262; TOL24 1e-11, TOL120 1e-10
+FIT B=316.8921168493721 R(37, 20) e_bar=1.54167 sigma: sigma/24 EN 317.6628819674145 S 1379.9469868967844 logdet 206.83045539371201 feasible False mass_dev 9.80e-13 (25.1 s)
+FIT B=316.8921168493721 R(38, 20) e_bar=1.58333 sigma: sigma/24 EN 291.5184498867203 S 1303.2807432744053 logdet 206.31630910313118 feasible True mass_dev 8.07e-13 (24.7 s)
+FIT B=316.8921168493721 R(37, 19) e_bar=1.54375 sigma: sigma/24 EN 316.3510241941782 S 1376.1074249326361 logdet 206.80539726796624 feasible True mass_dev 9.65e-13 (24.2 s)
+FIT B=316.8921168493721 -> R(37, 19) e_bar 1.54375 e_eff 1.5645833333333332: sigma/24 EN 316.3510241941782 logdet 206.80539726796624; sigma/120 EN 316.1189093693984 S 1375.7093340741876 logdet 206.80279748897607 mass_dev 4.74e-13 (144.0 s); start n 37, n visited [37], j0 19
+INPUT N DONE: R(37, 19) e_eff 1.5646 delta +0.0361; I_rule 206.8028 (sigma/24 206.8054); c_rule -11.6141; rule - table +0.0559; rule - SoD 10.1407
+=== ROUND 14 stage input input N done in 218.1 s
+CLEANUP removed empty folders []; git status on rounds 4-13 and the frozen files: clean
