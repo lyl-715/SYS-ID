@@ -1,4 +1,4 @@
-=== ROUND 16 stage summary start 2026-11-10 21:13:15 versions {'python': '3.13.18', 'numpy': '2.5.3', 'scipy': '1.18.1', 'numba': '0.68.1', 'workers': 4, 'R': 2000, 'seed_noise': 20261113, 'seed_inputs': 20261113}
+=== ROUND 16 stage summary start 2026-11-10 21:14:12 versions {'python': '3.13.18', 'numpy': '2.5.3', 'scipy': '1.18.1', 'numba': '0.68.1', 'workers': 4, 'R': 2000, 'seed_noise': 20261113, 'seed_inputs': 20261113}
 SUMMARY random set: 277 draws, 77 rejected (min p < 0.02), 200 accepted
 4a distribution over the 200 random inputs (nat; e_fit, D_fit in sigma):
                   c_rule: mean -11.5014 sd 0.0527 min -11.6201 p5 -11.5897 median -11.4954 p95 -11.4180 max -11.3731 | p95-p5 0.1717 max-min 0.2469
@@ -39,6 +39,11 @@ SUMMARY random set: 277 draws, 77 rejected (min p < 0.02), 200 accepted
 4d       power_only c_sod: mean -21.6097 sd 0.5118 min -22.5876 p5 -22.4648 median -21.5645 p95 -20.9692 max -20.8640 | p95-p5 1.4956 max-min 1.7236
 4d  random_first50 c_rule: mean -11.4979 sd 0.0568 min -11.6201 p5 -11.6048 median -11.4882 p95 -11.4015 max -11.3977 | p95-p5 0.2032 max-min 0.2224
 4d   random_first50 c_sod: mean -21.2829 sd 0.5568 min -22.4041 p5 -22.2365 median -21.3812 p95 -20.3942 max -20.0302 | p95-p5 1.8423 max-min 2.3739
+4d     phase_only: TV min 6005 p5 6142 p95 7244 max 7434; Spearman with TV: c_rule -0.707, c_sod -0.591
+4d     power_only: TV min 5525 p5 5735 p95 10226 max 10956; Spearman with TV: c_rule -0.865, c_sod -0.960
+4d random_first50: TV min 3990 p5 4127 p95 10557 max 11322; Spearman with TV: c_rule -0.971, c_sod -0.942
+4d         random: TV min 3470 p5 4204 p95 9969 max 11322; Spearman with TV: c_rule -0.972, c_sod -0.944
+Q6 anchors' TV / output range and their percentile ranks within the random set: U TV 7038 (60.0) range 1144 (56.5); SCH TV 6793 (54.5) range 1121 (53.5); P5514 TV 6837 (56.0) range 1136 (55.0); LO TV 8066 (79.5) range 1347 (81.5); HI TV 6102 (39.5) range 869 (28.0); N TV 9206 (92.0) range 1483 (91.5)
 Q6 anchor      U: c_rule -11.5035 percentile 44.5; c_sod -21.8040 percentile 21.5; gain 10.301 percentile 83.0
 Q6 anchor    SCH: c_rule -11.5305 percentile 31.0; c_sod -21.1547 percentile 67.5; gain 9.624 percentile 30.0
 Q6 anchor  P5514: c_rule -11.5253 percentile 34.0; c_sod -21.0897 percentile 70.5; gain 9.564 percentile 27.0
@@ -53,6 +58,7 @@ Q4 e_fit p5 1.5611 median 1.5761 p95 1.5876 (+0.0115 / -0.0150); min 1.5570 max 
 Q5 gain < 8.5: r108 gain 8.3358 c_rule -11.3912 c_sod -19.7270 p (0.028, 0.030, 0.839, 0.103) range 477.4 TV 3470.1 D_fit 9.696
 Q5 gain < 8.5: r099 gain 8.3422 c_rule -11.4022 c_sod -19.7445 p (0.045, 0.214, 0.554, 0.187) range 552.9 TV 3742.0 D_fit 10.557
 Q5 gain < 8.5: r113 gain 8.4175 c_rule -11.3731 c_sod -19.7907 p (0.024, 0.257, 0.413, 0.307) range 494.6 TV 3583.7 D_fit 10.077
+Q5 rank (1 = smallest) of TV of the inputs with gain < 8.5: r099 3, r108 1, r113 2
 Q5 gain >= 8.5 nat for 197/200 inputs; min 8.3358 (r108) median 9.8749 max 10.8164 (r051) -> True
 Q7     phase_only: 5-95 % range c_sod 0.6057 c_rule 0.0503 (ratio 12.05); sd c_sod 0.1909 c_rule 0.0155
 Q7     power_only: 5-95 % range c_sod 1.4956 c_rule 0.1001 (ratio 14.95); sd c_sod 0.5118 c_rule 0.0290

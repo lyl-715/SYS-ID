@@ -124,14 +124,26 @@ def main(out):
     for nm, recs in (('phase_only', ph), ('power_only', pw), ('random_first50', rnd[:50])):
         sets[nm] = {k: stats(col(recs, k)) for k in ('c_rule', 'c_sod', 'e_fit', 'D_fit', 'gain')}
         for k in ('c_rule', 'c_sod'): out('4d '+statline(f"{nm} {k}", sets[nm][k]))
-    res['sets_4d'] = sets
+    sets_desc = {}
+    for nm, recs in (('phase_only', ph), ('power_only', pw), ('random_first50', rnd[:50]), ('random', rnd)):
+        tv = icol(recs, 'tv_sigma')
+        sets_desc[nm] = dict(tv=stats(tv), rho_c_rule_tv=float(spearmanr(col(recs, 'c_rule'), tv)[0]), rho_c_sod_tv=float(spearmanr(col(recs, 'c_sod'), tv)[0]))
+        out(f"4d {nm:>14s}: TV min {sets_desc[nm]['tv']['min']:.0f} p5 {sets_desc[nm]['tv']['p5']:.0f} p95 {sets_desc[nm]['tv']['p95']:.0f} max "
+            f"{sets_desc[nm]['tv']['max']:.0f}; Spearman with TV: c_rule {sets_desc[nm]['rho_c_rule_tv']:+.3f}, c_sod {sets_desc[nm]['rho_c_sod_tv']:+.3f}")
+    res['sets_4d'] = sets; res['sets_4d_tv'] = sets_desc
     # --- percentiles of the anchors (Q6) ----------------------------------------------------------------------------------
     cr, cs = col(rnd, 'c_rule'), col(rnd, 'c_sod')
     anc_pr = {n: dict(c_rule=A['records'][n]['derived']['c_rule'], c_sod=A['records'][n]['derived']['c_sod'],
                       prank_rule=prank(A['records'][n]['derived']['c_rule'], cr), prank_sod=prank(A['records'][n]['derived']['c_sod'], cs),
                       e_fit=A['records'][n]['derived']['e_fit'], gain=A['records'][n]['derived']['gain'],
                       prank_gain=prank(A['records'][n]['derived']['gain'], col(rnd, 'gain'))) for n in r16.ANCHORS}
+    tvr, rgr = icol(rnd, 'tv_sigma'), icol(rnd, 'range_sigma')
+    for n in r16.ANCHORS:
+        d_ = A['records'][n]['input']
+        anc_pr[n].update(tv_sigma=d_['tv_sigma'], range_sigma=d_['range_sigma'], prank_tv=prank(d_['tv_sigma'], tvr), prank_range=prank(d_['range_sigma'], rgr))
     res['anchors'] = anc_pr
+    out("Q6 anchors' TV / output range and their percentile ranks within the random set: " +
+        '; '.join(f"{n} TV {v['tv_sigma']:.0f} ({v['prank_tv']:.1f}) range {v['range_sigma']:.0f} ({v['prank_range']:.1f})" for n, v in anc_pr.items()))
     for n, v in anc_pr.items():
         out(f"Q6 anchor {n:>6s}: c_rule {v['c_rule']:+.4f} percentile {v['prank_rule']:.1f}; c_sod {v['c_sod']:+.4f} percentile {v['prank_sod']:.1f}; "
             f"gain {v['gain']:.3f} percentile {v['prank_gain']:.1f}")
@@ -171,6 +183,8 @@ def main(out):
     for i in np.argsort(g)[:int((g < 8.5).sum())]:
         d_ = rnd[int(i)]['input']; out(f"Q5 gain < 8.5: {d_['name']} gain {g[i]:.4f} c_rule {cr[i]:+.4f} c_sod {cs[i]:+.4f} p {r16_fmt(d_['p'], 3)} "
                                       f"range {d_['range_sigma']:.1f} TV {d_['tv_sigma']:.1f} D_fit {rnd[int(i)]['derived']['D_fit']:.3f}")
+    tv_rank = np.argsort(np.argsort(icol(rnd, 'tv_sigma'))) + 1
+    out("Q5 rank (1 = smallest) of TV of the inputs with gain < 8.5: " + ', '.join(f"{rnd[int(i)]['input']['name']} {int(tv_rank[i])}" for i in np.where(g < 8.5)[0]))
     out(f"Q5 gain >= 8.5 nat for {n85}/200 inputs; min {Q['Q5']['min']:.4f} ({Q['Q5']['min_input']}) median {Q['Q5']['median']:.4f} max "
         f"{Q['Q5']['max']:.4f} ({Q['Q5']['max_input']}) -> {Q['Q5']['answer']}")
     for nm, v in Q['Q7'].items():
