@@ -1,0 +1,8 @@
+# R13_INPUT=U python3 mem_probe.py plain
+after import 119704
+after forward 513864
+after sigma/120 551928
+# R13_INPUT=U python3 mem_probe.py stats
+after import 119792
+after forward with Stats 2706304 nodes 133912249
+after Stats.result 7941808
