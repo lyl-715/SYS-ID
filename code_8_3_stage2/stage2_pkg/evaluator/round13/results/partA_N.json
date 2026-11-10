@@ -32,5 +32,19 @@
   "min_KA_minus_X24": 769,
   "max_KB_plus_X24": 42492
  },
- "J_full": "results/partA_N/J_full.npy"
+ "J_full": "results/partA_N/J_full.npy",
+ "sod_delta": {
+  "M": 480,
+  "EN24": 423.97342665691707,
+  "S24": 607.8562732475928,
+  "I24": 199.31490917342813,
+  "path24": "accepted operator (evaluator_fast.evaluate_fast)",
+  "EN120": 423.97242202722276,
+  "S120": 607.8621277501295,
+  "I120": 199.31500366232015,
+  "mass_dev_max120": 4.558575739110893e-13,
+  "wall120_s": 28.87603454300006,
+  "J24": "results/partA_N/J_sod_delta_s24.npy",
+  "J120": "results/partA_N/J_sod_delta_s120.npy"
+ }
 }
