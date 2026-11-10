@@ -13,7 +13,7 @@ for n in $INPUTS; do
   [ -z "$line" ] && line="STOPPED (exit $rc): $(grep -E 'STOP' "logs/partA_${n}.log" | tail -1 | cut -c1-300)"
   echo "$line"
   for f in "results/partA_${n}.json" "results/partA_${n}" "results/table_A_${n}.npz" "logs/partA_${n}.log"; do [ -e "$f" ] && git add "$f"; done
-  if [ $rc -ne 0 ]; then git add "logs/partA_${n}.stdout"; fi
+  if [ $rc -ne 0 ]; then git add -f "logs/partA_${n}.stdout"; fi   # *.stdout is git-ignored; kept only for a stopped input (traceback)
   for i in 1 2 3 4; do
     git -c user.name=Claude -c user.email=noreply@anthropic.com commit -q -m "round 13 Part A: input $n - $line
 
