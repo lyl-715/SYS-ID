@@ -2,7 +2,7 @@
 # Round 14: stages in sequence, one process at a time: part1 (U), budgets (U), input SCH, P5514, LO, HI, N. After each stage its results and
 # log are committed and pushed (branch round14-one-parameter-rule). A failed part1 (reproduction) stops the sequence (prompt §2 1b); a failed
 # later stage is committed and the sequence goes on.
-cd "$(dirname "$0")"
+cd "$(dirname "$0")"; mkdir -p logs results
 export OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1
 STEPS=${@:-"part1:U budgets:U input:SCH input:P5514 input:LO input:HI input:N"}
 for st in $STEPS; do
