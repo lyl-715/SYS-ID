@@ -1,0 +1,77 @@
+=== ROUND 16 stage summary start 2026-11-10 21:13:15 versions {'python': '3.13.18', 'numpy': '2.5.3', 'scipy': '1.18.1', 'numba': '0.68.1', 'workers': 4, 'R': 2000, 'seed_noise': 20261113, 'seed_inputs': 20261113}
+SUMMARY random set: 277 draws, 77 rejected (min p < 0.02), 200 accepted
+4a distribution over the 200 random inputs (nat; e_fit, D_fit in sigma):
+                  c_rule: mean -11.5014 sd 0.0527 min -11.6201 p5 -11.5897 median -11.4954 p95 -11.4180 max -11.3731 | p95-p5 0.1717 max-min 0.2469
+                   c_sod: mean -21.3403 sd 0.5611 min -22.4041 p5 -22.1917 median -21.3680 p95 -20.3025 max -19.7270 | p95-p5 1.8892 max-min 2.6771
+                    gain: mean 9.8390 sd 0.5165 min 8.3358 p5 8.8736 median 9.8749 p95 10.6114 max 10.8164 | p95-p5 1.7378 max-min 2.4806
+                   e_fit: mean 1.5754 sd 0.0074 min 1.5570 p5 1.5611 median 1.5761 p95 1.5876 max 1.5912 | p95-p5 0.0265 max-min 0.0341
+                   D_fit: mean 19.4954 sd 5.0035 min 9.6959 p5 11.8713 median 18.6102 p95 29.4438 max 33.5513 | p95-p5 17.5725 max-min 23.8555
+      info_per_send_rule: mean 4.4079 sd 0.0256 min 4.3477 p5 4.3612 median 4.4105 p95 4.4496 max 4.4679 | p95-p5 0.0883 max-min 0.1203
+       info_per_send_sod: mean 1.5365 sd 0.0951 min 1.3528 p5 1.3947 median 1.5287 p95 1.7279 max 1.8245 | p95-p5 0.3332 max-min 0.4717
+          c_rule_minus_U: mean 0.0021 sd 0.0527 min -0.1166 p5 -0.0862 median 0.0081 p95 0.0855 max 0.1303 | p95-p5 0.1717 max-min 0.2469
+           c_sod_minus_U: mean 0.4637 sd 0.5611 min -0.6000 p5 -0.3876 median 0.4360 p95 1.5016 max 2.0771 | p95-p5 1.8892 max-min 2.6771
+4b c_rule  lowest: r049 c_rule -11.6201 p (0.833, 0.051, 0.045, 0.070) chi (5.688, 6.033, 2.913, 0.731) range 1737.2 TV 11321.8
+4b c_rule  lowest: r035 c_rule -11.6158 p (0.732, 0.058, 0.138, 0.072) chi (4.355, 5.579, 3.636, 2.677) range 1716.1 TV 10835.4
+4b c_rule  lowest: r131 c_rule -11.6119 p (0.547, 0.077, 0.102, 0.275) chi (6.047, 5.040, 1.731, 1.879) range 1541.8 TV 9850.2
+4b c_rule  lowest: r014 c_rule -11.6117 p (0.704, 0.175, 0.087, 0.034) chi (2.891, 4.661, 0.081, 3.763) range 1687.9 TV 10636.0
+4b c_rule  lowest: r058 c_rule -11.6053 p (0.632, 0.183, 0.024, 0.160) chi (0.561, 0.358, 2.668, 4.833) range 1605.2 TV 10000.9
+4b c_rule highest: r113 c_rule -11.3731 p (0.024, 0.257, 0.413, 0.307) chi (1.471, 3.946, 5.792, 2.489) range 494.6 TV 3583.7
+4b c_rule highest: r108 c_rule -11.3912 p (0.028, 0.030, 0.839, 0.103) chi (0.239, 1.638, 4.697, 0.408) range 477.4 TV 3470.1
+4b c_rule highest: r047 c_rule -11.3977 p (0.058, 0.044, 0.093, 0.805) chi (5.099, 2.978, 2.908, 0.101) range 615.2 TV 4062.6
+4b c_rule highest: r045 c_rule -11.3985 p (0.027, 0.432, 0.374, 0.166) chi (3.795, 5.309, 5.180, 1.844) range 524.9 TV 3992.3
+4b c_rule highest: r027 c_rule -11.4004 p (0.049, 0.434, 0.332, 0.185) chi (0.348, 3.225, 1.682, 3.986) range 641.1 TV 4205.1
+4b c_sod  lowest: r049 c_sod -22.4041 p (0.833, 0.051, 0.045, 0.070) chi (5.688, 6.033, 2.913, 0.731) range 1737.2 TV 11321.8
+4b c_sod  lowest: r051 c_sod -22.4024 p (0.698, 0.097, 0.044, 0.160) chi (0.066, 2.115, 5.811, 4.941) range 1557.9 TV 10046.1
+4b c_sod  lowest: r040 c_sod -22.3163 p (0.749, 0.080, 0.045, 0.126) chi (5.406, 0.840, 3.191, 4.661) range 1641.9 TV 10460.4
+4b c_sod  lowest: r190 c_sod -22.2746 p (0.677, 0.048, 0.078, 0.197) chi (5.737, 3.235, 5.191, 5.184) range 1576.8 TV 10008.2
+4b c_sod  lowest: r143 c_sod -22.2504 p (0.570, 0.321, 0.070, 0.039) chi (5.030, 1.255, 0.216, 3.323) range 1552.8 TV 9168.0
+4b c_sod highest: r108 c_sod -19.7270 p (0.028, 0.030, 0.839, 0.103) chi (0.239, 1.638, 4.697, 0.408) range 477.4 TV 3470.1
+4b c_sod highest: r099 c_sod -19.7445 p (0.045, 0.214, 0.554, 0.187) chi (0.004, 1.507, 1.328, 3.371) range 552.9 TV 3742.0
+4b c_sod highest: r113 c_sod -19.7907 p (0.024, 0.257, 0.413, 0.307) chi (1.471, 3.946, 5.792, 2.489) range 494.6 TV 3583.7
+4b c_sod highest: r015 c_sod -20.0302 p (0.063, 0.087, 0.497, 0.353) chi (0.331, 3.389, 1.381, 4.764) range 616.8 TV 3989.7
+4b c_sod highest: r045 c_sod -20.1144 p (0.027, 0.432, 0.374, 0.166) chi (3.795, 5.309, 5.180, 1.844) range 524.9 TV 3992.3
+4c Spearman c_rule: tv_sigma -0.972, range_sigma -0.945, max_p +0.136, min_p -0.083, I_full -0.100
+4c Spearman c_sod: tv_sigma -0.944, range_sigma -0.940, max_p +0.118, min_p -0.077, I_full -0.087
+4c extra (beyond the prompt's list, descriptive): Spearman c_rule_vs_c_sod +0.852, e_fit_vs_tv -0.983, gain_vs_tv +0.926, D_fit_vs_range +0.981
+4d      phase_only c_rule: mean -11.5031 sd 0.0155 min -11.5285 p5 -11.5250 median -11.5033 p95 -11.4748 max -11.4676 | p95-p5 0.0503 max-min 0.0610
+4d       phase_only c_sod: mean -21.4508 sd 0.1909 min -21.9093 p5 -21.7659 median -21.4359 p95 -21.1603 max -21.0712 | p95-p5 0.6057 max-min 0.8381
+4d      power_only c_rule: mean -11.5094 sd 0.0290 min -11.6013 p5 -11.5853 median -11.5012 p95 -11.4852 max -11.4778 | p95-p5 0.1001 max-min 0.1235
+4d       power_only c_sod: mean -21.6097 sd 0.5118 min -22.5876 p5 -22.4648 median -21.5645 p95 -20.9692 max -20.8640 | p95-p5 1.4956 max-min 1.7236
+4d  random_first50 c_rule: mean -11.4979 sd 0.0568 min -11.6201 p5 -11.6048 median -11.4882 p95 -11.4015 max -11.3977 | p95-p5 0.2032 max-min 0.2224
+4d   random_first50 c_sod: mean -21.2829 sd 0.5568 min -22.4041 p5 -22.2365 median -21.3812 p95 -20.3942 max -20.0302 | p95-p5 1.8423 max-min 2.3739
+Q6 anchor      U: c_rule -11.5035 percentile 44.5; c_sod -21.8040 percentile 21.5; gain 10.301 percentile 83.0
+Q6 anchor    SCH: c_rule -11.5305 percentile 31.0; c_sod -21.1547 percentile 67.5; gain 9.624 percentile 30.0
+Q6 anchor  P5514: c_rule -11.5253 percentile 34.0; c_sod -21.0897 percentile 70.5; gain 9.564 percentile 27.0
+Q6 anchor     LO: c_rule -11.5251 percentile 34.0; c_sod -22.0757 percentile 9.5; gain 10.551 percentile 92.0
+Q6 anchor     HI: c_rule -11.4924 percentile 52.0; c_sod -21.2383 percentile 59.5; gain 9.746 percentile 37.5
+Q6 anchor      N: c_rule -11.5960 percentile 4.5; c_sod -21.7618 percentile 23.0; gain 10.166 percentile 73.5
+FIGURE {'path': 'results/fig_round16.png', 'bins_nat': 0.05, 'n_bins': 58, 'edges': [-1.1250000000000002, 1.7750000000000024], 'max_count_rule': 66, 'max_count_sod': 13, 'width_in': 3.4, 'font_pt': 8}
+Q1 c_rule: sd 0.0527 nat; 5-95 % [-11.5897, -11.4180] range 0.1717 nat; worst |c - median| 0.1247 nat (r049); min-max range 0.2469
+Q2 c_sod: sd 0.5611 nat; 5-95 % [-22.1917, -20.3025] range 1.8892 nat; worst |c - median| 1.6410 nat (r108); min-max range 2.6771
+Q3 range ratio c_rule / c_sod (5-95 %) 0.0909 (<= 1/3: True)
+Q4 e_fit p5 1.5611 median 1.5761 p95 1.5876 (+0.0115 / -0.0150); min 1.5570 max 1.5912 -> within +-0.03: True
+Q5 gain < 8.5: r108 gain 8.3358 c_rule -11.3912 c_sod -19.7270 p (0.028, 0.030, 0.839, 0.103) range 477.4 TV 3470.1 D_fit 9.696
+Q5 gain < 8.5: r099 gain 8.3422 c_rule -11.4022 c_sod -19.7445 p (0.045, 0.214, 0.554, 0.187) range 552.9 TV 3742.0 D_fit 10.557
+Q5 gain < 8.5: r113 gain 8.4175 c_rule -11.3731 c_sod -19.7907 p (0.024, 0.257, 0.413, 0.307) range 494.6 TV 3583.7 D_fit 10.077
+Q5 gain >= 8.5 nat for 197/200 inputs; min 8.3358 (r108) median 9.8749 max 10.8164 (r051) -> True
+Q7     phase_only: 5-95 % range c_sod 0.6057 c_rule 0.0503 (ratio 12.05); sd c_sod 0.1909 c_rule 0.0155
+Q7     power_only: 5-95 % range c_sod 1.4956 c_rule 0.1001 (ratio 14.95); sd c_sod 0.5118 c_rule 0.0290
+Q7 random_first50: 5-95 % range c_sod 1.8423 c_rule 0.2032 (ratio 9.06); sd c_sod 0.5568 c_rule 0.0568
+Q7         random: 5-95 % range c_sod 1.8892 c_rule 0.1717 (ratio 11.00); sd c_sod 0.5611 c_rule 0.0527
+PRED check1: hit {"max_diff_rule": 0.028717559375763813, "max_diff_sod": 0.013937260144132324}
+PRED Q1: hit {"range_5_95": 0.17171964181369326, "sd": 0.052680461542529894, "worst": 0.12467270544675557}
+PRED Q2: MISS {"range_5_95": 1.8891702086452078}
+PRED Q3: hit {"ratio": 0.09089686097518954}
+PRED Q4: hit {"up": 0.011505967611080692, "down": 0.014990391574799977, "median": 1.5761366916841444}
+PRED Q5: hit {"n_ge_85": 197, "median": 9.874945401718847}
+PRED Q6: MISS {"prank_sod_U": 21.5, "prank_rule": {"U": 44.5, "SCH": 31.0, "P5514": 34.0, "LO": 34.0, "HI": 52.0, "N": 4.5}}
+PRED Q7: hit {"ratio": 12.05187903640119}
+PRED total 6 hit / 2 miss
+CHECK4 3805 runs, 632 interpolations: W_k in [2.764e-210, 1.0], max per-trajectory c 1.0, min N 83; failures [] -> PASS
+CHECK4 list extensions: rule 0 inputs []; SoD 13 inputs [('r015', [8.0]), ('r027', [8.0]), ('r045', [8.0]), ('r047', [8.0]), ('r086', [8.0]), ('r098', [8.0]), ('r099', [8.0]), ('r108', [8.0]), ('r113', [8.0]), ('r127', [8.0]), ('r141', [8.0]), ('r164', [8.0]), ('r171', [8.0])]
+CHECK2 noise floor (U, ten seeds, no common random numbers between seeds): sd c_rule 0.0075, c_sod 0.0076, e_fit 0.0007, D_fit 0.0029, gain 0.0094
+DIAG within-run group SE (10 groups of 200, random set, median): c_rule 0.0065, c_sod 0.0043 nat
+WALL runs: median 1.32 s (min 0.97, max 2.17); stages anchors 32 s, random 810 s, derived 390 s, floor 47 s
+SUMMARY written results/round16.json (4.8 MB) in 0.8 s
+CLEANUP removed empty folders []; git status on rounds 4-15 and the frozen files: clean
+=== ROUND 16 stage summary done in 1.2 s (exit 0)

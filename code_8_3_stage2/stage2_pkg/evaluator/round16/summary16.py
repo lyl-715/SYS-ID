@@ -111,6 +111,12 @@ def main(out):
     corr = {k: {f: float(spearmanr(col(rnd, k), fv)[0]) for f, fv in feats.items()} for k in ('c_rule', 'c_sod')}
     res['spearman'] = corr
     for k in corr: out(f"4c Spearman {k}: " + ', '.join(f"{f} {v:+.3f}" for f, v in corr[k].items()))
+    extra = dict(c_rule_vs_c_sod=float(spearmanr(col(rnd, 'c_rule'), col(rnd, 'c_sod'))[0]),
+                 e_fit_vs_tv=float(spearmanr(col(rnd, 'e_fit'), feats['tv_sigma'])[0]),
+                 gain_vs_tv=float(spearmanr(col(rnd, 'gain'), feats['tv_sigma'])[0]),
+                 D_fit_vs_range=float(spearmanr(col(rnd, 'D_fit'), feats['range_sigma'])[0]))
+    res['spearman_extra'] = extra
+    out("4c extra (beyond the prompt's list, descriptive): Spearman " + ', '.join(f"{k} {v:+.3f}" for k, v in extra.items()))
     res['feature_ranges'] = {f: stats(fv) for f, fv in feats.items()}
     res['max_step_sigma'] = stats(icol(rnd, 'max_step_sigma'))
     # --- 4d derived sets --------------------------------------------------------------------------------------------------
@@ -162,6 +168,9 @@ def main(out):
     out(f"Q3 range ratio c_rule / c_sod (5-95 %) {Q['Q3']['ratio']:.4f} (<= 1/3: {Q['Q3']['answer']})")
     out(f"Q4 e_fit p5 {ef['p5']:.4f} median {ef['median']:.4f} p95 {ef['p95']:.4f} (+{Q['Q4']['up']:.4f} / -{Q['Q4']['down']:.4f}); min {ef['min']:.4f} "
         f"max {ef['max']:.4f} -> within +-0.03: {Q['Q4']['answer']}")
+    for i in np.argsort(g)[:int((g < 8.5).sum())]:
+        d_ = rnd[int(i)]['input']; out(f"Q5 gain < 8.5: {d_['name']} gain {g[i]:.4f} c_rule {cr[i]:+.4f} c_sod {cs[i]:+.4f} p {r16_fmt(d_['p'], 3)} "
+                                      f"range {d_['range_sigma']:.1f} TV {d_['tv_sigma']:.1f} D_fit {rnd[int(i)]['derived']['D_fit']:.3f}")
     out(f"Q5 gain >= 8.5 nat for {n85}/200 inputs; min {Q['Q5']['min']:.4f} ({Q['Q5']['min_input']}) median {Q['Q5']['median']:.4f} max "
         f"{Q['Q5']['max']:.4f} ({Q['Q5']['max_input']}) -> {Q['Q5']['answer']}")
     for nm, v in Q['Q7'].items():
@@ -212,7 +221,7 @@ def main(out):
                          extensions=dict(rule=ext_rule, sod=ext_sod), group_se_random=gse)
     out(f"CHECK4 {nrun} runs, {nfit} interpolations: W_k in [{wmin:.3e}, {wmax!r}], max per-trajectory c {cmax!r}, min N {nmin:.0f}; "
         f"failures {bad} -> {'PASS' if not bad else 'FAIL'}")
-    out(f"CHECK4 list extensions: rule {len(ext_rule)} inputs {ext_rule[:10]}; SoD {len(ext_sod)} inputs {ext_sod[:10]}")
+    out(f"CHECK4 list extensions: rule {len(ext_rule)} inputs {ext_rule}; SoD {len(ext_sod)} inputs {[(n, e) for n, sd, e in ext_sod]}")
     out(f"CHECK2 noise floor (U, ten seeds, no common random numbers between seeds): sd " + ', '.join(f"{k} {v:.4f}" for k, v in Fl['sd'].items()))
     out(f"DIAG within-run group SE (10 groups of 200, random set, median): c_rule {gse['c_rule']['median']:.4f}, c_sod {gse['c_sod']['median']:.4f} nat")
     res['wall'] = dict(run_median_s=float(np.median(walls)), run_min_s=float(np.min(walls)), run_max_s=float(np.max(walls)),
