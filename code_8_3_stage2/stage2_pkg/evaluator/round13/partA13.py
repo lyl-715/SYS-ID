@@ -149,16 +149,16 @@ def figure(out, path):
     x = {n: rows[n]['I_full']-U['I_full'] for n in names}
     yt = {n: rows[n]['table']['I120']-U['table']['I120'] for n in names}
     ys = {n: rows[n]['matched']['I120']-U['matched']['I120'] for n in names}
-    fig, ax = plt.subplots(figsize=(3.4, 3.1), constrained_layout=True)
+    fig, ax = plt.subplots(figsize=(3.4, 3.6), constrained_layout=True)
     allv = list(x.values())+list(yt.values())+list(ys.values())
-    lo, hi = min(allv), max(allv); pad = 0.12*(hi-lo if hi > lo else 1.0)
-    lim = (lo-pad, hi+pad)
+    lo, hi = min(allv), max(allv); sp_ = (hi-lo if hi > lo else 1.0)
+    lim = (lo-0.30*sp_, hi+0.30*sp_)                             # room for the direct labels on both sides
     ax.plot(lim, lim, ls=':', color=INK2, lw=1.0, zorder=1, label='y = x')
     ax.scatter([x[n] for n in names], [yt[n] for n in names], s=30, color=C1, edgecolor=SURF, linewidth=1.0, zorder=3, label='designed table')
-    ax.scatter([x[n] for n in names], [ys[n] for n in names], s=30, facecolor='none', edgecolor=C2, linewidth=1.4, zorder=3, label='matched constant SoD')
+    ax.scatter([x[n] for n in names], [ys[n] for n in names], s=30, facecolor='none', edgecolor=C2, linewidth=1.4, zorder=3, label='matched SoD')
     # direct labels: points of one series closer than 4 % of the axis range share one label
     span = lim[1]-lim[0]
-    for ys_, dxs, ha in ((yt, -0.035, 'right'), (ys, 0.035, 'left')):
+    for ys_, dxs, ha in ((yt, -6, 'right'), (ys, 6, 'left')):
         left = list(names); groups = []
         while left:
             a = left.pop(0); g = [a]
@@ -167,13 +167,13 @@ def figure(out, path):
             groups.append(g)
         for g in groups:
             gx = np.mean([x[n] for n in g]); gy = np.mean([ys_[n] for n in g])
-            ax.annotate(', '.join(g), (gx, gy), xytext=(gx+dxs*span, gy), ha=ha, va='center', fontsize=8, color=INK)
+            ax.annotate(', '.join(g), (gx, gy), xytext=(dxs, 0), textcoords='offset points', ha=ha, va='center', fontsize=8, color=INK)
     ax.set_xlim(lim); ax.set_ylim(lim); ax.set_aspect('equal')
     ax.set_xlabel(r'$I_{\mathrm{full}} - I_{\mathrm{full}}(U)$ (nat)')
     ax.set_ylabel(r'$I - I(U)$ (nat), $\sigma/120$')
     ax.grid(True, color=GRID, lw=0.6); ax.set_axisbelow(True)
     for sp in ('top', 'right'): ax.spines[sp].set_visible(False)
-    ax.legend(loc='upper left', frameon=False, fontsize=8, handletextpad=0.4)
+    fig.legend(loc='outside lower center', ncol=3, frameon=False, fontsize=8, handletextpad=0.3, columnspacing=0.9)
     fig.savefig(path, dpi=300); plt.close(fig)
     return dict(path=os.path.relpath(path, HERE), caption=CAPTION, x=x, y_table=yt, y_sod=ys)
 

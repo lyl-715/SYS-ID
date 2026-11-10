@@ -1,34 +1,18 @@
-=== ROUND 13 stage partA input P5514 started 2026-11-10 13:20:21; python 3.13.18, numpy 2.5.3, scipy 1.18.1, numba 0.68.0 (4 threads); B = 316.8921168493721; G = 34951; work /tmp/claude-0/-home-user-SYS-ID/1fa7f25a-e8aa-51eb-92ab-58a088560e53/scratchpad/work
+=== ROUND 13 stage partA input P5514 started 2026-11-10 14:31:30; python 3.13.18, numpy 2.5.3, scipy 1.18.1, numba 0.68.0 (4 threads); B = 316.8921168493721; G = 34951; work /tmp/claude-0/-home-user-SYS-ID/1fa7f25a-e8aa-51eb-92ab-58a088560e53/scratchpad/work
 WARMUP 0.2 s
 PARTA P5514 I_full 219.00797787214196; G 34951; output range 1136.209 sigma; largest step 3.1759 sigma
 PARTA P5514 constant SoD at Delta*: sigma/24 EN 316.4724658173142 S 486.6943784924982 I 197.90224219753293; sigma/120 EN 316.4712548750552 S 486.7026818976254 I 197.90240989500066
-MATCH P5514 sigma/24 M=480 (20.0000 sigma) EN=316.4724658173432 EN-B=-0.41965103202886667 S=486.6943784925436 logdet=197.90224219753372 mass_dev_max=9.947598300641403e-14 wall=4.3s
-MATCH P5514 sigma/24 M=460 (19.1667 sigma) EN=329.55075295670713 EN-B=12.658636107335042 S=506.60690521438227 logdet=198.25801972643723 mass_dev_max=9.792167077193881e-14 wall=4.8s
-MATCH P5514 sigma/24 M=470 (19.5833 sigma) EN=322.96152466879283 EN-B=6.069407819420746 S=496.5427959582123 logdet=198.0810950228822 mass_dev_max=9.85878045867139e-14 wall=4.6s
-MATCH P5514 sigma/24 M=475 (19.7917 sigma) EN=319.89897433854986 EN-B=3.0068574891777757 S=492.1265162689191 logdet=198.00456291280838 mass_dev_max=1.0080825063596421e-13 wall=4.5s
-MATCH P5514 sigma/24 M=477 (19.8750 sigma) EN=318.5245914113414 EN-B=1.6324745619693317 S=489.9901339281728 logdet=197.96482277122968 mass_dev_max=1.0103029524088925e-13 wall=4.6s
-MATCH P5514 sigma/24 M=478 (19.9167 sigma) EN=317.82534413584904 EN-B=0.9332272864769493 S=488.8679304971097 logdet=197.94352745610087 mass_dev_max=1.0058620603103918e-13 wall=4.7s
-MATCH P5514 sigma/24 M=479 (19.9583 sigma) EN=317.1374795380638 EN-B=0.24536268869172773 S=487.75807502919963 logdet=197.92240064451084 mass_dev_max=1.0080825063596421e-13 wall=4.4s
-MATCH P5514 sigma/120 M=478 EN=317.8240718370645 EN-B=0.9319549876923929 S=488.8762116198667 logdet=197.94369378687117 mass_dev_max=5.144773496112975e-13 G=174747 wall=25.0s
-MATCH P5514 sigma/120 M=479 EN=317.1362218723405 EN-B=0.2441050229684265 S=487.76632173055907 logdet=197.9225666013267 mass_dev_max=5.186961971048731e-13 G=174747 wall=24.9s
-MATCH P5514 sigma/120 M=480 EN=316.4712548750552 EN-B=-0.42086197431689243 S=486.7026818976254 logdet=197.90240989500066 mass_dev_max=5.21471754666436e-13 G=174747 wall=25.1s
-MATCHED P5514 M*=479 (19.9583 sigma) EN120=317.1362218723405 residual 0.2441050229684265 accepted=True logdet24=197.92240064451084 logdet120=197.9225666013267
-STOP AssertionError: 
-=== ROUND 13 stage partA input P5514 STOPPED after 135.3 s
-CLEANUP removed empty folders []; git status on rounds 4-11, config.json, density_recursion_v1.py, evaluator_fast.py: clean
-Traceback (most recent call last):
-  File "/home/user/SYS-ID/code_8_3_stage2/stage2_pkg/evaluator/round13/run13.py", line 456, in <module>
-    main()
-    ~~~~^^
-  File "/home/user/SYS-ID/code_8_3_stage2/stage2_pkg/evaluator/round13/run13.py", line 445, in main
-    elif stg == 'partA': stage_partA(out)
-                         ~~~~~~~~~~~^^^^^
-  File "/home/user/SYS-ID/code_8_3_stage2/stage2_pkg/evaluator/round13/run13.py", line 381, in stage_partA
-    des = c13.get_design(out)
-  File "/home/user/SYS-ID/code_8_3_stage2/stage2_pkg/evaluator/round13/common13.py", line 193, in get_design
-    dp13.warmup(); _DES['des'] = dp13.Design11(log)
-                                 ~~~~~~~~~~~~~^^^^^
-  File "/home/user/SYS-ID/code_8_3_stage2/stage2_pkg/evaluator/round13/dp13.py", line 148, in __init__
-    w = (KB-KA+1); assert int(w[1:].min()) == int(w[1:].max()); self.W88 = int(w[1])
-                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-AssertionError
+DESIGN11 G = 34951 (full grid at every step), kernel windows 4224 nodes, cache range 6144 nodes per step, built in 1.8 s; limits outside the cache range exact: True
+DESIGN11 short window (DECISION 13-22): step k = 4676 [KA, KB] = [1729, 5951] (4223 nodes); (x_k -/+ 88 sigma - z0)/h = 1728.000000000018 / 5951.999999999982; padded entry = node KB + 1 (upper end); kernel at KA - 1 and KB + 1 exactly 0: True / True; padded row = evaluator kernel bitwise: True (sums 1.0 / 1.0); extra cache node KB + XC + 1: |u| = 127.99999999999926 > 127, at the limits: True; limit check outside the cache range at this step (u = -128.00 / 128.04): True
+SCAN edge_j0: actions edge (100); gbar 0.019280794224016462 gamma_1 0.028715047772388164; lambda_0 = 5 gbar = 0.09640397112008231
+LAM edge_j0 run=01 phase=start lam=0.09640397112008231 lam/gbar=5.0 dual=33.1572042827308 EN=77.67292165570043 S=486.1905563237173 F=10.066808850138354 feasible=True slack=239.21919519367165 logdet=198.2388475335756 dmD=0.3366053360426804 dp_s=43.0 fwd_s=18.6 [diag: V-policy rel 4.980002752751162e-16, support [2917, 32032]]
+LAM edge_j0 run=02 phase=scan lam=0.07712317689606585 lam/gbar=4.0 dual=29.111687097947716 EN=142.99692138711924 S=765.4524268642485 F=15.671622129164001 feasible=True slack=173.89519546225284 logdet=202.32716738298137 dmD=4.424925185448444 dp_s=42.5 fwd_s=18.8 [diag: V-policy rel 1.1101363675852903e-14, support [2917, 32032]]
+LAM edge_j0 run=03 phase=scan lam=0.06169854151685268 lam/gbar=3.2 dual=27.111575040964457 EN=241.24443981653576 S=1108.9892880172026 F=22.41550865112664 feasible=True slack=75.64767703283633 logdet=205.64054238387934 dmD=7.738300186346407 dp_s=40.7 fwd_s=18.2 [diag: V-policy rel 1.9909443528287623e-13, support [2917, 32032]]
+LAM edge_j0 run=04 phase=scan lam=0.049358833213482146 lam/gbar=2.56 dual=26.904844027163676 EN=373.2224365477457 S=1483.5430005919434 F=29.656527834239576 feasible=False slack=-56.330319698373614 logdet=208.23120187540002 dmD=10.32895967786709 dp_s=40.3 fwd_s=17.5 [diag: V-policy rel 5.194917594189518e-13, support [2917, 32032]]
+LAM edge_j0 run=05 phase=bisect lam=0.05552868736516742 lam/gbar=2.8800000000000003 dual=26.799774410313447 EN=294.53848060920666 S=1269.251526349094 F=25.52979128428381 feasible=True slack=22.35363624016543 logdet=206.8365341546623 dmD=8.934291957129375 dp_s=40.1 fwd_s=17.8 [diag: V-policy rel 2.628935479775893e-13, support [2917, 32032]]
+LAM edge_j0 run=06 phase=bisect lam=0.05244376028932478 lam/gbar=2.72 dual=26.789736472299467 EN=335.5043122035162 S=1378.2371967553167 F=27.737114936133732 feasible=False slack=-18.61219535414409 logdet=207.57634212109866 dmD=9.674099923565734 dp_s=40.3 fwd_s=17.4 [diag: V-policy rel 4.084359661273003e-13, support [2917, 32032]]
+LAM edge_j0 run=07 phase=bisect lam=0.0539862238272461 lam/gbar=2.8000000000000003 dual=26.779101729754238 EN=312.3778792052179 S=1316.9350286455012 F=26.50668003811174 feasible=True slack=4.514237644154207 logdet=207.16115918764717 dmD=9.258916990114244 dp_s=43.3 fwd_s=17.3 [diag: V-policy rel 3.5283253093277726e-13, support [2917, 32032]]
+LAM edge_j0 run=08 phase=bisect lam=0.053214992058285435 lam/gbar=2.76 dual=26.779873178782985 EN=323.6350699360541 S=1346.4217867707082 F=27.109984325963925 feasible=False slack=-6.742953086682007 logdet=207.36399499179655 dmD=9.461752794263617 dp_s=41.4 fwd_s=17.8 [diag: V-policy rel 3.8668655398275597e-13, support [2917, 32032]]
+LAM edge_j0 run=09 phase=bisect lam=0.05360060794276576 lam/gbar=2.78 dual=26.778423600363524 EN=317.88945110653805 S=1331.1666135476858 F=26.80316627509381 feasible=False slack=-0.99733425716596 logdet=207.25929575367908 dmD=9.357053556146155 dp_s=43.3 fwd_s=16.9 [diag: V-policy rel 3.636776021326657e-13, support [2917, 32032]]
+LAM edge_j0 run=10 phase=bisect lam=0.05379341588500593 lam/gbar=2.79 dual=26.778512570600185 EN=315.03460859708514 S=1323.7146260479167 F=26.649875808899157 feasible=True slack=1.857508252286948 logdet=207.20807982725424 dmD=9.30583762972131 dp_s=42.6 fwd_s=18.0 [diag: V-policy rel 3.6266739754725547e-13, support [2917, 32032]]
+LAM edge_j0 run=11 phase=bisect lam=0.053697011913885845 lam/gbar=2.7849999999999997 dual=26.778401678812912 EN=316.44397579249625 S=1327.3215768194439 F=26.725622795366867 feasible=True slack=0.4481410568758406 logdet=207.23293600223536 dmD=9.330693804702435 dp_s=41.0 fwd_s=17.8 [diag: V-policy rel 3.568241201977764e-13, support [2917, 32032]]

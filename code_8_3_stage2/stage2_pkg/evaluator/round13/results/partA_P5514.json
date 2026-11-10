@@ -93,5 +93,34 @@
   "wall120_s": 24.932713396000054,
   "J24": "results/partA_P5514/J_sod_matched_s24.npy",
   "J120": "results/partA_P5514/J_sod_matched_s120.npy"
+ },
+ "dp_window_fix": {
+  "decision": "DECISION 13-22",
+  "W88": 4224,
+  "short_steps": [
+   {
+    "step": 4676,
+    "array_index": 4675,
+    "KA": 1729,
+    "KB": 5951,
+    "width": 4223,
+    "padded_end": "upper",
+    "lo_index_real": 1728.000000000018,
+    "hi_index_real": 5951.999999999982,
+    "kernel_zero_lo": true,
+    "kernel_zero_hi": true,
+    "ext_inner_bitwise": true,
+    "row_bitwise": true,
+    "sum_row": 1.0,
+    "sum_eval": 1.0,
+    "sum_bitwise": true,
+    "pairwise_sum_equal_info": true,
+    "u_extra_node": 127.99999999999926,
+    "extra_node_at_limits": true,
+    "u_outside_lo": -127.99999999999926,
+    "u_outside_hi": 128.0416666666658,
+    "limit_check_step": true
+   }
+  ]
  }
 }
