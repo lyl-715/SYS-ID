@@ -477,7 +477,6 @@ def main():
     for stg in args:
         if stg not in STAGES: raise SystemExit(f"unknown stage {stg}")
         if stg == 'partB': raise SystemExit("stage partB is not implemented (Part B)")
-        if stg == 'partA_summary': raise SystemExit("stage partA_summary is not implemented yet")
         out = Tee(os.path.join(LOGS, f'{stg}_{NAME}.log' if stg in ('gate', 'partA', 'dpfix') else f'{stg}.log'))
         out(f"=== ROUND 13 stage {stg} input {NAME} started {time.strftime('%Y-%m-%d %H:%M:%S')}; python {platform.python_version()}, numpy {np.__version__}, "
             f"scipy {scipy.__version__}, numba {numba.__version__} ({numba.get_num_threads()} threads); B = {B!r}; G = {G}; work {WORK}")
@@ -487,6 +486,8 @@ def main():
             elif stg == 'gate_summary': stage_gate_summary(out)
             elif stg == 'partA': stage_partA(out)
             elif stg == 'dpfix': stage_dpfix(out)
+            elif stg == 'partA_summary':
+                import partA13; partA13.stage(out)
         except (Stop, e13.AssertionStop, AssertionError) as e:
             out(f"STOP {type(e).__name__}: {e}")
             out(f"=== ROUND 13 stage {stg} input {NAME} STOPPED after {time.perf_counter()-t0:.1f} s")

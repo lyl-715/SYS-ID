@@ -1,0 +1,23 @@
+=== ROUND 13 stage partA_summary input U started 2026-11-10 16:12:10; python 3.13.18, numpy 2.5.3, scipy 1.18.1, numba 0.68.0 (4 threads); B = 316.8921168493721; G = 35146; work /tmp/claude-0/-home-user-SYS-ID/1fa7f25a-e8aa-51eb-92ab-58a088560e53/scratchpad/work
+PARTA-SUMMARY missing or unfinished inputs: ['N']; constant-SoD numbers available for ['N']
+ROW U: I_full 219.0085; SoD(Delta*) EN24 316.89 I24 197.2010; matched M* 480 EN120 316.891 I120 197.2012 c_sod -21.8073; table EN120 316.516 S120 1343.89 I120 207.3531 (sigma/24 207.3552) c_tab -11.6554 gap 0.2100 (two scans 0.2100); gain 10.1519
+ROW P5514: I_full 219.0080; SoD(Delta*) EN24 316.47 I24 197.9022; matched M* 479 EN120 317.136 I120 197.9226 c_sod -21.0854; table EN120 316.594 S120 1341.00 I120 207.3363 (sigma/24 207.3386) c_tab -11.6716 gap 0.1140 (two scans 0.1140); gain 9.4138
+ROW SCH: I_full 219.0085; SoD(Delta*) EN24 314.81 I24 197.7985; matched M* 477 EN120 316.647 I120 197.8515 c_sod -21.1570; table EN120 316.551 S120 1344.01 I120 207.3662 (sigma/24 207.3684) c_tab -11.6423 gap 0.0835 (two scans 0.0835); gain 9.5147
+ROW LO: I_full 218.0343; SoD(Delta*) EN24 367.81 I24 197.3527; matched M* 561 EN120 317.117 I120 195.9725 c_sod -22.0618; table EN120 316.676 S120 1342.91 I120 206.3717 (sigma/24 206.3739) c_tab -11.6626 gap 0.2043 (two scans 0.2043); gain 10.3991
+ROW HI: I_full 218.0343; SoD(Delta*) EN24 274.27 I24 195.4602; matched M* 414 EN120 316.915 I120 196.7916 c_sod -21.2427; table EN120 316.218 S120 1346.07 I120 206.3975 (sigma/24 206.3996) c_tab -11.6368 gap 0.1247 (two scans 0.1247); gain 9.6060
+ROW N (no designed table: STOP AssertionStop: step 4217: |sum m - 1| = np.float64(1.003974681168529e-12) (tol 1e-12) or min m = np.float64(0.0)): I_full 218.4169; SoD(Delta*) EN24 423.97 I24 199.3149; matched M* 651 EN120 317.014 I120 196.6621 c_sod -21.7548
+RANGES c_tab 0.0349 (5 inputs); c_sod 0.9763 (6 inputs), 0.9763 (the 5 inputs with a table); S ratio max 0.0022
+RANK table: by I_full U = SCH = P5514 > HI = LO | by I_table SCH = U = P5514 > HI = LO | agree True (discordant [], mixed [])
+RANK SoD: by I_full U = SCH = P5514 > N > HI = LO | by I_SoD P5514 = SCH > U > HI > N > LO | agree False (discordant ['HI-N'], mixed ['U-P5514', 'U-SCH', 'LO-HI'])
+PAIRWISE {'SCH - U': {'table': 0.013122991428161868, 'sod': 0.6503528344627512, 'full': -2.842170943040401e-14}, 'P5514 - U': {'table': -0.016747795258396536, 'sod': 0.721408071296878, 'full': -0.0005280570530885598}, 'c(LO) - c(HI)': {'table': -0.025843681904774485, 'sod': -0.8190249925920909}}
+VERDICT H1 True H2 True H3 True resolution True -> incomplete: no designed table for N; on the 5 inputs with a table H1 holds, H2 holds, H3 holds
+PREDICTION UNDETERMINED H1 holds (S_table within +-3 % of S_table(U), sigma/120): 0.002151191226687388
+PREDICTION UNDETERMINED H2 holds (range c_tab <= 0.5) and sigma/24 I_table points 207.35 (P5514, SCH), 206.38 (LO, HI), 206.76 (N), each +-0.3: {'range_c_tab': 0.03487660781885893, 'points': {'P5514': {'I24': 207.33858284858758, 'interval': (207.05, 207.65), 'in_': True}, 'SCH': {'I24': 207.36842793349956, 'interval': (207.05, 207.65), 'in_': True}, 'LO': {'I24': 206.37386652972955, 'interval': (206.08, 206.68), 'in_': True}, 'HI': {'I24': 206.39961610361905, 'interval': (206.08, 206.68), 'in_': True}}}
+PREDICTION HIT H3 holds: {'SCH - U': 0.013122991428161868, 'P5514 - U': -0.016747795258396536, 'c(LO) - c(HI)': -0.025843681904774485}
+PREDICTION HIT constant SoD not separable: range c_sod >= 0.7 and |c_sod(LO) - c_sod(HI)| >= 0.5: {'range_c_sod': 0.9763426994863948, 'LO_HI': -0.8190249925920909}
+PREDICTION HIT matched SoD: I_SoD(P5514) - I_SoD(U) in [0.5, 0.9]: 0.721408071296878
+PREDICTION UNDETERMINED certificate gap <= 0.3 nat for every input after two scans: {'U': 0.21003452180190152, 'P5514': 0.11395660335207936, 'SCH': 0.08354595700836853, 'LO': 0.2042589630439693, 'HI': 0.12470373069191965}
+PREDICTION UNDETERMINED gain = I_table - I_SoD in [9, 11.5] for every input (sigma/120): {'U': 10.151925968695991, 'P5514': 9.413770102140717, 'SCH': 9.514696125661402, 'LO': 10.399145727541196, 'HI': 9.60596441685388}
+PREDICTIONS 3 hit, 0 miss, 4 undetermined of 7; check 6 {'diff': -2.842170943040401e-14, 'pass_': True}; all per-input checks True
+=== ROUND 13 stage partA_summary input U done in 0.5 s
+CLEANUP removed empty folders []; git status on rounds 4-11, config.json, density_recursion_v1.py, evaluator_fast.py: clean

@@ -63,27 +63,46 @@ def summary(log=print):
                                                                                      q90=r['shape']['shape']['edge_q90'])),
                                   shape_skipped=bool(r['shape'].get('skipped')), shape_reason=r['shape'].get('reason')),
                        gain=dv['gain'], gain24=dv['sigma24']['gain'], all_checks_pass=r['all_checks_pass'])
-    out = dict(inputs=list(INPUTS), done=names, missing=missing, grid='sigma/120 (sigma/24 alongside)', rows=rows)
+    # inputs stopped before a designed table but with an accepted matched SoD: their constant-SoD numbers are complete (DECISION 13-28)
+    partial = {}
+    for n in missing:
+        r = D[n]
+        if r is None or 'matched' not in r or not r['matched'].get('accepted'): continue
+        m = r['matched']; sd = r['sod_delta']; lp = os.path.join(HERE, 'logs', f'partA_{n}.log')
+        stops = [l.strip() for l in open(lp) if l.startswith('STOP ')] if os.path.exists(lp) else []
+        partial[n] = dict(I_full=r['I_full'], G=r['sanity']['G'], range_sigma=r['sanity']['range_sigma'], max_step_sigma=r['sanity']['max_step_sigma'],
+                          sod_delta=dict(EN24=sd['EN24'], I24=sd['I24'], S24=sd['S24'], EN120=sd['EN120'], I120=sd['I120'], S120=sd['S120']),
+                          matched=dict(M=m['M_star'], M_sigma=m['M_star']/24, EN120=m['EN120'], residual120=m['residual120'], S120=m['S120'], I120=m['logdet120'],
+                                       EN24=m['EN24'], S24=m['S24'], I24=m['logdet24'], c_sod=m['logdet120']-r['I_full'], c_sod24=m['logdet24']-r['I_full'],
+                                       info_per_send=(m['S120']-1.0)/(m['EN120']-1.0)),
+                          stopped=(stops[-1] if stops else 'not finished'))
+    out = dict(inputs=list(INPUTS), done=names, missing=missing, partial=partial, grid='sigma/120 (sigma/24 alongside)', rows=rows)
     if missing:
-        log(f"PARTA-SUMMARY missing or unfinished inputs: {missing}")
+        log(f"PARTA-SUMMARY missing or unfinished inputs: {missing}; constant-SoD numbers available for {list(partial)}")
     if 'U' not in rows: return out
     U = rows['U']
-    ct = {n: rows[n]['table']['c_tab'] for n in names}; cs = {n: rows[n]['matched']['c_sod'] for n in names}
-    It = {n: rows[n]['table']['I120'] for n in names}; Is = {n: rows[n]['matched']['I120'] for n in names}; If = {n: rows[n]['I_full'] for n in names}
+    sodall = dict(**{n: rows[n] for n in names}, **partial); sod_names = [n for n in INPUTS if n in sodall]
+    ct = {n: rows[n]['table']['c_tab'] for n in names}; cs = {n: sodall[n]['matched']['c_sod'] for n in sod_names}
+    It = {n: rows[n]['table']['I120'] for n in names}; Is = {n: sodall[n]['matched']['I120'] for n in sod_names}; If = {n: sodall[n]['I_full'] for n in sod_names}
     St = {n: rows[n]['table']['S120'] for n in names}
+    out['sod_inputs'] = sod_names
     out['range_c_tab'] = max(ct.values())-min(ct.values()); out['range_c_sod'] = max(cs.values())-min(cs.values())
+    out['range_c_sod_table_inputs'] = max(cs[n] for n in names)-min(cs[n] for n in names)
     out['range_c_tab24'] = max(rows[n]['table']['c_tab24'] for n in names)-min(rows[n]['table']['c_tab24'] for n in names)
     out['S_ratio'] = {n: St[n]/St['U']-1 for n in names}; out['S_ratio_max_abs'] = max(abs(v) for v in out['S_ratio'].values())
     out['S_ratio24_max_abs'] = max(abs(rows[n]['table']['S24']/U['table']['S24']-1) for n in names)
-    out['rank_table'] = rank_compare(If, It, names); out['rank_sod'] = rank_compare(If, Is, names)
+    out['rank_table'] = rank_compare({n: If[n] for n in names}, It, names); out['rank_sod'] = rank_compare(If, Is, sod_names)
     pw = {}
     for lab, a, b_, kind in (('SCH - U', 'SCH', 'U', 'I'), ('P5514 - U', 'P5514', 'U', 'I'), ('c(LO) - c(HI)', 'LO', 'HI', 'c')):
         if a in rows and b_ in rows:
             if kind == 'I': pw[lab] = dict(table=It[a]-It[b_], sod=Is[a]-Is[b_], full=If[a]-If[b_])
             else: pw[lab] = dict(table=ct[a]-ct[b_], sod=cs[a]-cs[b_])
+        elif a in sodall and b_ in sodall:
+            if kind == 'I': pw[lab] = dict(table=None, sod=Is[a]-Is[b_], full=If[a]-If[b_])
+            else: pw[lab] = dict(table=None, sod=cs[a]-cs[b_])
     out['pairwise'] = pw
     out['gain'] = {n: rows[n]['gain'] for n in names}
-    out['info_per_send'] = {n: dict(table=rows[n]['table']['info_per_send'], sod=rows[n]['matched']['info_per_send']) for n in names}
+    out['info_per_send'] = {n: dict(table=(rows[n]['table']['info_per_send'] if n in rows else None), sod=sodall[n]['matched']['info_per_send']) for n in sod_names}
     # verdict (prompt §6)
     complete = not missing
     H1 = out['S_ratio_max_abs'] <= 0.03
@@ -92,7 +111,9 @@ def summary(log=print):
               and abs(pw['c(LO) - c(HI)']['table']) <= 0.5)
     gaps = {n: rows[n]['table']['gap'] for n in names}
     unresolved = [n for n in names if gaps[n] > 0.5]
-    if not complete: verdict = f'incomplete (missing {missing})'
+    if not complete:
+        verdict = (f"incomplete: no designed table for {', '.join(missing)}; on the {len(names)} inputs with a table "
+                   f"H1 {'holds' if H1 else 'fails'}, H2 {'holds' if H2 else 'fails'}, H3 {'holds' if H3 else 'fails'}")
     elif H1 and H2 and H3: verdict = 'separation supported'
     elif out['range_c_tab'] > 1.5: verdict = 'not supported'
     else:
@@ -109,12 +130,13 @@ def summary(log=print):
     if 'LO' in rows and 'HI' in rows:
         out['check6_LO_HI_I_full'] = dict(diff=If['LO']-If['HI'], pass_=bool(abs(If['LO']-If['HI']) <= 0.01))
     out['checks_all_inputs_pass'] = all(rows[n]['all_checks_pass'] for n in names)
-    out['predictions'] = score(rows, out, names)
+    out['predictions'] = score(rows, out, names, missing)
     return out
 
 
-def score(rows, out, names):
-    """predictions_partA.md, scoring conventions 1-7 (fixed before running)."""
+def score(rows, out, names, missing=()):
+    """predictions_partA.md, scoring conventions 1-7 (fixed before running). A line that needs an input without a designed table is
+    'undetermined' unless the available inputs already make it a miss (DECISION 13-28)."""
     It24 = {n: rows[n]['table']['I24'] for n in names}
     iv = {'P5514': (207.05, 207.65), 'SCH': (207.05, 207.65), 'LO': (206.08, 206.68), 'HI': (206.08, 206.68), 'N': (206.46, 207.06)}
     pw = out['pairwise']; P = []
@@ -132,13 +154,20 @@ def score(rows, out, names):
     P.append(dict(line='certificate gap <= 0.3 nat for every input after two scans', value=g2, hit=bool(all(x <= 0.3 for x in g2.values()))))
     g = out['gain']
     P.append(dict(line='gain = I_table - I_SoD in [9, 11.5] for every input (sigma/120)', value=g, hit=bool(all(9 <= x <= 11.5 for x in g.values()))))
-    return dict(lines=P, hits=sum(p['hit'] for p in P), n=len(P))
+    needs_all = {0, 1, 5, 6}                                   # lines 1, 2, 6, 7 need every input's table; 3-5 do not
+    for i, p in enumerate(P):
+        p['result'] = 'hit' if p['hit'] else 'miss'
+        if missing and i in needs_all and p['hit']:
+            p['result'] = 'undetermined'; p['hit'] = None; p['note'] = f"no designed table for {', '.join(missing)}; holds on the other inputs"
+    return dict(lines=P, hits=sum(p['result'] == 'hit' for p in P), misses=sum(p['result'] == 'miss' for p in P),
+                undetermined=sum(p['result'] == 'undetermined' for p in P), n=len(P))
 
 
 CAPTION = ("Information of the designed table (filled) and of the matched constant SoD (open) against the full-data information, "
-           "both relative to the uniform input U, six inputs, sigma/120, budget B = 316.89. What to look at: table points on the dotted "
-           "line y = x mean that the designed table loses the same amount of information for every input (separation); the matched-SoD "
-           "points are shown for contrast.")
+           "both relative to the uniform input U, sigma/120, budget B = 316.89; matched SoD for six inputs, designed table for the inputs "
+           "whose design finished (N: none, its scan stopped on a conservation assertion). What to look at: table points on the dotted line "
+           "y = x mean that the designed table loses the same amount of information for every input (separation); the matched-SoD points "
+           "are shown for contrast.")
 
 def figure(out, path):
     import matplotlib; matplotlib.use('Agg'); import matplotlib.pyplot as plt
@@ -146,20 +175,21 @@ def figure(out, path):
     plt.rcParams.update({'font.size': 8, 'axes.edgecolor': INK2, 'axes.labelcolor': INK, 'xtick.color': INK2, 'ytick.color': INK2,
                          'axes.facecolor': SURF, 'figure.facecolor': SURF, 'font.family': 'DejaVu Sans'})
     rows = out['rows']; names = out['done']; U = rows['U']
-    x = {n: rows[n]['I_full']-U['I_full'] for n in names}
+    sodall = dict(**rows, **out.get('partial', {})); snames = out.get('sod_inputs', names)
+    x = {n: sodall[n]['I_full']-U['I_full'] for n in snames}
     yt = {n: rows[n]['table']['I120']-U['table']['I120'] for n in names}
-    ys = {n: rows[n]['matched']['I120']-U['matched']['I120'] for n in names}
+    ys = {n: sodall[n]['matched']['I120']-U['matched']['I120'] for n in snames}
     fig, ax = plt.subplots(figsize=(3.4, 3.6), constrained_layout=True)
     allv = list(x.values())+list(yt.values())+list(ys.values())
     lo, hi = min(allv), max(allv); sp_ = (hi-lo if hi > lo else 1.0)
     lim = (lo-0.30*sp_, hi+0.30*sp_)                             # room for the direct labels on both sides
     ax.plot(lim, lim, ls=':', color=INK2, lw=1.0, zorder=1, label='y = x')
     ax.scatter([x[n] for n in names], [yt[n] for n in names], s=30, color=C1, edgecolor=SURF, linewidth=1.0, zorder=3, label='designed table')
-    ax.scatter([x[n] for n in names], [ys[n] for n in names], s=30, facecolor='none', edgecolor=C2, linewidth=1.4, zorder=3, label='matched SoD')
+    ax.scatter([x[n] for n in snames], [ys[n] for n in snames], s=30, facecolor='none', edgecolor=C2, linewidth=1.4, zorder=3, label='matched SoD')
     # direct labels: points of one series closer than 4 % of the axis range share one label
     span = lim[1]-lim[0]
     for ys_, dxs, ha in ((yt, -6, 'right'), (ys, 6, 'left')):
-        left = list(names); groups = []
+        left = list(ys_); groups = []
         while left:
             a = left.pop(0); g = [a]
             for b in list(left):
@@ -188,8 +218,13 @@ def stage(log=print):
         log(f"ROW {n}: I_full {r['I_full']:.4f}; SoD(Delta*) EN24 {r['sod_delta']['EN24']:.2f} I24 {r['sod_delta']['I24']:.4f}; matched M* {m['M']} "
             f"EN120 {m['EN120']:.3f} I120 {m['I120']:.4f} c_sod {m['c_sod']:.4f}; table EN120 {t['EN120']:.3f} S120 {t['S120']:.2f} I120 {t['I120']:.4f} "
             f"(sigma/24 {t['I24']:.4f}) c_tab {t['c_tab']:.4f} gap {t['gap']:.4f} (two scans {t['gap_two_scans']:.4f}); gain {r['gain']:.4f}")
+    for n, r in out.get('partial', {}).items():
+        m = r['matched']
+        log(f"ROW {n} (no designed table: {r['stopped']}): I_full {r['I_full']:.4f}; SoD(Delta*) EN24 {r['sod_delta']['EN24']:.2f} I24 {r['sod_delta']['I24']:.4f}; "
+            f"matched M* {m['M']} EN120 {m['EN120']:.3f} I120 {m['I120']:.4f} c_sod {m['c_sod']:.4f}")
     if 'verdict' in out:
-        log(f"RANGES c_tab {out['range_c_tab']:.4f} c_sod {out['range_c_sod']:.4f}; S ratio max {out['S_ratio_max_abs']:.4f}")
+        log(f"RANGES c_tab {out['range_c_tab']:.4f} ({len(out['done'])} inputs); c_sod {out['range_c_sod']:.4f} ({len(out['sod_inputs'])} inputs), "
+            f"{out['range_c_sod_table_inputs']:.4f} (the {len(out['done'])} inputs with a table); S ratio max {out['S_ratio_max_abs']:.4f}")
         log(f"RANK table: by I_full {out['rank_table']['order_1']} | by I_table {out['rank_table']['order_2']} | agree {out['rank_table']['agree']} "
             f"(discordant {out['rank_table']['discordant_pairs']}, mixed {out['rank_table']['mixed_tie_pairs']})")
         log(f"RANK SoD: by I_full {out['rank_sod']['order_1']} | by I_SoD {out['rank_sod']['order_2']} | agree {out['rank_sod']['agree']} "
@@ -197,8 +232,8 @@ def stage(log=print):
         log(f"PAIRWISE {out['pairwise']}")
         log(f"VERDICT H1 {out['verdict']['H1']['pass_']} H2 {out['verdict']['H2']['pass_']} H3 {out['verdict']['H3']['pass_']} resolution "
             f"{out['verdict']['resolution']['pass_']} -> {out['verdict']['verdict']}")
-        for p in out['predictions']['lines']: log(f"PREDICTION {'HIT ' if p['hit'] else 'MISS'} {p['line']}: {p['value']}")
-        log(f"PREDICTIONS {out['predictions']['hits']}/{out['predictions']['n']} hits; check 6 {out.get('check6_LO_HI_I_full')}; "
+        for p in out['predictions']['lines']: log(f"PREDICTION {p['result'].upper()} {p['line']}: {p['value']}")
+        log(f"PREDICTIONS {out['predictions']['hits']} hit, {out['predictions']['misses']} miss, {out['predictions']['undetermined']} undetermined of {out['predictions']['n']}; check 6 {out.get('check6_LO_HI_I_full')}; "
             f"all per-input checks {out['checks_all_inputs_pass']}")
     return out
 
