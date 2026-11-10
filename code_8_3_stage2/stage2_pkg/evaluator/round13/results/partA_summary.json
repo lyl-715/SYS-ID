@@ -12,42 +12,11 @@
   "P5514",
   "SCH",
   "LO",
-  "HI"
- ],
- "missing": [
+  "HI",
   "N"
  ],
- "partial": {
-  "N": {
-   "I_full": 218.41690668812643,
-   "G": 43262,
-   "range_sigma": 1482.5144097331986,
-   "max_step_sigma": 4.03921268381897,
-   "sod_delta": {
-    "EN24": 423.97342665691707,
-    "I24": 199.31490917342813,
-    "S24": 607.8562732475928,
-    "EN120": 423.97242202722276,
-    "I120": 199.31500366232015,
-    "S120": 607.8621277501295
-   },
-   "matched": {
-    "M": 651,
-    "M_sigma": 27.125,
-    "EN120": 317.0143339305934,
-    "residual120": 0.12221708122132213,
-    "S120": 453.3854639092558,
-    "I120": 196.66212491977495,
-    "EN24": 317.014898712711,
-    "S24": 453.3810109125059,
-    "I24": 196.66202891655195,
-    "c_sod": -21.754781768351478,
-    "c_sod24": -21.754877771574485,
-    "info_per_send": 1.4315346341492654
-   },
-   "stopped": "STOP AssertionStop: step 4217: |sum m - 1| = np.float64(1.003974681168529e-12) (tol 1e-12) or min m = np.float64(0.0)"
-  }
- },
+ "missing": [],
+ "partial": {},
  "grid": "sigma/120 (sigma/24 alongside)",
  "rows": {
   "U": {
@@ -104,7 +73,39 @@
    },
    "gain": 10.151925968695991,
    "gain24": 10.154240620336225,
-   "all_checks_pass": true
+   "all_checks_pass": true,
+   "mass_dev": {
+    "tables": {
+     "T0": {
+      "s24": 6.549205622263798e-13,
+      "s120": 8.715250743307479e-13,
+      "flag_over_1e12": []
+     },
+     "T1": {
+      "s24": 5.117017920497346e-13,
+      "s120": 7.889244812986362e-13,
+      "flag_over_1e12": []
+     },
+     "T*": {
+      "s24": 5.117017920497346e-13,
+      "s120": 7.889244812986362e-13,
+      "label": "edge_j1",
+      "flag_over_1e12": []
+     },
+     "matched SoD": {
+      "s24": 3.852473895449293e-14,
+      "s120": 4.3587355946783646e-13,
+      "flag_over_1e12": []
+     },
+     "SoD at Delta* (sigma/120)": {
+      "s24": null,
+      "s120": 4.3587355946783646e-13,
+      "flag_over_1e12": []
+     }
+    },
+    "tol24_run": 1e-12,
+    "any_flag": false
+   }
   },
   "P5514": {
    "I_full": 219.00797787214196,
@@ -160,7 +161,41 @@
    },
    "gain": 9.413770102140717,
    "gain24": 9.416182204076733,
-   "all_checks_pass": true
+   "all_checks_pass": true,
+   "mass_dev": {
+    "tables": {
+     "T0": {
+      "s24": 4.021227795192317e-13,
+      "s120": 1.020961093445294e-12,
+      "flag_over_1e12": [
+       "s120"
+      ]
+     },
+     "T1": {
+      "s24": 5.445643935786393e-13,
+      "s120": 8.271161533457416e-13,
+      "flag_over_1e12": []
+     },
+     "T*": {
+      "s24": 5.445643935786393e-13,
+      "s120": 8.271161533457416e-13,
+      "label": "edge_j1",
+      "flag_over_1e12": []
+     },
+     "matched SoD": {
+      "s24": 1.0080825063596421e-13,
+      "s120": 5.186961971048731e-13,
+      "flag_over_1e12": []
+     },
+     "SoD at Delta* (sigma/120)": {
+      "s24": null,
+      "s120": 5.21471754666436e-13,
+      "flag_over_1e12": []
+     }
+    },
+    "tol24_run": 1e-12,
+    "any_flag": true
+   }
   },
   "SCH": {
    "I_full": 219.00850592919502,
@@ -216,7 +251,41 @@
    },
    "gain": 9.514696125661402,
    "gain24": 9.517087364806486,
-   "all_checks_pass": true
+   "all_checks_pass": true,
+   "mass_dev": {
+    "tables": {
+     "T0": {
+      "s24": 3.304023721284466e-13,
+      "s120": 1.0824674490095276e-12,
+      "flag_over_1e12": [
+       "s120"
+      ]
+     },
+     "T1": {
+      "s24": 3.411715354673106e-13,
+      "s120": 9.552358903874847e-13,
+      "flag_over_1e12": []
+     },
+     "T*": {
+      "s24": 3.411715354673106e-13,
+      "s120": 9.552358903874847e-13,
+      "label": "edge_j1",
+      "flag_over_1e12": []
+     },
+     "matched SoD": {
+      "s24": 4.3520742565306136e-14,
+      "s120": 4.569677969357144e-13,
+      "flag_over_1e12": []
+     },
+     "SoD at Delta* (sigma/120)": {
+      "s24": null,
+      "s120": 4.685141163918161e-13,
+      "flag_over_1e12": []
+     }
+    },
+    "tol24_run": 1e-12,
+    "any_flag": true
+   }
   },
   "LO": {
    "I_full": 218.0342877348977,
@@ -272,7 +341,45 @@
    },
    "gain": 10.399145727541196,
    "gain24": 10.401499849406434,
-   "all_checks_pass": true
+   "all_checks_pass": true,
+   "mass_dev": {
+    "tables": {
+     "T0": {
+      "s24": 2.716715741257758e-13,
+      "s120": 1.2709833185908792e-12,
+      "flag_over_1e12": [
+       "s120"
+      ]
+     },
+     "T1": {
+      "s24": 4.007905118896815e-13,
+      "s120": 1.014077710692618e-12,
+      "flag_over_1e12": [
+       "s120"
+      ]
+     },
+     "T*": {
+      "s24": 4.007905118896815e-13,
+      "s120": 1.014077710692618e-12,
+      "label": "edge_j1",
+      "flag_over_1e12": [
+       "s120"
+      ]
+     },
+     "matched SoD": {
+      "s24": 8.72635297355373e-14,
+      "s120": 3.9879211044535623e-13,
+      "flag_over_1e12": []
+     },
+     "SoD at Delta* (sigma/120)": {
+      "s24": null,
+      "s120": 2.5435209494162336e-13,
+      "flag_over_1e12": []
+     }
+    },
+    "tol24_run": 1e-12,
+    "any_flag": true
+   }
   },
   "HI": {
    "I_full": 218.03428773489773,
@@ -328,7 +435,127 @@
    },
    "gain": 9.60596441685388,
    "gain24": 9.608254651075697,
-   "all_checks_pass": true
+   "all_checks_pass": true,
+   "mass_dev": {
+    "tables": {
+     "T0": {
+      "s24": 5.945244296867713e-13,
+      "s120": 7.047695760320494e-13,
+      "flag_over_1e12": []
+     },
+     "T1": {
+      "s24": 3.7492231541591536e-13,
+      "s120": 9.519052213136092e-13,
+      "flag_over_1e12": []
+     },
+     "T*": {
+      "s24": 3.7492231541591536e-13,
+      "s120": 9.519052213136092e-13,
+      "label": "edge_j1",
+      "flag_over_1e12": []
+     },
+     "matched SoD": {
+      "s24": 5.906386491005833e-14,
+      "s120": 3.5482727867020003e-13,
+      "flag_over_1e12": []
+     },
+     "SoD at Delta* (sigma/120)": {
+      "s24": null,
+      "s120": 4.851674617611934e-13,
+      "flag_over_1e12": []
+     }
+    },
+    "tol24_run": 1e-12,
+    "any_flag": false
+   }
+  },
+  "N": {
+   "I_full": 218.41690668812643,
+   "G": 43262,
+   "range_sigma": 1482.5144097331986,
+   "max_step_sigma": 4.03921268381897,
+   "sod_delta": {
+    "EN24": 423.97342665691707,
+    "I24": 199.31490917342813,
+    "S24": 607.8562732475928,
+    "EN120": 423.97242202722276,
+    "I120": 199.31500366232015,
+    "S120": 607.8621277501295
+   },
+   "matched": {
+    "M": 651,
+    "M_sigma": 27.125,
+    "EN120": 317.0143339305934,
+    "residual120": 0.12221708122132213,
+    "S120": 453.3854639092558,
+    "I120": 196.66212491977495,
+    "EN24": 317.014898712711,
+    "S24": 453.3810109125059,
+    "I24": 196.66202891655195,
+    "c_sod": -21.754781768351478,
+    "c_sod24": -21.754877771574485,
+    "info_per_send": 1.4315346341492654
+   },
+   "table": {
+    "label": "edge_j1",
+    "T_star": "T1",
+    "lam": 0.018122370243575575,
+    "EN120": 316.5950293876046,
+    "S120": 1341.1566688211483,
+    "I120": 206.74688772410724,
+    "EN24": 316.8166893696985,
+    "S24": 1341.515763902548,
+    "I24": 206.7492630211184,
+    "c_tab": -11.670018964019192,
+    "c_tab24": -11.667643667008036,
+    "gap": 0.06481972216693066,
+    "gap_two_scans": 0.06481972216693066,
+    "UBp": 206.81408274328533,
+    "third_scan": false,
+    "info_per_send": 4.246444157950305,
+    "shape": {
+     "q10": 1.285852883518647,
+     "q50": 1.525176021237601,
+     "q90": 1.7738733004134097
+    },
+    "shape_skipped": false,
+    "shape_reason": null
+   },
+   "gain": 10.084762804332286,
+   "gain24": 10.087234104566448,
+   "all_checks_pass": true,
+   "mass_dev": {
+    "tables": {
+     "T0": {
+      "s24": 7.311928840181281e-13,
+      "s120": 5.775380174100064e-13,
+      "flag_over_1e12": []
+     },
+     "T1": {
+      "s24": 8.291145547900669e-13,
+      "s120": 4.206635040304718e-13,
+      "flag_over_1e12": []
+     },
+     "T*": {
+      "s24": 8.291145547900669e-13,
+      "s120": 4.206635040304718e-13,
+      "label": "edge_j1",
+      "flag_over_1e12": []
+     },
+     "matched SoD": {
+      "s24": 1.0669243266647754e-13,
+      "s120": 6.799005802804459e-13,
+      "flag_over_1e12": []
+     },
+     "SoD at Delta* (sigma/120)": {
+      "s24": null,
+      "s120": 4.558575739110893e-13,
+      "flag_over_1e12": []
+     }
+    },
+    "tol24_run": 1e-11,
+    "any_flag": false
+   }
   }
  },
  "sod_inputs": [
@@ -348,17 +575,18 @@
   "P5514": -0.002151191226687388,
   "SCH": 8.727088307125541e-05,
   "LO": -0.0007295790942034586,
-  "HI": 0.001618855757979043
+  "HI": 0.001618855757979043,
+  "N": -0.0020341698742950554
  },
  "S_ratio_max_abs": 0.002151191226687388,
  "S_ratio24_max_abs": 0.002138699536625599,
  "rank_table": {
-  "order_1": "U = SCH = P5514 > HI = LO",
-  "order_2": "SCH = U = P5514 > HI = LO",
+  "order_1": "U = SCH = P5514 > N > HI = LO",
+  "order_2": "SCH = U = P5514 > N > HI = LO",
   "agree": true,
   "discordant_pairs": [],
   "mixed_tie_pairs": [],
-  "n_pairs": 10
+  "n_pairs": 15
  },
  "rank_sod": {
   "order_1": "U = SCH = P5514 > N > HI = LO",
@@ -395,7 +623,8 @@
   "P5514": 9.413770102140717,
   "SCH": 9.514696125661402,
   "LO": 10.399145727541196,
-  "HI": 9.60596441685388
+  "HI": 9.60596441685388,
+  "N": 10.084762804332286
  },
  "info_per_send": {
   "U": {
@@ -419,7 +648,7 @@
    "sod": 1.5425857619002474
   },
   "N": {
-   "table": null,
+   "table": 4.246444157950305,
    "sod": 1.4315346341492654
   }
  },
@@ -450,12 +679,13 @@
     "P5514": 0.11395660335207936,
     "SCH": 0.08354595700836853,
     "LO": 0.2042589630439693,
-    "HI": 0.12470373069191965
+    "HI": 0.12470373069191965,
+    "N": 0.06481972216693066
    },
    "unresolved": [],
    "rule": "certificate gap <= 0.5 nat for every table"
   },
-  "verdict": "incomplete: no designed table for N; on the 5 inputs with a table H1 holds, H2 holds, H3 holds"
+  "verdict": "separation supported"
  },
  "check6_LO_HI_I_full": {
   "diff": -2.842170943040401e-14,
@@ -467,9 +697,8 @@
    {
     "line": "H1 holds (S_table within +-3 % of S_table(U), sigma/120)",
     "value": 0.002151191226687388,
-    "hit": null,
-    "result": "undetermined",
-    "note": "no designed table for N; holds on the other inputs"
+    "hit": true,
+    "result": "hit"
    },
    {
     "line": "H2 holds (range c_tab <= 0.5) and sigma/24 I_table points 207.35 (P5514, SCH), 206.38 (LO, HI), 206.76 (N), each +-0.3",
@@ -507,12 +736,19 @@
         206.68
        ],
        "in_": true
+      },
+      "N": {
+       "I24": 206.7492630211184,
+       "interval": [
+        206.46,
+        207.06
+       ],
+       "in_": true
       }
      }
     },
-    "hit": null,
-    "result": "undetermined",
-    "note": "no designed table for N; holds on the other inputs"
+    "hit": true,
+    "result": "hit"
    },
    {
     "line": "H3 holds",
@@ -546,11 +782,11 @@
      "P5514": 0.11395660335207936,
      "SCH": 0.08354595700836853,
      "LO": 0.2042589630439693,
-     "HI": 0.12470373069191965
+     "HI": 0.12470373069191965,
+     "N": 0.06481972216693066
     },
-    "hit": null,
-    "result": "undetermined",
-    "note": "no designed table for N; holds on the other inputs"
+    "hit": true,
+    "result": "hit"
    },
    {
     "line": "gain = I_table - I_SoD in [9, 11.5] for every input (sigma/120)",
@@ -559,21 +795,21 @@
      "P5514": 9.413770102140717,
      "SCH": 9.514696125661402,
      "LO": 10.399145727541196,
-     "HI": 9.60596441685388
+     "HI": 9.60596441685388,
+     "N": 10.084762804332286
     },
-    "hit": null,
-    "result": "undetermined",
-    "note": "no designed table for N; holds on the other inputs"
+    "hit": true,
+    "result": "hit"
    }
   ],
-  "hits": 3,
+  "hits": 7,
   "misses": 0,
-  "undetermined": 4,
+  "undetermined": 0,
   "n": 7
  },
  "figure": {
   "path": "results/fig_partA.png",
-  "caption": "Information of the designed table (filled) and of the matched constant SoD (open) against the full-data information, both relative to the uniform input U, sigma/120, budget B = 316.89; matched SoD for six inputs, designed table for the inputs whose design finished (N: none, its scan stopped on a conservation assertion). What to look at: table points on the dotted line y = x mean that the designed table loses the same amount of information for every input (separation); the matched-SoD points are shown for contrast.",
+  "caption": "Information of the designed table (filled) and of the matched constant SoD (open) against the full-data information, both relative to the uniform input U, six inputs, sigma/120, budget B = 316.89. What to look at: table points on the dotted line y = x mean that the designed table loses the same amount of information for every input (separation); the matched-SoD points are shown for contrast. Inputs without a designed table, if any, appear with their matched SoD only.",
   "x": {
    "U": 0.0,
    "P5514": -0.0005280570530885598,
@@ -587,7 +823,8 @@
    "P5514": -0.016747795258396536,
    "SCH": 0.013122991428161868,
    "LO": -0.9814050065885738,
-   "HI": -0.9555613246837709
+   "HI": -0.9555613246837709,
+   "N": -0.6061967746185815
   },
   "y_sod": {
    "U": 0.0,

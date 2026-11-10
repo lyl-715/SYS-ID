@@ -182,10 +182,9 @@ def score(rows, out, names, missing=()):
 
 
 CAPTION = ("Information of the designed table (filled) and of the matched constant SoD (open) against the full-data information, "
-           "both relative to the uniform input U, sigma/120, budget B = 316.89; matched SoD for six inputs, designed table for the inputs "
-           "whose design finished (N: none, its scan stopped on a conservation assertion). What to look at: table points on the dotted line "
-           "y = x mean that the designed table loses the same amount of information for every input (separation); the matched-SoD points "
-           "are shown for contrast.")
+           "both relative to the uniform input U, six inputs, sigma/120, budget B = 316.89. What to look at: table points on the dotted "
+           "line y = x mean that the designed table loses the same amount of information for every input (separation); the matched-SoD "
+           "points are shown for contrast. Inputs without a designed table, if any, appear with their matched SoD only.")
 
 def figure(out, path):
     import matplotlib; matplotlib.use('Agg'); import matplotlib.pyplot as plt
