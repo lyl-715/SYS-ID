@@ -10,7 +10,12 @@ One process per (input, stage):   R13_INPUT=<name> ROUND13_WORK=<dir> python3 ru
                   SCH    G4
                   HI     G4
   gate_summary  (any R13_INPUT) collect the six gate files into results/gate13.json with a pass flag per gate.
-  partA, partB  not part of Part 0 (refuse to run here).
+  partA         Part A for this input (prompt_round13_partA §4): I_full; constant SoD at Delta* (sigma/24, sigma/120); matched constant
+                SoD; the two-scan design (edge set, 9x9 log det); shape statistics of T* only, after the design is released (DECISION
+                13-17); packed T*; derived c_tab, c_sod, gain, information per transmission; checks 1-5 of §8. Writes
+                results/partA_<name>.json (after every step), results/partA_<name>/ (scan jsons, J matrices), results/table_A_<name>.npz.
+                Inputs run one at a time (DECISION 13-17).
+  partB         not implemented (Part B).
 DP tables live in $ROUND13_WORK/<input>/<label>/ (default round13/work/, not committed).
 """
 import os
@@ -330,21 +335,114 @@ def stage_gate_summary(out):
     return out_
 
 
-STAGES = ('gate', 'gate_summary', 'partA', 'partB')
+# --- Part A -------------------------------------------------------------------------------------------------------------------------
+I_TABLE_U_R11 = 207.35521730257756          # round11.json tables.edge_j1.I (sigma/24), Part A §4 / check 5
+
+def info_per_send(S, EN): return (S-1.0)/(EN-1.0)
+
+def stage_partA(out):
+    import shutil
+    outdir = os.path.join(RES, f'partA_{NAME}'); os.makedirs(outdir, exist_ok=True)
+    path = os.path.join(RES, f'partA_{NAME}.json')
+    res = json.load(open(path)) if os.path.exists(path) else dict(input=NAME)
+    res['versions'] = versions()
+    def save(): jdump(res, path)
+    t_all = time.perf_counter()
+    t0 = time.perf_counter(); dp13.warmup(); out(f"WARMUP {time.perf_counter()-t0:.1f} s")
+    # 1. full-data information and input sanity
+    Jf, If = c13.full_information()
+    res['I_full'] = If; res['sanity'] = c13.input_sanity(); res['J_full'] = c13.save_J(Jf, outdir, 'full')
+    out(f"PARTA {NAME} I_full {If!r}; G {G}; output range {res['sanity']['range_sigma']:.3f} sigma; largest step {res['sanity']['max_step_sigma']:.4f} sigma")
+    save()
+    # 2. constant SoD at Delta* (accepted operator on sigma/24; eval13 ConstRows(480) on sigma/120)
+    if 'sod_delta' not in res:
+        r24, J24, W24 = c13.sod_delta()
+        r120, J120, _ = c13.eval_const(ew.SOD_M, c13.F_REF)
+        res['sod_delta'] = dict(M=ew.SOD_M, EN24=r24['EN'], S24=r24['S'], I24=r24['logdet'], path24=r24.get('path'),
+                                EN120=r120['EN'], S120=r120['S'], I120=r120['logdet'], mass_dev_max120=r120['mass_dev_max'], wall120_s=r120['wall_s'],
+                                J24=c13.save_J(J24, outdir, 'sod_delta_s24'), J120=c13.save_J(J120, outdir, 'sod_delta_s120'))
+        save()
+    sd = res['sod_delta']
+    out(f"PARTA {NAME} constant SoD at Delta*: sigma/24 EN {sd['EN24']!r} S {sd['S24']!r} I {sd['I24']!r}; sigma/120 EN {sd['EN120']!r} S {sd['S120']!r} I {sd['I120']!r}")
+    # 3. matched constant SoD
+    if 'matched' not in res:
+        m, _, _ = c13.matched_sod(B, log=out, outdir=outdir, tag='sod_matched')
+        res['matched'] = m; save()
+    m = res['matched']
+    if not m['accepted']:
+        res['status'] = 'stopped: matched SoD not accepted (|E[N]_120 - B| > 1)'; save()
+        raise Stop(f"{NAME}: matched SoD not accepted, residual {m['residual120']!r}")
+    # 4. designed table (checkpointed scans; for U the two completed scans of gate G0 are reused, DECISION 13-20)
+    if NAME == 'U':
+        for j in ('j0', 'j1'):
+            src = os.path.join(RES, 'gate_U_design', f'scan_edge_{j}.json'); dst = os.path.join(outdir, f'scan_edge_{j}.json')
+            if not os.path.exists(dst) and os.path.exists(src): shutil.copyfile(src, dst); out(f"PARTA U: scan edge_{j} taken from gate G0 ({src})")
+    if 'design' not in res:
+        des = c13.get_design(out)
+        dres = c13.design(e13.edge_set(), dp13.Design11.gamma_from_J, c13.logdet9, 9, 'edge', des=des, outdir=outdir,
+                          work=os.path.join(WORK, NAME, 'edge'), log=out)
+        del des
+        res['design'] = dres; save()
+    dres = res['design']
+    # 5. shape statistics of T* only, after the design and its caches are released (DECISION 13-17, 13-18)
+    c13.release_design()
+    if 'shape' not in res or res['shape'].get('skipped') is None:
+        J_sod = np.load(os.path.join(HERE, dres['sod']['J']))
+        res['shape'] = c13.shape_stats(dres['best'], e13.edge_set(), J_sod, out); save()
+    # 6. packed T*, derived quantities, checks
+    best = dres['best']
+    res['packed'] = c13.pack_table(best['table'], e13.edge_set(), os.path.join(RES, f'table_A_{NAME}.npz'), best['lam'],
+                                   note=f"Round 13 Part A, input {NAME}, best table T* = {dres['T_star']} ({best['label']}).")
+    It, Is = best['logdet120'], m['logdet120']
+    res['derived'] = dict(grid='sigma/120', I_full=If, I_table=It, I_SoD=Is, c_tab=It-If, c_sod=Is-If, gain=It-Is,
+                          S_table=best['S120'], EN_table=best['EN120'], S_SoD=m['S120'], EN_SoD=m['EN120'],
+                          info_per_send_table=info_per_send(best['S120'], best['EN120']), info_per_send_SoD=info_per_send(m['S120'], m['EN120']),
+                          sigma24=dict(I_table=best['logdet24'], I_SoD=m['logdet24'], c_tab=best['logdet24']-If, c_sod=m['logdet24']-If,
+                                       gain=best['logdet24']-m['logdet24'], S_table=best['S24'], EN_table=best['EN24'], S_SoD=m['S24'], EN_SoD=m['EN24'],
+                                       info_per_send_table=info_per_send(best['S24'], best['EN24']), info_per_send_SoD=info_per_send(m['S24'], m['EN24'])),
+                          certificate_gap=dres['certificate']['gap'], certificate_gap_two_scans=dres['certificate_two_scans']['gap'], UBp=dres['certificate']['UBp'])
+    ch = dres['checks']
+    tabs = dres['tables']
+    res['checks'] = {
+        '1_forwards': dict(pass_=True, rule='asserted in every forward (conservation 1e-12 / 1e-10, min m >= 0, zero mass at the grid ends); a failure stops the run',
+                           mass_dev24_max=max(ch['mass_dev24_max'], m['mass_dev_max24']), mass_dev120_max=max(ch['mass_dev120_max'], m['mass_dev_max120'], sd['mass_dev_max120'])),
+        '2_scans': dict(pass_=bool(ch['scans_monotone'] and ch['forward_backward']), monotone=ch['scans_monotone'],
+                        forward_backward={k: tabs[k]['check_fb'] for k in tabs}),
+        '3_table': dict(pass_=bool(ch['budget120_best'] and ch['crit_le_UBp']), EN120_best=best['EN120'], budget120=ch['budget120_best'],
+                        I_le_UBp=ch['crit_le_UBp'], UBp=dres['certificate']['UBp'], I_tables={k: tabs[k]['crit24'] for k in tabs}),
+        '4_matched': dict(pass_=bool(m['accepted']), residual120=m['residual120']),
+    }
+    if NAME == 'U':
+        res['checks']['5_U_round11'] = dict(pass_=bool(best['logdet24'] == I_TABLE_U_R11), I_table24=best['logdet24'], ref=I_TABLE_U_R11)
+    res['all_checks_pass'] = all(v['pass_'] for v in res['checks'].values())
+    res['status'] = 'done'; res['wall_s_this_run'] = time.perf_counter()-t_all
+    save()
+    d = res['derived']
+    out(f"PARTA {NAME} DONE: I_full {If:.4f}; matched SoD M* {m['M_star']} I_SoD {Is:.4f} (EN120 {m['EN120']:.3f}); T* {best['label']} I_table {It:.4f} "
+        f"(sigma/24 {best['logdet24']:.4f}, EN120 {best['EN120']:.3f}, S120 {best['S120']:.2f}); c_tab {d['c_tab']:.4f} c_sod {d['c_sod']:.4f} gain {d['gain']:.4f}; "
+        f"gap {d['certificate_gap']:.4f} (two scans {d['certificate_gap_two_scans']:.4f}); shape {'skipped' if res['shape'].get('skipped') else 'done'}; "
+        f"checks {'PASS' if res['all_checks_pass'] else 'FAIL'}")
+    if not res['all_checks_pass']: raise Stop(f"{NAME}: a Part A check failed: {res['checks']}")
+    return res
+
+
+STAGES = ('gate', 'gate_summary', 'partA', 'partA_summary', 'partB')
 
 def main():
     args = sys.argv[1:]
     numba.set_num_threads(int(os.environ.get('R13_NUMBA_THREADS', '4')))
     for stg in args:
         if stg not in STAGES: raise SystemExit(f"unknown stage {stg}")
-        if stg in ('partA', 'partB'): raise SystemExit(f"stage {stg} is not part of Part 0 and is not implemented in this commit")
-        out = Tee(os.path.join(LOGS, f'{stg}_{NAME}.log' if stg == 'gate' else f'{stg}.log'))
+        if stg == 'partB': raise SystemExit("stage partB is not implemented (Part B)")
+        if stg == 'partA_summary': raise SystemExit("stage partA_summary is not implemented yet")
+        out = Tee(os.path.join(LOGS, f'{stg}_{NAME}.log' if stg in ('gate', 'partA') else f'{stg}.log'))
         out(f"=== ROUND 13 stage {stg} input {NAME} started {time.strftime('%Y-%m-%d %H:%M:%S')}; python {platform.python_version()}, numpy {np.__version__}, "
             f"scipy {scipy.__version__}, numba {numba.__version__} ({numba.get_num_threads()} threads); B = {B!r}; G = {G}; work {WORK}")
         t0 = time.perf_counter()
         try:
             if stg == 'gate': stage_gate(out)
             elif stg == 'gate_summary': stage_gate_summary(out)
+            elif stg == 'partA': stage_partA(out)
         except (Stop, e13.AssertionStop, AssertionError) as e:
             out(f"STOP {type(e).__name__}: {e}")
             out(f"=== ROUND 13 stage {stg} input {NAME} STOPPED after {time.perf_counter()-t0:.1f} s")

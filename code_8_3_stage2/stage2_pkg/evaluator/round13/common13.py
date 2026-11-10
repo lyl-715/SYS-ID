@@ -122,6 +122,12 @@ def eval_const(M, f=1):
     rec['M'] = cr.M; rec['support'] = cr.check_support(fw, f)
     return rec, J, fw
 
+def sod_delta():
+    """the constant SoD at Delta* through the accepted operator (evaluator_fast via evaluator_window.evaluate_table), exactly as
+    Design11.sod_reference, without building the DP caches."""
+    rec, J, r = ew.evaluate_table(NAME, ew.ConstTable(ew.SOD_M, ew.SOD_M))
+    return rec, J, r['W']
+
 def matched_sod(Bt=B, log=print, outdir=None, tag='sod_matched'):
     """the constant SoD whose expected number of transmissions is closest to Bt (prompt §2.4):
       1. sigma/24: E[N](M) from M = 480 (Delta*) in steps of +-20 towards Bt until Bt is bracketed, then integer bisection until two
@@ -221,15 +227,14 @@ def run_scan(des, acts, gtuple, label, outdir, work, log):
     if fin is None: raise Stop(f"scan {label}: no feasible table ({st['status']})")
     return st, fin
 
-def eval_scan_table(fin, acts, label, gtuple, gam_stats, crit_fn, outdir, log, f=F_REF):
-    """the final table of a scan: sigma/24 (record, J, F of the scan's gamma, shape statistics), fixed-policy backward check,
-    sigma/120 (record, J). Both J are saved."""
+def eval_scan_table(fin, acts, label, gtuple, crit_fn, outdir, log, f=F_REF):
+    """the final table of a scan: sigma/24 (record, J, F of the scan's gamma), fixed-policy backward check, sigma/120 (record, J).
+    Both J are saved. No shape statistics here (DECISION 13-17: shape_stats() on T* only, after the design is released)."""
     gam, gbar, g1 = gtuple
     tab = e13.Table11(np.load(fin['table'], mmap_mode='r'), acts, label)
-    st = e13.Stats(gam_stats)
-    t0 = time.perf_counter(); rec, J, fw = e13.evaluate(tab, gam=gam, stats=st); t24 = time.perf_counter()-t0
+    t0 = time.perf_counter(); rec, J, fw = e13.evaluate(tab, gam=gam); t24 = time.perf_counter()-t0
     if not (rec['EN'] == fin['EN'] and rec['logdet'] == fin['logdet']): raise Stop(f"{label}: re-evaluation differs from the scan record")
-    sres, ev, w = st.result()
+    nodes_upper = int((fw['sup_hi'][:-1]-fw['sup_lo'][:-1]+1).sum())     # nodes the Stats callback would visit (steps k >= 2)
     F = float(gam[1:]@fw['W'][1:]); N = rec['EN']-1.0; lam = fin['lam']
     t0 = time.perf_counter(); bw = e13.backward(tab, gam); tbw = time.perf_counter()-t0
     tf, tb = F-lam*N, bw['Fc']-lam*bw['Nq']
@@ -242,12 +247,11 @@ def eval_scan_table(fin, acts, label, gtuple, gam_stats, crit_fn, outdir, log, f
              support_lo_min=int(fw['sup_lo'].min()), support_hi_max=int(fw['sup_hi'].max()), fwd24_s=t24,
              EN120=rf['EN'], S120=rf['S'], logdet120=rf['logdet'], crit120=crit_fn(Jf), mass_dev_max120=rf['mass_dev_max'], min_m120=rf['min_m'],
              G120=rf['G'], fwd120_s=rf['wall_s'], budget120_pass=bool(rf['EN'] <= B), slack120=B-rf['EN'], slack24=B-rec['EN'],
-             check_fb=chk, shape=sres, J24=save_J(J, outdir, f'{label}_s24'), J120=save_J(Jf, outdir, f'{label}_s120'))
+             check_fb=chk, stats_nodes_upper=nodes_upper, J24=save_J(J, outdir, f'{label}_s24'), J120=save_J(Jf, outdir, f'{label}_s120'))
     log(f"TABLE {label}: crit24 {d['crit24']!r} logdet24 {rec['logdet']!r} EN24 {rec['EN']!r} S24 {rec['S']!r}; crit120 {d['crit120']!r} "
         f"logdet120 {rf['logdet']!r} EN120 {rf['EN']!r} (<= B: {d['budget120_pass']}) S120 {rf['S']!r}; mass dev {rec['mass_dev_max']:.2e} / "
         f"{rf['mass_dev_max']:.2e}; forward-backward F {chk['F_rel']:.1e} N {chk['N_rel']:.1e} total {chk['total_rel']:.1e} "
-        f"({'PASS' if chk['pass_'] else 'FAIL'}); edge quantiles 10/50/90 {sres['edge_q10']:.4f} / {sres['edge_median']:.4f} / {sres['edge_q90']:.4f}; "
-        f"walls {t24:.1f} / {tbw:.1f} / {rf['wall_s']:.1f} s")
+        f"({'PASS' if chk['pass_'] else 'FAIL'}); walls {t24:.1f} / {tbw:.1f} / {rf['wall_s']:.1f} s")
     return d, J
 
 def design(acts, gamma_fn, crit_fn, p_dim, label, des=None, outdir=None, work=None, log=print):
@@ -265,14 +269,14 @@ def design(acts, gamma_fn, crit_fn, p_dim, label, des=None, outdir=None, work=No
                scans={}, tables={})
     # scan j0: tangent at the constant SoD
     st0, fin0 = run_scan(des, acts, g0, f'{label}_j0', outdir, work, log)
-    d0, J0 = eval_scan_table(fin0, acts, f'{label}_j0', g0, g0[0], crit_fn, outdir, log)
+    d0, J0 = eval_scan_table(fin0, acts, f'{label}_j0', g0, crit_fn, outdir, log)
     res['scans']['j0'] = dict(gbar=g0[1], gamma1=g0[2], final_run=st0['final_run'], n_runs=len(st0['runs']), min_dual=st0['min_dual'],
                               status=st0['status'], mono_worst=st0.get('mono_worst'), wall_s=st0.get('wall_s'), tangent='constant SoD (Delta*)')
     res['tables']['T0'] = d0
     # scan j1: tangent at J(T0)
     g1t = gamma_fn(J0)
     st1, fin1 = run_scan(des, acts, g1t, f'{label}_j1', outdir, work, log)
-    d1, J1 = eval_scan_table(fin1, acts, f'{label}_j1', g1t, g0[0], crit_fn, outdir, log)
+    d1, J1 = eval_scan_table(fin1, acts, f'{label}_j1', g1t, crit_fn, outdir, log)
     res['scans']['j1'] = dict(gbar=g1t[1], gamma1=g1t[2], final_run=st1['final_run'], n_runs=len(st1['runs']), min_dual=st1['min_dual'],
                               status=st1['status'], mono_worst=st1.get('mono_worst'), wall_s=st1.get('wall_s'), tangent='J(T0)')
     res['tables']['T1'] = d1
@@ -281,12 +285,13 @@ def design(acts, gamma_fn, crit_fn, p_dim, label, des=None, outdir=None, work=No
     cert = certificate(st1, d0['crit24'], p_dim)
     certs = [cert]
     gap = cert['UBp']-cands[best][0]['crit24']
+    res['certificate_two_scans'] = dict(UB=cert['UB'], UBp=cert['UBp'], gap=gap, T_best=best, crit_best=cands[best][0]['crit24'])
     log(f"CERT {label} from scan j1 (tangent T0): UB {cert['UB']!r} (min dual {cert['min_dual']!r} at lam {cert['lam_argmin']!r}), "
         f"UB' {cert['UBp']!r} (lam {cert['lam_argmin_p']!r}); T* = {best} crit24 {cands[best][0]['crit24']!r}; gap {gap!r}")
     if gap > GAP_MAX:
         g2t = gamma_fn(cands[best][1])
         st2, fin2 = run_scan(des, acts, g2t, f'{label}_j2', outdir, work, log)
-        d2, J2 = eval_scan_table(fin2, acts, f'{label}_j2', g2t, g0[0], crit_fn, outdir, log)
+        d2, J2 = eval_scan_table(fin2, acts, f'{label}_j2', g2t, crit_fn, outdir, log)
         res['scans']['j2'] = dict(gbar=g2t[1], gamma1=g2t[2], final_run=st2['final_run'], n_runs=len(st2['runs']), min_dual=st2['min_dual'],
                                   status=st2['status'], mono_worst=st2.get('mono_worst'), wall_s=st2.get('wall_s'), tangent=f'J({best})')
         res['tables']['T2'] = d2
@@ -302,8 +307,7 @@ def design(acts, gamma_fn, crit_fn, p_dim, label, des=None, outdir=None, work=No
                               lam_argmin_p=[c['lam_argmin_p'] for c in certs if c['UBp'] == UBp][0])
     res['T_star'] = best
     res['best'] = {k: db[k] for k in ('label', 'run', 'lam', 'EN24', 'S24', 'logdet24', 'crit24', 'EN120', 'S120', 'logdet120', 'crit120',
-                                      'budget120_pass', 'slack120', 'J24', 'J120', 'table')}
-    res['best']['shape'] = {k: db['shape'][k] for k in ('edge_quantiles', 'edge_q10', 'edge_median', 'edge_q90', 'edge_mean', 'bins')}
+                                      'budget120_pass', 'slack120', 'J24', 'J120', 'table', 'stats_nodes_upper', 'mass_dev_max24', 'mass_dev_max120')}
     res['checks'] = dict(
         scans_monotone=all(res['scans'][j]['status'] == 'done' for j in res['scans']),
         forward_backward=all(cands[k][0]['check_fb']['pass_'] for k in cands),
@@ -319,6 +323,47 @@ def design(acts, gamma_fn, crit_fn, p_dim, label, des=None, outdir=None, work=No
     if not res['checks']['forward_backward']: raise Stop(f"design {label}: forward/backward check failed")
     return res
 
+
+def release_design():
+    """drop the cached Design11 (DP caches, about 1.2 GB) before the shape statistics (DECISION 13-17)."""
+    import gc
+    _DES.clear(); gc.collect()
+
+def _meminfo(key):
+    for l in open('/proc/meminfo'):
+        if l.startswith(key+':'): return int(l.split()[1])*1024
+    raise KeyError(key)
+
+def _proc_status(key):
+    for l in open('/proc/self/status'):
+        if l.startswith(key+':'): return int(l.split()[1])*1024
+    raise KeyError(key)
+
+STATS_BYTES_PER_NODE = 64          # DECISION 13-18: peak of Stats (collection + result) per visited node, from the Part 0 probe (59.8 B)
+STATS_MARGIN = 1 << 30             # plus 1 GiB
+
+def shape_stats(best, acts, J_sod, log):
+    """eval13.Stats (round 11's, unchanged) on the best table T* only, with gamma of the j0 tangent (constant SoD), after the design was
+    released. Skipped (with the reason) if the estimated peak STATS_BYTES_PER_NODE * nodes + 1 GiB exceeds MemAvailable."""
+    n = int(best['stats_nodes_upper']); need = STATS_BYTES_PER_NODE*n+STATS_MARGIN; avail = _meminfo('MemAvailable')
+    d = dict(nodes_upper=n, need_bytes=need, mem_available_bytes=avail, rss_before_bytes=_proc_status('VmRSS'))
+    if need > avail:
+        d.update(skipped=True, reason=f"estimated peak {need/2**30:.1f} GiB > MemAvailable {avail/2**30:.1f} GiB")
+        log(f"STATS {NAME} {best['label']}: SKIPPED ({d['reason']}; {n} nodes)"); return d
+    gam0 = dp13.Design11.gamma_from_J(J_sod)[0]
+    tab = e13.Table11(np.load(best['table'], mmap_mode='r'), acts, best['label'])
+    st = e13.Stats(gam0)
+    t0 = time.perf_counter(); rec, J, fw = e13.evaluate(tab, stats=st)
+    if not (rec['EN'] == best['EN24'] and rec['logdet'] == best['logdet24']): raise Stop(f"shape_stats: re-evaluation of {best['label']} differs")
+    sres, ev, w = st.result(); nv = int(ev.size); del ev, w, st
+    d.update(skipped=False, n_values=nv, wall_s=time.perf_counter()-t0, peak_rss_bytes=_proc_status('VmHWM'), shape=sres,
+             gamma='j0 tangent (constant SoD at Delta*)')
+    log(f"STATS {NAME} {best['label']}: {nv} node values; facing-edge quantiles 10/25/50/75/90 {sres['edge_quantiles']!r}; mean {sres['edge_mean']!r}; "
+        f"body send share {sres['body_send_share']!r}; process peak RSS so far {d['peak_rss_bytes']/2**30:.2f} GiB; {d['wall_s']:.1f} s")
+    for b in sres['bins']:
+        log(f"STATS {NAME} bin {b['bin']}: mass share {b['mass_share']!r}, sends {b['sends']!r} (share {b['send_share']!r}), info {b['info']!r}, "
+            f"info/send {b['info_per_send']!r}, edge {b['edge']!r}")
+    return d
 
 def pack_table(path_npy, acts, out_npz, lam, note=''):
     """packed final table (np.savez_compressed), as round11/post11.pack; returns size and round-trip equality."""
