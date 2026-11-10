@@ -1,0 +1,9 @@
+=== ROUND 14 stage input input SCH started 2026-11-10 19:55:22; python 3.13.18, numpy 2.5.3, scipy 1.18.1, numba 0.68.0; B = 316.8921168493721; G = 34596; TOL24 1e-11, TOL120 1e-10
+FIT B=316.8921168493721 R(37, 20) e_bar=1.54167 sigma: sigma/24 EN 324.8958399203583 S 1412.0017193746503 logdet 207.62774315846212 feasible False mass_dev 3.66e-13 (20.2 s)
+FIT B=316.8921168493721 R(38, 20) e_bar=1.58333 sigma: sigma/24 EN 298.04792223450903 S 1333.119805340039 logdet 207.11056789538165 feasible True mass_dev 3.19e-13 (19.6 s)
+FIT B=316.8921168493721 R(37, 14) e_bar=1.55417 sigma: sigma/24 EN 316.8360299658286 S 1388.334077322559 logdet 207.47564947973177 feasible True mass_dev 3.44e-13 (19.6 s)
+FIT B=316.8921168493721 R(37, 15) e_bar=1.55208 sigma: sigma/24 EN 318.1782237359004 S 1392.2787229036696 logdet 207.50117779077772 feasible False mass_dev 3.60e-13 (19.3 s)
+FIT B=316.8921168493721 -> R(37, 14) e_bar 1.5541666666666665 e_eff 1.5749999999999997: sigma/24 EN 316.8360299658286 logdet 207.47564947973177; sigma/120 EN 316.6061054405426 S 1387.9407147725135 logdet 207.4731018553021 mass_dev 8.98e-13 (112.1 s); start n 37, n visited [37], j0 14
+INPUT SCH DONE: R(37, 14) e_eff 1.5750 delta +0.0465; I_rule 207.4731 (sigma/24 207.4756); c_rule -11.5354; rule - table +0.1069; rule - SoD 9.6216
+=== ROUND 14 stage input input SCH done in 190.8 s
+CLEANUP removed empty folders []; git status on rounds 4-13 and the frozen files: clean
