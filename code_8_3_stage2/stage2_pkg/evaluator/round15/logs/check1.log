@@ -1,0 +1,17 @@
+=== ROUND 15 stage check1 started 2026-11-10 20:27:09; python 3.13.18, numpy 2.5.3, scipy 1.18.1, numba 0.68.0; B = 316.8921168493721; input U; TOL24 1e-11
+THETA* [2.0, -0.09418282548476453, -0.04700986910935495, -0.021769422116815165, -0.00467221421468943, -0.013602853745541023, -0.0022829964328180737, -0.01296036721172661, -0.002121398851610051]; max |HK theta* - XK| = 8.882e-16 (4.3e-16 relative)
+CHECK1 c=1 d=0: EN 293.130066163623 (rel 0.0e+00) logdet 206.94719294319475 (rel 0.0e+00); rms 0.113856 max 0.243846 (ref 0.113856 / 0.243846); FLd - FL in [-4, 6]; mass dev 8.66e-13 (20.2 s) -> PASS
+CHECK1 c=1 d=1: EN 340.7463732234027 (rel 0.0e+00) logdet 207.79277045511677 (rel 0.0e+00); rms 0.164476 max 0.374621 (ref 0.164476 / 0.374621); FLd - FL in [-9, 9]; mass dev 5.00e-13 (18.2 s) -> PASS
+CHECK1 c=1 d=2: EN 318.4508130092631 (rel 0.0e+00) logdet 207.4469157068209 (rel 0.0e+00); rms 0.131573 max 0.288575 (ref 0.131573 / 0.288575); FLd - FL in [-7, 6]; mass dev 9.26e-13 (19.1 s) -> PASS
+CHECK1 c=1 d=3: EN 315.63872992664085 (rel 0.0e+00) logdet 207.39108535919198 (rel 0.0e+00); rms 0.115342 max 0.249696 (ref 0.115342 / 0.249696); FLd - FL in [-6, 6]; mass dev 5.61e-13 (19.5 s) -> PASS
+CHECK1 c=2 d=0: EN 323.5285886160711 (rel 0.0e+00) logdet 207.5402691799476 (rel 0.0e+00); rms 0.106571 max 0.228429 (ref 0.106571 / 0.228429); FLd - FL in [-6, 5]; mass dev 6.37e-13 (19.5 s) -> PASS
+CHECK1 c=2 d=1: EN 353.8547438394742 (rel 0.0e+00) logdet 207.70585912543362 (rel 0.0e+00); rms 0.278381 max 0.641947 (ref 0.278381 / 0.641947); FLd - FL in [-15, 16]; mass dev 8.49e-13 (17.6 s) -> PASS
+CHECK1 c=2 d=2: EN 335.7276635272488 (rel 0.0e+00) logdet 207.65125283199484 (rel 0.0e+00); rms 0.177686 max 0.398959 (ref 0.177686 / 0.398959); FLd - FL in [-10, 10]; mass dev 7.42e-13 (19.1 s) -> PASS
+CHECK1 c=2 d=3: EN 318.6371113922262 (rel 0.0e+00) logdet 207.3058071370323 (rel 0.0e+00); rms 0.194471 max 0.473770 (ref 0.194471 / 0.473770); FLd - FL in [-12, 11]; mass dev 5.29e-13 (18.6 s) -> PASS
+CHECK1 c=4 d=0: EN 295.0571166894415 (rel 0.0e+00) logdet 206.94920759763048 (rel 0.0e+00); rms 0.135837 max 0.299670 (ref 0.135837 / 0.299670); FLd - FL in [-8, 5]; mass dev 7.10e-13 (19.3 s) -> PASS
+CHECK1 c=4 d=1: EN 271.76169186770636 (rel 0.0e+00) logdet 206.1620347166347 (rel 0.0e+00); rms 0.265468 max 0.589348 (ref 0.265468 / 0.589348); FLd - FL in [-12, 15]; mass dev 9.43e-13 (18.9 s) -> PASS
+CHECK1 c=4 d=2: EN 293.2396357394827 (rel 0.0e+00) logdet 206.6005178205391 (rel 0.0e+00); rms 0.261610 max 0.542670 (ref 0.261610 / 0.542670); FLd - FL in [-13, 13]; mass dev 2.56e-13 (19.2 s) -> PASS
+CHECK1 c=4 d=3: EN 386.8182332082853 (rel 0.0e+00) logdet 208.14034340245658 (rel 0.0e+00); rms 0.338782 max 0.706108 (ref 0.338782 / 0.706108); FLd - FL in [-17, 16]; mass dev 8.63e-13 (18.4 s) -> PASS
+CHECK1 all 12 reference models: PASS
+=== ROUND 15 stage check1 done in 227.5 s
+CLEANUP removed empty folders []; git status on rounds 4-14 and the frozen files: clean
