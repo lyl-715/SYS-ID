@@ -1,0 +1,50 @@
+=== ROUND 18 stage C start; versions {'python': '3.13.18', 'numpy': '2.5.3', 'scipy': '1.18.1', 'numba': '0.68.1'}
+SETUP J_ref = mean J_cond of RULE (Part A, log det 207.4643); S_ref = sum W_ref = 1387.3026196093233; p = 9; eps = 0.02; R = 2000, tuning seed 20261117, |E[N] - B| <= 0.3
+EDGE TABLE: 701 of 701 grid edges are on the upper envelope; breakpoints rho in [0.062574, 0.979565] (E = 4.0 below, 0.5 above); E(rho) = 1.58 for rho in [0.344635, 0.346245); E non-increasing along the table: True; table vs direct argmax on 21401 rho values (log grid 1e-3..10 and +-1e-9 around every breakpoint): equal True; direct argmax non-increasing: True -> PASS
+C1 weights: gamma_k = s^-2 h_k^T J_ref^-1 h_k: min 0.00521 median 0.00652 max 0.00979; sum_k W_ref,k gamma_k = 9.000000 (= p); p / S_ref = 0.006487
+TUNE C0 e = 1.5: E[N] 369.925 (I 208.4126; 1.2 s)
+TUNE C0 e = 1.7: E[N] 244.875 (I 205.9348; 1.2 s)
+TUNE C0 e = 1.6: E[N] 302.286 (I 207.2195; 1.2 s)
+TUNE C0 e = 1.55: E[N] 334.779 (I 207.8273; 1.2 s)
+TUNE C0 e = 1.5750000000000002: E[N] 318.200 (I 207.5261; 1.2 s)
+TUNE C0 e = 1.5875000000000001: E[N] 310.176 (I 207.3734; 1.2 s)
+TUNE C0 e = 1.5812500000000003: E[N] 314.211 (I 207.4498; 1.2 s)
+TUNE C0 e = 1.5781250000000002: E[N] 316.210 (I 207.4879; 1.2 s)
+TUNE C0 e = 1.5765625: E[N] 317.200 (I 207.5070; 1.2 s)
+TUNE C0 e = 1.5773437500000003: E[N] 316.703 (I 207.4975; 1.1 s)
+TUNED C0: e = 1.5773437500000003 after 10 runs (12 s): E[N] 316.703 (SE 0.408, sd N 18.23); I 207.49747533470315 dI +10.2965; per-run log det mean 207.4955 sd 0.0614; S 1392.45; e_k P5/P50/P95 1.577/1.577/1.577 (mean 1.5773)
+TUNE C1 lambda = 0.01502410510651383: E[N] 497.825 (I 210.2008; 1.1 s)
+TUNE C1 lambda = 0.02347516422892786: E[N] 189.963 (I 204.4730; 1.2 s)
+TUNE C1 lambda = 0.018780131383142287: E[N] 318.667 (I 207.6341; 1.2 s)
+TUNE C1 lambda = 0.02099682519954165: E[N] 248.333 (I 206.1358; 1.3 s)
+TUNE C1 lambda = 0.01985757124817295: E[N] 281.880 (I 206.9031; 1.1 s)
+TUNE C1 lambda = 0.019311338560306916: E[N] 299.889 (I 207.2740; 1.2 s)
+TUNE C1 lambda = 0.019043882885244428: E[N] 309.027 (I 207.4549; 1.4 s)
+TUNE C1 lambda = 0.018911547335690573: E[N] 313.745 (I 207.5431; 1.3 s)
+TUNE C1 lambda = 0.018845724810226415: E[N] 316.188 (I 207.5884; 1.1 s)
+TUNE C1 lambda = 0.018812899509288734: E[N] 317.378 (I 207.6106; 1.3 s)
+TUNE C1 lambda = 0.01882930500667773: E[N] 316.764 (I 207.5989; 1.1 s)
+TUNED C1: lambda = 0.01882930500667773 after 11 runs (13 s): E[N] 316.764 (SE 0.405, sd N 18.13); I 207.59894925873635 dI +10.3980; per-run log det mean 207.5971 sd 0.0613; S 1369.00; e_k P5/P50/P95 1.300/1.580/1.810 (mean 1.5957); e_k at 0.5 / 4.0: 0.0e+00 / 0.0e+00
+TUNE C2 lambda = 0.01502410510651383: E[N] 705.577 (I 211.4648; 10.5 s)
+TUNE C2 lambda = 0.02347516422892786: E[N] 254.979 (I 205.5780; 10.0 s)
+TUNE C2 lambda = 0.018780131383142287: E[N] 444.937 (I 208.8917; 10.0 s)
+TUNE C2 lambda = 0.02099682519954165: E[N] 341.370 (I 207.3369; 9.7 s)
+TUNE C2 lambda = 0.02220143958948003: E[N] 296.181 (I 206.4830; 10.3 s)
+TUNE C2 lambda = 0.021590732878679592: E[N] 318.192 (I 206.9159; 9.8 s)
+TUNE C2 lambda = 0.02189395696758823: E[N] 307.095 (I 206.7010; 10.3 s)
+TUNE C2 lambda = 0.021741816311994344: E[N] 312.640 (I 206.8090; 10.0 s)
+TUNE C2 lambda = 0.02166614290291626: E[N] 315.370 (I 206.8625; 10.0 s)
+TUNE C2 lambda = 0.021628405025062865: E[N] 316.779 (I 206.8893; 10.1 s)
+TUNED C2: lambda = 0.021628405025062865 after 10 runs (101 s): E[N] 316.779 (SE 0.408, sd N 18.25); I 206.88934656355892 dI +9.6884; per-run log det mean 206.8882 sd 0.0705; S 1352.24; e_k P5/P50/P95 1.395/1.485/2.210 (mean 1.6217); rel weight mean 1.1396, rho in [0.1697, 0.4238], |J_running - J_direct|/|J| 2.1e-14; e_k at 0.5 / 4.0: 0.0e+00 / 0.0e+00
+CHECK C determinism: repetition b = 0 (seed 20261117) equals the final tuning run for C0, C1, C2: True -> PASS
+REPS C0: I per seed [207.4975, 207.4978, 207.4981, 207.4959, 207.4959, 207.4993, 207.4991, 207.4939, 207.4997, 207.4956]; mean 207.4973 sd 0.0019; E[N] mean 316.238 (min 315.423, max 316.899)
+REPS C1: I per seed [207.5989, 207.5988, 207.5987, 207.5969, 207.5969, 207.6005, 207.5994, 207.5962, 207.6014, 207.5975]; mean 207.5985 sd 0.0017; E[N] mean 315.962 (min 315.234, max 316.764)
+REPS C2: I per seed [206.8893, 206.8925, 206.8891, 206.8877, 206.8873, 206.8935, 206.8905, 206.8868, 206.8908, 206.8892]; mean 206.8897 sd 0.0022; E[N] mean 316.114 (min 315.313, max 316.781)
+DIFF I(C1) - I(C0): mean over 10 seeds +0.1013 nat, paired SE 0.0002 (per seed [+0.1015, +0.1010, +0.1006, +0.1010, +0.1010, +0.1012, +0.1003, +0.1023, +0.1017, +0.1020]; at the tuning seed +0.1015); E[N] difference mean -0.276
+DIFF I(C2) - I(C1): mean over 10 seeds -0.7088 nat, paired SE 0.0004 (per seed [-0.7096, -0.7063, -0.7095, -0.7092, -0.7096, -0.7070, -0.7089, -0.7094, -0.7106, -0.7084]; at the tuning seed -0.7096); E[N] difference mean +0.152
+DIFF I(C2) - I(C0): mean over 10 seeds -0.6076 nat, paired SE 0.0004 (per seed [-0.6081, -0.6053, -0.6090, -0.6082, -0.6086, -0.6058, -0.6086, -0.6071, -0.6089, -0.6064]; at the tuning seed -0.6081); E[N] difference mean -0.125
+CHECK C certificate C0: I(tuned) 207.4975, mean over seeds 207.4973 vs certificate 207.7146: (I - UB)/SE = -114.7 (single run, SE 0.0019), -362.9 (mean, SE 0.0006) -> PASS
+CHECK C certificate C1: I(tuned) 207.5989, mean over seeds 207.5985 vs certificate 207.7146: (I - UB)/SE = -69.4 (single run, SE 0.0017), -220.3 (mean, SE 0.0005) -> PASS
+CHECK C certificate C2: I(tuned) 206.8893, mean over seeds 206.8897 vs certificate 207.7146: (I - UB)/SE = -375.8 (single run, SE 0.0022), -1187.8 (mean, SE 0.0007) -> PASS
+=== ROUND 18 stage C done in 137.7 s
+CLEANUP removed empty folders []; git status on rounds 4-15 (all present earlier rounds) and the frozen files: clean
