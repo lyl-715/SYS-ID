@@ -1,0 +1,21 @@
+=== ROUND 18 re-run of stages A and B by the second session (2026-11-11 10:45:49 UTC): committed code at e85a3f0 in a separate worktree, results/ and logs/ removed first; python 3.13.18 numpy 2.5.3 scipy 1.18.1 numba 0.68.1; wall: A 8.5 s, B 40.7 s
+partA.json differences outside wall_s / wall_s_sum: 0 []
+  wall_s committed / re-run: 10.8 8.5
+partB.json differences outside wall_s / wall_s_sum: 0 []
+  wall_s committed / re-run: 55.2 40.7
+J_A_PRED.npy arrays bitwise equal True | file bytes equal True
+J_A_RULE.npy arrays bitwise equal True | file bytes equal True
+J_A_RULE_FB.npy arrays bitwise equal True | file bytes equal True
+J_A_SOD.npy arrays bitwise equal True | file bytes equal True
+Jsent_A_PRED.npy arrays bitwise equal True | file bytes equal True
+Jsent_A_RULE.npy arrays bitwise equal True | file bytes equal True
+Jsent_A_RULE_FB.npy arrays bitwise equal True | file bytes equal True
+Jsent_A_SOD.npy arrays bitwise equal True | file bytes equal True
+W_A_PRED.npy arrays bitwise equal True | file bytes equal True
+W_A_RULE.npy arrays bitwise equal True | file bytes equal True
+W_A_RULE_FB.npy arrays bitwise equal True | file bytes equal True
+W_A_SOD.npy arrays bitwise equal True | file bytes equal True
+partB_estimates.npz: 24 arrays; keys and all arrays bitwise equal True
+log A: 19 / 19 lines; differing lines after removing wall times: 0 []
+log B: 23 / 23 lines; differing lines after removing wall times: 0 []
+CHECK re-run of stages A and B reproduces the committed results exactly (outside wall times): True -> PASS
