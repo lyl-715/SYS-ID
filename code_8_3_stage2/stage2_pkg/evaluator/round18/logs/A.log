@@ -1,0 +1,19 @@
+=== ROUND 18 stage A start; versions {'python': '3.13.18', 'numpy': '2.5.3', 'scipy': '1.18.1', 'numba': '0.68.1'}
+SETUP e = 1.58 (round14 part1.json d.e_up); VF(T, m) = (100, 3); PRED c = Phi^-1(1 - q/2) = 1.8578447684114752, q = 0.06319106158219086; Delta* = 0.002384694482635785 = 20.000000000000 sigma; R = 10000 (10 batches, seeds 20261115 + b)
+CHECK sim RULE batch 0 vs rule14._mc_cont(e = 1.58, 1000, 20261115): Wk, N, S bitwise equal True -> PASS
+CHECK sim RULE_FB batch 0 vs mismatch15.run_job(delta = 0, VF(100, 3), 1000, 20261115): Wk, N, S, e sums bitwise equal True -> PASS
+A SOD: I 197.20049416119426 (batch SE 0.00289) dI -0.0005; per-run log det mean 197.1671 sd 0.2573 P5 196.7491 P95 197.5884 [min 196.0783, max 198.0415]; I - mean 0.03338; corr(log det, N) +0.2214
+A SOD: log det mean(J_sent) 193.4493 (batch SE 0.0006); value of the non-transmissions I - log det mean(J_sent) 3.7512 nat (batch SE 0.0028); S 466.119 (SE 0.115) vs E[N] 316.875 (SE 0.022), sd N 2.246, frac N > B 0.5661; per-run log det J_sent mean 193.4457 sd 0.0838; cond J 94.890; |I_direct - I| 0.0e+00
+A RULE: I 207.46433057628943 (batch SE 0.00077) dI +10.2634; per-run log det mean 207.4624 sd 0.0626 P5 207.3596 P95 207.5670 [min 207.1896, max 207.6758]; I - mean 0.00193; corr(log det, N) +0.5149
+A RULE: log det mean(J_sent) 194.1150 (batch SE 0.0049); value of the non-transmissions I - log det mean(J_sent) 13.3494 nat (batch SE 0.0047); S 1387.303 (SE 0.097) vs E[N] 314.391 (SE 0.180), sd N 18.040, frac N > B 0.4517; per-run log det J_sent mean 193.9761 sd 0.5303; cond J 99.148; |I_direct - I| 2.8e-14
+A RULE_FB: I 207.3711179051597 (batch SE 0.00350) dI +10.1701; per-run log det mean 207.3423 sd 0.3150 P5 206.8153 P95 207.8515 [min 205.9771, max 208.3882]; I - mean 0.02878; corr(log det, N) -0.0977
+A RULE_FB: log det mean(J_sent) 194.1183 (batch SE 0.0007); value of the non-transmissions I - log det mean(J_sent) 13.2528 nat (batch SE 0.0034); S 1371.832 (SE 0.479) vs E[N] 314.159 (SE 0.018), sd N 1.807, frac N > B 0.0941; per-run log det J_sent mean 194.0564 sd 0.0733; cond J 98.605; |I_direct - I| 2.8e-14; e_k mean 1.5949 sd 0.1444, at clip lo/hi 0.0e+00/0.0e+00
+A PRED: I 208.95657763962117 (batch SE 0.00000) dI +11.7556; per-run log det mean 208.9566 sd 0.0000 P5 208.9566 P95 208.9566 [min 208.9566, max 208.9566]; I - mean -0.00000; corr(log det, N) undefined (sd 0)
+A PRED: log det mean(J_sent) 194.1853 (batch SE 0.0046); value of the non-transmissions I - log det mean(J_sent) 14.7713 nat (batch SE 0.0046); S 1636.151 (SE 0.000) vs E[N] 316.570 (SE 0.171), sd N 17.097, frac N > B 0.5000; per-run log det J_sent mean 194.0621 sd 0.4999; cond J 98.595; |I_direct - I| 5.7e-14
+CHECK A SOD: I 197.20049416119426 vs archive 197.20097668224076: diff -0.00048, batch SE 0.00289, z -0.17 -> PASS
+CHECK A RULE: I 207.46433057628943 vs Round 14 continuous rule e = 1.580 207.4639397749701: diff +0.00039, combined SE 0.00095, z +0.41 -> PASS
+CHECK A PRED: I 208.95657763962117 vs round 10 history[0].f 208.95657763962944: diff -8.27e-12 (J_cond is the same for every run: per-run sd 2.8e-14; agrees at 4 dp: True) -> PASS
+REF outside (not a gate) RULE: I 207.464 / 207.503; mean 207.462 / 207.501; sd 0.063 / 0.063; I - mean 0.002 / 0.002; log det mean(J_sent) 194.115 / 194.179
+REF outside (not a gate) SOD: I 197.200 / 197.194; mean 197.167 / 197.16; sd 0.257 / 0.263; I - mean 0.033 / 0.034; log det mean(J_sent) 193.449 / 193.448
+=== ROUND 18 stage A done in 10.8 s
+CLEANUP removed empty folders []; git status on rounds 4-15 (all present earlier rounds) and the frozen files: clean
