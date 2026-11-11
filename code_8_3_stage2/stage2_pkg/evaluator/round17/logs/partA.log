@@ -1,0 +1,35 @@
+=== ROUND 17 stage partA started 2026-11-11 10:23:01; python 3.13.18, numpy 2.5.3, scipy 1.18.1, numba 0.68.0; B = 316.8921168493721; input U; TOL24 1e-11
+REPRO full (full data): log det J 219.00850592919505 vs 219.00850592919505 [prompt §1] rel 0.0e+00 -> PASS; E[N] 5000.0 S 5000.0
+DIAG full: I 219.00850592919505 (I - I_full +0.0000); mu min 1.000000 max 1.000000 ratio 1.000; geo mu 1.000000 (identity rel 2.2e-16); cond 98.679231; lambda min 3.5754e+09 max 3.5282e+11; sd ratio min 1.0000 geo 1.0000 max 1.0000; tr ratio 1.0000; lambda_min ratio 1.0000
+DIAG full: mu = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]; sd ratios = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+SOD archived J (round4/results/J_U_SoD.npy) vs accepted operator accepted operator (evaluator_fast.evaluate_fast): {'bitwise': True, 'max_rel': 0.0}
+REPRO sod (constant SoD at Delta*): log det J 197.20097668224076 vs 197.20097668224076 [round4/results/J_U_SoD.npy; prompt §1] rel 0.0e+00 -> PASS; E[N] 316.8921168493721 S 466.15774934465276
+DIAG sod: I 197.20097668224076 (I - I_full -21.8075); mu min 0.048518 max 0.165458 ratio 3.410; geo mu 0.088650 (identity rel 9.4e-16); cond 94.922141; lambda min 3.5072e+08 max 3.3291e+10; sd ratio min 3.1078 geo 3.3586 max 3.9217; tr ratio 10.6481; lambda_min ratio 0.0981
+DIAG sod: mu = [0.048518, 0.055145, 0.081496, 0.085791, 0.092968, 0.097771, 0.107891, 0.111406, 0.165458]; sd ratios = [3.3332, 3.9217, 3.6767, 3.3292, 3.3269, 3.1078, 3.2403, 3.1545, 3.3266]
+REPRO round4 (round-4 table (half-widths, old action set)): log det J 205.03141309913676 vs 205.03141309913676 [round4/results/mc.json["U/W"]["logdet_eval"]] rel 0.0e+00 -> PASS; E[N] 316.6035659260541 S 1037.2604257322414
+DIAG round4: I 205.03141309913676 (I - I_full -13.9771); mu min 0.187571 max 0.238344 ratio 1.271; geo mu 0.211610 (identity rel 3.5e-15); cond 88.781812; lambda min 8.2670e+08 max 7.3396e+10; sd ratio min 2.0700 geo 2.1739 max 2.2222; tr ratio 4.4127; lambda_min ratio 0.2312
+DIAG round4: mu = [0.187571, 0.1962, 0.19692, 0.205771, 0.210969, 0.216239, 0.222722, 0.235596, 0.238344]; sd ratios = [2.2222, 2.199, 2.2174, 2.2129, 2.2145, 2.0712, 2.082, 2.07, 2.0988]
+REPRO T1 (T1 (edges, 100 actions)): log det J 207.35521730257756 vs 207.35521730257756 [round11.json tables.edge_j1.I] rel 0.0e+00 -> PASS; E[N] 316.7261244018059 S 1344.2138518296865
+DIAG T1: I 207.35521730257756 (I - I_full -11.6533); mu min 0.245793 max 0.308087 ratio 1.253; geo mu 0.273950 (identity rel 1.4e-15); cond 89.419632; lambda min 1.0633e+09 max 9.5077e+10; sd ratio min 1.8212 geo 1.9106 max 1.9691; tr ratio 3.4093; lambda_min ratio 0.2974
+DIAG T1: mu = [0.245793, 0.24845, 0.26054, 0.261964, 0.268193, 0.278438, 0.300563, 0.301532, 0.308087]; sd ratios = [1.9383, 1.9691, 1.9305, 1.9366, 1.9378, 1.8302, 1.8212, 1.8305, 1.8327]
+TPRIME action set S u S' (884 actions); edge nodes LN/UN equal to the archived npz: True
+REPRO Tprime (T' (edges, 884 actions)): log det J 207.64665023111849 vs 207.64665023111849 [round11/addendum/results/round11b.json Tprime.I24] rel 0.0e+00 -> PASS; E[N] 316.8433410803525 S 1384.4324696171584
+DIAG Tprime: I 207.64665023111849 (I - I_full -11.3619); mu min 0.239311 max 0.320899 ratio 1.341; geo mu 0.282966 (identity rel 5.9e-16); cond 88.999636; lambda min 1.1005e+09 max 9.7942e+10; sd ratio min 1.7868 geo 1.8799 max 1.9423; tr ratio 3.2960; lambda_min ratio 0.3078
+DIAG Tprime: mu = [0.239311, 0.264464, 0.265568, 0.274203, 0.280968, 0.294325, 0.301516, 0.315406, 0.320899]; sd ratios = [1.9219, 1.876, 1.9423, 1.9133, 1.9229, 1.8031, 1.7868, 1.7995, 1.8]
+REPRO rule (one-parameter rule R(37, 13)): log det J 207.5002944958199 vs 207.5002944958199 [round14 part1 1b (sigma/24)] rel 0.0e+00 -> PASS; E[N] 316.7251743087337 S 1392.8421245551658
+DIAG rule: I 207.5002944958199 (I - I_full -11.5082); mu min 0.262576 max 0.289842 ratio 1.104; geo mu 0.278402 (identity rel 3.2e-15); cond 99.126697; lambda min 9.9138e+08 max 9.8272e+10; sd ratio min 1.8815 geo 1.8952 max 1.9043; tr ratio 3.6024; lambda_min ratio 0.2773
+DIAG rule: mu = [0.262576, 0.274272, 0.275112, 0.276773, 0.278185, 0.279785, 0.281952, 0.28806, 0.289842]; sd ratios = [1.8955, 1.8815, 1.9043, 1.8914, 1.8981, 1.9003, 1.8977, 1.9028, 1.894]
+REPRO fixed (fixed threshold on the prediction residual (no SoD), W_k = c_max(q)): log det J 208.95657763962944 vs 208.95657763962944 [round10.json budgets.B316.history[0].f] rel 0.0e+00 -> PASS; E[N] 316.8921168493721 S 1636.150881906835
+DIAG fixed: I 208.95657763962944 (I - I_full -10.0519); mu min 0.327096 max 0.328931 ratio 1.006; geo mu 0.327299 (identity rel 2.0e-15); cond 98.594934; lambda min 1.1710e+09 max 1.1545e+11; sd ratio min 1.7463 geo 1.7479 max 1.7485; tr ratio 3.0533; lambda_min ratio 0.3275
+DIAG fixed: mu = [0.327096, 0.327096, 0.327096, 0.327096, 0.327096, 0.327096, 0.327096, 0.327096, 0.328931]; sd ratios = [1.7482, 1.7477, 1.7485, 1.7475, 1.7484, 1.7476, 1.7468, 1.7483, 1.7463]
+CHECK4 round 10 at the nominal budget: f 209.0685398686887 (archive 209.0685398686887) equal True; u_cert 209.07220154478713 (archive 209.07220154478713) equal True -> PASS
+REPRO classW (class-W optimum (receiver-known windows), W_k = c_max(q_hat_k)): log det J 209.0685398686887 vs 209.0685398686887 [round10.json budgets.B316.f] rel 0.0e+00 -> PASS; E[N] 316.8921168493721 S 1619.4500003061812
+DIAG classW: I 209.0685398686887 (I - I_full -9.9400); mu min 0.307685 max 0.372288 ratio 1.210; geo mu 0.331396 (identity rel 6.7e-16); cond 88.512117; lambda min 1.2942e+09 max 1.1455e+11; sd ratio min 1.6503 geo 1.7371 max 1.7713; tr ratio 2.8065; lambda_min ratio 0.3620
+DIAG classW: mu = [0.307685, 0.312392, 0.314538, 0.319385, 0.321808, 0.332729, 0.340595, 0.367729, 0.372288]; sd ratios = [1.7712, 1.7614, 1.7681, 1.7676, 1.7713, 1.6617, 1.6503, 1.6593, 1.6619]
+REF cond_full: 98.67923064906215 vs 98.67923064906208 rel 7.2e-16 -> PASS
+REF sod_mu_min: 0.048517708610531125 vs 0.048517708610531125 rel 0.0e+00 -> PASS
+REF sod_mu_max: 0.16545799228159686 vs 0.16545799228159686 rel 0.0e+00 -> PASS
+REF sod_cond: 94.92214093489962 vs 94.92214093489969 rel 7.5e-16 -> PASS
+CHECK2 geometric-mean identity exp(mean log mu) = exp((I - I_full)/9) to 1e-10 for every design: True (max rel 3.5e-15)
+=== ROUND 17 stage partA done in 75.0 s
+CLEANUP removed empty folders []; git status on rounds 4-14 and the frozen files: clean
