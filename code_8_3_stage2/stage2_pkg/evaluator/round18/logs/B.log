@@ -1,0 +1,23 @@
+=== ROUND 18 stage B start; versions {'python': '3.13.18', 'numpy': '2.5.3', 'scipy': '1.18.1', 'numba': '0.68.1'}
+CHECK B noise: experiment 0 drawn one value at a time (eval11._mc_batch order, R = 1) equals standard_normal(K): True -> PASS
+B SOD: simulated 500 experiments: N mean 316.78 sd 2.27 min 309 max 323; receiver windows equal the sensor's at every non-transmitted step: True -> PASS
+B RULE: simulated 500 experiments: N mean 314.85 sd 18.24 min 267 max 362; receiver windows equal the sensor's at every non-transmitted step: True -> PASS
+B PRED: simulated 500 experiments: N mean 316.73 sd 16.80 min 267 max 362; receiver windows equal the sensor's at every non-transmitted step: True -> PASS
+B SOD LS: bias/CRsd [+0.758, -0.373, -5.348, -0.321, -2.007, -0.407, -0.828, +1.054, -0.397] (MC SE 0.050 avg); largest |bias| 5.348 (param 3); Mahalanobis 7.995
+B SOD LS: RMSE/CRsd [1.374, 1.224, 5.463, 1.195, 2.294, 1.166, 1.365, 1.502, 1.209] min 1.166 max 5.463; D-hat 191.138 (I 197.200, D-hat - I -6.063); -log det cov 195.143 (minus I -2.058)
+B SOD CML: bias/CRsd [-0.070, +0.057, -0.031, -0.007, -0.102, -0.067, -0.001, +0.051, -0.078] (MC SE 0.045 avg); largest |bias| 0.102 (param 5); Mahalanobis 0.222
+B SOD CML: RMSE/CRsd [1.003, 1.019, 1.064, 1.025, 1.029, 0.989, 0.997, 0.949, 1.042] min 0.949 max 1.064; D-hat 196.862 (I 197.200, D-hat - I -0.339); -log det cov 196.886 (minus I -0.315)
+B SOD CML: not accepted 3/500 (first call not accepted 7, restart used 4, fallback 3); first-call nit median 41, max Newton decrement 1.1e-06; LS rank 9 in every run: True
+B RULE LS: bias/CRsd [+1.551, +12.128, -35.710, +1.912, -20.986, +0.160, -7.184, +2.602, -4.918] (MC SE 0.105 avg); largest |bias| 35.710 (param 3); Mahalanobis 50.904
+B RULE LS: RMSE/CRsd [2.860, 12.357, 35.783, 3.008, 21.129, 2.376, 7.534, 3.481, 5.439] min 2.376 max 35.783; D-hat 186.010 (I 207.464, D-hat - I -21.455); -log det cov 192.446 (minus I -15.018)
+B RULE CML: bias/CRsd [+0.074, +0.173, -0.421, -0.022, -0.265, +0.010, -0.118, +0.043, -0.050] (MC SE 0.080 avg); largest |bias| 0.421 (param 3); Mahalanobis 0.654
+B RULE CML: RMSE/CRsd [1.114, 1.816, 4.629, 1.083, 2.743, 1.097, 1.381, 1.070, 1.219] min 1.070 max 4.629; D-hat 202.903 (I 207.464, D-hat - I -4.561); -log det cov 202.902 (minus I -4.562)
+B RULE CML: not accepted 8/500 (first call not accepted 15, restart used 7, fallback 8); first-call nit median 37, max Newton decrement 1.3e-06; LS rank 9 in every run: True
+B PRED LS: bias/CRsd [+0.056, -0.234, +0.231, +0.117, -0.405, +0.361, -0.404, -0.019, +0.485] (MC SE 0.240 avg); largest |bias| 0.485 (param 9); Mahalanobis 0.733
+B PRED LS: RMSE/CRsd [5.236, 5.368, 5.581, 5.289, 5.423, 5.407, 5.338, 5.281, 5.419] min 5.236 max 5.581; D-hat 178.664 (I 208.957, D-hat - I -30.293); -log det cov 178.664 (minus I -30.292)
+B PRED CML: bias/CRsd [+0.007, -0.062, +0.032, +0.016, -0.087, +0.056, -0.078, +0.009, +0.090] (MC SE 0.048 avg); largest |bias| 0.090 (param 9); Mahalanobis 0.143
+B PRED CML: RMSE/CRsd [1.025, 1.113, 1.068, 1.091, 1.096, 1.042, 1.124, 1.035, 1.130] min 1.025 max 1.130; D-hat 207.710 (I 208.957, D-hat - I -1.247); -log det cov 207.711 (minus I -1.246)
+B PRED CML: not accepted 3/500 (first call not accepted 8, restart used 5, fallback 3); first-call nit median 36, max Newton decrement 1.6e-06; LS rank 9 in every run: True
+CHECK B SOD CML: D-hat 196.862 vs I 197.200: |D-hat - I| 0.339 <= 0.3 -> FAIL (round 8b stage 1, R = 300: -log det M1 196.881 vs log det J1 197.201)
+=== ROUND 18 stage B done in 55.2 s
+CLEANUP removed empty folders []; git status on rounds 4-15 (all present earlier rounds) and the frozen files: clean
