@@ -218,6 +218,69 @@ def stage_B(out):
     out(f"=== ROUND 18 stage B done in {res['wall_s']:.1f} s")
 
 
+# --- Part B, supplementary (user instruction after stage B; NOT the pre-registered estimator; supp18.py) ----------------------------
+def stage_Bn(out):
+    import supp18
+    t0 = time.perf_counter()
+    out(f"=== ROUND 18 stage Bn start (SUPPLEMENTARY: Newton steps for the CML runs not accepted in stage B; the pre-registered "
+        f"estimator and its numbers are unchanged); versions {versions()}")
+    Bj = json.load(open(os.path.join(RES, 'partB.json'))); A = json.load(open(os.path.join(RES, 'partA.json')))
+    est = np.load(os.path.join(RES, 'partB_estimates.npz'))
+    trigs = ('SOD', 'RULE', 'PRED')
+    NZ = np.vstack([a.noise_B(i) for i in range(B_NREP)])
+    jobs = []
+    for trig in trigs:
+        runs = Bj['triggers'][trig]['not_accepted_runs']
+        conv = est[f'{trig}_converged']
+        assert sorted(np.flatnonzero(~conv).tolist()) == sorted(runs), trig
+        ev, z, _, _ = a.simulate_B(trig, NZ)
+        jobs += [(trig, i, ev[i], z[i], est[f'{trig}_theta_LS'][i]) for i in runs]
+    out(f"SETUP non-accepted runs: " + '; '.join(f"{t} {Bj['triggers'][t]['not_accepted_runs']}" for t in trigs)
+        + f"; start = end point of the first L-BFGS-B call; full Newton steps; stop at eta <= {supp18.TOL:g} or {supp18.MAX_STEPS} steps")
+    with Pool(WORKERS) as pool:
+        outs = pool.map(supp18.supp_one, jobs)
+    rep = all(o['reproduced'] for o in outs)
+    out(f"CHECK Bn: estimator_r8b.estimate_stage1 re-run on the {len(outs)} non-accepted runs reproduces stage B (not accepted, "
+        f"fallback theta_LS bitwise equal to the archive): {rep} -> {'PASS' if rep else 'FAIL'}")
+    if not rep: raise Stop("stage B decision not reproduced")
+    res = dict(versions=versions(), max_steps=supp18.MAX_STEPS, tol=supp18.TOL, start='first L-BFGS-B call end point', runs=[],
+               triggers={}, checks=dict(reproduced=rep))
+    for trig in trigs:
+        J = np.load(os.path.join(RES, f'J_A_{trig}.npy')); I = A['triggers'][trig]['I']
+        crsd = np.sqrt(np.diag(np.linalg.inv(J)))
+        thC = est[f'{trig}_theta_CML'].copy(); thL = est[f'{trig}_theta_LS']
+        oo = sorted([o for o in outs if o['trig'] == trig], key=lambda o: o['i'])
+        nconv = 0
+        for o in oo:
+            nt = o['newton']; h = nt['hist']
+            d_a1 = float(np.abs((o['theta_a1']-nt['theta'])/crsd).max()); d_a2 = float(np.abs((o['theta_a2']-nt['theta'])/crsd).max())
+            d_ls = float(np.abs((o['theta_LS']-nt['theta'])/crsd).max())
+            err_new = float(np.abs((nt['theta']-a.THETA_STAR)/crsd).max()); err_ls = float(np.abs((o['theta_LS']-a.THETA_STAR)/crsd).max())
+            out(f"Bn {trig} run {o['i']} (N {o['N']}): call 1 success {o['a1']['success']} '{o['a1']['message']}' nit {o['a1']['nit']} "
+                f"eta {o['a1']['decrement']:.2e} |g|inf {o['a1']['grad_inf']:.1e}; call 2 success {o['a2']['success']} '{o['a2']['message']}' "
+                f"nit {o['a2']['nit']} eta {o['a2']['decrement']:.2e}; Newton: converged {nt['converged']} after {nt['steps']} steps "
+                f"({nt['reason']}), eta path [{', '.join(f'{x['eta']:.1e}' for x in h)}], NLL change {h[-1]['f']-h[0]['f']:+.2e}; "
+                f"max |theta - theta_Newton|/CRsd: call-1 end {d_a1:.2e}, call-2 end {d_a2:.2e}, theta_LS {d_ls:.2f}; "
+                f"max |error|/CRsd: Newton {err_new:.2f}, theta_LS (pre-registered fallback) {err_ls:.2f}")
+            res['runs'].append(dict(trig=trig, i=o['i'], N=o['N'], a1=o['a1'], a2=o['a2'], newton_converged=nt['converged'],
+                                    newton_steps=nt['steps'], newton_reason=nt['reason'], newton_hist=nt['hist'],
+                                    theta_newton=nt['theta'], theta_a1=o['theta_a1'], theta_a2=o['theta_a2'], theta_LS=o['theta_LS'],
+                                    dist_a1_cr=d_a1, dist_a2_cr=d_a2, dist_LS_cr=d_ls, err_newton_cr=err_new, err_LS_cr=err_ls))
+            if nt['converged']:
+                thC[o['i']] = nt['theta']; nconv += 1
+        st = a.acc_stats(thC, J); pre = Bj['triggers'][trig]['CML']
+        res['triggers'][trig] = dict(I=I, n_not_accepted=len(oo), n_newton_converged=nconv, CML_newton_substituted=st)
+        out(f"Bn {trig}: {nconv} of {len(oo)} non-accepted runs converge under the Newton steps; CML with those estimates substituted "
+            f"(500 runs): bias/CRsd [{', '.join(f'{v:+.3f}' for v in st['bias_cr'])}]; largest |bias| {st['bias_max_abs']:.3f} "
+            f"(pre-registered {pre['bias_max_abs']:.3f}); Mahalanobis {st['bias_mahalanobis']:.3f}")
+        out(f"Bn {trig}: RMSE/CRsd [{', '.join(f'{v:.3f}' for v in st['rmse_cr'])}] min {st['rmse_cr_min']:.3f} max {st['rmse_cr_max']:.3f}; "
+            f"D-hat {st['D_hat']:.3f} (I {I:.3f}, D-hat - I {st['D_hat']-I:+.3f}; pre-registered {pre['D_hat']-I:+.3f}); -log det cov "
+            f"{st['neg_logdet_cov']:.3f} (minus I {st['neg_logdet_cov']-I:+.3f})")
+    res['wall_s'] = time.perf_counter()-t0
+    jdump(res, os.path.join(RES, 'partB_newton.json'))
+    out(f"=== ROUND 18 stage Bn done in {res['wall_s']:.1f} s")
+
+
 # --- Part C ----------------------------------------------------------------------------------------------------------------------
 def tune(args):
     var, Jref, Sref = args
@@ -328,7 +391,7 @@ def main():
     stage = sys.argv[1]
     out = Tee(os.path.join(LOGS, f'{stage}.log'))
     try:
-        {'A': stage_A, 'B': stage_B, 'C': stage_C}[stage](out) if stage != 'summary' else __import__('summary18').stage_summary(out)
+        {'A': stage_A, 'B': stage_B, 'Bn': stage_Bn, 'C': stage_C}[stage](out) if stage != 'summary' else __import__('summary18').stage_summary(out)
     except Stop as e:
         out(f"STOP {e}"); cleanup_frozen(out); sys.exit(2)
     cleanup_frozen(out)
