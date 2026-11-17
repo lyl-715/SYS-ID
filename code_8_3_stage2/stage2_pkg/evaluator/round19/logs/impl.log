@@ -1,0 +1,10 @@
+=== ROUND 19 stage impl start; versions {'python': '3.13.18', 'numpy': '2.5.3', 'scipy': '1.18.1', 'numba': '0.68.1'}
+IMPL I1 Sim vs acc18.simulate_B('SOD') (40 replications, e = 1.58): record and windows bitwise equal True -> PASS
+IMPL I1 Sim vs acc18.simulate_B('RULE') (40 replications, e = 1.58): record and windows bitwise equal True -> PASS
+IMPL I1 Sim vs acc18.simulate_B('RULE_FB') (40 replications, e = 1.58): record and windows bitwise equal True -> PASS
+IMPL I2 Sim vs acc18.batch_A('SOD', 200, 195001000): Wk, N, S, per-run log det J_cond bitwise equal True -> PASS
+IMPL I2 Sim vs acc18.batch_A('RULE', 200, 195001000): Wk, N, S, per-run log det J_cond bitwise equal True -> PASS
+IMPL I2 Sim vs acc18.batch_A('RULE_FB', 200, 195001000): Wk, N, S, per-run log det J_cond bitwise equal True -> PASS
+IMPL I3 lik_data / receiver_windows vs estimator_r8.StageData(ev, z, ('sod',)) and the sensor (5 SoD records): equal True -> PASS
+IMPL I4 receiver windows of 40 two-stage records (K1 = 2500, theta* perturbed by 1 %, feedback) equal the sensor's at every step: True -> PASS
+=== ROUND 19 stage impl done in 2.9 s

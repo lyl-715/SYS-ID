@@ -1,0 +1,20 @@
+{
+ "versions": {
+  "python": "3.13.18",
+  "numpy": "2.5.3",
+  "scipy": "1.18.1",
+  "numba": "0.68.1"
+ },
+ "checks": {
+  "simulate_B_SOD": true,
+  "simulate_B_RULE": true,
+  "simulate_B_RULE_FB": true,
+  "batch_A_SOD": true,
+  "batch_A_RULE": true,
+  "batch_A_RULE_FB": true,
+  "lik_data_sod": true,
+  "receiver_two_stage": true
+ },
+ "passed": true,
+ "wall_s": 2.9043280719999984
+}
