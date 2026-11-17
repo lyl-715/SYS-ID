@@ -1,0 +1,6 @@
+=== ROUND 19 stage checks start; versions {'python': '3.13.18', 'numpy': '2.5.3', 'scipy': '1.18.1', 'numba': '0.68.1'}
+CHECK (a) constant SoD throughout: log det J 197.19698369303674 (batch SE 0.00208) vs 197.201: diff -0.00402, z -1.93; E[N] 316.8270 (SE 0.0225) vs 316.89: diff -0.0630, z -2.81 -> PASS
+CHECK (a) context: vs the archive 197.20097668224076 diff -0.00399; E[N] vs B -0.0651; sd N 2.246; frac N > B 0.5614; per-run log det mean 197.1637 sd 0.2573
+CHECK (b) rule throughout, true model, no feedback, e = 1.577: log det J 207.50122908081983 (batch SE 0.00061) vs 197.201 + 10.30 = 207.501: diff +0.00023, z +0.37 -> PASS
+CHECK (b) context: gain over the archive SoD +10.3003 nat; E[N] 316.7586 (SE 0.1824), sd N 18.244, frac N > B 0.5048; per-run log det mean 207.4993 sd 0.0622
+=== ROUND 19 stage checks done in 5.6 s
