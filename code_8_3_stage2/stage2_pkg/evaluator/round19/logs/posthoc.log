@@ -1,0 +1,24 @@
+D1 stage-1 identifiability (post hoc, descriptive)
+   config    K1 logdet J_1   cond J_1  pe_rms stage 1 (median)  pe_rms stage 2 (median) P90 stage 2
+  K1_1250  1250    171.967  8.165e+04                   0.2809                   4.0136      8.2276
+  primary  2500    188.367  4.452e+02                   0.1978                   0.3382      0.5493
+  K1_3750  3750    193.061  1.763e+02                   0.1650                   0.2231      0.3582
+  context: cond of the whole-record baseline J 9.490e+01
+
+D2 time split of the information (post hoc): log det of the stage parts of J (steps 1..2500 and 2501..5000)
+   baseline: log det J(1..2500) 188.3668, log det J(2501..5000) 186.3824, log det J 197.2002; share of transmissions in steps 1..2500 0.5417
+    control: log det J(1..2500) 188.3805, log det J(2501..5000) 197.3787, log det J 203.1104; share of transmissions in steps 1..2500 0.5455
+    primary: log det J(1..2500) 188.3668, log det J(2501..5000) 196.9193, log det J 202.8052; share of transmissions in steps 1..2500 0.5447
+  stage-2 information, control minus baseline: +10.9963 nat (rule with the true model and feedback vs SoD, steps 2501..5000); half-record SoD parts vs 197.201 - 9 ln 2 = 190.9627
+
+D3 CR reference for a varying per-run information (post hoc): I = log det mean J_cond; I_inv = -log det mean(J_cond^-1); D-hat
+    primary: I 202.8052, I_inv 202.5621 (I - I_inv +0.2431); D-hat all 202.2719 (I_inv - D-hat +0.2902), final accepted 202.4327 (I_inv - D-hat +0.1294)
+    K1_1250: I 203.8681, I_inv 200.7012 (I - I_inv +3.1669); D-hat all 195.3375 (I_inv - D-hat +5.3637), final accepted 200.8360 (I_inv - D-hat -0.1348)
+    K1_3750: I 200.9089, I_inv 200.7894 (I - I_inv +0.1196); D-hat all 200.9099 (I_inv - D-hat -0.1206), final accepted 201.3221 (I_inv - D-hat -0.5328)
+    control: I 203.1104, I_inv 203.0413 (I - I_inv +0.0691); D-hat all 203.2091 (I_inv - D-hat -0.1678), final accepted 203.4326 (I_inv - D-hat -0.3913)
+   baseline: I 197.2002, I_inv 197.1339 (I - I_inv +0.0663); D-hat all 196.8330 (I_inv - D-hat +0.3009), final accepted 197.0919 (I_inv - D-hat +0.0421)
+
+D4 replications with e_k at a clip bound or an abnormal N_2 (primary, K1_3750, control; K1_1250 summarised)
+  primary: {'i': 447, 'N': 311, 'N_2': 139, 'plan2': 141.8921168493721, 'u_lo': 1, 'u_hi': 0, 'abnormal': 0, 'pe_rms': 0.5839076984814269, 's1_converged': 0}
+  K1_1250: 285 flagged replications; Spearman(pe_rms, N) +0.718; median pe_rms with N > B 3.732 vs N <= B 1.466 (n = 21, max 2.770); e_k at 4 and abnormal N_2: 117
+=== ROUND 19 posthoc done
