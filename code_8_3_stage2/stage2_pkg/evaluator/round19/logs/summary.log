@@ -1,0 +1,99 @@
+INFORMATION (log det J, J = s^-2 sum_k wbar_k h_k h_k^T over the configuration's replications; gain = paired difference with constant SoD throughout on the same replications; 95 % paired bootstrap, 2000 resamples, seed 194000000)
+   config    K1     R  log det J base (same reps)     gain  boot SE       95% interval vs archive SoD  ldJ(W)-ldJ(mean Jc)
+  primary  2500  1000   202.8052         197.2002  +5.6050   0.0128 [+5.5810, +5.6310]        +5.6042             -5.7e-14
+  K1_1250  1250   300   203.8681         197.1977  +6.6704   0.1166 [+6.4379, +6.8839]        +6.6671              0.0e+00
+  K1_3750  3750   300   200.9089         197.1977  +3.7112   0.0168 [+3.6785, +3.7436]        +3.7079             -2.8e-14
+  control  2500   300   203.1104         197.1977  +5.9127   0.0190 [+5.8744, +5.9487]        +5.9094              2.8e-14
+ baseline  2500  1000   197.2002         197.2002  +0.0000   0.0000 [+0.0000, +0.0000]        -0.0008              5.7e-14
+control minus primary on the paired replications 0..299 (cost of model error at K1 = 2500): +0.2965 nat (boot SE 0.0182, 95 % [+0.2622, +0.3323]); primary on 0..299: log det J 202.8139, gain +5.6162
+proportional reference 9 ln((K1/K) + (1 - K1/K) exp(10.30/9)) (prompt §7 basis, context only): K1 = 1250: 8.619, K1 = 2500: 6.549, K1 = 3750: 3.858
+
+EMPIRICAL MEASURE (round 8b): D-hat = -log det M-hat, M-hat = mean (theta_hat - theta*)(theta_hat - theta*)^T over all replications (fallbacks included); Delta D-hat = paired difference with the baseline on the same replications
+   config     R     D-hat D-hat base Delta D-hat  boot SE       95% interval gain logdet J
+  primary  1000  202.2719   196.8330     +5.4389   0.2164 [+5.0078, +5.8445]       +5.6050
+  K1_1250   300  195.3375   197.3863     -2.0488   2.0046 [-3.3815, +3.7932]       +6.6704
+  K1_3750   300  200.9099   197.3863     +3.5237   0.3126 [+2.9126, +4.1247]       +3.7112
+  control   300  203.2091   197.3863     +5.8228   0.3541 [+5.1242, +6.4978]       +5.9127
+EARLIER two-stage experiment (round 8b, old table, two 5-s stages, total budget 2B, R = 300): Delta D-hat 3.6725 [3.141, 4.222] (the measure of its headline 3.67); information measure log det J_seq - log det J_SoD+SoD = 207.0711 - 203.4395 = 3.6316
+
+BUDGET (N = all transmissions incl. the forced first; N_1 steps 1..K1, N_2 steps K1+1..K; plan_2 = B - 3 - N_1; 'N > B' = N >= 317)
+   config     R   mean N   sd N  min  max  frac>B  #>B  mean N_1  sd N_1  mean N_2  sd N_2 mean plan_2 mean N_2-plan_2
+  primary  1000  315.197  3.522  305  330  0.3160  316   171.674   1.513   143.523   3.818     142.218          +1.305
+  K1_1250   300  555.610 233.674  302 1209  0.9300  279    87.983   0.909   467.627 233.673     225.909        +241.718
+  K1_3750   300  313.657  2.632  305  322  0.1000   30   228.763   2.147    84.893   3.160      85.129          -0.235
+  control   300  314.743  1.705  309  319  0.1467   44   171.693   1.481   143.050   2.202     142.199          +0.851
+ baseline  1000  316.908  2.342  309  324  0.5600  560   171.674   1.513   145.234   1.678     142.218          +3.016
+  N histogram primary: 305:1 306:1 307:5 308:10 309:20 310:33 311:57 312:87 313:112 314:123 315:128 316:107 317:89 318:61 319:62 320:29 321:28 322:16 323:7 324:8 325:7 326:4 327:3 328:1 330:1
+  N histogram K1_1250: 302:1 304:1 305:2 306:2 308:2 310:2 311:1 312:3 313:2 314:2 315:2 316:1 317:1 318:1 323:1 324:3 325:3 326:1 327:3 329:1 330:2 331:2 332:2 333:1 334:1 335:4 337:1 338:1 340:3 341:3 342:1 343:1 344:2 345:1 346:2 348:2 349:2 356:2 357:1 358:1 359:1 360:1 362:1 363:2 364:1 365:2 366:1 368:1 370:2 373:1 374:1 375:2 377:4 381:1 382:1 386:2 388:1 389:1 391:1 392:2 393:1 395:1 399:1 400:1 402:1 404:1 408:3 409:2 410:3 411:1 417:1 418:1 419:1 420:1 422:2 423:1 428:1 429:1 432:1 434:1 436:1 442:2 454:2 456:2 457:1 459:1 461:1 462:2 463:2 465:1 469:1 471:2 474:1 477:3 478:2 480:1 481:2 482:1 485:1 486:2 490:1 491:1 492:1 501:1 502:2 503:2 505:1 507:2 509:1 515:1 517:2 518:1 521:1 524:1 525:1 526:1 527:1 528:1 529:1 530:2 534:1 538:1 541:1 544:3 546:2 550:1 554:1 555:1 556:1 557:1 560:1 565:1 567:1 568:1 575:1 582:1 587:1 590:1 593:1 596:1 599:1 603:1 604:1 607:1 608:1 622:1 630:1 636:1 637:1 638:1 645:1 650:2 653:1 662:1 669:1 688:1 690:3 696:1 704:1 706:1 707:1 708:1 709:1 712:1 725:1 727:1 731:2 746:1 757:1 763:1 772:1 775:1 783:1 791:1 792:1 821:1 822:1 826:1 828:1 829:1 837:1 839:1 847:1 854:1 855:1 864:1 873:1 875:1 877:1 886:1 890:1 894:1 898:1 908:1 911:1 913:1 914:2 917:1 927:1 945:1 951:1 954:1 960:1 962:1 964:1 983:1 985:1 989:1 991:1 1004:1 1007:1 1013:1 1015:1 1020:1 1030:1 1033:1 1035:1 1043:1 1045:1 1050:2 1055:1 1057:2 1069:1 1083:1 1101:1 1144:1 1148:1 1209:2
+  N histogram K1_3750: 305:1 306:1 307:3 308:1 309:12 310:9 311:38 312:31 313:46 314:42 315:40 316:46 317:13 318:7 319:4 320:3 321:2 322:1
+  N histogram control: 309:1 310:5 311:2 312:19 313:39 314:59 315:79 316:52 317:29 318:14 319:1
+  N histogram baseline: 309:1 310:3 311:8 312:11 313:47 314:84 315:118 316:168 317:162 318:131 319:132 320:85 321:29 322:13 323:3 324:5
+  fraction N > B, primary on the replications 0..299 (paired with K1 = 1250): 0.3167
+
+STAGE-2 THRESHOLD e_k (sigma units) and FAILURE CASES
+   config  mean e  min e  max e  #u<=0.5  #u>=4 #abnormal N_2 stage-1 CML not acc. final CML not acc.
+  primary  1.6702  0.500  3.141        1      0             0                   12                  3
+  K1_1250  2.9467  0.500  4.000      110    269           117                    7                  2
+  K1_3750  1.5558  0.580  2.501        0      0             0                    8                  7
+  control  1.6438  1.008  2.302        0      0             0                    4                  2
+ baseline       -      -      -        -      -             -                   12                  8
+  primary: stage-1 CML not accepted in replications [4, 23, 49, 163, 305, 316, 447, 688, 692, 834, 837, 850] (theta_tilde = fallback theta_LS); final CML not accepted in [829, 886, 975] (final = fallback theta_tilde); first call not accepted: stage 1 15, final 19; messages ['ABNORMAL: '] / ['ABNORMAL: ']
+  K1_1250: stage-1 CML not accepted in replications [0, 19, 45, 51, 100, 160, 187] (theta_tilde = fallback theta_LS); final CML not accepted in [165, 240] (final = fallback theta_tilde); first call not accepted: stage 1 15, final 5; messages ['ABNORMAL: '] / ['ABNORMAL: ']
+  K1_3750: stage-1 CML not accepted in replications [22, 59, 93, 117, 164, 175, 178, 234] (theta_tilde = fallback theta_LS); final CML not accepted in [31, 61, 99, 167, 204, 212, 230] (final = fallback theta_tilde); first call not accepted: stage 1 15, final 12; messages ['ABNORMAL: '] / ['ABNORMAL: ']
+  control: stage-1 CML not accepted in replications [4, 23, 49, 163] (theta_tilde = fallback theta_LS); final CML not accepted in [157, 218] (final = fallback theta_tilde); first call not accepted: stage 1 5, final 3; messages ['ABNORMAL: '] / ['ABNORMAL: ']
+  baseline: stage-1 CML not accepted in replications [4, 23, 49, 163, 305, 316, 447, 688, 692, 834, 837, 850] (theta_tilde = fallback theta_LS); final CML not accepted in [220, 649, 715, 725, 890, 948, 949, 965] (final = fallback theta_tilde); first call not accepted: stage 1 15, final 12; messages ['ABNORMAL: '] / ['ABNORMAL: ']
+
+MODEL: prediction error of theta_tilde, RMS over all K steps of (h_k^T theta_tilde - x_k)/sigma (mismatch15.pred_error), the RMS over stage 2 only, and the max |.|
+   config    K1    mean     P10  median     P90     max | stage2 median     P90 | max|.| median     P90
+  primary  2500  0.2934  0.1756  0.2825  0.4303  0.7165 |        0.3382  0.5493 |        0.7093  1.1550
+  K1_1250  1250  4.0342  1.4828  3.4793  7.1262 11.0593 |        4.0136  8.2276 |        9.2482 18.7301
+  K1_3750  3750  0.1962  0.1303  0.1917  0.2535  0.5107 |        0.2231  0.3582 |        0.4623  0.6882
+  primary, stage-1 CML not accepted (theta_tilde = theta_LS): pe_rms [0.4853, 0.6283, 0.7165, 0.5067, 0.3744, 0.5111, 0.5839, 0.4768, 0.6459, 0.4511, 0.4405, 0.6087]
+
+ESTIMATOR: final estimate (estimate_joint), CR sd = sqrt(diag J^-1) with the configuration's own J; I - D-hat = log det(M-hat J) (> 0: MSE above the CR bound); var ratio = exp((I - D-hat)/9), sd ratio = exp((I - D-hat)/18)
+   config            runs     n largest|bias| (param)  Mahal.  I - D-hat var ratio sd ratio  RMSE/CRsd min-max
+  primary             all  1000        0.0679       3   0.103    +0.5333    1.0610   1.0301    1.001-1.082
+  primary  final accepted   997        0.0769       3   0.108    +0.3724    1.0422   1.0209    0.987-1.081
+  primary   both accepted   985        0.0768       3   0.107    +0.3837    1.0436   1.0215    0.990-1.078
+  primary bias/CRsd: [-0.018, +0.045, -0.068, +0.026, -0.011, +0.013, +0.007, -0.020, -0.005] (MC SE avg 0.033)
+  K1_1250             all   300        0.6489       7   1.386    +8.5306    2.5801   1.6063    1.332-8.814
+  K1_1250  final accepted   298        0.2457       3   0.325    +3.0321    1.4006   1.1835    1.023-1.405
+  K1_1250   both accepted   291        0.2292       3   0.314    +3.0489    1.4032   1.1846    1.026-1.413
+  K1_1250 bias/CRsd: [+0.077, +0.104, -0.172, +0.249, -0.025, -0.093, +0.649, +0.014, -0.570] (MC SE avg 0.192)
+  K1_3750             all   300        0.0971       8   0.212    -0.0010    0.9999   0.9999    0.941-1.152
+  K1_3750  final accepted   293        0.0835       9   0.206    -0.4132    0.9551   0.9773    0.932-1.097
+  K1_3750   both accepted   285        0.0796       8   0.201    -0.4698    0.9491   0.9742    0.933-1.092
+  K1_3750 bias/CRsd: [-0.042, +0.040, -0.025, +0.080, +0.007, -0.038, +0.070, -0.097, -0.082] (MC SE avg 0.059)
+  control             all   300        0.1471       5   0.223    -0.0987    0.9891   0.9945    0.949-1.122
+  control  final accepted   298        0.1533       5   0.232    -0.3222    0.9648   0.9823    0.950-1.099
+  control   both accepted   294        0.1584       5   0.234    -0.3300    0.9640   0.9818    0.954-1.104
+  control bias/CRsd: [-0.054, -0.016, +0.008, -0.018, +0.147, -0.086, +0.085, -0.049, -0.133] (MC SE avg 0.058)
+ baseline             all  1000        0.0675       7   0.138    +0.3672    1.0416   1.0206    0.979-1.066
+ baseline  final accepted   992        0.0570       7   0.133    +0.1083    1.0121   1.0060    0.978-1.036
+ baseline   both accepted   980        0.0597       2   0.134    +0.0868    1.0097   1.0048    0.976-1.033
+  baseline bias/CRsd: [-0.047, +0.056, -0.015, +0.010, -0.021, -0.030, -0.068, +0.024, +0.034] (MC SE avg 0.032)
+  stage-1 estimate theta_tilde, primary (K1 = 2500), against J_1 of the stage-1 SoD steps (log det 188.3668): largest |bias| 0.1297, I_1 - D-hat +0.4936
+  stage-1 estimate theta_tilde, K1_1250 (K1 = 1250), against J_1 of the stage-1 SoD steps (log det 171.9671): largest |bias| 0.1873, I_1 - D-hat +0.1834
+  stage-1 estimate theta_tilde, K1_3750 (K1 = 3750), against J_1 of the stage-1 SoD steps (log det 193.0611): largest |bias| 0.1362, I_1 - D-hat +0.9514
+
+PREDICTIONS (scoring conventions of predictions.md §2, §3; closed intervals)
+  A1 K1=2500 gain in [5.3, 6.6]: HIT - gain 5.6050
+  A2 K1=1250 gain in [7.3, 8.6]: MISS - gain 6.6704
+  A3 K1=3750 gain in [3.2, 4.0]: HIT - gain 3.7112
+  A4 control rounds to 6.4: MISS - gain 5.9127; 6.4 inside the 95 % interval [5.8744, 5.9487]: False (not scored)
+  A5 primary mean N in [312, 316] and frac N>B in [0.03, 0.25]: MISS - mean N 315.197 (in); frac 0.3160 (out)
+  A6 frac N>B: K1=1250 > K1=2500: HIT - K1 = 1250 0.9300 vs K1 = 2500 0.3160 (paired 0..299: 0.3167)
+  A7 primary largest bias < 0.3 and I - D-hat <= 9 ln 1.05: MISS - largest bias 0.0679; I - D-hat 0.5333 (var ratio 1.0610; sd reading 1.0301: <= 1.05)
+  C1 K1=2500 gain in [5.8, 6.5]: MISS - 5.6050
+  C2 K1=1250 gain in [7.4, 8.3]: MISS - 6.6704
+  C3 K1=3750 gain in [3.3, 3.8]: HIT - 3.7112
+  C4 control in [6.2, 6.6] and control - primary (0..299) in [0.05, 0.40]: MISS - control 5.9127; control - primary +0.2965
+  C5 primary mean N in [314.0, 315.5], sd in [1.6, 2.6], frac in [0.08, 0.25]: MISS - mean 315.197, sd 3.522, frac 0.3160
+  C6 frac N>B: K1=1250 > K1=2500 > K1=3750: HIT - 0.9300 / 0.3160 / 0.1000
+  C7 primary stage-1 not accepted in [1, 15], final not accepted <= 25: HIT - stage 1 12, final 3
+  C8 median pe_rms K1=2500 in [0.12, 0.25], ordered 1250 > 2500 > 3750: MISS - medians 3.4793 / 0.2825 / 0.1917
+  C9 primary e_k clip reached in <= 2 replications, abnormal N_2 in 0: HIT - clip 1, abnormal 0
+  C10 primary largest bias < 0.3, I - D-hat (all) in [0.3, 1.0], (accepted) in [0.15, 0.6]: HIT - bias 0.0679; all 0.5333; accepted 0.3724
+  C11 primary |Delta D-hat - gain| <= 0.5: HIT - Delta D-hat 5.4389, gain 5.6050
+  tally: prompt author 3 of 7; mine 6 of 11
+=== ROUND 19 stage summary done
