@@ -1,0 +1,16 @@
+=== ROUND 19 stage main start; versions {'python': '3.13.18', 'numpy': '2.5.3', 'scipy': '1.18.1', 'numba': '0.68.1'}
+SETUP noise seeds 190000000 + i, i = 0..999; e0 = 1.577, T = 100, m = 3; clip [0.5, 4.0]; restart seeds stage 1 191000000 + i, final 192000000 + i
+STAGE1 K1 = 2500: 1000 replications simulated; N_1 mean 171.674 sd 1.513 min 167 max 176
+STAGE1 K1 = 1250: 300 replications simulated; N_1 mean 87.983 sd 0.909 min 86 max 91
+STAGE1 K1 = 3750: 300 replications simulated; N_1 mean 228.763 sd 2.147 min 223 max 235
+STAGE1 CML: 1600 estimates in 42.0 s; receiver windows equal the sensor's in every run: True -> PASS
+STAGE1 K1 = 2500: CML not accepted in 12 of 1000 replications [4, 23, 49, 163, 305, 316, 447, 688, 692, 834, 837, 850] (fallback theta_LS used as theta_tilde); first call not accepted 15; LS rank 9 in every run True
+STAGE1 K1 = 1250: CML not accepted in 7 of 300 replications [0, 19, 45, 51, 100, 160, 187] (fallback theta_LS used as theta_tilde); first call not accepted 15; LS rank 9 in every run True
+STAGE1 K1 = 3750: CML not accepted in 8 of 300 replications [22, 59, 93, 117, 164, 175, 178, 234] (fallback theta_LS used as theta_tilde); first call not accepted 15; LS rank 9 in every run True
+STAGE2 primary: K1 2500, mode est, R 1000: N mean 315.197 sd 3.522 max 330; N_2 mean 143.523; frac N > B 0.3160; log det J 202.8052
+STAGE2 K1_1250: K1 1250, mode est, R 300: N mean 555.610 sd 233.674 max 1209; N_2 mean 467.627; frac N > B 0.9300; log det J 203.8681
+STAGE2 K1_3750: K1 3750, mode est, R 300: N mean 313.657 sd 2.632 max 322; N_2 mean 84.893; frac N > B 0.1000; log det J 200.9089
+STAGE2 control: K1 2500, mode true, R 300: N mean 314.743 sd 1.705 max 319; N_2 mean 143.050; frac N > B 0.1467; log det J 203.1104
+STAGE2 baseline: K1 2500, mode sod, R 1000: N mean 316.908 sd 2.342 max 324; N_2 mean 145.234; frac N > B 0.5600; log det J 197.2002
+FINAL CML: 2900 estimates in 101.6 s; receiver windows equal the sensor's in every run: True -> PASS
+=== ROUND 19 stage main done in 146.8 s

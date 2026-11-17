@@ -1,0 +1,52 @@
+{
+ "versions": {
+  "python": "3.13.18",
+  "numpy": "2.5.3",
+  "scipy": "1.18.1",
+  "numba": "0.68.1"
+ },
+ "configs": {
+  "primary": {
+   "K1": 2500,
+   "mode": "est",
+   "R": 1000
+  },
+  "K1_1250": {
+   "K1": 1250,
+   "mode": "est",
+   "R": 300
+  },
+  "K1_3750": {
+   "K1": 3750,
+   "mode": "est",
+   "R": 300
+  },
+  "control": {
+   "K1": 2500,
+   "mode": "true",
+   "R": 300
+  },
+  "baseline": {
+   "K1": 2500,
+   "mode": "sod",
+   "R": 1000
+  }
+ },
+ "seeds": {
+  "noise": [
+   190000000,
+   190000999
+  ],
+  "stage1_restart": 191000000,
+  "final_restart": 192000000
+ },
+ "windows_ok": {
+  "stage1": true,
+  "final": true
+ },
+ "wall_s": 146.817364053,
+ "cml_wall_s": {
+  "stage1": 165.6045144349988,
+  "final": 402.98979812599714
+ }
+}
