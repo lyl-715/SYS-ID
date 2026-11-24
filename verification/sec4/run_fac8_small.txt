@@ -4,3 +4,16 @@ constant SoD: E[N] = 316.9002, log det J = 197.1995, mass 1.000000000000   (3 s)
 == tangent point: J of constant SoD (log det 197.1995); check sum_k w_k gamma_k = p: 9.000000 ==
   lambda/gbar =   3.0000: E[N] =   319.796  log det J =  207.3100  V* = 10.989263  forward score = 10.989263 (diff +4.1e-14)  bound = 219.6811  (22 s)
   lambda/gbar =   4.5000: E[N] =   122.527  log det J =  201.0141  V* = 4.434098  forward score = 4.434098 (diff -4.4e-13)  bound = 223.3572  (41 s)
+  lambda/gbar =   3.7500: E[N] =   195.583  log det J =  204.1939  V* = 6.932869  forward score = 6.932869 (diff -1.6e-13)  bound = 220.7403  (61 s)
+  lambda/gbar =   3.3750: E[N] =   248.039  log det J =  205.7228  V* = 8.713130  forward score = 8.713130 (diff -6.8e-13)  bound = 219.9628  (80 s)
+  lambda/gbar =   3.1875: E[N] =   281.326  log det J =  206.5025  V* = 9.779874  forward score = 9.779874 (diff -5.4e-13)  bound = 219.7506  (98 s)
+  lambda/gbar =   3.0937: E[N] =   299.392  log det J =  206.8874  V* = 10.364811  forward score = 10.364811 (diff -4.0e-13)  bound = 219.6961  (117 s)
+  lambda/gbar =   3.0469: E[N] =   309.565  log det J =  207.1048  V* = 10.671839  forward score = 10.671839 (diff -5.2e-13)  bound = 219.6834  (137 s)
+  lambda/gbar =   3.0234: E[N] =   314.744  log det J =  207.2122  V* = 10.829279  forward score = 10.829279 (diff -3.9e-13)  bound = 219.6810  (156 s)
+  lambda/gbar =   3.0117: E[N] =   317.074  log det J =  207.2577  V* = 10.908953  forward score = 10.908953 (diff -3.3e-13)  bound = 219.6807  (175 s)
+  lambda/gbar =   3.0176: E[N] =   315.842  log det J =  207.2340  V* = 10.869039  forward score = 10.869039 (diff -1.6e-13)  bound = 219.6808  (195 s)
+  lambda/gbar =   3.0146: E[N] =   316.493  log det J =  207.2468  V* = 10.888975  forward score = 10.888975 (diff -3.7e-13)  bound = 219.6807  (214 s)
+  best feasible table: log det J = 207.2468 (+10.0473), E[N] = 316.493
+  upper bound for the class: 219.6807 (+22.4813);  gap = 12.4340
+
+== tangent point: J of the table just found (log det 207.2468); check sum_k w_k gamma_k = p: 9.000000 ==
