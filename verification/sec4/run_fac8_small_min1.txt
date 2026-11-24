@@ -33,3 +33,24 @@ constant SoD: E[N] = 316.9002, log det J = 197.1995, mass 1.000000000000   (3 s)
   upper bound for the class: 207.8429 (+10.6434);  gap = 0.3156
 
 == tangent point: J of the table just found (log det 207.5273); check sum_k w_k gamma_k = p: 9.000000 ==
+  lambda/gbar =   3.0000: E[N] =   309.888  log det J =  207.4645  V* = 2.993171  forward score = 2.993171 (diff -1.2e-14)  bound = 207.6599  (460 s)
+  lambda/gbar =   2.1000: E[N] =   595.320  log det J =  211.2116  V* = 5.547393  forward score = 5.547393 (diff +4.1e-13)  bound = 208.3751  (480 s)
+  lambda/gbar =   2.5500: E[N] =   423.132  log det J =  209.2989  V* = 4.058870  forward score = 4.058870 (diff +3.6e-13)  bound = 207.8061  (499 s)
+  lambda/gbar =   2.7750: E[N] =   367.886  log det J =  208.4897  V* = 3.486917  forward score = 3.486917 (diff +1.4e-13)  bound = 207.6939  (518 s)
+  lambda/gbar =   2.8875: E[N] =   340.771  log det J =  208.0354  V* = 3.229056  forward score = 3.229056 (diff +5.9e-14)  bound = 207.6659  (537 s)
+  lambda/gbar =   2.9438: E[N] =   324.837  log det J =  207.7478  V* = 3.108348  forward score = 3.108348 (diff -5.7e-14)  bound = 207.6601  (557 s)
+  lambda/gbar =   2.9719: E[N] =   317.724  log det J =  207.6149  V* = 3.050060  forward score = 3.050060 (diff -8.0e-14)  bound = 207.6593  (577 s)
+  lambda/gbar =   2.9859: E[N] =   313.673  log det J =  207.5370  V* = 3.021441  forward score = 3.021441 (diff -5.9e-14)  bound = 207.6594  (596 s)
+  lambda/gbar =   2.9789: E[N] =   315.459  log det J =  207.5713  V* = 3.035706  forward score = 3.035706 (diff -1.2e-13)  bound = 207.6593  (615 s)
+  lambda/gbar =   2.9754: E[N] =   316.552  log det J =  207.5925  V* = 3.042869  forward score = 3.042869 (diff -7.5e-14)  bound = 207.6593  (636 s)
+  lambda/gbar =   2.9736: E[N] =   317.200  log det J =  207.6049  V* = 3.046461  forward score = 3.046461 (diff -7.0e-14)  bound = 207.6593  (655 s)
+  best feasible table: log det J = 207.5925 (+10.3930), E[N] = 316.552
+  upper bound for the class: 207.6593 (+10.4598);  gap = 0.0668
+
+== other SoD-class triggers at the same budget, against the smallest bound 207.6593 ==
+  constant SoD                      197.1995   below bound: True
+  table                             207.2468   below bound: True
+  table                             207.5273   below bound: True
+  table                             207.5925   below bound: True
+  one-parameter rule, e = 1.5174:   207.4760 (+10.2765), E[N] = 316.783   below bound: True
+time 679 s
