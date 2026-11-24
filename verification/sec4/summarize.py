@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Extract the summary of check_cert*.py runs (and the .meta file written by the run wrapper) as markdown.
-usage: summarize.py run_*.txt"""
+usage: summarize.py [--overview] run_*.txt"""
 import re, sys, os
 
 def parse(fn):
@@ -55,6 +55,23 @@ def md(r):
           f"exit code {r['meta'].get('exit_code','?')}, stderr {r['err']} bytes", ""]
     return "\n".join(o)
 
+def overview(runs):
+    o = ["| run | grid | edge values | MIN (sigma) | const. SoD E[N] | const. SoD log det J | best table, round 3 | its E[N] "
+         "| smallest bound | gap | max abs(diff) | one-parameter rule | all below bound | wall time (s) | peak RSS (MB) |",
+         "|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|"]
+    for r in runs:
+        c = r['rounds'][-1]
+        ub = min(float(x['UB']) for x in r['rounds'])
+        rule = re.search(r'e = (\S+):\s+(\S+)', r['rule'])
+        o.append(f"| `{r['file']}` | sigma/{r['FAC']} | {r['nvals']} + None | {r['MIN'].split(' sigma')[0]} | {r['B']} | {r['ld0']} | "
+                 f"{c['best']} | {c['EN']} | {ub:.4f} | {c['gap']} | {max(abs(d) for d in r['diffs']):.1e} | "
+                 f"{rule[2]} (e = {rule[1]}) | {all(r['below'])} | {r['time']} | {r['meta'].get('peak_rss_MB','?')} |")
+    return "\n".join(o)
+
 if __name__ == "__main__":
-    for fn in sys.argv[1:]:
-        print(md(parse(fn)))
+    a = sys.argv[1:]
+    if a and a[0] == '--overview':
+        print(overview([parse(fn) for fn in a[1:]]))
+    else:
+        for fn in a:
+            print(md(parse(fn)))
