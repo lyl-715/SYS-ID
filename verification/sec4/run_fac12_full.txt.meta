@@ -1,0 +1,9 @@
+cmd: python3 check_cert.py 12 full 5 3
+start: 2026-11-24T19:07:51
+end: 2026-11-24T20:16:21
+wall_s: 4110.5
+cpu_user_s: 3195.5
+cpu_sys_s: 885.0
+peak_rss_MB: 372.6
+exit_code: 0
+threads: OMP/OPENBLAS/MKL_NUM_THREADS=1
