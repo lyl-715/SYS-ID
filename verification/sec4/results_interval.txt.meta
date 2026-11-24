@@ -1,0 +1,9 @@
+cmd: python3 check_interval.py
+start: 2026-11-24T19:07:56
+end: 2026-11-24T19:07:57
+wall_s: 0.7
+cpu_user_s: 0.7
+cpu_sys_s: 0.0
+peak_rss_MB: 78.7
+exit_code: 0
+threads: OMP/OPENBLAS/MKL_NUM_THREADS=1
