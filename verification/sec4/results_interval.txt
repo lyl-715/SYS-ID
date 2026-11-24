@@ -1,0 +1,20 @@
+== (1) symmetric window is best at fixed send probability ==
+ q=0.020: argmax alpha=-2.3264 (-a=-2.3263), max c=0.144004, c_max formula=0.144004, one-sided c=0.1218; dc/dalpha num=+6.708e-05 formula=+6.708e-05
+ q=0.063: argmax alpha=-1.8593 (-a=-1.8592), max c=0.326436, c_max formula=0.326436, one-sided c=0.2687; dc/dalpha num=+1.368e-04 formula=+1.368e-04
+ q=0.200: argmax alpha=-1.2816 (-a=-1.2816), max c=0.649820, c_max formula=0.649820, one-sided c=0.5336; dc/dalpha num=+3.047e-04 formula=+3.047e-04
+ q=0.500: argmax alpha=-0.6744 (-a=-0.6745), max c=0.928674, c_max formula=0.928674, one-sided c=0.8183; dc/dalpha num=+6.448e-04 formula=+6.448e-04
+ table at q=6.3%: [np.float64(0.326), np.float64(0.304), np.float64(0.269)]
+== (2) slope of c_max ==
+ q=0.02: a=2.326 c_max=0.1440 slope num=5.4119 a^2=5.4119
+ q=0.063: a=1.859 c_max=0.3264 slope num=3.4566 a^2=3.4566
+ q=0.2: a=1.282 c_max=0.6498 slope num=1.6424 a^2=1.6424
+ q=0.5: a=0.674 c_max=0.9287 slope num=0.4549 a^2=0.4549
+== (3) allocation problem ==
+ iterations 34, E[N]=316.892200 (B=316.8922), log det = 209.06855
+ a_k range 1.545..2.048; q_k range 4.06%..12.24%
+ optimality condition: a_k^2 gamma_k min/max = 1.881594e-02 / 1.881594e-02
+ bracket: [209.06855, 209.06855]
+== (4) constant half-width at the same budget ==
+ a=1.8578, log det = 208.95658, below optimum by 0.1120
+ all samples sent: log det = 219.0085
+ optimum minus constant SoD (197.2010): 11.8675
