@@ -536,7 +536,7 @@ Further numbers (table, MIN = 0.25):
   - The table spreads e over 1.3–1.9σ (5–95 %), around a mean 0.02–0.03σ above the rule's single e.
 - **Far edge.**
   - With MIN = 1 the far edge sits at r ∓ 1σ in 92 % of the weight. It is set by e only when abs(r − x_k) < σ.
-  - With MIN = 0.25 it is set by e in 17 % of the weight, including 6 % with abs(r − x_k) ≥ σ.
+  - With MIN = 0.25 it is set by e in 17 % of all weight: 11.8 % from abs(r − x_k) < σ (all of that weight) and 5.2 % from abs(r − x_k) ≥ σ (5.9 % of that weight).
 - **Caveats.**
   - These statistics depend on the candidate set (e on a 0.1σ lattice plus 1.25, 1.75, 2.25) and on the outward rounding to σ/24 nodes.
   - The table is the best of 11 λ evaluations in round 3, not an optimum of the class.
