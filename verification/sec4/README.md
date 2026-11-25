@@ -18,6 +18,9 @@ triggers). Nothing outside this folder was changed.
 | `*.err` | stderr of each run; all are empty (0 bytes) |
 | `runlog.py` | wrapper used for every run: runs the command with stdout → `.txt` and stderr → `.err`, pins `OMP/OPENBLAS/MKL_NUM_THREADS=1`, writes `.meta` |
 | `summarize.py` | parses `run_*.txt` + `.meta` and prints the tables in this README (`python3 summarize.py [--overview] run_*.txt`) |
+| `check_shape.py` | Task B (second batch): recomputes the best tables of a `check_cert*.py` run and collects edge statistics of the round-3 table and of the one-parameter rule; imports `check_cert_min.py` unchanged |
+| `shape_*.txt`, `shape_*.npz` | stdout of each `check_shape.py` run (via `runlog.py`, with `.meta`/`.err`) and the weighted histograms it saved |
+| `make_shape_fig.py` | draws `fig_shape.png` from the `shape_*.npz` files and prints the plotted numbers |
 
 ### How the runs were made
 
@@ -272,3 +275,215 @@ Observations. These are stated as measured, with no tuning; the larger classes w
 - **Feasibility.**
   - "best feasible table" means E[N] ≤ B, with B the constant-SoD E[N] on the same grid. Every reported best table satisfies it.
   - The one-parameter rule is evaluated at e* + 1e-4, so its E[N] is just below B.
+
+---
+
+# Second batch (25 Nov): Tasks A, B, C
+
+Same environment, same wrapper (`runlog.py`, BLAS/OpenMP threads pinned to 1). `check_cert.py` and
+`check_cert_min.py` were not modified; all new code is in new files (`check_shape.py`, `make_shape_fig.py`).
+Nothing was tuned.
+
+TASK_A_PLACEHOLDER
+
+## Task B: shape of the constructed trigger (`check_shape.py`)
+
+### What the script does
+
+`python3 runlog.py shape_fac24_full_min1.txt python3 check_shape.py 24 full 1 run_fac24_full.txt shape_fac24_full_min1.npz`
+(904 s wall, peak RSS 391 MB, exit code 0, stderr empty).
+
+**Recomputing the round-3 table.**
+- The round-3 table of `run_fac24_full.txt` uses the tangent point J(round-2 table). That table was never stored, and neither was the round-1 table it depends on.
+- So `check_shape.py` recomputes all three rounds, with **one backward sweep per round (three in total)**. Each sweep is at the price λ that gave that round's best feasible table in the log.
+- The λ values are not searched again:
+  - the λ sequence of the log is replayed with the script's own arithmetic (λ₀ = 3γ̄; ×0.7, ×1.5 or bisection);
+  - each feasibility decision is read from the log (printed E[N] ≤ B; no printed E[N] is within 0.001 of B);
+  - the best entry is the feasible entry with the largest printed log det. It is unique at the printed precision.
+- The edge codes (`CL`, `CU` of `backward()`) of the round-3 sweep are kept in memory and used in the statistics pass.
+
+**Reproduction.** Every recomputed number equals the logged one to the printed digits.
+
+| round | λ/γ̄ (replayed) | recomputed E[N] / log det J / V* | log |
+|---|---|---|---|
+| 1 | 3.0146484375 | 316.841 / 207.3086 / 11.036084 | 316.841 / 207.3086 / 11.036084 |
+| 2 | 2.9490234375 | 316.651 / 207.5656 / 3.270737 | 316.651 / 207.5656 / 3.270737 |
+| 3 | 2.9701171875 | 316.837 / 207.6420 / 3.090760 | 316.837 / 207.6420 / 3.090760 |
+| rule, e = 1.5562 | — | 316.847 / 207.5051 | 316.847 / 207.5051 |
+
+- The statistics pass is a line-by-line copy of `forward()` with the counting added. Its `w` is bit-identical to `forward()`'s for the same table (`np.array_equal`: True).
+- As a test before the σ/24 run, the same script reproduced all numbers of `run_fac8_small.txt` (σ/8, small set). That output is not committed.
+
+### Definitions, exactly as in the code
+
+- **Weights.** At step k the weight of node i is `m[i]`: the array `m` of `forward()` at the start of step k. That is the probability mass of the last transmitted value r = `nodes[i]`, i.e. the weights in `w[k] = m @ c`.
+  - Steps are the code indices k = 2, …, 4999 (`x[0]` is the first sample, always sent; `forward()`'s loop starts at k = 1, which is left out).
+  - `m` sums to 1 at every step (conservation to 1e-12), so every step carries the same total weight. The total is 4998.
+  - A "fraction" is weight / total weight. In item 4 it is weight / the weight of the restricted set.
+- **Facing edge.** The upper edge if `nodes[i] < x[k]`, the lower edge if `nodes[i] > x[k]`. The far edge is the other one. `nodes[i] == x[k]` is counted apart; its weight is 0 in every run here.
+- **Edge positions and rounding.** Everything is compared as integer node indices, padded by +1 as in `check_cert_min.py`.
+  - The **MIN edge** of node i is `i+1−M` (lower) and `i+1+M` (upper), with M = MIN·FAC. It is exact: r is a grid node and M is an integer, so no rounding enters.
+  - The **e-edge** is the stored code's candidate e, rounded outward exactly as `edge_idx()` does: `floor((x_k − eσ − lo0)/d + 1e-9) + 1` (lower) and `ceil((x_k + eσ − lo0)/d − 1e-9) + 1` (upper).
+  - The window edge actually used is the min (lower) or max (upper) of the two, as in `windows()`.
+- **Status of an edge.**
+  - "set by e": the rounded e-edge lies strictly beyond the MIN edge.
+  - "tie": the rounded e-edge is the MIN node itself, so the position is the same either way.
+  - "set by MIN": the code is None, or the e-edge lies strictly inside the MIN edge.
+- **Within "set by MIN", the split None / e-inside carries no information.** Every code whose e-edge lies inside gives the same value, and `argmax` keeps the first index (the smallest e). In the one-edge regions of `backward()` the unused edge code is None. Only the edge position is meaningful.
+- **Quantile q.** The smallest candidate value v whose cumulative weight fraction is ≥ q. The quantiles are therefore candidate values. The mean is the weighted mean of e over the cases with status "set by e".
+- **One-parameter rule.** Taken at the 4-decimal e printed in the run's rule line (1.5562 for MIN = 1), not re-solved. Its windows are `rule_win()` of `check_cert_min.py`, copied, because that function is local to the `__main__` block. Its E[N] and log det reproduce the printed line.
+
+### Results: σ/24, full set, MIN = 1 (`shape_fac24_full_min1.txt`)
+
+| item | quantity | round-3 table | one-parameter rule, e = 1.5562 |
+|---|---|---|---|
+| | log det J / E[N] (recomputed) | 207.6420 / 316.837 | 207.5051 / 316.847 |
+| 2 | facing edge set by a candidate e | **1** (exactly; tie 0, MIN 0) | 1 (exactly) |
+| 2 | facing e: weighted mean | **1.5804** | 1.5562 |
+| 2 | facing e: 5 / 25 / 50 / 75 / 95 % | **1.3 / 1.4 / 1.6 / 1.7 / 1.9** | 1.5562 (all) |
+| 2 | facing edge set by MIN (not by e) | **0** | 0 |
+| 3 | far edge exactly at the MIN distance (r ∓ 1σ) | **0.9167** (of which tie 0) | 0.9456 (of which tie 0.0041) |
+| 3 | far edge set by a candidate e | **0.0833** | 0.0544 |
+| 4 | fraction with abs(r − x_k) < σ | **0.1244** | 0.0999 |
+| 4 | facing e, abs(r − x_k) ≥ σ only: mean | **1.5638** | 1.5562 |
+| 4 | facing e, abs(r − x_k) ≥ σ only: 5 / 25 / 50 / 75 / 95 % | **1.3 / 1.4 / 1.6 / 1.7 / 1.9** | 1.5562 (all) |
+| 4 | facing edge set by MIN, abs(r − x_k) ≥ σ only | **0** | 0 |
+
+Further numbers from the same output (fractions of the weight named):
+
+**Far edge by distance.** The far edge is set by e only when abs(r − x_k) < σ.
+- abs(r − x_k) < σ: set by e in 0.6702 of that weight (table) and 0.5450 (rule, plus 0.0408 tie).
+- abs(r − x_k) ≥ σ: set by e in 0 of that weight, for both.
+- When the table's far edge is set by e: mean e 1.7174; quantiles 1.5 / 1.6 / 1.7 / 1.8 / 1.9.
+
+**Both edges set by e.** This happens in 0.0833 of all weight (table) and 0.0544 (rule). All of it is in abs(r − x_k) < σ.
+
+**Facing e, abs(r − x_k) < σ only (table).** Mean 1.6977; quantiles 1.5 / 1.6 / 1.7 / 1.8 / 1.9.
+
+**Facing e by side (table).**
+- r < x_k (facing = upper; 0.559 of the weight): mean 1.5571; quantiles 1.3 / 1.4 / 1.6 / 1.7 / 1.75.
+- r > x_k (facing = lower; 0.441): mean 1.6100; quantiles 1.3 / 1.5 / 1.6 / 1.7 / 1.9.
+
+**Weighted histogram of the facing e (table, status "set by e").** Fraction of the total weight W, and of the weight with abs(r − x_k) ≥ σ. Values with fraction < 1e-4 are left out (2.1: 2e-5). No e < 1 is ever chosen for the facing edge.
+
+| e | 1.0 | 1.1 | 1.2 | 1.25 | 1.3 | 1.4 | 1.5 | 1.6 | 1.7 | 1.75 | 1.8 | 1.9 | 2.0 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| all | 0.0015 | 0.0023 | 0.0094 | 0.0099 | 0.0480 | 0.2176 | 0.1046 | 0.2365 | 0.2001 | 0.0508 | 0.0565 | 0.0595 | 0.0033 |
+| abs(r−x_k) ≥ σ | 0.0018 | 0.0026 | 0.0106 | 0.0111 | 0.0542 | 0.2456 | 0.1006 | 0.2453 | 0.1966 | 0.0353 | 0.0421 | 0.0535 | 0.0007 |
+
+TASK_B_MIN025_PLACEHOLDER
+
+## Task C: where three earlier statements come from (no new computation)
+
+**Search scope.** I searched the round reports and prompts on every branch:
+- `reports_CN/report_round*_{CN,EN}.md` and `prompt_round*_EN.md` on `round10-…` to `round19-…`;
+- the round-19 README;
+- the "paper 1" input-design reports `code_8_3_stage2/stage2_pkg/stage{2,3,4}/*_report.md`, also present on this branch.
+
+**Notation.**
+- I is log det J at θ₀, in nat.
+- I_full is log det of the full-sampling information (every sample sent).
+- c = I − I_full is the information *lost* relative to full sampling.
+- All inputs: four fixed frequencies ω = (3√2, 3π, 12, 12.3) rad/s, offset a₀ = 1, total power Σ a_m² = 1, budget B = 316.892, K = 5000.
+- No report uses a peak or amplitude constraint.
+
+### (i) "with a constant threshold, different inputs give information that differs by 1 to 2 nat"
+
+**No report contains this sentence**, nor "1 to 2 nat" or "1–2 nat". The two closest sources both measure the spread of **c_sod = I_SoD − I_full**, not of I_SoD:
+
+**(a) Round 13 Part A.**
+- Where: `reports_CN/report_round13_partA_CN.md` (+ EN copy), branch `round13-input-trigger`, §1 "Verdict" and §4 "Constant-SoD contrast".
+- Statement: *"Under the matched constant SoD, c_sod ranges over 0.976 nat."*
+- Inputs: six hand-picked inputs.
+  - U: uniform amplitudes, zero phases.
+  - SCH: uniform amplitudes, Schroeder phases.
+  - P5514: paper 1's input (powers within 1 % of uniform, optimised phases).
+  - LO: powers (0.4, 0.3, 0.2, 0.1), zero phases.
+  - HI: powers (0.1, 0.2, 0.3, 0.4), zero phases.
+  - N: paper 1's best input without a budget (skewed powers, optimised phases).
+- Trigger: constant SoD with the threshold **re-tuned per input** ("matched SoD").
+  - The half-width is an integer M\* on the σ/24 lattice, M\*/σ = 17.25 … 27.13.
+  - The resulting E[N] is 316.65 … 317.14 on σ/120, i.e. within ±0.25 of B, not exactly B.
+- Evaluation: grid density recursion, σ/120.
+- Numbers:
+  - c_sod from −22.062 (LO) to −21.085 (P5514): range **0.976 nat**;
+  - pairwise: I_SoD(SCH) − I_SoD(U) = +0.650, I_SoD(P5514) − I_SoD(U) = +0.721, c_sod(LO) − c_sod(HI) = −0.819 nat.
+- The I_SoD column of the §2 table runs from 195.9725 (LO) to 197.9226 (P5514), a range of 1.950 nat. This is my subtraction; the report does not state this range.
+
+**(b) Round 16.**
+- Where: `reports_CN/report_round16_CN.md` (+ EN copy), branch `round16-random-inputs`; "Conclusion", §1 Q2, §2 table.
+- Statement: over 200 random inputs, c_sod has sd **0.561 nat**, 5–95 % range **1.889 nat**, min–max 2.677 nat.
+- Inputs: 200 random inputs, varying powers and phases.
+  - Powers p ~ Dirichlet(1, 1, 1, 1) with Σp = 1, accepted only if min p ≥ 0.02 (77 of 277 draws rejected).
+  - Phases independent and uniform on [0, 2π).
+  - Frequencies fixed.
+- Trigger: constant SoD with the threshold **re-tuned per input**.
+  - Runs at Δ/σ ∈ {12, 16, 20, 24, 28, 34}, extended to 8 for 13 inputs, plus the 1/3 and 2/3 points of the bracketing interval.
+  - Linear interpolation to E[N] = B exactly.
+- Evaluation: Monte Carlo of the continuous trigger, R = 2000 trajectories, the same noise seed (20261113) for every input.
+
+**Reading.**
+- "1 to 2 nat" fits (a) at the low end (0.976, range over six inputs) and (b) at the high end (1.889, 5–95 % range over 200 random inputs).
+- The setting is therefore **ambiguous** in three ways:
+  - which set of inputs;
+  - which spread measure (range of six, 5–95 %, or min–max 2.68);
+  - "information" in the statement is in both sources the information *lost*, c_sod, not I_SoD.
+- In Round 16 the two differ a lot. From the archived per-input values in `round16/results/round16.json` (no simulation, my arithmetic): I_SoD − I_SoD(U) has a 5–95 % range of 4.84 nat and a min–max of 8.09 nat, mostly because I_full itself varies by 4.49 nat (5–95 %) when the powers vary.
+
+### (ii) "with the one-parameter rule the spread is about 0.17 nat"
+
+- Where: Round 16 report (same file as (i)(b)): "Conclusion", first bullet; §1 Q1; §2 table, row c_rule.
+- Statement: *"c_rule … has a standard deviation of 0.053 nat and a 5–95 % range of 0.172 nat"*. Precisely: 5–95 % range **0.1717 nat** (−11.5897 … −11.4180); min–max 0.247 nat; worst case 0.125 nat from the median.
+- Inputs: the same 200 random inputs as (i)(b).
+- Trigger: the one-parameter rule lo = min(x_k − eσ, r − σ), hi = max(x_k + eσ, r + σ), continuous, with the true model.
+- **e re-tuned per input to the budget:** runs at e ∈ {1.52, 1.56, 1.60, 1.64} and linear interpolation to E[N] = B. e_fit is 1.557 … 1.591 (5–95 %: 1.561 … 1.588).
+- Evaluation: Monte Carlo, R = 2000, seed 20261113 for every input.
+- Quantity: **c_rule = I_rule − I_full** (nat), again the information lost, not I_rule. From the archive (my arithmetic), I_rule − I_rule(U) has a 5–95 % range of 4.60 nat.
+- Comparison in the same report, same inputs, same spread measure: c_sod 1.889 nat; the ratio is 0.091.
+- Related, smaller sets:
+  - Round 14 report (`reports_CN/report_round14_CN.md`, branch `round14-one-parameter-rule`, §1 Q5): range of c_rule over the six Round-13 inputs **0.117 nat**. That is the σ/120 lattice rule, fitted per input with `fit_rule`, so E[N] is 0.29–1.03 below B.
+  - Round 16's Monte Carlo re-run of the same six gives 0.104 nat.
+  - The phase-only subset of Round 16 (50 phase vectors, uniform power) gives 0.050 nat (c_sod: 0.606).
+
+### (iii) "tuning amplitudes and phases at fixed frequencies gains at most +0.70; the best of 200 random inputs gains +0.77"
+
+**+0.70: paper 1's input design under constant SoD.**
+
+Where:
+- `code_8_3_stage2/stage2_pkg/stage2/stage2_report.md`, §3 Tables B and C: NM-none-P5514, Δm_D^(C) = +0.689 (se 0.008) at R = 2000;
+- `stage4/stage4_report.md`, confirmation at R = 8000: NM-none-P5514 **+0.700 [+0.684, +0.717]**;
+- grid re-evaluation +0.7013 (`evaluator/round2a/report_recheck_bounds_CN.md`, `evaluator_fast`, n = 24);
+- in Round 13 Part A, "SoD at Δ\*" column: 197.9022 − 197.2010 = +0.701, E[N] 316.47;
+- quoted as "paper 1 gained only 0.70 nat by designing the input" in `reports_CN/prompt_round13_partA_input_invariance_EN.md` §1.
+
+Setting:
+- **What was varied:** amplitudes a_m = √p_m with p = softmax(z₁, z₂, z₃, 0), i.e. total power Σ a_m² = 1, and the four phases. The four frequencies were fixed.
+- **Threshold:** constant SoD at the **fixed** threshold Δ\* = 0.002384694 (σ = Δ\*/20), **not re-tuned** per input.
+- **Budget:** enters as a constraint. A candidate qualifies if its expected number of sends is not above the uniform input's at Δ\*, by a paired test (`mc85_post.py::qual`: ok / over / undecided).
+- **Criterion:** Δm_D^(C) = log det J(candidate) − log det J(uniform) on common random numbers, in nat.
+- **Search size:**
+  - stage 2: 4458 screened candidates (stage-1 amplitude and phase grids plus 3000 random LHS inputs), 40 refined at R = 2000, Nelder–Mead from several starts;
+  - stage 4: 48 budgeted and 10 unbudgeted Nelder–Mead runs, 17 331 evaluations; 21 candidates re-evaluated at R = 8000.
+- **The winner:** NM-none-P5514 has powers (0.252, 0.251, 0.252, 0.245) and phases (5.140, 5.338, 1.097, 4.207). Its amplitude part is +0.011 ± 0.007 nat; its phase-only projection gives +0.678.
+
+"At most" is **not** what the reports claim:
+- they call it "the best evaluated candidate" and say "nothing here is a global optimum";
+- stage 4's further budgeted search improved the incumbent by only +0.0004 (se 0.0010);
+- without the budget constraint, the 10 unbudgeted endpoints reach +1.79 … +2.11 nat, with 90–109 more sends than the uniform input (stage 4, P2.1).
+
+**+0.77: not stated in any report text.** The only matching number is in the Round 16 archive, `code_8_3_stage2/stage2_pkg/evaluator/round16/results/round16.json` (branch `round16-random-inputs`):
+
+`records.random.r187.derived.I_SoD − records.anchors.U.derived.I_SoD` = 197.9746 − 197.2045 = **+0.7701 nat**.
+
+- That is the largest I_SoD among the 200 random inputs, relative to U, under the **re-tuned** constant SoD of (i)(b): E[N] = B by interpolation, Δ_fit = 13.94σ for r187 against 20.00σ for U. Monte Carlo, R = 2000.
+- r187: p = (0.128, 0.274, 0.362, 0.235), χ = (1.256, 1.549, 1.754, 4.435).
+- Next best: r066 +0.674, r160 +0.646. 16 of the 200 have I_SoD > I_SoD(U).
+- This number is my reading of archived values (a subtraction), not a reported result.
+- The Round 16 report itself gives c_sod − c_sod(U), whose maximum is +2.077 (§2). That is a different quantity, the information lost, and should not be confused with +0.77.
+- Under the rule, r187 is 0.487 nat **below** U (I_full is 0.530 below U).
+
+**The two numbers are not on the same footing.**
+- +0.70 is at the fixed threshold Δ\* with the budget as an inequality; +0.77 is at a threshold re-tuned per input to E[N] = B.
+- On the re-tuned footing, P5514 is +0.721 (Round 13, σ/120) and +0.714 (Round 16 Monte Carlo, same seed as r187).
+- So with the same seed, the best random input exceeds P5514 by 0.770 − 0.714 = 0.056 nat. Round 16 did not measure the Monte Carlo noise of such a difference; the single-input noise is sd 0.0076 nat without common random numbers.
+- The random inputs vary powers and phases; the "+0.70" search did too, but over a far larger number of candidates and under the fixed-threshold budget constraint.
