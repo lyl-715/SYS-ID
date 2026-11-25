@@ -36,3 +36,21 @@ constant SoD: E[N] = 316.8952, log det J = 197.2004, mass 1.000000000000   (5 s)
   lambda/gbar =   3.0000: E[N] =   308.964  log det J =  207.4804  V* = 3.023963  forward score = 3.023963 (diff -9.4e-14)  bound = 207.7034  (3362 s)
   lambda/gbar =   2.1000: E[N] =   608.424  log det J =  211.3542  V* = 5.574006  forward score = 5.574006 (diff +4.9e-13)  bound = 208.4201  (3514 s)
   lambda/gbar =   2.5500: E[N] =   432.046  log det J =  209.4503  V* = 4.084880  forward score = 4.084880 (diff +4.3e-13)  bound = 207.8477  (3670 s)
+  lambda/gbar =   2.7750: E[N] =   365.654  log det J =  208.4830  V* = 3.510166  forward score = 3.510166 (diff +2.8e-13)  bound = 207.7313  (3817 s)
+  lambda/gbar =   2.8875: E[N] =   335.186  log det J =  207.9649  V* = 3.256186  forward score = 3.256186 (diff +4.9e-14)  bound = 207.7065  (3963 s)
+  lambda/gbar =   2.9438: E[N] =   320.688  log det J =  207.7020  V* = 3.137688  forward score = 3.137688 (diff -1.2e-13)  bound = 207.7025  (4111 s)
+  lambda/gbar =   2.9719: E[N] =   314.338  log det J =  207.5831  V* = 3.080299  forward score = 3.080299 (diff -2.1e-13)  bound = 207.7024  (4261 s)
+  lambda/gbar =   2.9578: E[N] =   317.334  log det J =  207.6394  V* = 3.108848  forward score = 3.108848 (diff -1.7e-13)  bound = 207.7023  (4407 s)
+  lambda/gbar =   2.9648: E[N] =   315.808  log det J =  207.6107  V* = 3.094538  forward score = 3.094538 (diff -1.9e-13)  bound = 207.7024  (4554 s)
+  lambda/gbar =   2.9613: E[N] =   316.624  log det J =  207.6260  V* = 3.101684  forward score = 3.101684 (diff -1.5e-13)  bound = 207.7023  (4701 s)
+  lambda/gbar =   2.9596: E[N] =   316.972  log det J =  207.6326  V* = 3.105264  forward score = 3.105264 (diff -1.1e-13)  bound = 207.7023  (4851 s)
+  best feasible table: log det J = 207.6260 (+10.4256), E[N] = 316.624
+  upper bound for the class: 207.7023 (+10.5019);  gap = 0.0764
+
+== other SoD-class triggers at the same budget, against the smallest bound 207.7023 ==
+  constant SoD                      197.2004   below bound: True
+  table                             207.2876   below bound: True
+  table                             207.5591   below bound: True
+  table                             207.6260   below bound: True
+  one-parameter rule, e = 1.5366:   207.4941 (+10.2937), E[N] = 316.818   below bound: True
+time 4901 s

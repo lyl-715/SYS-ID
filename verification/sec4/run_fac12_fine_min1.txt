@@ -1,0 +1,5 @@
+grid sigma/12: 14070 nodes; candidates per side: 56 (55 values + None)
+MIN = 1 sigma (12 nodes)
+constant SoD: E[N] = 316.8952, log det J = 197.2004, mass 1.000000000000   (6 s)
+
+== tangent point: J of constant SoD (log det 197.2004); check sum_k w_k gamma_k = p: 9.000000 ==
