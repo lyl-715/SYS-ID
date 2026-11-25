@@ -5,3 +5,5 @@ constant SoD: E[N] = 316.8922, log det J = 197.2010, mass 1.000000000000   (9 s)
 == tangent point: J of constant SoD (log det 197.2010); check sum_k w_k gamma_k = p: 9.000000 ==
   lambda/gbar =   3.0000: E[N] =   335.425  log det J =  207.7284  V* = 11.599714  forward score = 11.599714 (diff -5.8e-13)  bound = 220.2883  (302 s)
   lambda/gbar =   4.5000: E[N] =   127.585  log det J =  201.4192  V* = 4.732374  forward score = 4.732374 (diff -1.5e-12)  bound = 223.6499  (597 s)
+  lambda/gbar =   3.7500: E[N] =   204.493  log det J =  204.5653  V* = 7.347157  forward score = 7.347157 (diff -1.2e-12)  bound = 221.1502  (890 s)
+  lambda/gbar =   3.3750: E[N] =   260.367  log det J =  206.1313  V* = 9.209856  forward score = 9.209856 (diff -2.1e-12)  bound = 220.4557  (1181 s)

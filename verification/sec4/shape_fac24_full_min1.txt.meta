@@ -1,0 +1,9 @@
+cmd: python3 check_shape.py 24 full 1 run_fac24_full.txt shape_fac24_full_min1.npz
+start: 2026-11-25T19:32:38
+end: 2026-11-25T19:47:42
+wall_s: 904.4
+cpu_user_s: 735.5
+cpu_sys_s: 155.6
+peak_rss_MB: 391.4
+exit_code: 0
+threads: OMP/OPENBLAS/MKL_NUM_THREADS=1
