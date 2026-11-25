@@ -37,7 +37,7 @@ if len(sys.argv) < 5:
     sys.exit(__doc__)
 FAC_s, SET_s, MIN_s, RUNFILE = sys.argv[1:5]
 OUT = sys.argv[5] if len(sys.argv) > 5 else None
-MODULE = sys.argv[6] if len(sys.argv) > 6 else ('check_cert_fine' if SET_s == 'fine' else 'check_cert_min')
+MODULE = sys.argv[6] if len(sys.argv) > 6 else ('check_cert_fine' if SET_s in ('fine', 'fineplus') else 'check_cert_min')
 sys.argv = [MODULE + '.py', FAC_s, SET_s, '5', '3', MIN_s]
 import importlib                                  # noqa: E402
 cc = importlib.import_module(MODULE)              # prints the grid and MIN lines

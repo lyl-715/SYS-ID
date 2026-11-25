@@ -20,6 +20,8 @@ check_cert_fine.py: copy of check_cert_min.py with one addition, the candidate s
   E = [-2.0, -1.9, ..., 2.9, 3.0] (step 0.1, 51 values) + [3.5, 4, 5, 6]   (55 values + None = 56 codes per side).
 A negative e puts the e-edge on the near side of the predicted output (between x_k and r); the edge formulas
 above are unchanged, so the window still contains [r - MIN sigma, r + MIN sigma]. Everything else is unchanged.
+SET = 'fineplus' (added afterwards, as a control): the union of 'fine' and 'full' (59 values + None), because
+'fine' does not contain the 'full' values 0.75, 1.25, 1.75, 2.25. The 'full' and 'fine' branches are unchanged.
 """
 import numpy as np, sys, time
 from scipy.special import ndtr
@@ -39,6 +41,9 @@ elif SET == 'full':   # the 30 finite candidate values listed in the 9 Nov draft
     E = sorted(set([0.5, 0.75] + [round(1.0+0.1*i, 1) for i in range(21)] + [3.5, 4, 5, 6] + [1.25, 1.75, 2.25]))
 elif SET == 'fine':   # finer and wider: -2.0 ... 3.0 in steps of 0.1, plus 3.5, 4, 5, 6
     E = [round(-2.0+0.1*i, 1) for i in range(51)] + [3.5, 4, 5, 6]
+elif SET == 'fineplus':   # extra control (not requested): union of 'fine' and 'full' (adds 0.75, 1.25, 1.75, 2.25)
+    E = sorted(set([round(-2.0+0.1*i, 1) for i in range(51)] + [3.5, 4, 5, 6]
+                   + [0.5, 0.75] + [round(1.0+0.1*i, 1) for i in range(21)] + [3.5, 4, 5, 6] + [1.25, 1.75, 2.25]))
 E = np.array(E); nE = len(E) + 1          # last index = None
 
 # ---------------- model ----------------
