@@ -1,0 +1,4 @@
+grid sigma/24: 28138 nodes; candidates per side: 31 (30 values + None)
+MIN = 0.25 sigma (6 nodes)
+module: check_cert_min.py
+constant SoD: E[N] = 316.8922, log det J = 197.2010   (run: E[N] = 316.8922, log det J = 197.2010; equal to the printed digits: True)   (9 s)

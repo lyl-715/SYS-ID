@@ -3,3 +3,4 @@ MIN = 0.25 sigma (3 nodes)
 constant SoD: E[N] = 316.8952, log det J = 197.2004, mass 1.000000000000   (7 s)
 
 == tangent point: J of constant SoD (log det 197.2004); check sum_k w_k gamma_k = p: 9.000000 ==
+  lambda/gbar =   3.0000: E[N] =   341.748  log det J =  207.8567  V* = 11.761640  forward score = 11.761640 (diff -1.2e-13)  bound = 220.4515  (398 s)

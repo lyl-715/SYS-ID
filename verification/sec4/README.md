@@ -284,7 +284,102 @@ Same environment, same wrapper (`runlog.py`, BLAS/OpenMP threads pinned to 1). `
 `check_cert_min.py` were not modified; all new code is in new files (`check_shape.py`, `make_shape_fig.py`).
 Nothing was tuned.
 
-TASK_A_PLACEHOLDER
+## Task A: σ/24, full set, smaller minimum distance MIN (`check_cert_min.py`, unchanged)
+
+**Commands.** Each was started as its own background process at 19:27 UTC through the wrapper, e.g.
+`python3 runlog.py run_fac24_full_min05.txt python3 check_cert_min.py 24 full 5 3 0.5`. None of the three
+outputs existed before, so none was skipped. None was stopped early; all exited with code 0 and empty stderr.
+
+**CPU sharing.** The three runs shared the 4 vCPUs with:
+- `check_shape.py` (MIN = 1), 19:32–19:47;
+- the Task D reproduction run, 20:46–22:08;
+- the two Task D `fine` runs, from 22:08.
+
+So the wall times include contention.
+
+### `python3 check_cert_min.py 24 full 5 3 0.5`  →  `run_fac24_full_min05.txt`
+
+- grid sigma/24 (28138 nodes); candidate set: 30 values + None; MIN = 0.5 sigma (12 nodes)
+- constant SoD: E[N] = 316.8922, log det J = 197.2010
+
+| round | tangent point | best feasible table: log det J | E[N] | upper bound | gap | max abs(diff) in round |
+|---|---|---|---|---|---|---|
+| 1 | constant SoD | 207.3677 (+10.1667) | 316.820 | 220.2724 (+23.0715) | 12.9047 | 2.9e-12 |
+| 2 | table of round 1 | 207.6424 (+10.4414) | 316.874 | 207.9956 (+10.7947) | 0.3532 | 5.9e-13 |
+| 3 | table of round 2 | 207.7297 (+10.5287) | 316.866 | 207.8098 (+10.6089) | 0.0801 | 5.1e-13 |
+
+- largest abs(diff) between V* and the forward score, all 33 backward passes: 2.9e-12
+- one-parameter rule: `one-parameter rule, e = 1.5761:   207.5762 (+10.3753), E[N] = 316.828   below bound: True`
+- 'below bound' entries: 5, all True: True
+- wall time: 10014 s (script); wrapper: 10015.0 s wall, 8030.5 s user CPU, peak RSS 664.4 MB, exit code 0, stderr 0 bytes
+
+### `python3 check_cert_min.py 24 full 5 3 0.25`  →  `run_fac24_full_min025.txt`
+
+- grid sigma/24 (28138 nodes); candidate set: 30 values + None; MIN = 0.25 sigma (6 nodes)
+- constant SoD: E[N] = 316.8922, log det J = 197.2010
+
+| round | tangent point | best feasible table: log det J | E[N] | upper bound | gap | max abs(diff) in round |
+|---|---|---|---|---|---|---|
+| 1 | constant SoD | 207.3920 (+10.1910) | 316.588 | 220.4544 (+23.2535) | 13.0625 | 2.6e-12 |
+| 2 | table of round 1 | 207.6707 (+10.4697) | 316.875 | 208.0420 (+10.8410) | 0.3712 | 5.5e-13 |
+| 3 | table of round 2 | 207.7610 (+10.5600) | 316.767 | 207.8511 (+10.6502) | 0.0902 | 6.0e-13 |
+
+- largest abs(diff) between V* and the forward score, all 33 backward passes: 2.6e-12
+- one-parameter rule: `one-parameter rule, e = 1.5844:   207.6065 (+10.4055), E[N] = 316.804   below bound: True`
+- 'below bound' entries: 5, all True: True
+- wall time: 10118 s (script); wrapper: 10119.5 s wall, 8113.4 s user CPU, peak RSS 663.9 MB, exit code 0, stderr 0 bytes
+
+### `python3 check_cert_min.py 24 full 5 3 0.125`  →  `run_fac24_full_min0125.txt`
+
+- grid sigma/24 (28138 nodes); candidate set: 30 values + None; MIN = 0.125 sigma (3 nodes)
+- constant SoD: E[N] = 316.8922, log det J = 197.2010
+
+| round | tangent point | best feasible table: log det J | E[N] | upper bound | gap | max abs(diff) in round |
+|---|---|---|---|---|---|---|
+| 1 | constant SoD | 207.4074 (+10.2064) | 316.732 | 220.5368 (+23.3358) | 13.1294 | 2.8e-12 |
+| 2 | table of round 1 | 207.6720 (+10.4710) | 316.288 | 208.0632 (+10.8623) | 0.3912 | 6.7e-13 |
+| 3 | table of round 2 | 207.7612 (+10.5602) | 316.053 | 207.8705 (+10.6695) | 0.1093 | 6.0e-13 |
+
+- largest abs(diff) between V* and the forward score, all 33 backward passes: 2.8e-12
+- one-parameter rule: `one-parameter rule, e = 1.5889:   207.6217 (+10.4208), E[N] = 316.816   below bound: True`
+- 'below bound' entries: 5, all True: True
+- wall time: 10159 s (script); wrapper: 10160.3 s wall, 8159.6 s user CPU, peak RSS 664.6 MB, exit code 0, stderr 0 bytes
+
+### Effect of MIN at σ/24, full set (round 3)
+
+| MIN (σ) | best table | its E[N] | change vs MIN = 1 | smallest bound | change vs MIN = 1 | gap | one-parameter rule |
+|---|---|---|---|---|---|---|---|
+| 1 | 207.6420 | 316.837 | — | 207.7114 | — | 0.0693 | 207.5051 (e = 1.5562) |
+| 0.5 | 207.7297 | 316.866 | +0.0877 | 207.8098 | +0.0984 | 0.0801 | 207.5762 (e = 1.5761) |
+| 0.25 | 207.7610 | 316.767 | +0.1190 | 207.8511 | +0.1397 | 0.0902 | 207.6065 (e = 1.5844) |
+| 0.125 | 207.7612 | **316.053** | +0.1192 | 207.8705 | +0.1591 | 0.1093 | 207.6217 (e = 1.5889) |
+
+Grid effect at equal MIN (σ/24 − σ/12):
+
+| MIN (σ) | best table | bound |
+|---|---|---|
+| 1 | +0.0160 | +0.0091 |
+| 0.5 | +0.0201 | +0.0084 |
+| 0.25 | +0.0091 | +0.0090 |
+
+Observations, as measured (nothing tuned):
+1. **The bound rises monotonically as MIN decreases** (the class grows): 207.7114, 207.8098, 207.8511, 207.8705. In every run the smallest bound is the round-3 bound.
+2. **The best table at MIN = 0.125 is only +0.0002 above MIN = 0.25. This comparison is affected by unused budget.**
+   - The MIN = 0.125 round-3 best feasible table has E[N] = 316.053, 0.84 transmissions below B = 316.8922.
+   - The last λ evaluated in that round (λ/γ̄ = 3.0674) gave E[N] = 316.895. That is 0.003 *above* B, so it is infeasible, with log det 207.7781.
+   - The search then stopped at its fixed maximum of 11 evaluations per round.
+   - The round-2 table of this run, the round-3 tangent point, also sits 0.60 below B (E[N] = 316.288).
+   - The other runs' best tables are within 0.13 of B.
+   - Nothing was re-run. The table value at MIN = 0.125 is therefore a lower bound for what the class reaches at this budget on this grid. The upper bound does not depend on which table is feasible.
+3. **The gap after three tangent-point rounds grows as MIN decreases:** 0.0693, 0.0801, 0.0902, 0.1093. Part of the MIN = 0.125 gap is item 2.
+4. **Tables above the MIN = 1 bound.**
+   - The MIN = 0.5, 0.25 and 0.125 tables lie above the MIN = 1 bound (207.7114) by 0.0183, 0.0496 and 0.0498.
+   - They lie above the repository's σ/24 certificate 207.7146 by 0.0151, 0.0464 and 0.0466.
+   - As in the first batch, this does not contradict the MIN = 1 bound, which covers only edges at least 1σ from r.
+5. **One-parameter rule.** e rises from 1.5562 to 1.5889 as MIN goes from 1 to 0.125. Its log det rises by +0.0711, +0.1014, +0.1166 relative to MIN = 1.
+6. **Grid.** At MIN = 0.5 and 0.25 the step from σ/12 to σ/24 changes the bound by +0.0084 and +0.0090, about as at MIN = 1 (+0.0091).
+7. **Checks.** max abs(diff) ≤ 2.9e-12 in every run; all 5 "below bound" entries True in every run.
+8. **Wall time and memory.** 10015 s, 10120 s and 10160 s (≈ 2.8 h each, shared CPUs); peak RSS 664 MB each.
 
 ## Task B: shape of the constructed trigger (`check_shape.py`)
 
