@@ -1,3 +1,4 @@
 grid sigma/24: 28138 nodes; candidates per side: 31 (30 values + None)
 MIN = 1 sigma (24 nodes)
 constant SoD: E[N] = 316.8922, log det J = 197.2010   (run: E[N] = 316.8922, log det J = 197.2010; equal to the printed digits: True)   (9 s)
+round 1: replayed 11 lambdas, best feasible = entry 11, lambda/gbar = 3.0146484375 (printed 3.0146);  recomputed E[N] = 316.841, log det J = 207.3086, V* = 11.036084  (run: 316.841, 207.3086, 11.036084);  equal to the printed digits: True   (299 s)
