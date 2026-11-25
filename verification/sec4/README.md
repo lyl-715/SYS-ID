@@ -487,3 +487,55 @@ Setting:
 - On the re-tuned footing, P5514 is +0.721 (Round 13, σ/120) and +0.714 (Round 16 Monte Carlo, same seed as r187).
 - So with the same seed, the best random input exceeds P5514 by 0.770 − 0.714 = 0.056 nat. Round 16 did not measure the Monte Carlo noise of such a difference; the single-input noise is sd 0.0076 nat without common random numbers.
 - The random inputs vary powers and phases; the "+0.70" search did too, but over a far larger number of candidates and under the fixed-threshold budget constraint.
+
+### (iv) How the allocation problem behind 209.07 (bracket 209.0685–209.0722) was originally solved
+
+**Where.**
+- Branch `round10-upper-bound`, Round 10 (commit `94d92af`, 2026-11-07).
+- Code: `code_8_3_stage2/stage2_pkg/evaluator/round10/ub.py`, driven by `round10/run_round10.py` (`main()`, section "§3 solves").
+- Plan: `reports_CN/plan_round10_logdet_upper_bound_EN.md` §2.
+- Report: `reports_CN/report_round10_CN.md` (+ EN copy), §1 table and §7 DECISIONs 10-1, 10-2, 10-4, 10-6.
+- Log: `round10/logs/run_round10.log`, lines 41–67. Results: `round10/results/round10.json["budgets"]["B316"]`.
+
+**Problem** (`ub.py` docstring and `Problem` class).
+- UB(B) = max_q f(q), with f(q) = log det(σ⁻²[h₁h₁ᵀ + Σ_{k≥2} c_max(q_k) h_k h_kᵀ]) over C = {0 ≤ q_k ≤ 1, Σ_{k≥2} q_k ≤ B − 1}.
+- c_max(q) = q + 2aφ(a) with a = Φ⁻¹(1 − q/2) (functions `c_max`, `dc_max`; dc/dq = a²).
+- f is concave.
+- The gradient is analytic: γ_k·a_k², with γ_k = σ⁻² h_kᵀ J⁻¹ h_k from one Cholesky factor (`Problem.fg`, `Problem.gamma`).
+
+**Main solver: `ub.solve()`, a hand-written projected gradient ascent** (no `scipy.optimize`).
+- Start: uniform q = (B − 1)/(K − 1).
+- Direction: d = P_C(q + t g) − q.
+  - The projection is `ub.project()`: clip(y − τ, 0, 1), with τ found by bisection (at most 200 steps), returning the feasible end of the bracket.
+- Step size t: Barzilai–Borwein, alternating BB1/BB2, clipped to [1e-12, 1e12]; t₀ = 0.1·mean(q)/mean|g|.
+- Damping: s = 0.99 if the projected point touches 0 or 1, else 1.
+- Armijo backtracking s ← s/2 with parameter 1e-4.
+- `max_iter` = 20000.
+- **Stopping rule: certificate gap U_cert − f(q̂) ≤ `tol` = 0.01 nat** (`TOL_GAP` in `run_round10.py`; plan §2).
+- **Certificate: `ub.u_cert()` / `ub.lin_max()`.** U_cert = f(q̂) + max_{v∈C} ∇f(q̂)ᵀ(v − q̂), the tangent plane of the concave f.
+  - The inner maximum is solved exactly by sorting the gradient and filling to the budget.
+  - So [f(q̂), U_cert] brackets UB.
+
+**Result at B = 316.8921168493721.**
+- 5 iterations, 6 function evaluations, 0.01 s.
+- No damping, backtracking or step shrink was triggered.
+- f(q̂) = **209.0685398686887**, U_cert = **209.07220154478713**, gap 3.66e-3.
+- This is the bracket 209.0685–209.0722.
+
+**Cross-check: `ub.kkt_fixed_point()` with `ub.water_fill()` and `ub._inv_dc_sym()`** (DECISION 10-1).
+- With J fixed, q_k(λ) = 2Φ̄(√(λ/γ_k)).
+- λ by 100 bisection steps on log λ ∈ [−60, 20], so that Σq = B − 1.
+- Damped update q ← ½q + ½q_new.
+- Stop at max|Δq| ≤ 1e-13: 39 iterations, final max|Δq| = 7.1e-14.
+- Result: f = 209.06854028327803, with its own certificate gap 4.8e-13.
+- Pass criterion: |f_KKT − f_PGA| ≤ 0.01; actual +4.1e-7.
+- The report gives this tight interval only as a supplement (DECISION 10-6). The main result stays the projected-gradient bracket.
+
+**Libraries.**
+- Python 3.13.18, numpy 2.5.3, scipy 1.18.1, from the log header. numba 0.68.0 is loaded by the driver for the frozen round-4 evaluator, not by `ub.py`.
+- scipy is used only for `scipy.stats.norm` (`isf`, `pdf`, `ppf`, `sf`, `cdf`), `scipy.special.erfcx` (one-sided variant only) and `scipy.linalg.cholesky` / `solve_triangular`.
+- No general-purpose optimiser (scipy.optimize, cvxpy, …) is used.
+
+**Relation to Task 1 of the first batch.**
+- `check_interval.py` re-solved the same problem independently with its own fixed-point iteration on a_k² γ_k = const: 34 iterations, 209.06855.
+- That matches the KKT value 209.068540, and lies inside the Round 10 bracket.
