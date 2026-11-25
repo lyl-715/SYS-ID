@@ -1,0 +1,10 @@
+grid sigma/12: 14070 nodes; candidates per side: 56 (55 values + None)
+MIN = 1 sigma (12 nodes)
+1. codes per side nE = 56; largest code 55 <= 127 (int8): True
+2. over k = 1..4999: a.min() is the lower edge of the largest e (6): True; b.max() is its upper edge: True; negative-e edges on the near side of x_k: True
+3. k0 =    1 (x = +1.929047): g1 @ V  region 0.010143878147191  brute 0.010143878147191  diff +0.0e+00;  max |value at chosen codes - brute max|: step 2 0.0e+00, step 1 0.0e+00   (12 s)
+3. k0 = 4974 (x = +2.065340): g1 @ V  region 0.010957061311258  brute 0.010957061311258  diff +0.0e+00;  max |value at chosen codes - brute max|: step 2 0.0e+00, step 1 0.0e+00   (19 s)
+3. k0 =  777 (x = +2.052509): g1 @ V  region 0.004180783647044  brute 0.004180783647044  diff +0.0e+00;  max |value at chosen codes - brute max|: step 2 0.0e+00, step 1 0.0e+00   (26 s)
+3. k0 = 2500 (x = +1.985404): g1 @ V  region 0.000456841839898  brute 0.000456841839898  diff +0.0e+00;  max |value at chosen codes - brute max|: step 2 0.0e+00, step 1 0.0e+00   (32 s)
+3. k0 = 4321 (x = +1.966378): g1 @ V  region 0.007093983464431  brute 0.007093983464431  diff +0.0e+00;  max |value at chosen codes - brute max|: step 2 0.0e+00, step 1 0.0e+00   (39 s)
+worst abs difference over all tested steps: 0.0e+00

@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """Shape of the constructed trigger (Task B).
 
-usage: check_shape.py FAC SET MIN RUNFILE [OUT.npz]
+usage: check_shape.py FAC SET MIN RUNFILE [OUT.npz] [MODULE]
 
-Imports check_cert_min.py (unchanged) with arguments FAC SET 5 3 MIN, then
+Imports MODULE (default: check_cert_fine for SET = fine, else check_cert_min; both unchanged) with arguments
+FAC SET 5 3 MIN, then
   1. recomputes the constant-SoD baseline and, round by round, the best feasible table of the run RUNFILE
      (stdout of check_cert.py / check_cert_min.py with the same FAC SET 5 3 MIN). The tangent point of
      round r+1 is J of the best table of round r, so all three rounds are recomputed, with ONE backward
@@ -36,8 +37,11 @@ if len(sys.argv) < 5:
     sys.exit(__doc__)
 FAC_s, SET_s, MIN_s, RUNFILE = sys.argv[1:5]
 OUT = sys.argv[5] if len(sys.argv) > 5 else None
-sys.argv = ['check_cert_min.py', FAC_s, SET_s, '5', '3', MIN_s]
-import check_cert_min as cc                      # noqa: E402  (prints the grid and MIN lines)
+MODULE = sys.argv[6] if len(sys.argv) > 6 else ('check_cert_fine' if SET_s == 'fine' else 'check_cert_min')
+sys.argv = [MODULE + '.py', FAC_s, SET_s, '5', '3', MIN_s]
+import importlib                                  # noqa: E402
+cc = importlib.import_module(MODULE)              # prints the grid and MIN lines
+print(f"module: {MODULE}.py", flush=True)
 
 t0 = time.time()
 K, n, idx, M, E, nE, BIG = cc.K, cc.n, cc.idx, cc.M, cc.E, cc.nE, cc.BIG
@@ -63,10 +67,13 @@ assert len(runs) == 3, "RUNFILE does not contain three complete rounds"
 rule_e_s = re.search(r"one-parameter rule, e = ([\d.]+):\s+([\d.]+) \(\+[\d.]+\), E\[N\] = ([\d.]+)", txt)
 
 # ---------------- statistics ----------------
-def new_hist(nv):
+LOW_NAMES = ("facing e < 0", "facing 0 <= e < 0.5", "far e < 0", "far 0 <= e < 0.5",
+             "either edge e < 0", "either edge e < 0.5", "either edge e < 0.5 incl. ties")
+def new_hist(nv, values):
     # axes: side (0: r < x_k, 1: r > x_k, 2: r == x_k), near (|r - x_k| < sig), status (e, tie, MIN), value slot
+    vals = np.array([np.nan if v is None else v for v in values], dtype=float)
     return {'face': np.zeros((3, 2, 3, nv)), 'far': np.zeros((3, 2, 3, nv)), 'joint': np.zeros((3, 2, 3, 3)),
-            'clip': 0.0, 'nv': nv}
+            'clip': 0.0, 'nv': nv, 'vals': vals, 'low': np.zeros(len(LOW_NAMES))}
 
 def accumulate(Hs, m, k, aE, bE, cl, cu):
     r = cc.nodes; xk = cc.x[k]
@@ -84,6 +91,13 @@ def accumulate(Hs, m, k, aE, bE, cl, cu):
     Hs['joint'] += np.bincount(((side*2 + near)*3 + fs)*3 + rs, weights=m, minlength=54).reshape(3, 2, 3, 3)
     lo_ = np.minimum(iLm, aE); hi_ = np.maximum(iUm, bE)
     Hs['clip'] += float(m[(lo_ < 0) | (hi_ > n + 1)].sum())
+    # edges set by a small or negative e (status 'e' unless stated; NaN = None compares False)
+    fv = Hs['vals'][fc]; rv = Hs['vals'][rc]; ok = side < 2
+    fe, re_ = ok & (fs == 0), ok & (rs == 0)
+    conds = (fe & (fv < 0), fe & (fv >= 0) & (fv < 0.5), re_ & (rv < 0), re_ & (rv >= 0) & (rv < 0.5),
+             (fe & (fv < 0)) | (re_ & (rv < 0)), (fe & (fv < 0.5)) | (re_ & (rv < 0.5)),
+             (ok & (fs <= 1) & (fv < 0.5)) | (ok & (rs <= 1) & (rv < 0.5)))
+    Hs['low'] += np.array([float(m[c_].sum()) for c_ in conds])
 
 def forward_stats(win, Hs):
     """check_cert_min.forward() line by line, plus accumulate() at steps k >= KMIN.
@@ -183,6 +197,10 @@ def report(Hs, values, title):
     for s, nm in ((0, "r < x_k"), (1, "r > x_k")):
         Ws = F[s].sum()
         edge_block(F, values, f"facing edge, {nm}", (s, slice(None)), Ws)
+    print("  mass-weighted fraction of cases with an edge set by a candidate e below 0.5 or negative (status 'e';"
+          " fractions of the total weight):")
+    for nm_, v_ in zip(LOW_NAMES, Hs['low']):
+        print(f"    {nm_:32s} {v_/W:.6f}")
     # histogram of the facing e and far e
     hf_all = F[:2, :, 0].sum(axis=(0, 1)); hf_far = F[:2, 0, 0].sum(axis=0)
     hr_all = R[:2, :, 0].sum(axis=(0, 1))
@@ -238,14 +256,14 @@ for rnd, (ent, best_ld_s, best_EN_s) in enumerate(runs):
 
 # ---------------- forward passes with statistics ----------------
 values_T = list(E) + [None]
-HT = new_hist(nE)
+HT = new_hist(nE, values_T)
 wT, ENT, _, massT = forward_stats(table_win_stats(CL, CU), HT)
 print(f"\nforward pass with statistics, round-3 table: E[N] = {ENT:.3f}, log det J = {cc.logdet(wT)[0]:.4f},"
       f" mass {massT:.12f};  w identical to forward(): {np.array_equal(wT, w)}   ({time.time()-t0:.0f} s)", flush=True)
 resT = report(HT, values_T, f"round-3 table (FAC {cc.FAC}, {SET_s}, MIN = {MIN_s})")
 
 e_rule = float(rule_e_s.group(1))
-HR = new_hist(2)
+HR = new_hist(2, [e_rule, None])
 wR, ENR, _, massR = forward_stats(rule_win_stats(e_rule), HR)
 ldR = cc.logdet(wR)[0]
 print(f"\nforward pass with statistics, one-parameter rule at e = {e_rule} (the printed, 4-decimal value):"
@@ -256,5 +274,6 @@ resR = report(HR, [e_rule, None], f"one-parameter rule e = {e_rule} (FAC {cc.FAC
 
 if OUT:
     np.savez(OUT, E=np.array(E), face_T=HT['face'], far_T=HT['far'], face_R=HR['face'], far_R=HR['far'],
-             e_rule=e_rule, MIN=float(MIN_s), FAC=cc.FAC, KMIN=KMIN)
+             e_rule=e_rule, MIN=float(MIN_s), FAC=cc.FAC, KMIN=KMIN, low_T=HT['low'], low_R=HR['low'],
+             low_names=np.array(LOW_NAMES))
 print(f"\ntime {time.time()-t0:.0f} s")
