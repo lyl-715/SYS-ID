@@ -13,3 +13,8 @@ constant SoD: E[N] = 316.8952, log det J = 197.2004, mass 1.000000000000   (6 s)
   lambda/gbar =   3.1172: E[N] =   315.303  log det J =  207.3550  V* = 10.935413  forward score = 10.935413 (diff -1.1e-12)  bound = 220.4245  (3014 s)
   lambda/gbar =   3.1055: E[N] =   317.638  log det J =  207.4013  V* = 11.015238  forward score = 11.015238 (diff -1.3e-12)  bound = 220.4244  (3355 s)
   lambda/gbar =   3.1113: E[N] =   316.547  log det J =  207.3799  V* = 10.975251  forward score = 10.975251 (diff -1.3e-12)  bound = 220.4243  (3699 s)
+  lambda/gbar =   3.1084: E[N] =   317.087  log det J =  207.3905  V* = 10.995228  forward score = 10.995228 (diff -1.2e-12)  bound = 220.4243  (4037 s)
+  best feasible table: log det J = 207.3799 (+10.1795), E[N] = 316.547
+  upper bound for the class: 220.4243 (+23.2239);  gap = 13.0444
+
+== tangent point: J of the table just found (log det 207.3799); check sum_k w_k gamma_k = p: 9.000000 ==
