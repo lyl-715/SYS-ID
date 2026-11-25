@@ -23,3 +23,19 @@ constant SoD: E[N] = 316.8922, log det J = 197.2010, mass 1.000000000000   (9 s)
   lambda/gbar =   3.7500: E[N] =   189.464  log det J =  204.4400  V* = 2.031774  forward score = 2.031774 (diff -4.7e-13)  bound = 208.3999  (4208 s)
   lambda/gbar =   3.3750: E[N] =   246.935  log det J =  206.1334  V* = 2.574942  forward score = 2.574942 (diff -6.7e-13)  bound = 208.1480  (4510 s)
   lambda/gbar =   3.1875: E[N] =   282.895  log det J =  206.9885  V* = 2.906874  forward score = 2.906874 (diff -3.1e-13)  bound = 208.0823  (4809 s)
+  lambda/gbar =   3.0938: E[N] =   301.196  log det J =  207.3773  V* = 3.089948  forward score = 3.089948 (diff -3.0e-13)  bound = 208.0666  (5152 s)
+  lambda/gbar =   3.0469: E[N] =   312.901  log det J =  207.6072  V* = 3.186138  forward score = 3.186138 (diff -2.2e-13)  bound = 208.0634  (5448 s)
+  lambda/gbar =   3.0234: E[N] =   319.316  log det J =  207.7304  V* = 3.235715  forward score = 3.235715 (diff -6.4e-14)  bound = 208.0633  (5737 s)
+  lambda/gbar =   3.0352: E[N] =   316.288  log det J =  207.6720  V* = 3.210801  forward score = 3.210801 (diff -2.3e-13)  bound = 208.0633  (6031 s)
+  lambda/gbar =   3.0293: E[N] =   317.698  log det J =  207.6994  V* = 3.223229  forward score = 3.223229 (diff -1.8e-13)  bound = 208.0633  (6340 s)
+  lambda/gbar =   3.0322: E[N] =   316.996  log det J =  207.6857  V* = 3.217008  forward score = 3.217008 (diff -1.2e-13)  bound = 208.0632  (6637 s)
+  best feasible table: log det J = 207.6720 (+10.4710), E[N] = 316.288
+  upper bound for the class: 208.0632 (+10.8623);  gap = 0.3912
+
+== tangent point: J of the table just found (log det 207.6720); check sum_k w_k gamma_k = p: 9.000000 ==
+  lambda/gbar =   3.0000: E[N] =   331.461  log det J =  208.0510  V* = 3.155797  forward score = 3.155797 (diff -2.8e-13)  bound = 207.8738  (6940 s)
+  lambda/gbar =   4.5000: E[N] =   116.870  log det J =  201.3996  V* = 1.208757  forward score = 1.208757 (diff -3.2e-13)  bound = 208.9453  (7246 s)
+  lambda/gbar =   3.7500: E[N] =   193.579  log det J =  204.6965  V* = 1.933887  forward score = 1.933887 (diff -4.5e-13)  bound = 208.1612  (7542 s)
+  lambda/gbar =   3.3750: E[N] =   254.999  log det J =  206.4415  V* = 2.464115  forward score = 2.464115 (diff -6.0e-13)  bound = 207.9368  (7839 s)
+  lambda/gbar =   3.1875: E[N] =   287.943  log det J =  207.1886  V* = 2.786741  forward score = 2.786741 (diff -5.9e-13)  bound = 207.8821  (8149 s)
+  lambda/gbar =   3.0938: E[N] =   309.846  log det J =  207.6384  V* = 2.964409  forward score = 2.964409 (diff -4.3e-13)  bound = 207.8711  (8471 s)
