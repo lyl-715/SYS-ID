@@ -1,0 +1,7 @@
+grid sigma/24: 28138 nodes; candidates per side: 31 (30 values + None)
+MIN = 0.125 sigma (3 nodes)
+constant SoD: E[N] = 316.8922, log det J = 197.2010, mass 1.000000000000   (9 s)
+
+== tangent point: J of constant SoD (log det 197.2010); check sum_k w_k gamma_k = p: 9.000000 ==
+  lambda/gbar =   3.0000: E[N] =   344.528  log det J =  207.9361  V* = 11.883156  forward score = 11.883156 (diff -5.8e-13)  bound = 220.5718  (304 s)
+  lambda/gbar =   4.5000: E[N] =   130.927  log det J =  201.6075  V* = 4.830165  forward score = 4.830165 (diff -1.2e-12)  bound = 223.7477  (603 s)
