@@ -21,6 +21,7 @@ triggers). Nothing outside this folder was changed.
 | `check_shape.py` | Task B (second batch): recomputes the best tables of a `check_cert*.py` run and collects edge statistics of the round-3 table and of the one-parameter rule; imports `check_cert_min.py` unchanged |
 | `shape_*.txt`, `shape_*.npz` | stdout of each `check_shape.py` run (via `runlog.py`, with `.meta`/`.err`) and the weighted histograms it saved |
 | `make_shape_fig.py` | draws `fig_shape.png` from the `shape_*.npz` files and prints the plotted numbers |
+| `fig_shape.png`, `fig_shape.txt` | Task B figure and the numbers it plots |
 
 ### How the runs were made
 
@@ -466,7 +467,79 @@ Further numbers from the same output (fractions of the weight named):
 | all | 0.0015 | 0.0023 | 0.0094 | 0.0099 | 0.0480 | 0.2176 | 0.1046 | 0.2365 | 0.2001 | 0.0508 | 0.0565 | 0.0595 | 0.0033 |
 | abs(r−x_k) ≥ σ | 0.0018 | 0.0026 | 0.0106 | 0.0111 | 0.0542 | 0.2456 | 0.1006 | 0.2453 | 0.1966 | 0.0353 | 0.0421 | 0.0535 | 0.0007 |
 
-TASK_B_MIN025_PLACEHOLDER
+### Results: σ/24, full set, MIN = 0.25 (`shape_fac24_full_min0.25.txt`)
+
+`python3 runlog.py shape_fac24_full_min0.25.txt python3 check_shape.py 24 full 0.25 run_fac24_full_min025.txt shape_fac24_full_min0.25.npz`
+(1133 s wall, peak RSS 392 MB, exit code 0, stderr empty). It used the Task A output `run_fac24_full_min025.txt`.
+
+**Reproduction.** All three rounds equal the log to the printed digits, and `w` is bit-identical to `forward()`.
+- The best feasible entries are 10, 8 and 9: in rounds 2 and 3 the best table is not the last one evaluated.
+- λ/γ̄ = 3.1113281250, 3.0234375000, 3.0585937500.
+- Recomputed values: E[N] = 316.588, 316.875, 316.767; log det J = 207.3920, 207.6707, 207.7610.
+
+**The rule line does not reproduce at the printed e.**
+- At e = 1.5844 exactly, the rule gives log det 207.6063 and E[N] = 316.792; the run printed 207.6065 and 316.804.
+- The run's rule used e* + 1e-4 unrounded. On the σ/24 grid the rounding of e to 4 decimals changes a few outward-rounded edge nodes.
+- The rule column below is therefore for e = 1.5844 exactly. (For MIN = 1 the printed e reproduced the line.) The rule was not part of the MIN = 0.25 request; it is shown for comparison.
+
+| item | quantity | table, MIN = 1 (above) | **table, MIN = 0.25** | rule, MIN = 0.25, e = 1.5844 |
+|---|---|---|---|---|
+| | log det J / E[N] | 207.6420 / 316.837 | 207.7610 / 316.767 | 207.6063 / 316.792 |
+| 2 | facing edge set by a candidate e | 1 | **1** (exactly; tie 0, MIN 0) | 1 |
+| 2 | facing e: weighted mean | 1.5804 | **1.6088** | 1.5844 |
+| 2 | facing e: 5 / 25 / 50 / 75 / 95 % | 1.3 / 1.4 / 1.6 / 1.7 / 1.9 | **1.3 / 1.5 / 1.6 / 1.75 / 1.9** | 1.5844 (all) |
+| 2 | facing edge set by MIN (not by e) | 0 | **0** | 0 |
+| 3 | far edge exactly at the MIN distance (r ∓ MIN σ) | 0.9167 | **0.8296** (of which tie 0) | 0.8740 (of which tie 0.0040) |
+| 3 | far edge set by a candidate e | 0.0833 | **0.1704** | 0.1260 |
+| 4 | fraction with abs(r − x_k) < σ | 0.1244 | **0.1184** | 0.0938 |
+| 4 | facing e, abs(r − x_k) ≥ σ only: mean | 1.5638 | **1.5923** | 1.5844 |
+| 4 | facing e, abs(r − x_k) ≥ σ only: 5 / 25 / 50 / 75 / 95 % | 1.3 / 1.4 / 1.6 / 1.7 / 1.9 | **1.3 / 1.4 / 1.6 / 1.7 / 1.9** | 1.5844 (all) |
+| 4 | facing edge set by MIN, abs(r − x_k) ≥ σ only | 0 | **0** | 0 |
+
+Further numbers (table, MIN = 0.25):
+
+**Far edge by distance.**
+- abs(r − x_k) < σ: set by e in all of that weight (1.0000; MIN = 1: 0.6702).
+- abs(r − x_k) ≥ σ: set by e in 0.0589 of that weight (MIN = 1: 0).
+- When set by e: mean e 1.7216; quantiles 1.6 / 1.6 / 1.7 / 1.8 / 1.9.
+
+**Both edges set by e.** 0.1704 of all weight. The rule: 0.1260.
+
+**Facing e.**
+- abs(r − x_k) < σ only: mean 1.7313.
+- By side:
+  - r < x_k (0.559 of the weight): mean 1.5838; quantiles 1.3 / 1.4 / 1.6 / 1.7 / 1.8;
+  - r > x_k (0.441): mean 1.6404; quantiles 1.4 / 1.5 / 1.6 / 1.75 / 1.9.
+
+**No e below 0.5, and no e below 1, sets either edge.** The fractions of the new e < 0.5 lines are 0. They were added to `check_shape.py` for Task D, after the MIN = 1 run; that addition changes no other number.
+
+**Weighted histogram of the facing e (table, status "set by e").**
+
+| e | 1.0 | 1.1 | 1.2 | 1.25 | 1.3 | 1.4 | 1.5 | 1.6 | 1.7 | 1.75 | 1.8 | 1.9 | 2.0 | 2.1 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| all | 0.0010 | 0.0020 | 0.0070 | 0.0087 | 0.0359 | 0.1848 | 0.1109 | 0.2155 | 0.1731 | 0.1023 | 0.0631 | 0.0864 | 0.0091 | 0.0003 |
+| abs(r−x_k) ≥ σ | 0.0011 | 0.0023 | 0.0079 | 0.0098 | 0.0406 | 0.2083 | 0.1177 | 0.2181 | 0.1730 | 0.0908 | 0.0436 | 0.0805 | 0.0060 | 0.0002 |
+
+### Figure
+
+![fig_shape](fig_shape.png)
+
+**`fig_shape.png`.** Weighted distribution of the candidate e that sets the facing edge of the round-3 table (σ/24, full set). Top panel: MIN = 1; bottom panel: MIN = 0.25. The dashed line is the one-parameter rule's e at the same MIN.
+- Look at the spread of the table's e around the rule's single value. Most of the weight is on 1.4–1.9σ.
+- With MIN = 0.25 the weight shifts slightly towards larger e (mean 1.580 → 1.609).
+- The plotted numbers are in `fig_shape.txt`.
+
+### Reading of Task B (descriptive; modelling choices as stated)
+
+- **Facing edge.**
+  - In both settings the facing edge is always set by the predicted output: x_k ± eσ with e between 1.0 and 2.1, and never by the minimum distance to r.
+  - The table spreads e over 1.3–1.9σ (5–95 %), around a mean 0.02–0.03σ above the rule's single e.
+- **Far edge.**
+  - With MIN = 1 the far edge sits at r ∓ 1σ in 92 % of the weight. It is set by e only when abs(r − x_k) < σ.
+  - With MIN = 0.25 it is set by e in 17 % of the weight, including 6 % with abs(r − x_k) ≥ σ.
+- **Caveats.**
+  - These statistics depend on the candidate set (e on a 0.1σ lattice plus 1.25, 1.75, 2.25) and on the outward rounding to σ/24 nodes.
+  - The table is the best of 11 λ evaluations in round 3, not an optimum of the class.
 
 ## Task C: where three earlier statements come from (no new computation)
 

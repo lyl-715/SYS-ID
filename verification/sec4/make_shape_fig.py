@@ -26,8 +26,9 @@ for ax, f in zip(axes[:, 0], files):
         if v > 5e-5: print(f"  {e:5.2f}   {v:.4f}")
     ax.bar(E, h, width=0.04, color=BLUE, edgecolor="white", linewidth=0.5, zorder=3)
     ax.axvline(float(z["e_rule"]), color=INK, ls="--", lw=1.0, zorder=4)
-    ax.text(float(z["e_rule"]) + 0.03, 0.97*max(h.max(), 1e-9), f"one-parameter rule, e = {float(z['e_rule']):.4f}",
-            color=INK2, fontsize=8, va="top")
+    ytxt = 0.75*max(h.max(), 1e-9)
+    ax.annotate(f"one-parameter rule, e = {float(z['e_rule']):.4f}", xy=(float(z["e_rule"]), ytxt), xytext=(2.3, ytxt),
+                color=INK2, fontsize=8, va="center", arrowprops=dict(arrowstyle="->", color=INK2, lw=0.8))
     mean = float((E*h).sum()/h.sum())
     setname = {30: "full", 7: "small"}.get(len(E), f"{len(E)} values")
     ax.set_title(f"σ/{int(z['FAC'])}, {setname} set, MIN = {float(z['MIN']):g} σ: round-3 table, facing edge "
