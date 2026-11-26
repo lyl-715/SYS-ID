@@ -1,0 +1,9 @@
+cmd: python3 check_shape.py 12 fine 0.25 run_fac12_fine_min0.25.txt shape_fac12_fine_min0.25.npz
+start: 2026-11-26T01:07:05
+end: 2026-11-26T01:22:50
+wall_s: 944.8
+cpu_user_s: 755.7
+cpu_sys_s: 181.0
+peak_rss_MB: 254.0
+exit_code: 0
+threads: OMP/OPENBLAS/MKL_NUM_THREADS=1
