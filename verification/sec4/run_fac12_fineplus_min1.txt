@@ -18,3 +18,20 @@ constant SoD: E[N] = 316.8952, log det J = 197.2004, mass 1.000000000000   (6 s)
   upper bound for the class: 219.7967 (+22.5963);  gap = 12.5055
 
 == tangent point: J of the table just found (log det 207.2912); check sum_k w_k gamma_k = p: 9.000000 ==
+  lambda/gbar =   3.0000: E[N] =   305.588  log det J =  207.3402  V* = 3.161441  forward score = 3.161441 (diff -1.0e-13)  bound = 207.8717  (4182 s)
+  lambda/gbar =   2.1000: E[N] =   605.115  log det J =  211.2775  V* = 5.809695  forward score = 5.809695 (diff +9.2e-13)  bound = 208.5972  (4507 s)
+  lambda/gbar =   2.5500: E[N] =   426.225  log det J =  209.3126  V* = 4.260521  forward score = 4.260521 (diff +3.6e-13)  bound = 208.0094  (4830 s)
+  lambda/gbar =   2.7750: E[N] =   361.061  log det J =  208.3388  V* = 3.664810  forward score = 3.664810 (diff +2.4e-13)  bound = 207.8944  (5147 s)
+  lambda/gbar =   2.8875: E[N] =   330.965  log det J =  207.8220  V* = 3.402705  forward score = 3.402705 (diff +1.1e-13)  bound = 207.8727  (5467 s)
+  lambda/gbar =   2.9438: E[N] =   318.045  log det J =  207.5811  V* = 3.279672  forward score = 3.279672 (diff +6.2e-15)  bound = 207.8698  (5787 s)
+  lambda/gbar =   2.9719: E[N] =   311.785  log det J =  207.4612  V* = 3.219955  forward score = 3.219955 (diff -1.0e-13)  bound = 207.8702  (6104 s)
+  lambda/gbar =   2.9578: E[N] =   315.022  log det J =  207.5229  V* = 3.249663  forward score = 3.249663 (diff -6.1e-14)  bound = 207.8698  (6432 s)
+  lambda/gbar =   2.9508: E[N] =   316.520  log det J =  207.5520  V* = 3.264632  forward score = 3.264632 (diff -8.6e-14)  bound = 207.8698  (6786 s)
+  lambda/gbar =   2.9473: E[N] =   317.273  log det J =  207.5661  V* = 3.272143  forward score = 3.272143 (diff -6.8e-14)  bound = 207.8698  (7119 s)
+  lambda/gbar =   2.9490: E[N] =   316.880  log det J =  207.5588  V* = 3.268385  forward score = 3.268385 (diff +1.6e-14)  bound = 207.8698  (7437 s)
+  best feasible table: log det J = 207.5588 (+10.3584), E[N] = 316.880
+  upper bound for the class: 207.8698 (+10.6694);  gap = 0.3110
+
+== tangent point: J of the table just found (log det 207.5588); check sum_k w_k gamma_k = p: 9.000000 ==
+  lambda/gbar =   3.0000: E[N] =   309.010  log det J =  207.4813  V* = 3.024171  forward score = 3.024171 (diff -1.2e-13)  bound = 207.7035  (7801 s)
+  lambda/gbar =   2.1000: E[N] =   611.418  log det J =  211.3817  V* = 5.577714  forward score = 5.577714 (diff +5.0e-13)  bound = 208.4236  (8117 s)
