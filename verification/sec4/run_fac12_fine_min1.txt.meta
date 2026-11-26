@@ -1,0 +1,9 @@
+cmd: python3 check_cert_fine.py 12 fine 5 3 1
+start: 2026-11-25T22:08:43
+end: 2026-11-26T00:55:06
+wall_s: 9983.1
+cpu_user_s: 7866.4
+cpu_sys_s: 1777.9
+peak_rss_MB: 387.5
+exit_code: 0
+threads: OMP/OPENBLAS/MKL_NUM_THREADS=1

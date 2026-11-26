@@ -40,3 +40,17 @@ constant SoD: E[N] = 316.8952, log det J = 197.2004, mass 1.000000000000   (6 s)
   lambda/gbar =   2.8875: E[N] =   334.900  log det J =  207.9593  V* = 3.256736  forward score = 3.256736 (diff +5.3e-15)  bound = 207.7066  (8202 s)
   lambda/gbar =   2.9438: E[N] =   320.626  log det J =  207.7004  V* = 3.138280  forward score = 3.138280 (diff -1.1e-13)  bound = 207.7028  (8506 s)
   lambda/gbar =   2.9719: E[N] =   314.449  log det J =  207.5849  V* = 3.080876  forward score = 3.080876 (diff -2.1e-13)  bound = 207.7027  (8785 s)
+  lambda/gbar =   2.9578: E[N] =   317.370  log det J =  207.6397  V* = 3.109436  forward score = 3.109436 (diff -1.6e-13)  bound = 207.7026  (9068 s)
+  lambda/gbar =   2.9648: E[N] =   315.918  log det J =  207.6124  V* = 3.095123  forward score = 3.095123 (diff -2.3e-13)  bound = 207.7026  (9354 s)
+  lambda/gbar =   2.9613: E[N] =   316.630  log det J =  207.6258  V* = 3.102271  forward score = 3.102271 (diff -7.5e-14)  bound = 207.7026  (9644 s)
+  lambda/gbar =   2.9596: E[N] =   316.954  log det J =  207.6319  V* = 3.105851  forward score = 3.105851 (diff -1.9e-13)  bound = 207.7026  (9932 s)
+  best feasible table: log det J = 207.6258 (+10.4254), E[N] = 316.630
+  upper bound for the class: 207.7026 (+10.5022);  gap = 0.0768
+
+== other SoD-class triggers at the same budget, against the smallest bound 207.7026 ==
+  constant SoD                      197.2004   below bound: True
+  table                             207.2926   below bound: True
+  table                             207.5575   below bound: True
+  table                             207.6258   below bound: True
+  one-parameter rule, e = 1.5366:   207.4941 (+10.2937), E[N] = 316.818   below bound: True
+time 9982 s
