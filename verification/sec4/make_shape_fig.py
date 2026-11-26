@@ -30,7 +30,7 @@ for ax, f in zip(axes[:, 0], files):
     ax.annotate(f"one-parameter rule, e = {float(z['e_rule']):.4f}", xy=(float(z["e_rule"]), ytxt), xytext=(2.3, ytxt),
                 color=INK2, fontsize=8, va="center", arrowprops=dict(arrowstyle="->", color=INK2, lw=0.8))
     mean = float((E*h).sum()/h.sum())
-    setname = {30: "full", 7: "small"}.get(len(E), f"{len(E)} values")
+    setname = {30: "full", 7: "small", 55: "fine", 59: "fineplus"}.get(len(E), f"{len(E)} values")
     ax.set_title(f"σ/{int(z['FAC'])}, {setname} set, MIN = {float(z['MIN']):g} σ: round-3 table, facing edge "
                  f"(weighted mean e = {mean:.3f})", fontsize=9, color=INK, loc="left")
     ax.set_ylabel("fraction of weight", fontsize=8, color=INK2)
