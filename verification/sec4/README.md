@@ -18,10 +18,13 @@ triggers). Nothing outside this folder was changed.
 | `*.err` | stderr of each run; all are empty (0 bytes) |
 | `runlog.py` | wrapper used for every run: runs the command with stdout → `.txt` and stderr → `.err`, pins `OMP/OPENBLAS/MKL_NUM_THREADS=1`, writes `.meta` |
 | `summarize.py` | parses `run_*.txt` + `.meta` and prints the tables in this README (`python3 summarize.py [--overview] run_*.txt`) |
-| `check_shape.py` | Task B (second batch): recomputes the best tables of a `check_cert*.py` run and collects edge statistics of the round-3 table and of the one-parameter rule; imports `check_cert_min.py` unchanged |
+| `check_shape.py` | Task B (second batch): recomputes the best tables of a `check_cert*.py` run and collects edge statistics of the round-3 table and of the one-parameter rule; imports `check_cert_min.py` unchanged (`check_cert_fine.py` for the sets `fine`/`fineplus`, Task D) |
 | `shape_*.txt`, `shape_*.npz` | stdout of each `check_shape.py` run (via `runlog.py`, with `.meta`/`.err`) and the weighted histograms it saved |
-| `make_shape_fig.py` | draws `fig_shape.png` from the `shape_*.npz` files and prints the plotted numbers |
+| `make_shape_fig.py` | draws `fig_shape.png` (Task B) and `fig_shape_fine.png` (Task D) from the `shape_*.npz` files and prints the plotted numbers |
 | `fig_shape.png`, `fig_shape.txt` | Task B figure and the numbers it plots |
+| `check_cert_fine.py` | Task D (third batch): copy of `check_cert_min.py` with the candidate sets `fine` (requested) and `fineplus` (control) added; nothing else changed |
+| `test_fine_regions.py`, `test_fine_regions_min*.txt`, `test_fineplus_regions_min*.txt` | Task D: int8, region-boundary and brute-force checks of `check_cert_fine.py`, and their outputs |
+| `fig_shape_fine.png`, `fig_shape_fine.txt` | Task D figure (facing-edge e of the round-3 `fine` tables) and the numbers it plots |
 
 ### How the runs were made
 
