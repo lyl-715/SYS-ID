@@ -52,3 +52,5 @@ constant SoD: E[N] = 316.8952, log det J = 197.2004, mass 1.000000000000   (6 s)
   table                             207.2912   below bound: True
   table                             207.5588   below bound: True
   table                             207.6262   below bound: True
+  one-parameter rule, e = 1.5366:   207.4941 (+10.2937), E[N] = 316.818   below bound: True
+time 11044 s
