@@ -4,3 +4,168 @@ module: check_cert_fine.py
 constant SoD: E[N] = 316.8952, log det J = 197.2004   (run: E[N] = 316.8952, log det J = 197.2004; equal to the printed digits: True)   (5 s)
 round 1: replayed 11 lambdas, best feasible = entry 10, lambda/gbar = 3.0175781250 (printed 3.0176);  recomputed E[N] = 316.646, log det J = 207.2926, V* = 10.984940  (run: 316.646, 207.2926, 10.984940);  equal to the printed digits: True   (284 s)
 round 2: replayed 11 lambdas, best feasible = entry 9, lambda/gbar = 2.9507812500 (printed 2.9508);  recomputed E[N] = 316.886, log det J = 207.5575, V* = 3.263506  (run: 316.886, 207.5575, 3.263506);  equal to the printed digits: True   (572 s)
+round 3: replayed 11 lambdas, best feasible = entry 10, lambda/gbar = 2.9613281250 (printed 2.9613);  recomputed E[N] = 316.630, log det J = 207.6258, V* = 3.102271  (run: 316.630, 207.6258, 3.102271);  equal to the printed digits: True   (854 s)
+
+forward pass with statistics, round-3 table: E[N] = 316.630, log det J = 207.6258, mass 1.000000000000;  w identical to forward(): True   (863 s)
+
+==== round-3 table (FAC 12, fine, MIN = 1) ====
+  total weight over steps k = 2..4999: 4998.000000  (= number of steps 4998 x mass);  weight with r == x_k: 0.000e+00;  weight where an edge index falls off the grid: 2.469e-38
+  item 4: fraction with |r - x_k| < sigma: 0.1246;  with |r - x_k| >= sigma: 0.8754
+  items 1-2: facing edge, all steps (fractions of the total weight)
+    facing edge: weight 4998.0000 (fraction of the selection 1.000000)
+      set by a candidate e (e-edge strictly beyond the MIN edge): 1.0000
+      tie (rounded e-edge = MIN node):                            0.0000
+      set by the minimum distance MIN to r:                       0.0000   [code None 0.0000, e-edge inside 0.0000]
+      e-distribution over cases 'e': mean 1.5601;  quantiles 5/25/50/75/95 %: 1.3  1.4  1.6  1.7  1.8
+      e-distribution over cases 'e or tie': mean 1.5601;  quantiles 5/25/50/75/95 %: 1.3  1.4  1.6  1.7  1.8
+  item 3: far edge, all steps (fractions of the total weight)
+    far edge: weight 4998.0000 (fraction of the selection 1.000000)
+      set by a candidate e (e-edge strictly beyond the MIN edge): 0.0814
+      tie (rounded e-edge = MIN node):                            0.0000
+      set by the minimum distance MIN to r:                       0.9186   [code None 0.6179, e-edge inside 0.3008]
+      e-distribution over cases 'e': mean 1.6938;  quantiles 5/25/50/75/95 %: 1.5  1.6  1.7  1.8  1.9
+      e-distribution over cases 'e or tie': mean 1.6938;  quantiles 5/25/50/75/95 %: 1.5  1.6  1.7  1.8  1.9
+  item 4: facing edge, restricted to |r - x_k| >= sigma (fractions of that weight)
+    facing edge, |r-x_k| >= sigma: weight 4375.2938 (fraction of the selection 1.000000)
+      set by a candidate e (e-edge strictly beyond the MIN edge): 1.0000
+      tie (rounded e-edge = MIN node):                            0.0000
+      set by the minimum distance MIN to r:                       0.0000   [code None 0.0000, e-edge inside 0.0000]
+      e-distribution over cases 'e': mean 1.5436;  quantiles 5/25/50/75/95 %: 1.3  1.4  1.6  1.7  1.8
+      e-distribution over cases 'e or tie': mean 1.5436;  quantiles 5/25/50/75/95 %: 1.3  1.4  1.6  1.7  1.8
+  (extra) facing edge, restricted to |r - x_k| < sigma (fractions of that weight)
+    facing edge, |r-x_k| < sigma: weight 622.7062 (fraction of the selection 1.000000)
+      set by a candidate e (e-edge strictly beyond the MIN edge): 1.0000
+      tie (rounded e-edge = MIN node):                            0.0000
+      set by the minimum distance MIN to r:                       0.0000   [code None 0.0000, e-edge inside 0.0000]
+      e-distribution over cases 'e': mean 1.6763;  quantiles 5/25/50/75/95 %: 1.5  1.6  1.7  1.8  1.9
+      e-distribution over cases 'e or tie': mean 1.6763;  quantiles 5/25/50/75/95 %: 1.5  1.6  1.7  1.8  1.9
+  (extra) far edge, restricted to |r - x_k| < sigma and to |r - x_k| >= sigma (fractions of that weight)
+    far edge, |r-x_k| < sigma: weight 622.7062 (fraction of the selection 1.000000)
+      set by a candidate e (e-edge strictly beyond the MIN edge): 0.6531
+      tie (rounded e-edge = MIN node):                            0.0000
+      set by the minimum distance MIN to r:                       0.3469   [code None 0.0000, e-edge inside 0.3469]
+      e-distribution over cases 'e': mean 1.6938;  quantiles 5/25/50/75/95 %: 1.5  1.6  1.7  1.8  1.9
+      e-distribution over cases 'e or tie': mean 1.6938;  quantiles 5/25/50/75/95 %: 1.5  1.6  1.7  1.8  1.9
+    far edge, |r-x_k| >= sigma: weight 4375.2938 (fraction of the selection 1.000000)
+      set by a candidate e (e-edge strictly beyond the MIN edge): 0.0000
+      tie (rounded e-edge = MIN node):                            0.0000
+      set by the minimum distance MIN to r:                       1.0000   [code None 0.7058, e-edge inside 0.2942]
+      e-distribution (e): empty
+      e-distribution (e or tie): empty
+  (extra) both edges set by a candidate e (status 'e' on both sides), all: 0.0814   (fraction of that weight)
+  (extra) both edges set by a candidate e (status 'e' on both sides), |r-x_k| < sigma: 0.6531   (fraction of that weight)
+  (extra) both edges set by a candidate e (status 'e' on both sides), |r-x_k| >= sigma: 0.0000   (fraction of that weight)
+  (extra) facing edge by side: r < x_k (facing = upper) and r > x_k (facing = lower)
+    facing edge, r < x_k: weight 2794.8363 (fraction of the selection 1.000000)
+      set by a candidate e (e-edge strictly beyond the MIN edge): 1.0000
+      tie (rounded e-edge = MIN node):                            0.0000
+      set by the minimum distance MIN to r:                       0.0000   [code None 0.0000, e-edge inside 0.0000]
+      e-distribution over cases 'e': mean 1.5381;  quantiles 5/25/50/75/95 %: 1.3  1.4  1.6  1.7  1.8
+      e-distribution over cases 'e or tie': mean 1.5381;  quantiles 5/25/50/75/95 %: 1.3  1.4  1.6  1.7  1.8
+    facing edge, r > x_k: weight 2203.1637 (fraction of the selection 1.000000)
+      set by a candidate e (e-edge strictly beyond the MIN edge): 1.0000
+      tie (rounded e-edge = MIN node):                            0.0000
+      set by the minimum distance MIN to r:                       0.0000   [code None 0.0000, e-edge inside 0.0000]
+      e-distribution over cases 'e': mean 1.5881;  quantiles 5/25/50/75/95 %: 1.3  1.5  1.6  1.7  1.9
+      e-distribution over cases 'e or tie': mean 1.5881;  quantiles 5/25/50/75/95 %: 1.3  1.5  1.6  1.7  1.9
+  mass-weighted fraction of cases with an edge set by a candidate e below 0.5 or negative (status 'e'; fractions of the total weight):
+    facing e < 0                     0.000000
+    facing 0 <= e < 0.5              0.000000
+    far e < 0                        0.000000
+    far 0 <= e < 0.5                 0.000000
+    either edge e < 0                0.000000
+    either edge e < 0.5              0.000000
+    either edge e < 0.5 incl. ties   0.000000
+  weighted histogram of the e that sets the edge (status 'e' only); fractions of the total weight W,
+  and for the facing edge also of the weight with |r - x_k| >= sigma
+        e    facing/W   facing,|r-x|>=sig / W_far   far/W
+       0.9    0.00022    0.00025                      0.00000
+         1    0.00208    0.00237                      0.00000
+       1.1    0.00345    0.00392                      0.00000
+       1.2    0.01837    0.02077                      0.00000
+       1.3    0.07618    0.08605                      0.00017
+       1.4    0.20963    0.23473                      0.00076
+       1.5    0.13398    0.13065                      0.00878
+       1.6    0.23071    0.23693                      0.01803
+       1.7    0.20377    0.18636                      0.02810
+       1.8    0.08268    0.06766                      0.01803
+       1.9    0.03701    0.03000                      0.00698
+         2    0.00190    0.00030                      0.00051
+       2.1    0.00001    0.00000                      0.00000
+
+forward pass with statistics, one-parameter rule at e = 1.5366 (the printed, 4-decimal value): E[N] = 316.825, log det J = 207.4943  (run: e = 1.5366, 207.4941, E[N] = 316.818; equal to the printed digits: False)   (872 s)
+
+==== one-parameter rule e = 1.5366 (FAC 12, fine, MIN = 1) ====
+  total weight over steps k = 2..4999: 4998.000000  (= number of steps 4998 x mass);  weight with r == x_k: 0.000e+00;  weight where an edge index falls off the grid: 4.994e-38
+  item 4: fraction with |r - x_k| < sigma: 0.0999;  with |r - x_k| >= sigma: 0.9001
+  items 1-2: facing edge, all steps (fractions of the total weight)
+    facing edge: weight 4998.0000 (fraction of the selection 1.000000)
+      set by a candidate e (e-edge strictly beyond the MIN edge): 1.0000
+      tie (rounded e-edge = MIN node):                            0.0000
+      set by the minimum distance MIN to r:                       0.0000   [code None 0.0000, e-edge inside 0.0000]
+      e-distribution over cases 'e': mean 1.5366;  quantiles 5/25/50/75/95 %: 1.5366  1.5366  1.5366  1.5366  1.5366
+      e-distribution over cases 'e or tie': mean 1.5366;  quantiles 5/25/50/75/95 %: 1.5366  1.5366  1.5366  1.5366  1.5366
+  item 3: far edge, all steps (fractions of the total weight)
+    far edge: weight 4998.0000 (fraction of the selection 1.000000)
+      set by a candidate e (e-edge strictly beyond the MIN edge): 0.0525
+      tie (rounded e-edge = MIN node):                            0.0082
+      set by the minimum distance MIN to r:                       0.9393   [code None 0.0000, e-edge inside 0.9393]
+      e-distribution over cases 'e': mean 1.5366;  quantiles 5/25/50/75/95 %: 1.5366  1.5366  1.5366  1.5366  1.5366
+      e-distribution over cases 'e or tie': mean 1.5366;  quantiles 5/25/50/75/95 %: 1.5366  1.5366  1.5366  1.5366  1.5366
+  item 4: facing edge, restricted to |r - x_k| >= sigma (fractions of that weight)
+    facing edge, |r-x_k| >= sigma: weight 4498.5919 (fraction of the selection 1.000000)
+      set by a candidate e (e-edge strictly beyond the MIN edge): 1.0000
+      tie (rounded e-edge = MIN node):                            0.0000
+      set by the minimum distance MIN to r:                       0.0000   [code None 0.0000, e-edge inside 0.0000]
+      e-distribution over cases 'e': mean 1.5366;  quantiles 5/25/50/75/95 %: 1.5366  1.5366  1.5366  1.5366  1.5366
+      e-distribution over cases 'e or tie': mean 1.5366;  quantiles 5/25/50/75/95 %: 1.5366  1.5366  1.5366  1.5366  1.5366
+  (extra) facing edge, restricted to |r - x_k| < sigma (fractions of that weight)
+    facing edge, |r-x_k| < sigma: weight 499.4081 (fraction of the selection 1.000000)
+      set by a candidate e (e-edge strictly beyond the MIN edge): 1.0000
+      tie (rounded e-edge = MIN node):                            0.0000
+      set by the minimum distance MIN to r:                       0.0000   [code None 0.0000, e-edge inside 0.0000]
+      e-distribution over cases 'e': mean 1.5366;  quantiles 5/25/50/75/95 %: 1.5366  1.5366  1.5366  1.5366  1.5366
+      e-distribution over cases 'e or tie': mean 1.5366;  quantiles 5/25/50/75/95 %: 1.5366  1.5366  1.5366  1.5366  1.5366
+  (extra) far edge, restricted to |r - x_k| < sigma and to |r - x_k| >= sigma (fractions of that weight)
+    far edge, |r-x_k| < sigma: weight 499.4081 (fraction of the selection 1.000000)
+      set by a candidate e (e-edge strictly beyond the MIN edge): 0.5255
+      tie (rounded e-edge = MIN node):                            0.0819
+      set by the minimum distance MIN to r:                       0.3926   [code None 0.0000, e-edge inside 0.3926]
+      e-distribution over cases 'e': mean 1.5366;  quantiles 5/25/50/75/95 %: 1.5366  1.5366  1.5366  1.5366  1.5366
+      e-distribution over cases 'e or tie': mean 1.5366;  quantiles 5/25/50/75/95 %: 1.5366  1.5366  1.5366  1.5366  1.5366
+    far edge, |r-x_k| >= sigma: weight 4498.5919 (fraction of the selection 1.000000)
+      set by a candidate e (e-edge strictly beyond the MIN edge): 0.0000
+      tie (rounded e-edge = MIN node):                            0.0000
+      set by the minimum distance MIN to r:                       1.0000   [code None 0.0000, e-edge inside 1.0000]
+      e-distribution (e): empty
+      e-distribution (e or tie): empty
+  (extra) both edges set by a candidate e (status 'e' on both sides), all: 0.0525   (fraction of that weight)
+  (extra) both edges set by a candidate e (status 'e' on both sides), |r-x_k| < sigma: 0.5255   (fraction of that weight)
+  (extra) both edges set by a candidate e (status 'e' on both sides), |r-x_k| >= sigma: 0.0000   (fraction of that weight)
+  (extra) facing edge by side: r < x_k (facing = upper) and r > x_k (facing = lower)
+    facing edge, r < x_k: weight 2799.3169 (fraction of the selection 1.000000)
+      set by a candidate e (e-edge strictly beyond the MIN edge): 1.0000
+      tie (rounded e-edge = MIN node):                            0.0000
+      set by the minimum distance MIN to r:                       0.0000   [code None 0.0000, e-edge inside 0.0000]
+      e-distribution over cases 'e': mean 1.5366;  quantiles 5/25/50/75/95 %: 1.5366  1.5366  1.5366  1.5366  1.5366
+      e-distribution over cases 'e or tie': mean 1.5366;  quantiles 5/25/50/75/95 %: 1.5366  1.5366  1.5366  1.5366  1.5366
+    facing edge, r > x_k: weight 2198.6831 (fraction of the selection 1.000000)
+      set by a candidate e (e-edge strictly beyond the MIN edge): 1.0000
+      tie (rounded e-edge = MIN node):                            0.0000
+      set by the minimum distance MIN to r:                       0.0000   [code None 0.0000, e-edge inside 0.0000]
+      e-distribution over cases 'e': mean 1.5366;  quantiles 5/25/50/75/95 %: 1.5366  1.5366  1.5366  1.5366  1.5366
+      e-distribution over cases 'e or tie': mean 1.5366;  quantiles 5/25/50/75/95 %: 1.5366  1.5366  1.5366  1.5366  1.5366
+  mass-weighted fraction of cases with an edge set by a candidate e below 0.5 or negative (status 'e'; fractions of the total weight):
+    facing e < 0                     0.000000
+    facing 0 <= e < 0.5              0.000000
+    far e < 0                        0.000000
+    far 0 <= e < 0.5                 0.000000
+    either edge e < 0                0.000000
+    either edge e < 0.5              0.000000
+    either edge e < 0.5 incl. ties   0.000000
+  weighted histogram of the e that sets the edge (status 'e' only); fractions of the total weight W,
+  and for the facing edge also of the weight with |r - x_k| >= sigma
+        e    facing/W   facing,|r-x|>=sig / W_far   far/W
+    1.5366    1.00000    1.00000                      0.05251
+
+time 872 s
