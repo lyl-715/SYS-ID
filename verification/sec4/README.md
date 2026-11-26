@@ -52,6 +52,17 @@ the script is True (5 entries per run: constant SoD, the three tables, and the o
 | `run_fac24_full.txt` | sigma/24 | 30 + None | 1 | 316.8922 | 197.2010 | 207.6420 | 316.837 | 207.7114 | 0.0693 | 2.4e-12 | 207.5051 (e = 1.5562) | True | 7958 | 667.4 |
 | `run_fac12_full_min0.5.txt` | sigma/12 | 30 + None | 0.5 | 316.8952 | 197.2004 | 207.7096 | 316.480 | 207.8014 | 0.0918 | 1.3e-12 | 207.5662 (e = 1.5569) | True | 4134 | 370.7 |
 | `run_fac12_full_min0.25.txt` | sigma/12 | 30 + None | 0.25 | 316.8952 | 197.2004 | 207.7519 | 316.859 | 207.8421 | 0.0901 | 1.4e-12 | 207.5961 (e = 1.5648) | True | 4168 | 370.4 |
+| `run_fac24_full_min05.txt` | sigma/24 | 30 + None | 0.5 | 316.8922 | 197.2010 | 207.7297 | 316.866 | 207.8098 | 0.0801 | 2.9e-12 | 207.5762 (e = 1.5761) | True | 10014 | 664.4 |
+| `run_fac24_full_min025.txt` | sigma/24 | 30 + None | 0.25 | 316.8922 | 197.2010 | 207.7610 | 316.767 | 207.8511 | 0.0902 | 2.6e-12 | 207.6065 (e = 1.5844) | True | 10118 | 663.9 |
+| `run_fac24_full_min0125.txt` | sigma/24 | 30 + None | 0.125 | 316.8922 | 197.2010 | 207.7612 | 316.053 | 207.8705 | 0.1093 | 2.8e-12 | 207.6217 (e = 1.5889) | True | 10159 | 664.6 |
+| `run_fac12_full_copy_min1.txt` | sigma/12 | 30 + None | 1 | 316.8952 | 197.2004 | 207.6260 | 316.624 | 207.7023 | 0.0764 | 1.4e-12 | 207.4941 (e = 1.5366) | True | 4901 | 368.1 |
+| `run_fac12_fine_min1.txt` | sigma/12 | 55 + None | 1 | 316.8952 | 197.2004 | 207.6258 | 316.630 | 207.7026 | 0.0768 | 1.1e-12 | 207.4941 (e = 1.5366) | True | 9982 | 387.5 |
+| `run_fac12_fine_min0.25.txt` | sigma/12 | 55 + None | 0.25 | 316.8952 | 197.2004 | 207.7446 | 316.489 | 207.8422 | 0.0976 | 1.4e-12 | 207.5961 (e = 1.5648) | True | 10673 | 388.4 |
+| `run_fac12_fineplus_min1.txt` | sigma/12 | 59 + None | 1 | 316.8952 | 197.2004 | 207.6262 | 316.642 | 207.7024 | 0.0762 | 1.2e-12 | 207.4941 (e = 1.5366) | True | 11044 | 390.4 |
+| `run_fac12_fineplus_min0.25.txt` | sigma/12 | 59 + None | 0.25 | 316.8952 | 197.2004 | 207.7522 | 316.874 | 207.8422 | 0.0899 | 1.3e-12 | 207.5961 (e = 1.5648) | True | 11637 | 391.2 |
+
+Rows 1–6: first batch. Rows 7–9: Task A (second batch). Row 10: the Task D reproduction of `12 full 5 3` with the copy `check_cert_fine.py`. Rows 11–14: Task D (third batch); `fineplus` is the extra control.
+Wall times include CPU sharing between concurrent runs (see each batch).
 
 
 ## Task 1: interval triggers (`check_interval.py`)
@@ -710,3 +721,295 @@ Setting:
 **Relation to Task 1 of the first batch.**
 - `check_interval.py` re-solved the same problem independently with its own fixed-point iteration on a_k² γ_k = const: 34 iterations, 209.06855.
 - That matches the KKT value 209.068540, and lies inside the Round 10 bracket.
+
+---
+
+# Third batch (25–26 Nov): Task D, a finer and wider set of candidate edge positions
+
+Same environment, same wrapper (`runlog.py`, BLAS/OpenMP threads pinned to 1). `check_cert.py` and
+`check_cert_min.py` were not modified. Nothing was tuned.
+
+New code:
+- `check_cert_fine.py`, a copy of `check_cert_min.py` with the new set;
+- `test_fine_regions.py`, the int8 and region checks.
+
+`check_shape.py` gained two things after Task B:
+- an optional MODULE argument, which defaults to `check_cert_fine` for SET = fine/fineplus;
+- the counters for edges set by e < 0.5 or e < 0.
+
+The Task B outputs were made before this change and were not re-run.
+
+## Set-up and checks
+
+**The copy.** `diff check_cert_min.py check_cert_fine.py` shows only a docstring paragraph and two new `elif` branches
+of the candidate-set selection. The edge formulas, the rounding, the three-region backward sweep, the
+λ search and the bound are unchanged.
+
+| set | candidate values e (σ beyond the predicted output x_k) | codes per side |
+|---|---|---|
+| `full` (existing) | 0.5, 0.75, 1.0, 1.1, …, 3.0 (step 0.1), 1.25, 1.75, 2.25, 3.5, 4, 5, 6: 30 values | 31 |
+| `fine` (requested) | −2.0, −1.9, …, 2.9, 3.0 (step 0.1, 51 values), 3.5, 4, 5, 6: 55 values | 56 |
+| `fineplus` (extra control, not requested) | union of `fine` and `full`: 59 values | 60 |
+
+- **Why `fineplus`.** `fine` does not contain the `full` values 0.75, 1.25, 1.75 and 2.25.
+  - So the class of `fine` tables does not contain the class of `full` tables.
+  - A `fine` − `full` difference therefore mixes two effects: values added (−2.0 … −0.1, 0 … 0.4, 0.6 … 0.9) and four values removed.
+  - `fineplus` contains `full`, so `fineplus` − `full` isolates adding values. I started these two runs as an extra control 11 minutes after the `fine` runs.
+- **Negative e.** With e < 0 the e-edge lies on the near side of x_k (between x_k and r). The edge formulas are unchanged:
+  - lower = min(x_k − eσ, r − MIN·σ), upper = max(x_k + eσ, r + MIN·σ);
+  - so the window still contains [r − MIN·σ, r + MIN·σ];
+  - a negative-e edge can only be active on the facing side, and only when |r − x_k| > (|e| + MIN)σ.
+
+**int8 and region boundaries** (`test_fine_regions.py`; outputs `test_fine_regions_min1.txt`, `test_fine_regions_min0.25.txt`,
+`test_fineplus_regions_min1.txt`, `test_fineplus_regions_min0.25.txt`):
+
+1. **int8.** Largest code 55 (`fine`) and 59 (`fineplus`), both ≤ 127, so the int8 arrays `CL`, `CU` of `backward()` hold every code. True in all four files.
+2. **Region boundaries.**
+   - Over every step k = 1 … 4999, `a.min()` (smallest lower-edge index) is the lower edge of the largest e (6), and `b.max()` (largest upper-edge index) is its upper edge.
+   - So `i_lo = a.min() + M` and `i_hi = b.max() − M − 1` are still computed from the smallest lower-edge index and the largest upper-edge index, as in the original.
+   - The negative values do not move them: every negative-e lower edge lies above x_k − d and every negative-e upper edge below x_k + d. Here d = σ/12 is the node spacing; the script compares padded indices.
+   - True for both sets and both MIN.
+3. **Brute force.**
+   - Test steps: k0 = argmin x, argmax x, 777, 2500, 4321.
+   - At each one, `backward()` ran on a two-step problem and was compared with an exhaustive maximisation over all nE × nE actions at every node, without the three-region split.
+   - Worst |difference| was **0.0e+00**, for the final value and for the per-node maxima, in all four files.
+
+**Reproduction of `12 full 5 3`.**
+- `python3 runlog.py run_fac12_full_copy_min1.txt python3 check_cert_fine.py 12 full 5 3 1`: 4901 s wall, peak RSS 368 MB, exit code 0, stderr empty.
+- The output is identical to `run_fac12_full.txt` after removing the MIN line (which `check_cert.py` does not print) and the elapsed-time stamps: 54 lines, 0 differences.
+- So the `full` branch of the copy reproduces the existing run exactly. The run started 20:46 UTC.
+
+**Runs.** Each was started as its own background process through the wrapper, e.g.
+`python3 runlog.py run_fac12_fine_min1.txt python3 check_cert_fine.py 12 fine 5 3 1`:
+- 22:08 UTC: `12 fine 5 3 1` and `12 fine 5 3 0.25`;
+- 22:19 UTC: `12 fineplus 5 3 1` and `12 fineplus 5 3 0.25` (control).
+
+None was stopped early. All exited with code 0 and empty stderr.
+
+**CPU sharing.** The runs shared the 4 vCPUs with:
+- the three Task A runs, until 22:16;
+- each other (four runs from 22:19);
+- the two `check_shape.py` passes, from 00:55.
+
+The `fine` sets are also more expensive per backward pass: the middle region evaluates nE² = 3136 (`fine`) or 3600 (`fineplus`) action pairs per node, against 961 for `full`. Wall times are therefore not comparable with the `full` runs.
+
+## Comparison with `12 full 5 3`, same grid, same MIN: the effect of the candidate set alone
+
+The `full` rows are the existing runs `run_fac12_full.txt` (MIN = 1) and `run_fac12_full_min0.25.txt` (MIN = 0.25).
+The rows differ only in the candidate set: same grid σ/12, same B = 316.8952, same search, same three rounds.
+
+| MIN (σ) | set | round | best table | its E[N] | change vs full | upper bound | change vs full | gap |
+|---|---|---|---|---|---|---|---|---|
+| 1 | `full` | 1 | 207.2876 | 316.358 | — | 219.7959 | — | 12.5083 |
+| 1 | `full` | 2 | 207.5591 | 316.889 | — | 207.8697 | — | 0.3105 |
+| 1 | `full` | 3 | 207.6260 | 316.624 | — | 207.7023 | — | 0.0764 |
+| 1 | `fine` | 1 | 207.2926 | 316.646 | +0.0050 | 219.7947 | -0.0012 | 12.5021 |
+| 1 | `fine` | 2 | 207.5575 | 316.886 | -0.0016 | 207.8691 | -0.0006 | 0.3115 |
+| 1 | `fine` | 3 | 207.6258 | 316.630 | -0.0002 | 207.7026 | +0.0003 | 0.0768 |
+| 1 | `fineplus` | 1 | 207.2912 | 316.578 | +0.0036 | 219.7967 | +0.0008 | 12.5055 |
+| 1 | `fineplus` | 2 | 207.5588 | 316.880 | -0.0003 | 207.8698 | +0.0001 | 0.3110 |
+| 1 | `fineplus` | 3 | 207.6262 | 316.642 | +0.0002 | 207.7024 | +0.0001 | 0.0762 |
+| 0.25 | `full` | 1 | 207.3772 | 316.384 | — | 220.4238 | — | 13.0466 |
+| 0.25 | `full` | 2 | 207.6612 | 316.833 | — | 208.0348 | — | 0.3736 |
+| 0.25 | `full` | 3 | 207.7519 | 316.859 | — | 207.8421 | — | 0.0901 |
+| 0.25 | `fine` | 1 | 207.3795 | 316.501 | +0.0023 | 220.4221 | -0.0017 | 13.0426 |
+| 0.25 | `fine` | 2 | 207.6541 | 316.540 | -0.0071 | 208.0338 | -0.0010 | 0.3796 |
+| 0.25 | `fine` | 3 | 207.7446 | 316.489 | -0.0073 | 207.8422 | +0.0001 | 0.0976 |
+| 0.25 | `fineplus` | 1 | 207.3799 | 316.547 | +0.0027 | 220.4243 | +0.0005 | 13.0444 |
+| 0.25 | `fineplus` | 2 | 207.6607 | 316.812 | -0.0005 | 208.0349 | +0.0001 | 0.3743 |
+| 0.25 | `fineplus` | 3 | 207.7522 | 316.874 | +0.0003 | 207.8422 | +0.0001 | 0.0899 |
+
+**Round 3: the best table against the two evaluations that bracket the budget.**
+- The best feasible table is the feasible evaluation (E[N] ≤ B) with the largest log det among the 11 λ values of the round. How close its E[N] lands to B depends on where the fixed search stopped.
+- To separate that from the effect of the set, the table below also gives the nearest evaluation above B and the straight line between the two at E[N] = B.
+- **The interpolated value is a reading aid, not a table of the class.** No trigger with that value was constructed. Its differences are computed before rounding.
+
+| MIN (σ) | set | best table (feasible) | its E[N] | B − E[N] | next evaluation above B: E[N], log det | linear interpolation at B | change vs full | smallest bound | change vs full |
+|---|---|---|---|---|---|---|---|---|---|
+| 1 | `full` | 207.6260 | 316.624 | 0.271 | 316.972, 207.6326 | 207.6311 | — | 207.7023 | — |
+| 1 | `fine` | 207.6258 | 316.630 | 0.265 | 316.954, 207.6319 | 207.6308 | -0.0004 | 207.7026 | +0.0003 |
+| 1 | `fineplus` | 207.6262 | 316.642 | 0.253 | 316.984, 207.6327 | 207.6310 | -0.0001 | 207.7024 | +0.0001 |
+| 0.25 | `full` | 207.7519 | 316.859 | 0.036 | 317.471, 207.7636 | 207.7526 | — | 207.8421 | — |
+| 0.25 | `fine` | 207.7446 | 316.489 | 0.406 | 317.134, 207.7571 | 207.7525 | -0.0001 | 207.8422 | +0.0001 |
+| 0.25 | `fineplus` | 207.7522 | 316.874 | 0.021 | 317.503, 207.7642 | 207.7526 | +0.0000 | 207.8422 | +0.0001 |
+
+**Other columns** (all 5 "below bound" entries of every run are True; stderr empty in every run):
+
+| MIN (σ) | set | values + None | max abs(diff) | one-parameter rule | all 'below bound' True | wall (s) | user CPU (s) | peak RSS (MB) | exit code |
+|---|---|---|---|---|---|---|---|---|---|
+| 1 | `full` | 30 + None | 1.4e-12 | e = 1.5366: 207.4941 (+10.2937), E[N] = 316.818 | True (5 of 5) | 4110.5 | 3195.5 | 372.6 | 0 |
+| 1 | `fine` | 55 + None | 1.1e-12 | e = 1.5366: 207.4941 (+10.2937), E[N] = 316.818 | True (5 of 5) | 9983.1 | 7866.4 | 387.5 | 0 |
+| 1 | `fineplus` | 59 + None | 1.2e-12 | e = 1.5366: 207.4941 (+10.2937), E[N] = 316.818 | True (5 of 5) | 11044.7 | 8662.5 | 390.4 | 0 |
+| 0.25 | `full` | 30 + None | 1.4e-12 | e = 1.5648: 207.5961 (+10.3957), E[N] = 316.848 | True (5 of 5) | 4168.7 | 3259.9 | 370.4 | 0 |
+| 0.25 | `fine` | 55 + None | 1.4e-12 | e = 1.5648: 207.5961 (+10.3957), E[N] = 316.848 | True (5 of 5) | 10673.3 | 8285.9 | 388.4 | 0 |
+| 0.25 | `fineplus` | 59 + None | 1.3e-12 | e = 1.5648: 207.5961 (+10.3957), E[N] = 316.848 | True (5 of 5) | 11637.8 | 9120.9 | 391.2 | 0 |
+
+**The one-parameter rule** does not use the candidate set, so its line must be the same as in the `full` run at the same MIN. It is, digit for digit, in every run.
+
+**Round 1 (consistency check).**
+- Round 1 has the same tangent point (constant SoD) in every run, and the λ sequence of round 1 is the same in all runs.
+- So V* can be compared at equal λ. V* is the maximum of the additive objective over the class.
+
+| MIN (σ) | set | round-1 λ sequence equal to `full`'s | V* − V*_full, smallest over the 11 λ | largest |
+|---|---|---|---|---|
+| 1 | `fine` | True | -0.002056 | -0.001170 |
+| 1 | `fineplus` | True | +0.000000 | +0.000890 |
+| 0.25 | `fine` | True | -0.002267 | -0.001268 |
+| 0.25 | `fineplus` | True | +0.000000 | +0.000840 |
+
+- **`fineplus` contains `full`.** So its V* must be ≥ `full`'s at every λ. It is: the smallest difference is 0 to the printed 6 decimals.
+- **`fine` does not contain `full`.** Its V* is *below* `full`'s at every λ, by 0.0012–0.0023. The net effect of removing 0.75, 1.25, 1.75, 2.25 and adding the 29 new values (−2.0 … −0.1, 0 … 0.4, 0.6 … 0.9) is negative. `fineplus` shows that adding the 29 values alone raises V* by at most 0.0009.
+- From round 2 on, each run has its own tangent point (its own round-1 table). The bounds of different runs are then no longer ordered by set inclusion.
+
+## Per-run output (format as for the earlier runs)
+
+### `python3 check_cert_fine.py 12 fine 5 3 1`  →  `run_fac12_fine_min1.txt`
+
+- grid sigma/12 (14070 nodes); candidate set: 55 values + None; MIN = 1 sigma (12 nodes)
+- constant SoD: E[N] = 316.8952, log det J = 197.2004
+
+| round | tangent point | best feasible table: log det J | E[N] | upper bound | gap | max abs(diff) in round |
+|---|---|---|---|---|---|---|
+| 1 | constant SoD | 207.2926 (+10.0922) | 316.646 | 219.7947 (+22.5942) | 12.5021 | 1.1e-12 |
+| 2 | table of round 1 | 207.5575 (+10.3571) | 316.886 | 207.8691 (+10.6686) | 0.3115 | 8.8e-13 |
+| 3 | table of round 2 | 207.6258 (+10.4254) | 316.630 | 207.7026 (+10.5022) | 0.0768 | 6.1e-13 |
+
+- largest abs(diff) between V* and the forward score, all 33 backward passes: 1.1e-12
+- one-parameter rule: `one-parameter rule, e = 1.5366:   207.4941 (+10.2937), E[N] = 316.818   below bound: True`
+- 'below bound' entries: 5, all True: True
+- wall time: 9982 s (script); wrapper: 9983.1 s wall, 7866.4 s user CPU, peak RSS 387.5 MB, exit code 0, stderr 0 bytes
+
+### `python3 check_cert_fine.py 12 fine 5 3 0.25`  →  `run_fac12_fine_min0.25.txt`
+
+- grid sigma/12 (14070 nodes); candidate set: 55 values + None; MIN = 0.25 sigma (3 nodes)
+- constant SoD: E[N] = 316.8952, log det J = 197.2004
+
+| round | tangent point | best feasible table: log det J | E[N] | upper bound | gap | max abs(diff) in round |
+|---|---|---|---|---|---|---|
+| 1 | constant SoD | 207.3795 (+10.1791) | 316.501 | 220.4221 (+23.2217) | 13.0426 | 1.4e-12 |
+| 2 | table of round 1 | 207.6541 (+10.4537) | 316.540 | 208.0338 (+10.8333) | 0.3796 | 2.9e-13 |
+| 3 | table of round 2 | 207.7446 (+10.5442) | 316.489 | 207.8422 (+10.6418) | 0.0976 | 3.1e-13 |
+
+- largest abs(diff) between V* and the forward score, all 33 backward passes: 1.4e-12
+- one-parameter rule: `one-parameter rule, e = 1.5648:   207.5961 (+10.3957), E[N] = 316.848   below bound: True`
+- 'below bound' entries: 5, all True: True
+- wall time: 10673 s (script); wrapper: 10673.3 s wall, 8285.9 s user CPU, peak RSS 388.4 MB, exit code 0, stderr 0 bytes
+
+### `python3 check_cert_fine.py 12 fineplus 5 3 1`  →  `run_fac12_fineplus_min1.txt`
+
+- grid sigma/12 (14070 nodes); candidate set: 59 values + None; MIN = 1 sigma (12 nodes)
+- constant SoD: E[N] = 316.8952, log det J = 197.2004
+
+| round | tangent point | best feasible table: log det J | E[N] | upper bound | gap | max abs(diff) in round |
+|---|---|---|---|---|---|---|
+| 1 | constant SoD | 207.2912 (+10.0908) | 316.578 | 219.7967 (+22.5963) | 12.5055 | 1.2e-12 |
+| 2 | table of round 1 | 207.5588 (+10.3584) | 316.880 | 207.8698 (+10.6694) | 0.3110 | 9.2e-13 |
+| 3 | table of round 2 | 207.6262 (+10.4258) | 316.642 | 207.7024 (+10.5020) | 0.0762 | 5.0e-13 |
+
+- largest abs(diff) between V* and the forward score, all 33 backward passes: 1.2e-12
+- one-parameter rule: `one-parameter rule, e = 1.5366:   207.4941 (+10.2937), E[N] = 316.818   below bound: True`
+- 'below bound' entries: 5, all True: True
+- wall time: 11044 s (script); wrapper: 11044.7 s wall, 8662.5 s user CPU, peak RSS 390.4 MB, exit code 0, stderr 0 bytes
+
+### `python3 check_cert_fine.py 12 fineplus 5 3 0.25`  →  `run_fac12_fineplus_min0.25.txt`
+
+- grid sigma/12 (14070 nodes); candidate set: 59 values + None; MIN = 0.25 sigma (3 nodes)
+- constant SoD: E[N] = 316.8952, log det J = 197.2004
+
+| round | tangent point | best feasible table: log det J | E[N] | upper bound | gap | max abs(diff) in round |
+|---|---|---|---|---|---|---|
+| 1 | constant SoD | 207.3799 (+10.1795) | 316.547 | 220.4243 (+23.2239) | 13.0444 | 1.3e-12 |
+| 2 | table of round 1 | 207.6607 (+10.4603) | 316.812 | 208.0349 (+10.8345) | 0.3743 | 2.9e-13 |
+| 3 | table of round 2 | 207.7522 (+10.5518) | 316.874 | 207.8422 (+10.6417) | 0.0899 | 3.2e-13 |
+
+- largest abs(diff) between V* and the forward score, all 33 backward passes: 1.3e-12
+- one-parameter rule: `one-parameter rule, e = 1.5648:   207.5961 (+10.3957), E[N] = 316.848   below bound: True`
+- 'below bound' entries: 5, all True: True
+- wall time: 11637 s (script); wrapper: 11637.8 s wall, 9120.9 s user CPU, peak RSS 391.2 MB, exit code 0, stderr 0 bytes
+
+## Round-3 tables of the `fine` runs: is the chosen e below 0.5 or negative? (`check_shape.py`)
+
+**Commands.** `check_shape.py` was run on each `fine` run as soon as it ended, as its own background process:
+- `python3 runlog.py shape_fac12_fine_min1.txt python3 check_shape.py 12 fine 1 run_fac12_fine_min1.txt shape_fac12_fine_min1.npz`: 873 s, 254 MB, exit code 0, stderr empty;
+- the same with 0.25: 945 s, 254 MB, exit code 0, stderr empty.
+
+**Method.** The same as in Task B:
+- the λ sequence is replayed;
+- one backward sweep per round recomputes the round-3 table, and its codes are kept;
+- one forward pass with statistics follows.
+
+The definitions (weights `m`, steps k ≥ 2, facing/far edge, rounding, status e / tie / MIN) are those of Task B.
+
+**Reproduction.** Every recomputed round (λ/γ̄, E[N], log det J, V*) equals the logged one to the printed digits, in both runs:
+
+| run | round 1 λ/γ̄ | round 2 λ/γ̄ | round 3 λ/γ̄ | round 3 recomputed: E[N] / log det J / V* |
+|---|---|---|---|---|
+| fine, MIN = 1 | 3.0175781250 | 2.9507812500 | 2.9613281250 | 316.630 / 207.6258 / 3.102271 |
+| fine, MIN = 0.25 | 3.1113281250 | 3.0263671875 | 3.0527343750 | 316.489 / 207.7446 / 3.023728 |
+
+**What is counted.** A case is a node r at a step k, weighted by `m[r]`. The script counts the cases in which an edge is *set* by a candidate e (status "e": the rounded e-edge lies strictly beyond the MIN edge) and that e is < 0, or 0 ≤ e < 0.5. It counts the facing and the far edge separately, and also "either edge". A variant also counts ties (rounded e-edge = MIN node). The fractions are of the total weight (4998, i.e. 1 per step).
+
+| mass-weighted fraction of the total weight | fine, MIN = 1 | fine, MIN = 0.25 |
+|---|---|---|
+| facing edge set by e < 0 | 0 | 0 |
+| facing edge set by 0 ≤ e < 0.5 | 0 | 0 |
+| far edge set by e < 0 | 0 | 0 |
+| far edge set by 0 ≤ e < 0.5 | 0 | 0 |
+| either edge set by e < 0 | 0 | 0 |
+| **either edge set by e < 0.5 (negative included)** | **0** | **0** |
+| either edge, e < 0.5, ties included | 0 | 0 |
+| smallest e that sets the facing edge (weight > 0) | 0.9 (0.0002 of the weight) | 0.9 (0.0001) |
+| smallest e that sets the far edge (weight > 0) | 1.3 | 1.3 |
+
+- **The zeros are exact.** The accumulated weights are 0.0, not just below the printed 6 decimals.
+- **Cross-check against the saved histograms.** The `.npz` histograms give the same result: no weight with status "e" or "tie" on any slot with e < 0.5, on either edge, in either run.
+- **Stored codes that set no edge.** The far edge is set by the minimum distance (window edge r ∓ MIN·σ) in 91.9 % (MIN = 1) and 83.1 % (MIN = 0.25) of the weight. In those cases the stored code is:
+  - None in 61.8 % and 59.7 % of the weight;
+  - −2.0 in 30.1 % and 23.4 %.
+  - These −2.0 codes are not a choice. Every candidate whose e-edge falls inside the MIN edge gives the same window and the same value, and `argmax` keeps the first index, which in `fine` is −2.0 (as stated in Task B: only the edge position is meaningful).
+  - Counting stored codes instead of edges that are set would therefore give 30.1 % and 23.4 % "negative e", and that number would be an artefact of the tie-break.
+- **Rule line.** For the one-parameter rule pass, the 4-decimal e of the rule line does not reproduce the printed line exactly:
+  - MIN = 1: e = 1.5366 gives 207.4943 / E[N] 316.825 against the printed 207.4941 / 316.818;
+  - MIN = 0.25: e = 1.5648 gives 207.5964 / 316.869 against 207.5961 / 316.848.
+  - This is the same rounding effect as at σ/24, MIN = 0.25 in Task B: the line is printed at e* + 1e-4 rounded to 4 decimals. It affects only the rule's statistics, which are not part of Task D.
+
+**Shape of the round-3 `fine` tables**, for comparison with Task B (σ/24, `full`). Fractions are of the total weight unless stated.
+
+| quantity | fine, MIN = 1 | fine, MIN = 0.25 |
+|---|---|---|
+| facing edge set by e | 1.0000 | 1.0000 |
+| facing e: mean; 5/25/50/75/95 % quantiles | 1.5601; 1.3 / 1.4 / 1.6 / 1.7 / 1.8 | 1.5893; 1.3 / 1.4 / 1.6 / 1.7 / 1.9 |
+| far edge at r ∓ MIN·σ / set by e | 0.9186 / 0.0814 | 0.8311 / 0.1689 |
+| fraction with abs(r − x_k) < σ | 0.1246 | 0.1186 |
+| facing e for abs(r − x_k) ≥ σ: mean; quantiles | 1.5436; 1.3 / 1.4 / 1.6 / 1.7 / 1.8 | 1.5733; 1.3 / 1.4 / 1.6 / 1.7 / 1.9 |
+| one-parameter rule e | 1.5366 | 1.5648 |
+
+![fig_shape_fine](fig_shape_fine.png)
+
+**`fig_shape_fine.png`** (drawn by `make_shape_fig.py`; numbers in `fig_shape_fine.txt`).
+- It shows the weighted distribution of the e that sets the facing edge of the round-3 `fine` tables at σ/12. Top panel: MIN = 1; bottom panel: MIN = 0.25. The dashed line is the one-parameter rule's e.
+- The x-axis starts at 0.3. The candidates from −2.0 to 0.8 carry no weight, so nothing is cut off.
+- The bar at 1.5 is lower than its neighbours 1.4 and 1.6 in both panels. This is reported as computed and was not investigated.
+
+## Reading of Task D (as measured; modelling choices as stated)
+
+1. **The finer and wider set changes nothing measurable at σ/12.**
+   - Round 3, `fine` against `full`: the smallest bound moves by +0.0003 (MIN = 1) and +0.0001 (MIN = 0.25).
+   - At the budget (linear interpolation between the bracketing evaluations), the table value moves by −0.0004 and −0.0001.
+   - The −0.0073 of the `fine` best table at MIN = 0.25 is where the fixed 11-evaluation search stopped: that table uses 0.41 fewer transmissions than B, while `full`'s uses 0.04 fewer. It is not an effect of the set.
+2. **The added values are not used.**
+   - No edge of either round-3 `fine` table is set by a negative e or by e < 0.5, and the smallest e that sets any edge is 0.9.
+   - The facing-edge distribution is the same shape as with `full` (1.3–1.8 or 1.9 for 5–95 %).
+3. **The values 0.75, 1.25, 1.75, 2.25 matter slightly.**
+   - At the common round-1 tangent point, `fine` (which lacks them) has a lower V* than `full` at every λ, and a lower round-1 bound (−0.0012, −0.0017).
+   - `fineplus` (which has them) has V* ≥ `full`'s, as it must.
+   - By round 3 all these differences are ≤ 0.0004 in both the bound and the interpolated table value.
+4. **`fineplus` against `full`.** `fineplus` is `full` plus the 29 `fine` values that `full` lacks. Against `full` in round 3, for MIN = 1 / 0.25:
+   - best table: +0.0002 / +0.0003;
+   - smallest bound: +0.0001 / +0.0001;
+   - linear interpolation at B: −0.0001 / +0.0000.
+   - So adding negative e, 0 … 0.4 and 0.6 … 0.9 to the existing set changes the result by at most 0.0003 nat. That is smaller than the step between the two round-3 evaluations that bracket B, which is 0.0061–0.0125 nat in log det across the six runs.
+5. **Caveats.**
+   - One grid (σ/12) and one budget.
+   - Three tangent-point rounds and 11 λ evaluations per round, so the gap of 0.076–0.098 is not closed.
+   - The statements are about this candidate lattice with outward rounding to σ/12 nodes. They do not show that negative or small e can never help in a different class, for example with a finer grid or another MIN.
